@@ -1,6 +1,6 @@
 /* WanderNest-inspired art direction for MIARADI-TRAVEL */
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap');
-:root{--wn-teal:#087f78;--wn-teal-dark:#073b3b;--wn-ink:#172126;--wn-muted:#68757a;--wn-pale:#eff7f6;--wn-white:#fff}
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+:root{--wn-teal:#0B8278;--wn-teal-dark:#073B3B;--wn-ink:#263238;--wn-muted:#68757A;--wn-pale:#FAF8F2;--wn-white:#FFFFFF;--forest:#073B3B;--forest-deep:#073B3B;--forest-soft:#0B8278;--paper:#FAF8F2;--paper-deep:#E9E0D0;--terracotta:#B85C3D;--ink:#263238;--muted:#68757A;--sand:#E9E0D0;--line:rgba(7,59,59,.14)}
 body{font-family:"DM Sans",sans-serif;background:#fff;color:var(--wn-ink);font-size:15px;line-height:1.6}
 h1,h2,h3,h4,.brand-name{font-family:"Manrope","DM Sans",sans-serif;letter-spacing:-.045em}
 h1,h2{font-weight:800;line-height:1.06}
@@ -172,3 +172,11 @@ h1 em,h2 em{font-style:normal;color:var(--wn-teal)}
  .section-pad{padding-block:58px}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
+
+/* Final MIARADI palette: ivory, deep green, turquoise and restrained terracotta */
+body{background:#FAF8F2;color:#263238}
+.site-footer{background:#073B3B}
+.intro,.contact{background:#FAF8F2}
+.included{background:#E9E0D0}
+.circuits{background:#F2F6F4}
+.button-terracotta,.circuit-tag{background:#B85C3D;color:#fff}
