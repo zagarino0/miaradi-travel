@@ -270,6 +270,183 @@ document.addEventListener("DOMContentLoaded", () => {
     if (event.target === galleryDialog) galleryDialog.close();
   });
 
+
+  // Detailed circuit sheets: itinerary, places, activities, accommodation and dedicated photos.
+  const circuitDetails = {
+    "L'Ouest sauvage": {
+      region: { fr: "Ouest · Morondava et allée des Baobabs", en: "West · Morondava and Avenue of the Baobabs" },
+      duration: { fr: "5 à 8 jours indicatifs", en: "Indicative 5–8 days" },
+      intro: { fr: "Un itinéraire entre baobabs emblématiques, villages de l'Ouest et lumière du littoral. Le programme exact dépendra des transports et de la saison.", en: "A journey through iconic baobabs, western villages and coastal light. The final programme depends on transport and season." },
+      days: [
+        { fr: ["Arrivée à Morondava", "Installation, découverte de la ville et promenade au bord de la mer.", "Morondava"], en: ["Arrival in Morondava", "Check in, explore the town and take a seaside walk.", "Morondava"] },
+        { fr: ["Allée des Baobabs", "Découverte des baobabs et séance photo en fin de journée.", "Morondava ou environs"], en: ["Avenue of the Baobabs", "Explore the baobabs and enjoy late-afternoon photography.", "Morondava or nearby"] },
+        { fr: ["Villages et paysages de l'Ouest", "Rencontres locales et découverte des paysages ruraux selon l'itinéraire retenu.", "Hébergement local"], en: ["Villages and western landscapes", "Local encounters and rural scenery, depending on the chosen route.", "Local accommodation"] },
+        { fr: ["Journée nature ou littoral", "Temps libre, observation des paysages et activités convenues avec le guide.", "Morondava"], en: ["Nature or coastal day", "Free time, scenery and activities agreed with the guide.", "Morondava"] },
+        { fr: ["Retour et fin du circuit", "Transfert selon le moyen de transport réservé. Des journées supplémentaires sont possibles.", "Selon le transport"], en: ["Return and end of tour", "Transfer according to booked transport. Additional days can be arranged.", "Depending on transport"] }
+      ],
+      places: { fr: "Morondava, Allée des Baobabs, villages de la région du Menabe", en: "Morondava, Avenue of the Baobabs, villages in the Menabe region" },
+      activities: { fr: "Photographie, balades, découverte des paysages, rencontres locales", en: "Photography, walks, landscapes, local encounters" },
+      stay: { fr: "Hôtels ou maisons d'hôtes selon budget et disponibilités, à confirmer au devis.", en: "Hotels or guesthouses based on budget and availability, to be confirmed in the quote." }
+    },
+    "L'appel du lagon": {
+      region: { fr: "Nord · Nosy Be et îles voisines", en: "North · Nosy Be and nearby islands" }, duration: { fr: "3 à 6 jours indicatifs", en: "Indicative 3–6 days" },
+      intro: { fr: "Une parenthèse balnéaire à adapter selon la météo, les conditions maritimes et les excursions disponibles.", en: "A coastal escape tailored to weather, sea conditions and available excursions." },
+      days: [
+        { fr: ["Arrivée à Nosy Be", "Accueil, installation et découverte des environs.", "Nosy Be"], en: ["Arrival in Nosy Be", "Welcome, check-in and explore the surroundings.", "Nosy Be"] },
+        { fr: ["Plages et villages", "Découverte du littoral, baignade si les conditions le permettent et rencontre avec la vie locale.", "Nosy Be"], en: ["Beaches and villages", "Explore the coast, swim when conditions allow and experience local life.", "Nosy Be"] },
+        { fr: ["Excursion en mer", "Sortie vers une île ou un site côtier, sous réserve de météo et de disponibilité.", "Nosy Be"], en: ["Sea excursion", "Boat trip to an island or coastal site, subject to weather and availability.", "Nosy Be"] },
+        { fr: ["Journée libre et départ", "Temps libre ou activité complémentaire, puis transfert de départ.", "Selon le transport"], en: ["Free time and departure", "Free time or an extra activity, followed by departure transfer.", "Depending on transport"] }
+      ],
+      places: { fr: "Nosy Be, plages et îles voisines à définir avec l'agence", en: "Nosy Be, beaches and nearby islands selected with the agency" },
+      activities: { fr: "Baignade, détente, excursion en bateau, découverte de la culture locale", en: "Swimming, relaxation, boat trips, local culture" },
+      stay: { fr: "Hôtel, lodge ou maison d'hôtes selon le niveau de confort souhaité.", en: "Hotel, lodge or guesthouse depending on preferred comfort level." }
+    },
+    "Routes & rencontres": {
+      region: { fr: "Sud · Isalo et paysages du Sud", en: "South · Isalo and southern landscapes" }, duration: { fr: "Circuit personnalisable", en: "Customisable journey" },
+      intro: { fr: "Un circuit axé sur les paysages minéraux, les villages et les échanges culturels. Les étapes seront ajustées à votre point de départ.", en: "A journey focused on rocky landscapes, villages and cultural encounters. Stops will be adapted to your starting point." },
+      days: [
+        { fr: ["Route vers le Sud", "Trajet avec arrêts panoramiques et découverte des paysages traversés.", "Étape sur la route"], en: ["Journey south", "Travel with scenic stops and exploration along the way.", "Overnight stop en route"] },
+        { fr: ["Découverte de la région de l'Isalo", "Balade accompagnée et observation des reliefs, selon l'accès et les conditions.", "Ranohira ou environs"], en: ["Explore the Isalo region", "Guided walk and rock formations, depending on access and conditions.", "Ranohira or nearby"] },
+        { fr: ["Nature et rencontres locales", "Temps consacré aux paysages, à la culture et aux échanges avec les communautés.", "Hébergement local"], en: ["Nature and local encounters", "Time for scenery, culture and exchanges with local communities.", "Local accommodation"] },
+        { fr: ["Retour ou prolongation", "Retour selon le programme convenu ou ajout d'étapes sur demande.", "Selon le transport"], en: ["Return or extension", "Return as agreed or add extra stops on request.", "Depending on transport"] }
+      ],
+      places: { fr: "Isalo, Ranohira et étapes sélectionnées selon le trajet", en: "Isalo, Ranohira and stops selected for the route" },
+      activities: { fr: "Randonnée adaptée, photographie, découverte culturelle et paysages", en: "Suitable walks, photography, cultural discovery and landscapes" },
+      stay: { fr: "Hôtel ou lodge près des étapes retenues, sous réserve de disponibilité.", en: "Hotel or lodge near selected stops, subject to availability." }
+    },
+    "Les Tsingy de Bemaraha": {
+      region: { fr: "Ouest · Parc national des Tsingy de Bemaraha", en: "West · Tsingy de Bemaraha National Park" }, duration: { fr: "3 à 5 jours indicatifs", en: "Indicative 3–5 days" },
+      intro: { fr: "Une aventure nature autour des formations calcaires. Les visites sont soumises aux règles du parc, à la saison et aux conditions d'accès.", en: "A nature adventure among limestone formations. Visits depend on park rules, season and access conditions." },
+      days: [
+        { fr: ["Arrivée dans la région", "Installation et préparation de la visite avec un guide local.", "Bekopaka ou environs"], en: ["Arrival in the region", "Check-in and prepare the visit with a local guide.", "Bekopaka or nearby"] },
+        { fr: ["Découverte des Tsingy", "Circuit guidé adapté aux conditions physiques et aux parcours ouverts.", "Bekopaka"], en: ["Explore the Tsingy", "Guided route selected for fitness level and open trails.", "Bekopaka"] },
+        { fr: ["Nature et environs", "Découverte complémentaire de la région selon les conditions et le temps disponible.", "Bekopaka ou environs"], en: ["Nature and surroundings", "Additional regional exploration depending on conditions and time.", "Bekopaka or nearby"] },
+        { fr: ["Retour", "Transfert retour ou prolongation selon les connexions disponibles.", "Selon le transport"], en: ["Return", "Return transfer or extension depending on available connections.", "Depending on transport"] }
+      ],
+      places: { fr: "Bekopaka, Petit Tsingy ou Grand Tsingy selon ouverture et conditions", en: "Bekopaka, Petit Tsingy or Grand Tsingy depending on access and conditions" },
+      activities: { fr: "Randonnée guidée, observation géologique, photographie", en: "Guided hiking, geological discovery, photography" },
+      stay: { fr: "Lodge ou hébergement local à Bekopaka, à confirmer avant réservation.", en: "Lodge or local accommodation in Bekopaka, to be confirmed before booking." }
+    },
+    "La forêt d'Andasibe": {
+      region: { fr: "Est · Andasibe-Mantadia", en: "East · Andasibe-Mantadia" }, duration: { fr: "2 à 4 jours indicatifs", en: "Indicative 2–4 days" },
+      intro: { fr: "Une immersion dans la forêt humide à la recherche de la biodiversité endémique, toujours dans le respect des consignes des guides et du parc.", en: "An immersion in rainforest biodiversity, following park and guide instructions." },
+      days: [
+        { fr: ["Route vers Andasibe", "Trajet depuis Antananarivo et installation à proximité de la forêt.", "Andasibe"], en: ["Travel to Andasibe", "Drive from Antananarivo and check in near the forest.", "Andasibe"] },
+        { fr: ["Visite guidée de la forêt", "Marche avec un guide pour découvrir la flore et tenter d'observer les indris.", "Andasibe"], en: ["Guided forest visit", "Walk with a guide to discover flora and look for indri lemurs.", "Andasibe"] },
+        { fr: ["Nature complémentaire et retour", "Autre balade ou activité selon le temps disponible, puis retour.", "Selon le transport"], en: ["Further nature exploration and return", "Another walk or activity depending on time, then return.", "Depending on transport"] }
+      ],
+      places: { fr: "Andasibe et secteurs visitables du parc selon les autorisations", en: "Andasibe and accessible park areas, subject to permits" },
+      activities: { fr: "Randonnée guidée, observation de la faune et de la flore, photographie", en: "Guided walks, wildlife and plant observation, photography" },
+      stay: { fr: "Lodge ou maison d'hôtes à Andasibe, selon disponibilité.", en: "Lodge or guesthouse in Andasibe, subject to availability." }
+    },
+    "La Route nationale 7": {
+      region: { fr: "Hautes Terres vers le Sud · RN7", en: "Highlands to the South · RN7" }, duration: { fr: "7 à 12 jours indicatifs", en: "Indicative 7–12 days" },
+      intro: { fr: "Un grand itinéraire terrestre entre Hautes Terres, villes-étapes et paysages du Sud. Les nuits et distances seront confirmées lors du devis.", en: "A classic overland route through the Highlands, stopover towns and southern landscapes. Overnight stops and distances will be confirmed in the quote." },
+      days: [
+        { fr: ["Antananarivo et départ", "Départ vers les Hautes Terres avec arrêts selon le rythme du groupe.", "Antsirabe ou environs"], en: ["Antananarivo and departure", "Head into the Highlands with stops adapted to the group.", "Antsirabe or nearby"] },
+        { fr: ["Hautes Terres", "Découverte d'Antsirabe et des paysages et savoir-faire locaux.", "Étape sur la RN7"], en: ["Highlands", "Discover Antsirabe, local landscapes and craftsmanship.", "RN7 stopover"] },
+        { fr: ["Route vers le Sud", "Étapes routières et arrêts panoramiques en direction du massif de l'Isalo.", "Selon l'étape retenue"], en: ["Journey south", "Road stages and scenic stops towards the Isalo massif.", "Depending on selected stop"] },
+        { fr: ["Parc de l'Isalo", "Randonnée ou visite accompagnée selon les circuits autorisés et les capacités du groupe.", "Ranohira ou environs"], en: ["Isalo National Park", "Guided walk or visit on authorised routes and suited to the group.", "Ranohira or nearby"] },
+        { fr: ["Prolongation ou retour", "Le programme peut être prolongé vers d'autres étapes ou organisé en retour selon le projet.", "Selon le transport"], en: ["Extension or return", "Extend to other stops or arrange the return according to your plans.", "Depending on transport"] }
+      ],
+      places: { fr: "Antananarivo, Antsirabe, étapes de la RN7, Isalo selon durée", en: "Antananarivo, Antsirabe, RN7 stopovers, Isalo depending on duration" },
+      activities: { fr: "Découverte de villes, artisanat, paysages, balades guidées et photographie", en: "Town visits, crafts, landscapes, guided walks and photography" },
+      stay: { fr: "Hôtels, lodges ou maisons d'hôtes à chaque étape, à valider selon budget et disponibilité.", en: "Hotels, lodges or guesthouses at each stop, subject to budget and availability." }
+    }
+  };
+
+  const detailDialog = document.createElement("dialog");
+  detailDialog.className = "circuit-detail-dialog";
+  detailDialog.id = "circuit-detail-dialog";
+  detailDialog.setAttribute("aria-labelledby", "circuit-detail-title");
+  detailDialog.innerHTML = '<div class="detail-head"><div><p class="eyebrow" id="detail-region"></p><h2 id="circuit-detail-title"></h2><p id="detail-intro" class="detail-intro"></p></div><button class="detail-close" type="button" aria-label="Close details">×</button></div><div class="detail-facts"><div><span class="detail-label">DURATION</span><strong id="detail-duration"></strong></div><div><span class="detail-label">PRICE</span><strong class="detail-price" id="detail-price"></strong></div></div><section class="detail-section"><h3 id="detail-program-title">Programme jour par jour</h3><div id="detail-days" class="detail-days"></div></section><div class="detail-info-grid"><section class="detail-section"><h3 id="detail-places-title">Lieux visités</h3><p id="detail-places"></p></section><section class="detail-section"><h3 id="detail-activities-title">Activités</h3><p id="detail-activities"></p></section><section class="detail-section"><h3 id="detail-stay-title">Hébergement éventuel</h3><p id="detail-stay"></p></section></div><section class="detail-section"><h3 id="detail-gallery-title">Galerie photo du circuit</h3><div id="detail-gallery" class="detail-gallery"></div></section><div class="detail-footer"><p id="detail-disclaimer"></p><a class="button button-dark" href="#contact" id="detail-quote"><span>Demander un devis</span><span aria-hidden="true">↗</span></a></div>';
+  document.body.append(detailDialog);
+
+  const detailLabels = {
+    fr: { program: "Programme jour par jour", places: "Lieux visités", activities: "Activités proposées", stay: "Hébergement éventuel", gallery: "Galerie photo du circuit", duration: "DURÉE INDICATIVE", price: "TARIF", quote: "Demander un devis", disclaimer: "Itinéraire indicatif : étapes, activités et hébergements seront confirmés selon vos dates, les disponibilités et les conditions locales.", day: "Jour", close: "Fermer la fiche détaillée" },
+    en: { program: "Day-by-day itinerary", places: "Places to visit", activities: "Suggested activities", stay: "Accommodation options", gallery: "Journey photo gallery", duration: "INDICATIVE DURATION", price: "PRICE", quote: "Request a quote", disclaimer: "Indicative itinerary: stops, activities and accommodation will be confirmed according to your dates, availability and local conditions.", day: "Day", close: "Close detailed itinerary" }
+  };
+
+  const fillCircuitDetails = (key) => {
+    const data = circuitDetails[key];
+    if (!data) return;
+    const lang = currentLanguage;
+    const labels = detailLabels[lang];
+    detailDialog.querySelector("#circuit-detail-title").textContent = (galleryData[key]?.title?.[lang]) || key;
+    detailDialog.querySelector("#detail-region").textContent = data.region[lang];
+    detailDialog.querySelector("#detail-intro").textContent = data.intro[lang];
+    detailDialog.querySelector("#detail-duration").textContent = data.duration[lang];
+    detailDialog.querySelector("#detail-price").textContent = lang === "fr" ? "Sur devis" : "Quote only";
+    detailDialog.querySelector("#detail-program-title").textContent = labels.program;
+    detailDialog.querySelector("#detail-places-title").textContent = labels.places;
+    detailDialog.querySelector("#detail-activities-title").textContent = labels.activities;
+    detailDialog.querySelector("#detail-stay-title").textContent = labels.stay;
+    detailDialog.querySelector("#detail-gallery-title").textContent = labels.gallery;
+    detailDialog.querySelector("#detail-disclaimer").textContent = labels.disclaimer;
+    const days = detailDialog.querySelector("#detail-days");
+    days.replaceChildren();
+    data.days.forEach((day, index) => {
+      const item = document.createElement("article");
+      item.className = "detail-day";
+      const badge = document.createElement("span");
+      badge.className = "detail-day-number";
+      badge.textContent = labels.day + " " + (index + 1).toString().padStart(2, "0");
+      const content = document.createElement("div");
+      const heading = document.createElement("h4");
+      heading.textContent = day[lang][0];
+      const copy = document.createElement("p");
+      copy.textContent = day[lang][1];
+      const location = document.createElement("span");
+      location.className = "detail-day-location";
+      location.textContent = "⌖ " + day[lang][2];
+      content.append(heading, copy, location);
+      item.append(badge, content);
+      days.append(item);
+    });
+    detailDialog.querySelector("#detail-places").textContent = data.places[lang];
+    detailDialog.querySelector("#detail-activities").textContent = data.activities[lang];
+    detailDialog.querySelector("#detail-stay").textContent = data.stay[lang];
+    const photoContainer = detailDialog.querySelector("#detail-gallery");
+    photoContainer.replaceChildren();
+    (galleryData[key]?.photos || []).forEach(([file, alt]) => {
+      const figure = document.createElement("figure");
+      const img = document.createElement("img");
+      img.src = "https://commons.wikimedia.org/wiki/Special:FilePath/" + file + "?width=900";
+      img.alt = alt;
+      img.loading = "lazy";
+      const caption = document.createElement("figcaption");
+      caption.textContent = alt;
+      figure.append(img, caption);
+      photoContainer.append(figure);
+    });
+    const quote = detailDialog.querySelector("#detail-quote");
+    quote.querySelector("span").textContent = labels.quote;
+    quote.onclick = () => {
+      const select = document.getElementById("circuit-select");
+      if (select) select.value = key;
+      detailDialog.close();
+      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+    };
+    detailDialog.querySelector(".detail-close").setAttribute("aria-label", labels.close);
+  };
+
+  document.querySelectorAll(".circuit-card").forEach((card) => {
+    const title = card.querySelector("h3");
+    const circuitName = card.querySelector("[data-circuit]")?.dataset.circuit;
+    if (!title || !circuitName || !circuitDetails[circuitName]) return;
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "circuit-detail-trigger";
+    button.textContent = currentLanguage === "fr" ? "Voir le programme détaillé" : "View detailed itinerary";
+    button.addEventListener("click", () => {
+      fillCircuitDetails(circuitName);
+      detailDialog.showModal();
+    });
+    title.insertAdjacentElement("afterend", button);
+  });
+  document.querySelector(".detail-close")?.addEventListener("click", () => detailDialog.close());
+  detailDialog.addEventListener("click", (event) => { if (event.target === detailDialog) detailDialog.close(); });
+
   document.getElementById("quote-form")?.addEventListener("submit", (event) => {
     event.preventDefault();
     const form = event.currentTarget;
