@@ -210,6 +210,15 @@ document.addEventListener("DOMContentLoaded", () => {
         ["Antsirabe_Madagascar_landscape.jpg","Paysage des Hautes Terres"],
         ["Madagascar_RN7.jpg","Route nationale 7 à Madagascar"]
       ]
+    },
+    "La Route nationale 7": {
+      title: { fr: "La Route nationale 7", en: "The National Route 7" },
+      description: { fr: "Un itinéraire du centre vers le Sud, entre Hautes Terres et paysages de l'Isalo.", en: "A route from the highlands to the south, through villages and Isalo landscapes." },
+      photos: [
+        ["Isalo-madagascar.jpg","Paysages de l'Isalo"],
+        ["Antsirabe_Madagascar_landscape.jpg","Paysage des Hautes Terres"],
+        ["Madagascar_RN7.jpg","Route nationale 7 à Madagascar"]
+      ]
     }
   };
 
