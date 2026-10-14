@@ -98,6 +98,9 @@ function setLanguage(language) {
   document.title = currentLanguage === "fr"
     ? "MIARADI-TRAVEL — Découvrez Madagascar autrement"
     : "MIARADI-TRAVEL — Discover Madagascar differently";
+  document.querySelectorAll(".circuit-detail-trigger").forEach((button) => {
+    button.textContent = currentLanguage === "fr" ? "Voir le programme détaillé" : "View detailed itinerary";
+  });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
