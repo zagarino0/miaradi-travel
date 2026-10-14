@@ -421,3 +421,58 @@ a,.underlined-link{color:#3E5873}
 a:hover,.underlined-link:hover{color:#253C56}
 input:focus,select:focus,textarea:focus{outline-color:#253C56;border-color:#253C56}
 ::selection{background:#253C56;color:#FAF8F2}
+
+/* Final palette enforcement: remove remaining green accents across every page */
+:root{
+  --color-primary:#253C56;
+  --color-primary-dark:#192C40;
+  --color-accent:#253C56;
+  --color-secondary:#3E5873;
+  --color-text:#25303A;
+  --color-bg:#FAF8F2;
+  --color-border:rgba(37,60,86,.16);
+}
+html,body{background-color:#FAF8F2}
+a,.link,.text-green,.text-success,.accent,.eyebrow,.section-eyebrow,
+.nav-link:hover,.nav-link.active,.header-nav a:hover,
+.circuit-meta,.circuit-link,.gallery-trigger,.filter-button,
+.icon-accent,.feature-icon,.contact-link,.social-link,
+.breadcrumb a,.pagination a,.tab-button[aria-selected="true"]{
+  color:#253C56!important;
+}
+button,.button,.button-primary,.btn-primary,.cta,.filter-button.is-active,
+.filter-button[aria-pressed="true"],.nav-cta,.back-to-top,
+input[type="submit"],button[type="submit"]{
+  background-color:#253C56;
+  border-color:#253C56;
+  color:#FAF8F2;
+}
+button:hover,.button:hover,.button-primary:hover,.btn-primary:hover,
+.cta:hover,.nav-cta:hover,input[type="submit"]:hover,button[type="submit"]:hover{
+  background-color:#192C40;
+  border-color:#192C40;
+  color:#FAF8F2;
+}
+[style*="#123D32"],[style*="#082A24"],[style*="#28634D"],
+[style*="#0B8278"],[style*="#0b8278"],[style*="#073B3B"],
+[style*="#B64F35"],[style*="#b64f35"]{
+  color:#253C56!important;
+  border-color:rgba(37,60,86,.2)!important;
+}
+[style*="background:#123D32"],[style*="background: #123D32"],
+[style*="background-color:#123D32"],[style*="background-color: #123D32"],
+[style*="background:#082A24"],[style*="background: #082A24"],
+[style*="background-color:#082A24"],[style*="background-color: #082A24"],
+[style*="background:#28634D"],[style*="background: #28634D"],
+[style*="background-color:#28634D"],[style*="background-color: #28634D"],
+[style*="background:#0B8278"],[style*="background: #0B8278"],
+[style*="background-color:#0B8278"],[style*="background-color: #0B8278"],
+[style*="background:#B64F35"],[style*="background: #B64F35"],
+[style*="background-color:#B64F35"],[style*="background-color: #B64F35"]{
+  background-color:#253C56!important;
+}
+svg [fill="#123D32"],svg [fill="#082A24"],svg [fill="#28634D"],
+svg [fill="#0B8278"],svg [fill="#B64F35"]{fill:#253C56!important}
+svg [stroke="#123D32"],svg [stroke="#082A24"],svg [stroke="#28634D"],
+svg [stroke="#0B8278"],svg [stroke="#B64F35"]{stroke:#253C56!important}
+::selection{background:#253C56;color:#FAF8F2}
