@@ -22,7 +22,7 @@ const translations = {
     circuit4Title: "Les Tsingy de Bemaraha", circuit4Copy: "Un labyrinthe minéral spectaculaire, des passerelles et des panoramas uniques.",
     circuit5Title: "La forêt d'Andasibe", circuit5Copy: "Forêt humide, chants des indris et observation de la faune endémique.",
     circuit6Title: "La Route nationale 7", circuit6Copy: "Hautes Terres, villages, paysages de l'Isalo et route vers le sud.",
-    askQuote: "Demander un devis", circuitsFoot: "Chaque voyage est personnalisable. Les tarifs sont établis sur devis.", customTrip: "Créer mon voyage",
+    askQuote: "Demander un devis", viewGallery: "Voir la galerie", galleryEyebrow: "INSPIRATION EN IMAGES", galleryNote: "Photographies illustratives de Madagascar.", galleryQuote: "Demander un devis pour ce circuit", circuitsFoot: "Chaque voyage est personnalisable. Les tarifs sont établis sur devis.", customTrip: "Créer mon voyage",
     quoteEyebrow: "VOTRE HISTOIRE, VOTRE ITINÉRAIRE", quoteTitle: "Et si votre prochain voyage<br>avait <em>votre signature ?</em>", quoteButton: "Imaginons votre circuit",
     contactEyebrow: "LE PREMIER PAS", contactTitle: "Parlons de<br><em>votre voyage.</em>",
     contactCopy: "Racontez-nous ce qui vous attire à Madagascar. Nous pourrons ensuite construire un itinéraire adapté à vos dates et à vos envies.",
@@ -57,7 +57,7 @@ const translations = {
     circuit4Title: "The Tsingy of Bemaraha", circuit4Copy: "A spectacular stone labyrinth, suspension walkways and unforgettable views.",
     circuit5Title: "Andasibe rainforest", circuit5Copy: "Lush rainforest, indri calls and encounters with endemic wildlife.",
     circuit6Title: "The National Route 7", circuit6Copy: "Highlands, villages, Isalo landscapes and the road towards the south, Madagascar.",
-    askQuote: "Request a quote", circuitsFoot: "Every trip can be tailored. All prices are provided on request.", customTrip: "Create my journey",
+    askQuote: "Request a quote", viewGallery: "View gallery", galleryEyebrow: "TRAVEL IN PICTURES", galleryNote: "Illustrative photographs of Madagascar.", galleryQuote: "Request a quote for this journey", circuitsFoot: "Every trip can be tailored. All prices are provided on request.", customTrip: "Create my journey",
     quoteEyebrow: "YOUR STORY, YOUR ITINERARY", quoteTitle: "What if your next journey<br>carried <em>your signature?</em>", quoteButton: "Let's shape your journey",
     contactEyebrow: "THE FIRST STEP", contactTitle: "Tell us about<br><em>your journey.</em>",
     contactCopy: "Tell us what draws you to Madagascar. We can then shape an itinerary around your dates and interests.",
@@ -148,6 +148,104 @@ document.addEventListener("DOMContentLoaded", () => {
         select.value = circuit;
       }
     });
+  });
+
+
+  const galleryDialog = document.getElementById("circuit-gallery");
+  const galleryTitle = document.getElementById("gallery-title");
+  const galleryDescription = document.getElementById("gallery-description");
+  const galleryGrid = document.getElementById("gallery-grid");
+  const galleryQuote = document.getElementById("gallery-quote");
+  const galleryData = {
+    "L'Ouest sauvage": {
+      title: { fr: "L'Ouest sauvage", en: "The wild west" },
+      description: { fr: "Baobabs, pistes rouges et couchers de soleil autour de Morondava.", en: "Baobabs, red-earth tracks and sunsets around Morondava." },
+      photos: [
+        ["Walking_the_Avenue_of_the_Baobabs.jpg","Allée des Baobabs à Morondava"],
+        ["Avenue_of_the_Baobabs_Madagascar.jpg","Baobabs de Madagascar"],
+        ["Baobab_allee_Morondava_Madagascar.jpg","Paysage de l'Ouest malgache"]
+      ]
+    },
+    "L'appel du lagon": {
+      title: { fr: "L'appel du lagon", en: "Call of the lagoon" },
+      description: { fr: "Plages, eaux turquoise et îles du Nord malgache.", en: "Beaches, turquoise water and islands in northern Madagascar." },
+      photos: [
+        ["Beach_at_Nosy_Be.jpg","Plage de Nosy Be"],
+        ["Nosy_Be_Madagascar.jpg","Littoral de Nosy Be"],
+        ["Nosy_Iranja_Madagascar.jpg","Île de Nosy Iranja"]
+      ]
+    },
+    "Routes & rencontres": {
+      title: { fr: "Les paysages de l'Isalo", en: "Isalo landscapes" },
+      description: { fr: "Massifs rocheux, canyons et grands espaces du Sud.", en: "Rocky massifs, canyons and wide-open southern landscapes." },
+      photos: [
+        ["Isalo_landscape.jpg","Paysage du parc national de l'Isalo"],
+        ["Isalo-madagascar.jpg","Massifs rocheux de l'Isalo"],
+        ["Isalo_National_Park_Madagascar.jpg","Canyons du Sud malgache"]
+      ]
+    },
+    "Les Tsingy de Bemaraha": {
+      title: { fr: "Les Tsingy de Bemaraha", en: "The Tsingy of Bemaraha" },
+      description: { fr: "Un paysage calcaire spectaculaire classé au patrimoine mondial.", en: "A spectacular limestone landscape recognised as a World Heritage site." },
+      photos: [
+        ["Tsingy_de_Bemaraha%2C_Madagascar.jpg","Tsingy de Bemaraha"],
+        ["Tsingy_de_Bemaraha.jpg","Formations calcaires des Tsingy"],
+        ["Grand_Tsingy_Bemaraha_Madagascar.jpg","Aiguilles rocheuses du Bemaraha"]
+      ]
+    },
+    "La forêt d'Andasibe": {
+      title: { fr: "La forêt d'Andasibe", en: "Andasibe rainforest" },
+      description: { fr: "Forêt humide, biodiversité endémique et observation des indris.", en: "Rainforest, endemic biodiversity and indri observation." },
+      photos: [
+        ["Indri_Andasibe.JPG","Indri dans la forêt d'Andasibe"],
+        ["Andasibe-Mantadia_National_Park.jpg","Forêt humide d'Andasibe"],
+        ["Indri_indri_Andasibe.jpg","Lémurien indri"]
+      ]
+    },
+    "La Route nationale 7": {
+      title: { fr: "La Route nationale 7", en: "The National Route 7" },
+      description: { fr: "Un itinéraire du centre vers le Sud, entre Hautes Terres et paysages de l'Isalo.", en: "A route from the highlands to the south, through villages and Isalo landscapes." },
+      photos: [
+        ["Isalo-madagascar.jpg","Paysages de l'Isalo"],
+        ["Antsirabe_Madagascar_landscape.jpg","Paysage des Hautes Terres"],
+        ["Madagascar_RN7.jpg","Route nationale 7 à Madagascar"]
+      ]
+    }
+  };
+
+  document.querySelectorAll("[data-gallery]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const key = button.dataset.gallery;
+      const data = galleryData[key];
+      if (!data || !galleryDialog || !galleryGrid) return;
+      galleryTitle.textContent = data.title[currentLanguage] || data.title.fr;
+      galleryDescription.textContent = data.description[currentLanguage] || data.description.fr;
+      galleryGrid.replaceChildren();
+      data.photos.forEach(([file, alt]) => {
+        const figure = document.createElement("figure");
+        const img = document.createElement("img");
+        img.src = "https://commons.wikimedia.org/wiki/Special:FilePath/" + file + "?width=1000";
+        img.alt = alt;
+        img.loading = "lazy";
+        img.addEventListener("error", () => { figure.classList.add("gallery-image-error"); img.alt = currentLanguage === "fr" ? "Image indisponible — consultez les autres photos de la galerie" : "Image unavailable — see other gallery photos"; });
+        const caption = document.createElement("figcaption");
+        caption.textContent = alt;
+        figure.append(img, caption);
+        galleryGrid.append(figure);
+      });
+      galleryQuote.href = "#contact";
+      galleryQuote.dataset.circuit = key === "Routes & rencontres" ? "Routes & rencontres" : key;
+      galleryQuote.onclick = () => {
+        const select = document.getElementById("circuit-select");
+        if (select && Array.from(select.options).some((option) => option.value === galleryQuote.dataset.circuit)) select.value = galleryQuote.dataset.circuit;
+        galleryDialog.close();
+      };
+      galleryDialog.showModal();
+    });
+  });
+  document.querySelector(".gallery-close")?.addEventListener("click", () => galleryDialog?.close());
+  galleryDialog?.addEventListener("click", (event) => {
+    if (event.target === galleryDialog) galleryDialog.close();
   });
 
   document.getElementById("quote-form")?.addEventListener("submit", (event) => {
