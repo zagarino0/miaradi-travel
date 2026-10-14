@@ -1,0 +1,151 @@
+/* MIARADI-TRAVEL — Vacation-inspired presentation layer
+   Keeps the existing forest / sand identity while borrowing the clear travel-discovery flow. */
+.trip-finder {
+  position: relative;
+  z-index: 2;
+  margin-top: -1px;
+  padding: 0 0 0;
+  color: var(--ink);
+  background: var(--white);
+  box-shadow: 0 16px 45px rgba(16, 46, 39, .08);
+}
+.trip-finder-inner {
+  display: grid;
+  grid-template-columns: minmax(210px, .72fr) minmax(0, 1.8fr);
+  align-items: center;
+  gap: clamp(28px, 5vw, 72px);
+  padding-block: 30px;
+}
+.trip-finder-heading { min-width: 0; }
+.trip-finder-kicker {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--forest-soft);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .17em;
+}
+.trip-finder-heading h2 {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3vw, 38px);
+  font-weight: 500;
+  letter-spacing: -.04em;
+  line-height: 1.12;
+}
+.trip-finder-heading h2 em { color: #a07d4c; }
+.trip-finder-form {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  align-items: end;
+  gap: 12px;
+}
+.trip-finder-form label { display: grid; gap: 7px; min-width: 0; }
+.trip-finder-form label > span {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.trip-finder-form select {
+  width: 100%;
+  min-width: 0;
+  min-height: 47px;
+  padding: 10px 28px 10px 11px;
+  border: 1px solid rgba(31,43,38,.14);
+  border-radius: 0;
+  color: var(--ink);
+  background: #fbfaf6;
+  font-size: 11px;
+}
+.trip-finder-form select:focus-visible {
+  outline: 2px solid var(--forest-soft);
+  outline-offset: 2px;
+}
+.trip-finder-submit { min-height: 47px; padding: 12px 15px; gap: 15px; white-space: nowrap; }
+.hero { min-height: clamp(620px, 82vh, 850px); }
+.hero-shade {
+  background:
+    linear-gradient(90deg, rgba(11,32,26,.76) 0%, rgba(11,32,26,.38) 50%, rgba(11,32,26,.08) 100%),
+    linear-gradient(0deg, rgba(9,24,20,.5), transparent 42%);
+}
+.circuit-card {
+  position: relative;
+  padding-bottom: 3px;
+  transition: transform .28s ease;
+}
+.circuit-card:hover { transform: translateY(-4px); }
+.circuit-price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgba(255,255,255,.18);
+}
+.circuit-price > span {
+  color: rgba(255,255,255,.58);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .14em;
+}
+.circuit-price strong { color: var(--sand); font-size: 12px; font-weight: 700; }
+.circuit-card h3 { margin-top: 13px; }
+.circuit-detail-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 8px;
+  padding: 0 0 5px;
+  border: 0;
+  border-bottom: 1px solid rgba(255,255,255,.4);
+  color: var(--paper);
+  background: transparent;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: left;
+}
+.circuit-detail-trigger::after { content: "↗"; font-size: 15px; transition: transform .2s ease; }
+.circuit-detail-trigger:hover::after { transform: translate(3px,-3px); }
+.gallery-trigger { margin-top: 10px; }
+.intro { position: relative; }
+.intro::after {
+  content: "M.";
+  position: absolute;
+  top: 18px;
+  right: max(22px, calc((100vw - var(--container))/2));
+  color: rgba(23,63,53,.035);
+  font-family: var(--font-display);
+  font-size: clamp(120px, 18vw, 260px);
+  font-style: italic;
+  line-height: 1;
+  pointer-events: none;
+}
+.intro-grid, .value-row { position: relative; z-index: 1; }
+.quote-form { align-self: start; padding: clamp(20px, 3vw, 34px); background: var(--white); box-shadow: 0 14px 45px rgba(16,46,39,.06); }
+.quote-form input, .quote-form select, .quote-form textarea { background: #fbfaf6; }
+.contact-note { border-top-color: rgba(31,43,38,.12); }
+.button, .nav-cta { letter-spacing: .01em; }
+.button:focus-visible, .nav-cta:focus-visible, .gallery-trigger:focus-visible, .circuit-detail-trigger:focus-visible {
+  outline: 2px solid var(--sand);
+  outline-offset: 4px;
+}
+.gallery-trigger { border-color: rgba(240,237,229,.28); background: rgba(255,255,255,.045); }
+.gallery-trigger:hover { color: var(--forest-deep); background: var(--paper); border-color: var(--paper); }
+.gallery-dialog { overflow-y: auto; }
+@media (max-width: 1000px) {
+  .trip-finder-inner { grid-template-columns: 1fr; gap: 20px; }
+  .trip-finder-form { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .trip-finder-submit { grid-column: 1 / -1; justify-content: space-between; }
+}
+@media (max-width: 620px) {
+  .trip-finder-inner { padding-block: 25px; }
+  .trip-finder-form { grid-template-columns: 1fr; gap: 13px; }
+  .trip-finder-submit { grid-column: auto; width: 100%; }
+  .intro::after { top: 10px; right: 12px; font-size: 120px; }
+  .quote-form { padding: 19px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .circuit-card { transition: none; }
+}
