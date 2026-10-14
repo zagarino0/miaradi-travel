@@ -204,3 +204,107 @@ a{transition:color .22s,background .22s,transform .22s}
  .footer-main{grid-template-columns:1fr;gap:24px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+
+
+/* Contrast and completeness pass — visible labels, consistent controls, full-page art direction */
+:root{
+  --paper:#f8f6f1;
+  --paper-deep:#eee8dc;
+  --white:#fffefa;
+  --ink:#172522;
+  --muted:#59645f;
+  --forest:#173a32;
+  --forest-deep:#102b26;
+  --forest-soft:#31564a;
+  --sand:#c7a15b;
+  --line:rgba(23,37,34,.14);
+}
+/* Never allow a button to render as a blank coloured block */
+button, .button, a.nav-cta, .trip-finder-submit, .filter-button, .gallery-trigger,
+.circuit-link, .text-link, .underlined-link, .button-outline-light {
+  font-family:var(--font-body)!important;
+  font-weight:700!important;
+  line-height:1.35!important;
+  text-decoration:none;
+  text-shadow:none!important;
+  opacity:1!important;
+}
+.button-light,.button-dark,.form-submit,.nav-cta,.trip-finder-submit,.button-sand,
+.circuits-foot .button-outline-light,.quote-band .button,.planning-copy .button,
+.hero-actions .button {
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:10px!important;
+  min-height:46px!important;
+  padding:13px 20px!important;
+  color:#fffefa!important;
+  background:var(--forest)!important;
+  border:1px solid var(--forest)!important;
+  border-radius:999px!important;
+  font-size:12px!important;
+  font-weight:700!important;
+  visibility:visible!important;
+}
+.button-light span,.button-dark span,.form-submit span,.nav-cta span,
+.trip-finder-submit span,.button-sand span,.hero-actions .button span,
+.planning-copy .button span,.circuits-foot .button-outline-light span {
+  color:inherit!important;
+  opacity:1!important;
+  visibility:visible!important;
+}
+.button-sand,.promo-bar a {background:var(--sand)!important;border-color:var(--sand)!important;color:var(--forest-deep)!important}
+.button-sand span,.promo-bar a span {color:var(--forest-deep)!important}
+.button-light:hover,.button-dark:hover,.form-submit:hover,.nav-cta:hover,
+.trip-finder-submit:hover,.hero-actions .button:hover,.planning-copy .button:hover {
+  background:var(--sand)!important;border-color:var(--sand)!important;color:var(--forest-deep)!important;
+}
+.button-light:hover span,.button-dark:hover span,.form-submit:hover span,.nav-cta:hover span,
+.trip-finder-submit:hover span,.hero-actions .button:hover span {color:var(--forest-deep)!important}
+.text-link-light,.button-outline-light {color:var(--forest)!important;border:1px solid rgba(23,58,50,.3)!important;background:transparent!important}
+.text-link-light:hover,.button-outline-light:hover {background:var(--forest)!important;color:var(--white)!important}
+.text-link-light span,.button-outline-light span {color:inherit!important}
+/* Hero and navigation: high-contrast, deliberate hierarchy */
+.site-header{background:rgba(248,246,241,.96)!important}
+.primary-nav>a:not(.nav-cta),.language-toggle{color:var(--ink)!important;font-weight:700!important}
+.brand-mark{background:var(--forest)!important;color:var(--white)!important}
+.hero .eyebrow,.eyebrow,.trip-finder-kicker,.circuit-meta,.detail-label,.detail-day-number {color:#8a682d!important}
+.hero h1 em,.intro h2 em,.section-heading h2 em,.contact h2 em,.included h2 em,
+.planning-copy h2 em,.trip-finder-heading h2 em,.journey-handwritten,
+.journey-story h2 em,.quote-band h2 em,.inspiration-content h2 em {color:var(--sand)!important}
+/* Finder and filters: labels and values remain readable */
+.trip-finder{background:var(--white)!important}
+.trip-finder-form label>span,.filter-label{color:#46534d!important;font-weight:700!important}
+.trip-finder-form select,.circuit-filter-select,.quote-form input,.quote-form select,.quote-form textarea{
+ color:#24342e!important;background:#fffefa!important;border:1px solid #d6d9d2!important;
+ font-size:12px!important;font-weight:500!important;opacity:1!important;
+}
+.trip-finder-form select option,.circuit-filter-select option,.quote-form select option{color:#24342e!important;background:#fffefa!important}
+.filter-button{color:#34433c!important;background:#fffefa!important;border:1px solid #d7dbd4!important;font-size:12px!important}
+.filter-button:hover,.filter-button.is-active,.filter-button[aria-pressed="true"]{background:var(--forest)!important;border-color:var(--forest)!important;color:#fffefa!important}
+.filter-button:hover *, .filter-button.is-active *, .filter-button[aria-pressed="true"] *{color:#fffefa!important}
+.gallery-trigger{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;min-height:46px!important;padding:12px 14px!important;background:#fffefa!important;color:var(--forest)!important;border:1px solid #e0e1dc!important;font-size:12px!important}
+.gallery-trigger span{color:inherit!important;visibility:visible!important;opacity:1!important}
+.gallery-trigger:hover{background:var(--forest)!important;color:#fffefa!important}
+.gallery-trigger:hover span{color:#fffefa!important}
+.circuit-link,.underlined-link,.circuits-foot p{color:var(--forest)!important}
+.circuit-price strong{color:var(--forest)!important}
+.image-index{background:rgba(16,43,38,.92)!important;color:#fffefa!important}
+.image-arrow{color:var(--forest)!important}
+.image-arrow:hover{background:var(--sand)!important;color:var(--forest-deep)!important}
+/* Preserve all sections while unifying the page to the reference's warm editorial style */
+.trust-strip,.intro,.included,.contact,.circuits{background:var(--paper)!important;color:var(--ink)!important}
+.value-item,.included-grid article,.circuit-card,.quote-form{background:var(--white)!important}
+.planning-steps{background:var(--paper-deep)!important}
+.journey-story,.quote-band,.site-footer{background:var(--forest-deep)!important;color:#fffefa!important}
+.journey-story p,.site-footer p,.site-footer a,.footer-bottom{color:rgba(255,254,250,.82)!important}
+.journey-stop h3,.site-footer h3,.site-footer h4{color:#fffefa!important}
+.circuit-card h3,.gallery-dialog h2,.detail-head h2,.detail-section h3{color:var(--ink)!important}
+.circuit-card>p,.intro-copy>p,.planning-copy>p:not(.eyebrow),.section-heading-copy{color:var(--muted)!important}
+.inspiration-content h2,.inspiration-content p{color:#fffefa!important}
+@media(max-width:760px){
+ .button-light,.button-dark,.form-submit,.nav-cta,.trip-finder-submit,.button-sand,.hero-actions .button{min-height:44px!important;padding:12px 16px!important;font-size:12px!important}
+ .trip-finder-form select,.circuit-filter-select{min-height:44px!important;font-size:13px!important}
+ .filter-button{min-height:40px!important;padding:9px 13px!important;font-size:12px!important}
+ .gallery-trigger{min-height:46px!important}
+}
