@@ -12,7 +12,7 @@ const translations = {
     value3Title: "Pensé pour vous", value3Copy: "Un échange direct pour créer votre circuit.",
     circuitsEyebrow: "INSPIRATIONS DE VOYAGE", circuitsTitle: "L'île, en plusieurs<br><em>émotions.</em>",
     circuitsCopy: "Un séjour côtier, une aventure dans les terres ou une rencontre culturelle : trouvons ensemble votre manière de découvrir Madagascar.",
-    filterLabel: "CHOISIR UNE INSPIRATION", filterAll: "Tout voir", filterNature: "Nature", filterCoast: "Côte & îles", filterCulture: "Culture",
+    filterLabel: "CHOISIR UNE INSPIRATION", filterThemeLabel: "THÉMATIQUE", filterRegionLabel: "RÉGION", filterDurationLabel: "DURÉE", regionAll: "Toutes les régions", regionWest: "Ouest", regionNorth: "Nord & îles", regionEast: "Est", regionSouth: "Sud", regionHighlands: "Hautes Terres", durationAll: "Toutes les durées", durationCustom: "Sur mesure", priceLabel: "TARIF", priceQuote: "Sur devis", filterAll: "Tout voir", filterNature: "Nature", filterCoast: "Côte & îles", filterCulture: "Culture",
     tagNature: "NATURE & GRANDS ESPACES", tagCoast: "CÔTE & ÎLES", tagCulture: "CULTURE & RENCONTRES",
     durationLong: "5–8 jours", durationShort: "3–6 jours", durationFlexible: "Sur mesure",
     durationTsingy: "3–5 jours", durationForest: "2–4 jours", durationRoad: "7–12 jours",
@@ -47,7 +47,7 @@ const translations = {
     value3Title: "Made for you", value3Copy: "A direct conversation to shape your journey.",
     circuitsEyebrow: "TRAVEL INSPIRATION", circuitsTitle: "One island,<br><em>many feelings.</em>",
     circuitsCopy: "A coastal escape, an inland adventure or a cultural encounter: let's find your own way to experience Madagascar.",
-    filterLabel: "CHOOSE YOUR INSPIRATION", filterAll: "View all", filterNature: "Nature", filterCoast: "Coast & islands", filterCulture: "Culture",
+    filterLabel: "CHOOSE YOUR INSPIRATION", filterThemeLabel: "THEME", filterRegionLabel: "REGION", filterDurationLabel: "DURATION", regionAll: "All regions", regionWest: "West", regionNorth: "North & islands", regionEast: "East", regionSouth: "South", regionHighlands: "Highlands", durationAll: "All durations", durationCustom: "Tailor-made", priceLabel: "PRICE", priceQuote: "Quote only", filterAll: "View all", filterNature: "Nature", filterCoast: "Coast & islands", filterCulture: "Culture",
     tagNature: "NATURE & OPEN SPACES", tagCoast: "COAST & ISLANDS", tagCulture: "CULTURE & ENCOUNTERS",
     durationLong: "5–8 days", durationShort: "3–6 days", durationFlexible: "Tailor-made",
     durationTsingy: "3–5 days", durationForest: "2–4 days", durationRoad: "7–12 days",
@@ -126,19 +126,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const filters = document.querySelectorAll(".filter-button");
   const cards = document.querySelectorAll(".circuit-card");
+  const regionFilter = document.getElementById("region-filter");
+  const durationFilter = document.getElementById("duration-filter");
+  let selectedTheme = "all";
+
+  const applyCircuitFilters = () => {
+    cards.forEach((card) => {
+      const matchesTheme = selectedTheme === "all" || card.dataset.category === selectedTheme;
+      const matchesRegion = !regionFilter || regionFilter.value === "all" || card.dataset.region === regionFilter.value;
+      const matchesDuration = !durationFilter || durationFilter.value === "all" || card.dataset.duration === durationFilter.value;
+      card.hidden = !(matchesTheme && matchesRegion && matchesDuration);
+    });
+  };
+
   filters.forEach((button) => {
     button.addEventListener("click", () => {
-      const selected = button.dataset.filter;
+      selectedTheme = button.dataset.filter;
       filters.forEach((filter) => {
         const active = filter === button;
         filter.classList.toggle("is-active", active);
         filter.setAttribute("aria-pressed", String(active));
       });
-      cards.forEach((card) => {
-        card.hidden = selected !== "all" && card.dataset.category !== selected;
-      });
+      applyCircuitFilters();
     });
   });
+  if (regionFilter) regionFilter.addEventListener("change", applyCircuitFilters);
+  if (durationFilter) durationFilter.addEventListener("change", applyCircuitFilters);
 
   document.querySelectorAll("[data-circuit]").forEach((link) => {
     link.addEventListener("click", () => {
