@@ -1,0 +1,143 @@
+/* MIARADI-TRAVEL — Dynamic travel experience
+   Warm ivory, deep evergreen and sun-gold accents; motion stays subtle and accessible. */
+:root {
+  --mt-ink: #17352f;
+  --mt-forest: #173f35;
+  --mt-gold: #e7b34d;
+  --mt-gold-deep: #b98222;
+  --mt-paper: #fbf8f1;
+  --mt-card: #fffefa;
+  --mt-line: rgba(23, 53, 47, .13);
+}
+html { scroll-behavior: smooth; scroll-padding-top: 105px; }
+body { background: var(--mt-paper); color: var(--mt-ink); }
+::selection { background: var(--mt-gold); color: #182b27; }
+a, button, input, select { -webkit-tap-highlight-color: transparent; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 3px solid var(--mt-gold-deep); outline-offset: 4px;
+}
+/* Compact sticky navigation with a crisp, premium surface */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(251, 248, 241, .94);
+  border-bottom: 1px solid rgba(23, 53, 47, .08);
+  backdrop-filter: blur(16px);
+  transition: box-shadow .25s ease, background .25s ease;
+}
+.site-header:hover { box-shadow: 0 10px 28px rgba(20, 42, 35, .07); }
+.promo-bar { background: var(--mt-forest); color: #fffdf7; }
+.promo-contact-link { color: var(--mt-gold) !important; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.promo-cta, .hero .button, .hero a.button, .trip-finder button, .quote-band a, .contact button {
+  transition: transform .22s ease, box-shadow .22s ease, background-color .22s ease;
+}
+.promo-cta { background: var(--mt-gold) !important; color: #1d302b !important; border-radius: 999px; }
+.promo-cta:hover, .hero .button:hover, .hero a.button:hover, .trip-finder button:hover, .quote-band a:hover, .contact button:hover {
+  transform: translateY(-3px); box-shadow: 0 12px 25px rgba(23, 53, 47, .18);
+}
+/* Hero: editorial, inviting, and focused on the destination */
+.hero { isolation: isolate; }
+.hero::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(90deg, rgba(251,248,241,.93) 0%, rgba(251,248,241,.72) 34%, rgba(251,248,241,.12) 69%, rgba(23,53,47,.06) 100%);
+}
+.hero h1 { text-wrap: balance; letter-spacing: -.055em; }
+.hero h1 em, .hero h1 strong { color: var(--mt-forest); }
+.hero .eyebrow, .section-eyebrow { color: var(--mt-gold-deep); }
+.hero .button, .hero a.button, .trip-finder button, .quote-band a, .contact button {
+  border-radius: 999px; font-weight: 750;
+}
+.hero .button-primary, .hero a.button-primary, .trip-finder button, .contact button {
+  background: var(--mt-forest); color: #fffdf7;
+}
+.hero .button-primary:hover, .hero a.button-primary:hover, .trip-finder button:hover, .contact button:hover {
+  background: #24574a;
+}
+/* Finder: visible labels and clear controls */
+.trip-finder {
+  border: 1px solid rgba(23, 53, 47, .1);
+  box-shadow: 0 22px 55px rgba(27, 46, 38, .12);
+  border-radius: 22px;
+}
+.trip-finder label, .trip-finder .finder-label { color: #52645e; }
+.trip-finder select, .trip-finder input {
+  color: #203c34; background: #fffefa; border: 1px solid #d9dfd7;
+  border-radius: 12px; min-height: 46px;
+}
+.trip-finder select:focus, .trip-finder input:focus {
+  border-color: var(--mt-gold-deep); box-shadow: 0 0 0 3px rgba(231,179,77,.2);
+}
+/* Circuit cards: lively image motion without hiding information */
+.circuit-card {
+  background: var(--mt-card); border: 1px solid var(--mt-line);
+  border-radius: 19px; overflow: clip;
+  box-shadow: 0 8px 24px rgba(24, 48, 40, .045);
+  transition: transform .28s cubic-bezier(.2,.75,.25,1), box-shadow .28s ease, border-color .28s ease;
+}
+.circuit-card:hover {
+  transform: translateY(-7px);
+  border-color: rgba(183, 130, 34, .42);
+  box-shadow: 0 22px 48px rgba(24, 48, 40, .13);
+}
+.circuit-image-link { overflow: hidden; background: #e7e4d9; }
+.circuit-image-link img {
+  transition: transform .65s cubic-bezier(.2,.7,.2,1), filter .35s ease;
+  will-change: transform;
+}
+.circuit-card:hover .circuit-image-link img { transform: scale(1.055); filter: saturate(1.08); }
+.image-index { background: var(--mt-forest) !important; color: #fffdf7 !important; }
+.image-arrow {
+  background: var(--mt-paper); color: var(--mt-forest);
+  transition: transform .22s ease, background .22s ease, color .22s ease;
+}
+.circuit-card:hover .image-arrow { transform: rotate(45deg); background: var(--mt-gold); color: #1d302b; }
+.circuit-card h3 { color: var(--mt-ink); letter-spacing: -.035em; }
+.circuit-meta { color: #8d6727; }
+.circuit-price strong { color: var(--mt-forest); }
+.gallery-trigger {
+  border: 1px solid #e4e0d6; border-radius: 12px; background: transparent;
+  color: var(--mt-forest); transition: background .2s ease, border-color .2s ease, transform .2s ease;
+}
+.gallery-trigger:hover { background: #f6edda; border-color: #e6c77f; transform: translateY(-2px); }
+.circuit-link { color: var(--mt-forest); text-decoration-color: var(--mt-gold-deep); text-underline-offset: 6px; }
+.circuit-link:hover { color: var(--mt-gold-deep); }
+/* Make filters feel interactive and remain readable */
+.circuit-filters button, .filter-chip, .filter-button {
+  transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease;
+}
+.circuit-filters button:hover, .filter-chip:hover, .filter-button:hover { transform: translateY(-2px); }
+.circuit-filters button[aria-pressed="true"], .filter-chip.active, .filter-button.active {
+  background: var(--mt-forest); border-color: var(--mt-forest); color: #fffdf7;
+}
+/* Section rhythm and editorial contrast */
+section { scroll-margin-top: 100px; }
+.trust-strip, .included, .planning-steps { color: var(--mt-ink); }
+.quote-band { background: var(--mt-forest); color: #fffdf7; }
+.quote-band h2, .quote-band p { color: inherit; }
+.quote-band a { background: var(--mt-gold); color: #1d302b; }
+.inspiration-band { position: relative; isolation: isolate; }
+.site-footer a { transition: color .2s ease, opacity .2s ease; }
+.site-footer a:hover { color: var(--mt-gold-deep); }
+/* Light entrance animation, disabled when the visitor requests reduced motion */
+@keyframes mt-rise-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero .hero-content, .trip-finder, .circuit-card { animation: mt-rise-in .65s both; }
+.circuit-card:nth-child(2) { animation-delay: .06s; }
+.circuit-card:nth-child(3) { animation-delay: .12s; }
+.circuit-card:nth-child(4) { animation-delay: .18s; }
+.circuit-card:nth-child(5) { animation-delay: .24s; }
+.circuit-card:nth-child(6) { animation-delay: .3s; }
+.circuit-card:nth-child(7) { animation-delay: .36s; }
+.circuit-card:nth-child(8) { animation-delay: .42s; }
+@media (max-width: 700px) {
+  .hero::after { background: linear-gradient(90deg, rgba(251,248,241,.9), rgba(251,248,241,.48)); }
+  .trip-finder { border-radius: 17px; }
+  .circuit-card { border-radius: 16px; }
+  .circuit-card:hover { transform: translateY(-3px); }
+  .promo-cta { padding-inline: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
