@@ -476,3 +476,92 @@ svg [fill="#0B8278"],svg [fill="#B64F35"]{fill:#253C56!important}
 svg [stroke="#123D32"],svg [stroke="#082A24"],svg [stroke="#28634D"],
 svg [stroke="#0B8278"],svg [stroke="#B64F35"]{stroke:#253C56!important}
 ::selection{background:#253C56;color:#FAF8F2}
+
+/* Accessibility and strict two-colour palette: slate blue + warm off-white */
+:root{
+  color-scheme:light;
+  --slate:#253C56;
+  --slate-deep:#192C40;
+  --paper:#FAF8F2;
+  --ink:#202B35;
+  --muted:#566575;
+}
+html,body,main{background-color:var(--paper)!important;color:var(--ink)}
+/* Replace green text accents, including headings, labels, links and counters */
+.eyebrow,.eyebrow-line,.intro em,.hero h1 em,.trip-finder em,
+.value-number,.trust-grid article>span,.section-kicker,.section-label,
+.timeline-section .eyebrow,.timeline-section h2 em,.timeline-item::before,
+.circuit-card .category,.circuit-card .duration,.circuit-card .price,
+.circuit-card a,.filter-chip,.filter-chip.active,.gallery-link,
+.value-item .value-number,.primary-nav a:hover,.primary-nav a.active,
+.brand-mark,.brand-name span,.text-link,.underlined-link,.feature-icon,
+.contact-item a,.footer-links a:hover{
+  color:var(--slate)!important;
+}
+/* Replace green and teal section backgrounds without affecting photographs */
+.timeline-section,.journey-section,.story-journey,.quote-band,
+.newsletter-band,.promo-section,.trust-strip,.trip-finder{
+  background-color:var(--slate)!important;
+  background-image:none;
+  color:var(--paper)!important;
+}
+.timeline-section h1,.timeline-section h2,.timeline-section h3,
+.journey-section h1,.journey-section h2,.journey-section h3,
+.story-journey h1,.story-journey h2,.story-journey h3,
+.quote-band h1,.quote-band h2,.quote-band p,
+.newsletter-band h1,.newsletter-band h2,.newsletter-band p{
+  color:var(--paper)!important;
+}
+.timeline-section em,.journey-section em,.story-journey em,
+.quote-band em,.newsletter-band em{color:#DCE3E9!important}
+.timeline-line,.timeline-item::before{border-color:#AAB9C7!important}
+.timeline-dot,.timeline-item .dot{background:var(--paper)!important;border-color:var(--slate)!important}
+/* High-contrast controls and filters: readable in every state */
+button,.button,.button-primary,.button-dark,.btn,.btn-primary,.nav-cta,
+input[type=submit],button[type=submit],.filter-chip.active,
+.filter-button.is-active,[aria-pressed=true]{
+  background:var(--slate)!important;
+  border-color:var(--slate)!important;
+  color:var(--paper)!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+button *, .button *, .button-primary *, .button-dark *, .btn *,
+.btn-primary *, .nav-cta *, input[type=submit] *{
+  color:var(--paper)!important;
+  opacity:1!important;
+  visibility:visible!important;
+}
+button:hover,.button:hover,.button-primary:hover,.button-dark:hover,
+.btn:hover,.btn-primary:hover,.nav-cta:hover,input[type=submit]:hover{
+  background:var(--slate-deep)!important;border-color:var(--slate-deep)!important;color:var(--paper)!important;
+}
+select,option,input,textarea{
+  color:var(--slate)!important;background-color:#FFFFFF!important;
+  border-color:rgba(37,60,86,.22)!important;
+}
+select:focus,input:focus,textarea:focus{
+  outline:2px solid rgba(37,60,86,.28)!important;border-color:var(--slate)!important;
+}
+.filter-chip,.filter-button,.trip-finder select,.trip-finder label,
+.circuit-filters label,.filter-bar label{color:var(--slate)!important}
+.filter-chip:not(.active),.filter-button:not(.is-active){
+  background:#FFFFFF!important;border-color:rgba(37,60,86,.2)!important;color:var(--slate)!important;
+}
+::placeholder{color:#657382!important;opacity:1!important}
+/* Remove green inline-style backgrounds and SVG accents used by older sections */
+[style*="#123D32"],[style*="#082A24"],[style*="#28634D"],[style*="#0B8278"],
+[style*="#0b8278"],[style*="#073B3B"],[style*="#0D4A43"],[style*="#0B3F3B"],
+[style*="#B64F35"],[style*="#b64f35"]{
+  color:var(--slate)!important;border-color:rgba(37,60,86,.2)!important;
+}
+svg [fill="#123D32"],svg [fill="#082A24"],svg [fill="#28634D"],
+svg [fill="#0B8278"],svg [fill="#073B3B"]{fill:var(--slate)!important}
+svg [stroke="#123D32"],svg [stroke="#082A24"],svg [stroke="#28634D"],
+svg [stroke="#0B8278"],svg [stroke="#073B3B"]{stroke:var(--slate)!important}
+/* Images: preserve aspect ratio and use browser's best available rendering */
+.hero-image,.hero-destination img,.circuit-card img,.gallery-grid img,
+.timeline-item img,.destination-card img{
+  image-rendering:auto;
+  backface-visibility:hidden;
+}
