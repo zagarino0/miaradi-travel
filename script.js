@@ -1,6 +1,7 @@
 const translations = {
   fr: {
     navAbout: "À propos", navCircuits: "Circuits", navContact: "Contact", navQuote: "Demander un devis",
+    finderEyebrow: "VOTRE PROCHAINE AVENTURE", finderTitle: "Trouvez votre <em>voyage.</em>", finderRegion: "Région", finderDuration: "Durée du séjour", finderTheme: "Type de voyage", finderSubmit: "Trouver un circuit",
     heroEyebrow: "VOYAGES AUTHENTIQUES · MADAGASCAR",
     heroTitle: "Le voyage commence<br><em>au bout du monde.</em>",
     heroCopy: "Des pistes rouges aux lagons turquoise, découvrez une île unique à travers des expériences pensées pour vous.",
@@ -36,6 +37,7 @@ const translations = {
   },
   en: {
     navAbout: "About", navCircuits: "Journeys", navContact: "Contact", navQuote: "Request a quote",
+    finderEyebrow: "YOUR NEXT ADVENTURE", finderTitle: "Find your <em>journey.</em>", finderRegion: "Region", finderDuration: "Trip length", finderTheme: "Travel style", finderSubmit: "Find a journey",
     heroEyebrow: "AUTHENTIC JOURNEYS · MADAGASCAR",
     heroTitle: "Your journey begins<br><em>at the edge of the world.</em>",
     heroCopy: "From red-earth tracks to turquoise lagoons, discover a remarkable island through experiences made for you.",
@@ -125,6 +127,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.querySelector(".language-toggle")?.addEventListener("click", () => {
     setLanguage(currentLanguage === "fr" ? "en" : "fr");
+  });
+
+  const tripFinder = document.getElementById("trip-finder-form");
+  tripFinder?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const finderRegion = document.getElementById("finder-region");
+    const finderDuration = document.getElementById("finder-duration");
+    const finderTheme = document.getElementById("finder-theme");
+    if (regionFilter && finderRegion) regionFilter.value = finderRegion.value;
+    if (durationFilter && finderDuration) durationFilter.value = finderDuration.value;
+    const themeButton = Array.from(filters).find((button) => button.dataset.filter === (finderTheme?.value || "all"));
+    themeButton?.click();
+    applyCircuitFilters();
+    document.getElementById("circuits")?.scrollIntoView({ behavior: "smooth" });
   });
 
   const filters = document.querySelectorAll(".filter-button");
