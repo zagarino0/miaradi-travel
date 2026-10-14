@@ -8,6 +8,7 @@
   <title>MIARADI-TRAVEL — Découvrez Madagascar autrement</title>
   <link rel="preconnect" href="https://commons.wikimedia.org">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="vacation-inspired.css">
   <script src="script.js" defer></script>
 </head>
 <body>
@@ -49,6 +50,45 @@
         <span data-i18n="heroCaption">MADAGASCAR, UNE ÎLE À PART</span>
       </div>
       <div class="hero-index" aria-hidden="true">01 <span></span> 03</div>
+    </section>
+
+
+    <section class="trip-finder" aria-labelledby="trip-finder-title">
+      <div class="container trip-finder-inner">
+        <div class="trip-finder-heading">
+          <span class="trip-finder-kicker" data-i18n="finderEyebrow">VOTRE PROCHAINE AVENTURE</span>
+          <h2 id="trip-finder-title" data-i18n="finderTitle">Trouvez votre <em>voyage.</em></h2>
+        </div>
+        <form class="trip-finder-form" id="trip-finder-form">
+          <label><span data-i18n="finderRegion">Région</span>
+            <select id="finder-region">
+              <option value="all" data-i18n="regionAll">Toutes les régions</option>
+              <option value="west" data-i18n="regionWest">Ouest</option>
+              <option value="north" data-i18n="regionNorth">Nord & îles</option>
+              <option value="east" data-i18n="regionEast">Est</option>
+              <option value="south" data-i18n="regionSouth">Sud</option>
+              <option value="highlands" data-i18n="regionHighlands">Hautes Terres</option>
+            </select>
+          </label>
+          <label><span data-i18n="finderDuration">Durée du séjour</span>
+            <select id="finder-duration">
+              <option value="all" data-i18n="durationAll">Toutes les durées</option>
+              <option value="2-4">2–4 jours</option><option value="3-5">3–5 jours</option>
+              <option value="3-6">3–6 jours</option><option value="5-8">5–8 jours</option>
+              <option value="7-12">7–12 jours</option><option value="custom" data-i18n="durationCustom">Sur mesure</option>
+            </select>
+          </label>
+          <label><span data-i18n="finderTheme">Type de voyage</span>
+            <select id="finder-theme">
+              <option value="all" data-i18n="filterAll">Tout voir</option>
+              <option value="nature" data-i18n="filterNature">Nature</option>
+              <option value="coast" data-i18n="filterCoast">Côte & îles</option>
+              <option value="culture" data-i18n="filterCulture">Culture</option>
+            </select>
+          </label>
+          <button class="button button-dark trip-finder-submit" type="submit"><span data-i18n="finderSubmit">Trouver un circuit</span><span aria-hidden="true">↗</span></button>
+        </form>
+      </div>
     </section>
 
     <section class="intro section-pad" id="about">
