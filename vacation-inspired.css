@@ -149,3 +149,88 @@
 @media (prefers-reduced-motion: reduce) {
   .circuit-card { transition: none; }
 }
+
+
+/* MIARADI-TRAVEL visual direction: AHEAD discovery homepage + India Escapes circuit storytelling. */
+:root {
+  --paper: #f5f0e7;
+  --paper-deep: #e9dfcf;
+  --white: #fffaf2;
+  --sand: #d9b783;
+  --terracotta: #c85e3d;
+  --ink: #202a25;
+  --muted: #6d746c;
+  --font-display: "Plus Jakarta Sans", "DM Sans", sans-serif;
+}
+body { background: var(--paper); font-family: "Plus Jakarta Sans", "DM Sans", sans-serif; }
+h1, h2, h3, h4, .brand-name { font-family: "Plus Jakarta Sans", "DM Sans", sans-serif; letter-spacing: -.045em; }
+h1, h2 { font-weight: 800; }
+h1 em, h2 em { color: var(--terracotta); font-style: normal; font-weight: 800; }
+.site-header { background: rgba(245,240,231,.91); border-bottom: 1px solid rgba(32,42,37,.06); }
+.brand-mark { border-radius: 12px; color: var(--white); background: var(--forest); font-family: "Plus Jakarta Sans",sans-serif; font-style: normal; font-weight: 800; }
+.nav-cta, .button-dark { border-radius: 999px; background: var(--terracotta); color: #fffaf2; }
+.nav-cta:hover, .button-dark:hover { background: #a94b31; }
+.button { border-radius: 999px; }
+.button-light { color: var(--ink); background: var(--white); }
+.button-light:hover { background: var(--sand); }
+.hero { min-height: clamp(540px, 76vh, 760px); border-radius: 0 0 28px 28px; }
+.hero-shade { background: linear-gradient(90deg,rgba(17,35,28,.70) 0%,rgba(17,35,28,.30) 48%,rgba(17,35,28,.03) 100%),linear-gradient(0deg,rgba(17,35,28,.43),transparent 42%); }
+.hero h1 { max-width: 800px; font-size: clamp(42px, 7vw, 88px); line-height: 1.03; letter-spacing: -.065em; }
+.hero h1 em { color: #f0c18e; }
+.trip-finder { margin: -26px auto 0; width: min( calc(100% - 36px), 1320px); border-radius: 24px; background: var(--white); box-shadow: 0 18px 55px rgba(38,35,27,.10); }
+.trip-finder-inner { padding-block: 28px; }
+.trip-finder-heading h2 { font-size: clamp(25px,3vw,36px); }
+.trip-finder-heading h2 em { color: var(--terracotta); }
+.trip-finder-form select, .circuit-filter-select { border: 1px solid rgba(32,42,37,.09); border-radius: 12px; background-color: #f8f4ec; }
+.trip-finder-submit { border-radius: 999px; }
+.section-pad { padding-block: clamp(68px,8vw,112px); }
+.intro { background: var(--paper); }
+.value-row { gap: 18px; margin-top: 56px; border-top: 0; }
+.value-item { padding: 20px; border: 1px solid rgba(32,42,37,.07); border-radius: 18px; background: rgba(255,250,242,.68); }
+.value-number { color: var(--terracotta); font-family: "Plus Jakarta Sans",sans-serif; font-weight: 800; }
+.circuits { border-radius: 28px; margin-inline: 18px; background: var(--forest-deep); }
+.circuit-filters { border-radius: 18px; }
+.filter-button { border-radius: 999px; }
+.filter-button:hover, .filter-button.is-active { border-color: var(--sand); background: rgba(217,183,131,.12); }
+.circuit-grid { gap: 22px; }
+.circuit-card { overflow: hidden; padding: 12px 12px 18px; border: 1px solid rgba(255,250,242,.10); border-radius: 22px; background: rgba(255,255,255,.035); }
+.circuit-card-offset { margin-top: 0; }
+.circuit-image-link { aspect-ratio: 1.18 / 1; border-radius: 14px; }
+.circuit-meta { flex-wrap: wrap; }
+.circuit-card h3 { font-family: "Plus Jakarta Sans",sans-serif; font-weight: 800; font-size: clamp(20px,2vw,26px); }
+.circuit-price { border-bottom-color: rgba(255,250,242,.10); }
+.circuit-price strong { color: #f0c18e; }
+.circuit-detail-trigger { border-radius: 0; }
+.gallery-trigger { border-radius: 999px; }
+.contact { overflow: hidden; }
+.quote-form { border: 1px solid rgba(32,42,37,.06); border-radius: 24px; }
+.quote-form input, .quote-form select, .quote-form textarea { border-radius: 12px; }
+.site-footer { border-radius: 24px 24px 0 0; }
+@media (max-width: 760px) {
+  .container { width: min(var(--container), calc(100% - 32px)); }
+  .hero { min-height: min(680px, calc(100svh - 68px)); border-radius: 0 0 20px 20px; }
+  .hero-content { padding-top: 34px; padding-bottom: 84px; }
+  .hero h1 { max-width: 11ch; font-size: clamp(39px, 11vw, 62px); }
+  .hero-copy { max-width: 34ch; font-size: 14px; }
+  .hero-bottom { width: calc(100% - 32px); bottom: 16px; font-size: 8px; }
+  .hero-index { display: none; }
+  .trip-finder { width: calc(100% - 24px); margin-top: -18px; border-radius: 20px; }
+  .trip-finder-inner { gap: 18px; padding: 23px 0; }
+  .intro-grid, .section-heading { grid-template-columns: 1fr; gap: 22px; }
+  .intro h2, .section-heading h2, .contact h2 { font-size: clamp(34px, 9vw, 48px); }
+  .value-row { grid-template-columns: 1fr; gap: 10px; margin-top: 34px; }
+  .value-item { padding: 16px; }
+  .circuits { margin-inline: 8px; border-radius: 20px; }
+  .circuit-grid { grid-template-columns: 1fr; gap: 18px; padding-top: 24px; }
+  .circuit-card { padding: 10px 10px 18px; border-radius: 18px; }
+  .circuit-image-link { aspect-ratio: 1.28 / 1; }
+  .circuit-meta { font-size: 8px; }
+  .section-pad { padding-block: 64px; }
+}
+@media (min-width: 761px) and (max-width: 1000px) {
+  .circuit-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .hero h1 { font-size: clamp(52px,7vw,72px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
