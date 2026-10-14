@@ -373,3 +373,51 @@ a:hover,.underlined-link:hover{color:#B64F35}
 input:focus,select:focus,textarea:focus{outline-color:#B64F35;border-color:#B64F35}
 ::selection{background:#D8BD8A;color:#082A24}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+/* MIARADI-TRAVEL palette v2: slate blue + off-white */
+:root{
+ --forest:#253C56;
+ --forest-deep:#192C40;
+ --forest-soft:#3E5873;
+ --paper:#FAF8F2;
+ --paper-deep:#E9E5DA;
+ --terracotta:#253C56;
+ --ink:#25303A;
+ --muted:#68737D;
+ --sand:#D9D7D0;
+ --line:rgba(37,60,86,.16);
+}
+body{background:#FAF8F2;color:#25303A}
+.site-header,.header-inner{background:rgba(250,248,242,.97)}
+.site-footer{background:#253C56;color:#FAF8F2}
+.site-footer a{color:#FAF8F2}
+.circuits{background:#FAF8F2!important;color:#25303A!important}
+.circuits .section-heading h2{color:#253C56}
+.circuits .section-heading h2 em{color:#3E5873}
+.circuits .eyebrow-line{background:#253C56}
+.circuits .eyebrow-light{color:#253C56}
+.circuits .section-heading-copy{color:#68737D}
+.circuits .circuit-filters{background:#FFFFFF;border-color:rgba(37,60,86,.13)}
+.circuits .filter-button.is-active,.circuits .filter-button[aria-pressed="true"]{background:#253C56;color:#FAF8F2;border-color:#253C56}
+.circuits .circuit-card{background:#FFFFFF;border-color:rgba(37,60,86,.12);box-shadow:0 8px 24px rgba(37,48,58,.07)}
+.circuits .image-index{background:rgba(37,60,86,.94);color:#FAF8F2}
+.circuits .image-arrow{color:#253C56;background:#FAF8F2}
+.circuits .circuit-meta{color:#3E5873}
+.circuits .circuit-price strong,.circuits .circuit-card h3{color:#253C56}
+.circuits .circuit-card>p,.circuits .circuit-price span{color:#68737D}
+.circuits .gallery-trigger{color:#253C56;background:#FAF8F2;border-color:rgba(37,60,86,.15)}
+.circuits .circuit-link{color:#253C56;border-color:#D9D7D0}
+.circuits .circuits-foot .button-outline-light{border-color:#253C56;color:#253C56}
+.circuits .circuits-foot .button-outline-light:hover{background:#253C56;color:#FAF8F2}
+.quote-band{
+ background:linear-gradient(90deg,rgba(25,44,64,.94),rgba(37,60,86,.45)),url("https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=1800&q=85") center 54%/cover;
+}
+.quote-band .eyebrow{color:#FAF8F2}
+.quote-band h2 em{color:#D9D7D0}
+.quote-band .button-dark{background:#FAF8F2;color:#253C56}
+.button,.button-primary{background:#253C56;border-color:#253C56;color:#FAF8F2}
+.button:hover,.button-primary:hover{background:#192C40;border-color:#192C40}
+a,.underlined-link{color:#3E5873}
+a:hover,.underlined-link:hover{color:#253C56}
+input:focus,select:focus,textarea:focus{outline-color:#253C56;border-color:#253C56}
+::selection{background:#253C56;color:#FAF8F2}
