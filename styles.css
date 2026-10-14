@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --forest: #173f35;
+  --forest: #173f35;\n  --terracotta: #c85e3d;
   --forest-deep: #102e27;
   --forest-soft: #315c4f;
   --paper: #f5f1e8;
@@ -12,7 +12,7 @@
   --white: #fffefa;
   --line: rgba(31, 43, 38, .16);
   --font-body: "DM Sans", sans-serif;
-  --font-display: "Playfair Display", Georgia, serif;
+  --font-display: "Plus Jakarta Sans", "DM Sans", sans-serif;
   --container: 1200px;
 }
 *, *::before, *::after { box-sizing: border-box; }
