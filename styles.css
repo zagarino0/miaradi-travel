@@ -193,3 +193,24 @@ h1 em, h2 em { color: var(--sand); font-weight: 500; }
   .footer-main nav { flex-wrap: wrap; gap: 18px; }
   .footer-bottom { flex-wrap: wrap; gap: 10px 20px; }
 }
+
+/* Circuit-linked photo galleries */
+.gallery-trigger { display: inline-flex; align-items: center; justify-content: space-between; gap: 18px; width: 100%; margin-top: 18px; padding: 11px 0; border: 0; border-top: 1px solid var(--line); color: var(--forest); background: transparent; text-align: left; font-size: 11px; font-weight: 700; }
+.gallery-trigger span:last-child { font-size: 17px; transition: transform .2s; }
+.gallery-trigger:hover span:last-child { transform: translate(3px,-3px); }
+.gallery-dialog { width: min(1040px, calc(100% - 32px)); max-width: none; max-height: min(90vh, 900px); padding: clamp(20px,4vw,42px); border: 0; color: var(--ink); background: var(--paper); box-shadow: 0 24px 100px rgba(0,0,0,.32); }
+.gallery-dialog::backdrop { background: rgba(9,24,20,.78); backdrop-filter: blur(5px); }
+.gallery-dialog-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
+.gallery-dialog-head .eyebrow { margin: 0 0 8px; color: var(--forest-soft); font-size: 10px; letter-spacing: .15em; }
+.gallery-dialog-head h2 { margin: 0; font-family: var(--font-display); font-size: clamp(30px,4vw,48px); line-height: 1.12; }
+.gallery-close { width: 42px; height: 42px; flex: 0 0 auto; border: 1px solid var(--line); color: var(--forest); background: transparent; font-size: 28px; line-height: 1; }
+.gallery-description { max-width: 700px; margin: 14px 0 24px; color: var(--muted); font-size: 14px; }
+.gallery-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; }
+.gallery-grid figure { min-width: 0; margin: 0; background: var(--white); }
+.gallery-grid img { width: 100%; aspect-ratio: 4/3; object-fit: cover; background: var(--paper-deep); }
+.gallery-grid figcaption { padding: 10px 12px; color: var(--muted); font-size: 11px; line-height: 1.5; }
+.gallery-image-error img { object-fit: contain; }
+.gallery-dialog-foot { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line); }
+.gallery-dialog-foot > span { color: var(--muted); font-size: 11px; }
+.gallery-dialog-foot .button { flex-shrink: 0; }
+@media(max-width:620px) { .gallery-grid { grid-template-columns: 1fr; } .gallery-grid img { aspect-ratio: 5/3; } .gallery-dialog-foot { align-items: stretch; flex-direction: column; } .gallery-dialog-foot .button { justify-content: space-between; } }
