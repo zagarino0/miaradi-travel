@@ -74,82 +74,108 @@
         <div><p class="eyebrow eyebrow-light"><span class="eyebrow-line"></span><span data-i18n="circuitsEyebrow">INSPIRATIONS DE VOYAGE</span></p><h2 data-i18n="circuitsTitle">L'île, en plusieurs<br><em>émotions.</em></h2></div>
         <p class="section-heading-copy" data-i18n="circuitsCopy">Un séjour côtier, une aventure dans les terres ou une rencontre culturelle : trouvons ensemble votre manière de découvrir Madagascar.</p>
       </div>
-      <div class="container filter-bar" aria-label="Filtres des circuits">
-        <div class="filter-label" data-i18n="filterLabel">CHOISIR UNE INSPIRATION</div>
-        <div class="filter-buttons" role="group" aria-label="Filtrer les circuits">
-          <button class="filter-button is-active" type="button" data-filter="all" data-i18n="filterAll" aria-pressed="true">Tout voir</button>
-          <button class="filter-button" type="button" data-filter="nature" data-i18n="filterNature" aria-pressed="false">Nature</button>
-          <button class="filter-button" type="button" data-filter="coast" data-i18n="filterCoast" aria-pressed="false">Côte & îles</button>
-          <button class="filter-button" type="button" data-filter="culture" data-i18n="filterCulture" aria-pressed="false">Culture</button>
+      <div class="container circuit-filters" aria-label="Filtres des circuits">
+        <div class="filter-theme">
+          <div class="filter-label" data-i18n="filterThemeLabel">THÉMATIQUE</div>
+          <div class="filter-buttons" role="group" aria-label="Filtrer par thématique">
+            <button class="filter-button is-active" type="button" data-filter="all" data-i18n="filterAll" aria-pressed="true">Tout voir</button>
+            <button class="filter-button" type="button" data-filter="nature" data-i18n="filterNature" aria-pressed="false">Nature</button>
+            <button class="filter-button" type="button" data-filter="coast" data-i18n="filterCoast" aria-pressed="false">Côte & îles</button>
+            <button class="filter-button" type="button" data-filter="culture" data-i18n="filterCulture" aria-pressed="false">Culture</button>
+          </div>
         </div>
+        <label class="filter-select-wrap"><span class="filter-label" data-i18n="filterRegionLabel">RÉGION</span>
+          <select id="region-filter" class="circuit-filter-select" aria-label="Filtrer par région">
+            <option value="all" data-i18n="regionAll">Toutes les régions</option>
+            <option value="west" data-i18n="regionWest">Ouest</option>
+            <option value="north" data-i18n="regionNorth">Nord & îles</option>
+            <option value="east" data-i18n="regionEast">Est</option>
+            <option value="south" data-i18n="regionSouth">Sud</option>
+            <option value="highlands" data-i18n="regionHighlands">Hautes Terres</option>
+          </select>
+        </label>
+        <label class="filter-select-wrap"><span class="filter-label" data-i18n="filterDurationLabel">DURÉE</span>
+          <select id="duration-filter" class="circuit-filter-select" aria-label="Filtrer par durée">
+            <option value="all" data-i18n="durationAll">Toutes les durées</option>
+            <option value="2-4">2–4 jours</option><option value="3-5">3–5 jours</option>
+            <option value="3-6">3–6 jours</option><option value="5-8">5–8 jours</option>
+            <option value="7-12">7–12 jours</option><option value="custom" data-i18n="durationCustom">Sur mesure</option>
+          </select>
+        </label>
       </div>
       <div class="container circuit-grid">
-        <article class="circuit-card" data-category="nature">
+        <article class="circuit-card" data-category="nature" data-region="west" data-duration="5-8">
           <a href="#contact" class="circuit-image-link" data-circuit="L'Ouest sauvage">
             <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Walking_the_Avenue_of_the_Baobabs.jpg?width=1200" alt="Allée des baobabs de Morondava, à Madagascar" loading="lazy">
             <span class="image-index">01 / OUEST</span><span class="image-arrow" aria-hidden="true">↗</span>
           </a>
           <div class="circuit-meta"><span data-i18n="tagNature">NATURE & GRANDS ESPACES</span><span data-i18n="durationLong">5–8 jours</span></div>
+          <div class="circuit-price"><span data-i18n="priceLabel">TARIF</span><strong data-i18n="priceQuote">Sur devis</strong></div>
           <h3 data-i18n="circuit1Title">L'Ouest sauvage</h3>
           <p data-i18n="circuit1Copy">Baobabs majestueux, pistes rouges et horizons infinis.</p>
 
           <button class="gallery-trigger" type="button" data-gallery="L'Ouest sauvage" aria-label="Voir la galerie : L'Ouest sauvage"><span data-i18n="viewGallery">Voir la galerie</span><span aria-hidden="true">↗</span></button>
           <a class="underlined-link circuit-link" href="#contact" data-circuit="L'Ouest sauvage"><span data-i18n="askQuote">Demander un devis</span><span aria-hidden="true">↗</span></a>
         </article>
-        <article class="circuit-card circuit-card-offset" data-category="coast">
+        <article class="circuit-card circuit-card-offset" data-category="coast" data-region="north" data-duration="3-6">
           <a href="#contact" class="circuit-image-link" data-circuit="L'appel du lagon">
             <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Beach_at_Nosy_Be.jpg?width=1200" alt="Plage de Nosy Be à Madagascar" loading="lazy">
             <span class="image-index">02 / NORD</span><span class="image-arrow" aria-hidden="true">↗</span>
           </a>
           <div class="circuit-meta"><span data-i18n="tagCoast">CÔTE & ÎLES</span><span data-i18n="durationShort">3–6 jours</span></div>
+          <div class="circuit-price"><span data-i18n="priceLabel">TARIF</span><strong data-i18n="priceQuote">Sur devis</strong></div>
           <h3 data-i18n="circuit2Title">L'appel du lagon</h3>
           <p data-i18n="circuit2Copy">Des criques lumineuses, la mer et le temps retrouvé.</p>
 
           <button class="gallery-trigger" type="button" data-gallery="L'appel du lagon" aria-label="Voir la galerie : L'appel du lagon"><span data-i18n="viewGallery">Voir la galerie</span><span aria-hidden="true">↗</span></button>
           <a class="underlined-link circuit-link" href="#contact" data-circuit="L'appel du lagon"><span data-i18n="askQuote">Demander un devis</span><span aria-hidden="true">↗</span></a>
         </article>
-        <article class="circuit-card" data-category="culture">
+        <article class="circuit-card" data-category="culture" data-region="south" data-duration="custom">
           <a href="#contact" class="circuit-image-link" data-circuit="Routes & rencontres">
             <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Isalo_landscape.jpg?width=1200" alt="Paysage rocheux du parc national de l’Isalo, Madagascar" loading="lazy">
             <span class="image-index">03 / HAUTES TERRES</span><span class="image-arrow" aria-hidden="true">↗</span>
           </a>
           <div class="circuit-meta"><span data-i18n="tagCulture">CULTURE & RENCONTRES</span><span data-i18n="durationFlexible">Sur mesure</span></div>
+          <div class="circuit-price"><span data-i18n="priceLabel">TARIF</span><strong data-i18n="priceQuote">Sur devis</strong></div>
           <h3 data-i18n="circuit3Title">Routes & rencontres</h3>
           <p data-i18n="circuit3Copy">Villages, savoir-faire et histoires partagées.</p>
 
           <button class="gallery-trigger" type="button" data-gallery="Routes & rencontres" aria-label="Voir la galerie : Routes & rencontres"><span data-i18n="viewGallery">Voir la galerie</span><span aria-hidden="true">↗</span></button>
           <a class="underlined-link circuit-link" href="#contact" data-circuit="Routes & rencontres"><span data-i18n="askQuote">Demander un devis</span><span aria-hidden="true">↗</span></a>
         </article>
-        <article class="circuit-card" data-category="nature">
+        <article class="circuit-card" data-category="nature" data-region="west" data-duration="3-5">
           <a href="#contact" class="circuit-image-link" data-circuit="Les Tsingy de Bemaraha">
             <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Tsingy_de_Bemaraha%2C_Madagascar.jpg?width=1200" alt="Formations rocheuses des Tsingy de Bemaraha, Madagascar" loading="lazy">
             <span class="image-index">04 / OUEST</span><span class="image-arrow" aria-hidden="true">↗</span>
           </a>
           <div class="circuit-meta"><span data-i18n="tagNature">NATURE & GRANDS ESPACES</span><span data-i18n="durationTsingy">3–5 jours</span></div>
+          <div class="circuit-price"><span data-i18n="priceLabel">TARIF</span><strong data-i18n="priceQuote">Sur devis</strong></div>
           <h3 data-i18n="circuit4Title">Les Tsingy de Bemaraha</h3>
           <p data-i18n="circuit4Copy">Un labyrinthe minéral spectaculaire, des passerelles et des panoramas uniques.</p>
 
           <button class="gallery-trigger" type="button" data-gallery="Les Tsingy de Bemaraha" aria-label="Voir la galerie : Les Tsingy de Bemaraha"><span data-i18n="viewGallery">Voir la galerie</span><span aria-hidden="true">↗</span></button>
           <a class="underlined-link circuit-link" href="#contact" data-circuit="Les Tsingy de Bemaraha"><span data-i18n="askQuote">Demander un devis</span><span aria-hidden="true">↗</span></a>
         </article>
-        <article class="circuit-card" data-category="nature">
+        <article class="circuit-card" data-category="nature" data-region="east" data-duration="2-4">
           <a href="#contact" class="circuit-image-link" data-circuit="La forêt d'Andasibe">
             <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Indri_Andasibe.JPG?width=1200" alt="Indri dans la forêt d'Andasibe à Madagascar" loading="lazy">
             <span class="image-index">05 / EST</span><span class="image-arrow" aria-hidden="true">↗</span>
           </a>
           <div class="circuit-meta"><span data-i18n="tagNature">NATURE & GRANDS ESPACES</span><span data-i18n="durationForest">2–4 jours</span></div>
+          <div class="circuit-price"><span data-i18n="priceLabel">TARIF</span><strong data-i18n="priceQuote">Sur devis</strong></div>
           <h3 data-i18n="circuit5Title">La forêt d'Andasibe</h3>
           <p data-i18n="circuit5Copy">Forêt humide, chants des indris et observation de la faune endémique.</p>
 
           <button class="gallery-trigger" type="button" data-gallery="La forêt d'Andasibe" aria-label="Voir la galerie : La forêt d'Andasibe"><span data-i18n="viewGallery">Voir la galerie</span><span aria-hidden="true">↗</span></button>
           <a class="underlined-link circuit-link" href="#contact" data-circuit="La forêt d'Andasibe"><span data-i18n="askQuote">Demander un devis</span><span aria-hidden="true">↗</span></a>
         </article>
-        <article class="circuit-card" data-category="culture">
+        <article class="circuit-card" data-category="culture" data-region="highlands" data-duration="7-12">
           <a href="#contact" class="circuit-image-link" data-circuit="La Route nationale 7">
             <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Isalo-madagascar.jpg?width=1200" alt="Paysage de l'Isalo sur la Route nationale 7, Madagascar" loading="lazy">
             <span class="image-index">06 / SUD</span><span class="image-arrow" aria-hidden="true">↗</span>
           </a>
           <div class="circuit-meta"><span data-i18n="tagCulture">CULTURE & RENCONTRES</span><span data-i18n="durationRoad">7–12 jours</span></div>
+          <div class="circuit-price"><span data-i18n="priceLabel">TARIF</span><strong data-i18n="priceQuote">Sur devis</strong></div>
           <h3 data-i18n="circuit6Title">La Route nationale 7</h3>
           <p data-i18n="circuit6Copy">Hautes Terres, villages, paysages de l'Isalo et route vers le sud.</p>
 
