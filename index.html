@@ -92,6 +92,8 @@
           <div class="circuit-meta"><span data-i18n="tagNature">NATURE & GRANDS ESPACES</span><span data-i18n="durationLong">5–8 jours</span></div>
           <h3 data-i18n="circuit1Title">L'Ouest sauvage</h3>
           <p data-i18n="circuit1Copy">Baobabs majestueux, pistes rouges et horizons infinis.</p>
+
+          <button class="gallery-trigger" type="button" data-gallery="L'Ouest sauvage" aria-label="Voir la galerie : L'Ouest sauvage"><span data-i18n="viewGallery">Voir la galerie</span><span aria-hidden="true">↗</span></button>
           <a class="underlined-link circuit-link" href="#contact" data-circuit="L'Ouest sauvage"><span data-i18n="askQuote">Demander un devis</span><span aria-hidden="true">↗</span></a>
         </article>
         <article class="circuit-card circuit-card-offset" data-category="coast">
@@ -102,6 +104,8 @@
           <div class="circuit-meta"><span data-i18n="tagCoast">CÔTE & ÎLES</span><span data-i18n="durationShort">3–6 jours</span></div>
           <h3 data-i18n="circuit2Title">L'appel du lagon</h3>
           <p data-i18n="circuit2Copy">Des criques lumineuses, la mer et le temps retrouvé.</p>
+
+          <button class="gallery-trigger" type="button" data-gallery="L'appel du lagon" aria-label="Voir la galerie : L'appel du lagon"><span data-i18n="viewGallery">Voir la galerie</span><span aria-hidden="true">↗</span></button>
           <a class="underlined-link circuit-link" href="#contact" data-circuit="L'appel du lagon"><span data-i18n="askQuote">Demander un devis</span><span aria-hidden="true">↗</span></a>
         </article>
         <article class="circuit-card" data-category="culture">
@@ -112,6 +116,8 @@
           <div class="circuit-meta"><span data-i18n="tagCulture">CULTURE & RENCONTRES</span><span data-i18n="durationFlexible">Sur mesure</span></div>
           <h3 data-i18n="circuit3Title">Routes & rencontres</h3>
           <p data-i18n="circuit3Copy">Villages, savoir-faire et histoires partagées.</p>
+
+          <button class="gallery-trigger" type="button" data-gallery="Routes & rencontres" aria-label="Voir la galerie : Routes & rencontres"><span data-i18n="viewGallery">Voir la galerie</span><span aria-hidden="true">↗</span></button>
           <a class="underlined-link circuit-link" href="#contact" data-circuit="Routes & rencontres"><span data-i18n="askQuote">Demander un devis</span><span aria-hidden="true">↗</span></a>
         </article>
         <article class="circuit-card" data-category="nature">
@@ -122,6 +128,8 @@
           <div class="circuit-meta"><span data-i18n="tagNature">NATURE & GRANDS ESPACES</span><span data-i18n="durationTsingy">3–5 jours</span></div>
           <h3 data-i18n="circuit4Title">Les Tsingy de Bemaraha</h3>
           <p data-i18n="circuit4Copy">Un labyrinthe minéral spectaculaire, des passerelles et des panoramas uniques.</p>
+
+          <button class="gallery-trigger" type="button" data-gallery="Les Tsingy de Bemaraha" aria-label="Voir la galerie : Les Tsingy de Bemaraha"><span data-i18n="viewGallery">Voir la galerie</span><span aria-hidden="true">↗</span></button>
           <a class="underlined-link circuit-link" href="#contact" data-circuit="Les Tsingy de Bemaraha"><span data-i18n="askQuote">Demander un devis</span><span aria-hidden="true">↗</span></a>
         </article>
         <article class="circuit-card" data-category="nature">
@@ -132,6 +140,8 @@
           <div class="circuit-meta"><span data-i18n="tagNature">NATURE & GRANDS ESPACES</span><span data-i18n="durationForest">2–4 jours</span></div>
           <h3 data-i18n="circuit5Title">La forêt d'Andasibe</h3>
           <p data-i18n="circuit5Copy">Forêt humide, chants des indris et observation de la faune endémique.</p>
+
+          <button class="gallery-trigger" type="button" data-gallery="La forêt d'Andasibe" aria-label="Voir la galerie : La forêt d'Andasibe"><span data-i18n="viewGallery">Voir la galerie</span><span aria-hidden="true">↗</span></button>
           <a class="underlined-link circuit-link" href="#contact" data-circuit="La forêt d'Andasibe"><span data-i18n="askQuote">Demander un devis</span><span aria-hidden="true">↗</span></a>
         </article>
         <article class="circuit-card" data-category="culture">
@@ -142,6 +152,8 @@
           <div class="circuit-meta"><span data-i18n="tagCulture">CULTURE & RENCONTRES</span><span data-i18n="durationRoad">7–12 jours</span></div>
           <h3 data-i18n="circuit6Title">La Route nationale 7</h3>
           <p data-i18n="circuit6Copy">Hautes Terres, villages, paysages de l'Isalo et route vers le sud.</p>
+
+          <button class="gallery-trigger" type="button" data-gallery="La Route nationale 7" aria-label="Voir la galerie : La Route nationale 7"><span data-i18n="viewGallery">Voir la galerie</span><span aria-hidden="true">↗</span></button>
           <a class="underlined-link circuit-link" href="#contact" data-circuit="La Route nationale 7"><span data-i18n="askQuote">Demander un devis</span><span aria-hidden="true">↗</span></a>
         </article>
       </div>
@@ -183,6 +195,14 @@
       </div>
     </section>
   </main>
+
+
+  <dialog class="gallery-dialog" id="circuit-gallery" aria-labelledby="gallery-title">
+    <div class="gallery-dialog-head"><div><p class="eyebrow" data-i18n="galleryEyebrow">INSPIRATION EN IMAGES</p><h2 id="gallery-title">Galerie du circuit</h2></div><button class="gallery-close" type="button" aria-label="Fermer la galerie">×</button></div>
+    <p class="gallery-description" id="gallery-description"></p>
+    <div class="gallery-grid" id="gallery-grid"></div>
+    <div class="gallery-dialog-foot"><span data-i18n="galleryNote">Photographies illustratives de Madagascar.</span><a class="button button-dark" href="#contact" id="gallery-quote"><span data-i18n="galleryQuote">Demander un devis pour ce circuit</span><span aria-hidden="true">↗</span></a></div>
+  </dialog>
 
   <footer class="site-footer">
     <div class="container footer-main">
