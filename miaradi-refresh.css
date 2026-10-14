@@ -1,0 +1,84 @@
+/* MIARADI-TRAVEL — lighter, more dynamic editorial refresh
+   Palette: warm ivory, deep ink and a restrained marigold accent. */
+:root{
+  --forest:#26364a;
+  --forest-deep:#1d2c3d;
+  --forest-soft:#52657a;
+  --paper:#faf8f2;
+  --paper-deep:#f0ece2;
+  --sand:#f0b544;
+  --ink:#202a34;
+  --muted:#65717b;
+  --white:#fffefa;
+  --line:rgba(38,54,74,.14);
+  --wn-teal:#26364a;
+  --wn-teal-dark:#26364a;
+  --wn-ink:#202a34;
+  --wn-muted:#65717b;
+  --wn-pale:#faf8f2;
+  --wn-white:#fffefa;
+}
+body{background:#faf8f2!important;color:#202a34!important}
+h1 em,h2 em,.hero h1 em{color:#26364a!important}
+a:hover,.primary-nav>a:not(.nav-cta):hover,.text-link:hover,.underlined-link:hover{color:#c88719!important}
+.promo-bar{background:#26364a!important;color:#fffefa!important}
+.promo-bar strong,.promo-bar a{background:#f0b544!important;color:#202a34!important}
+.site-header{background:#fffefa!important;border-color:rgba(38,54,74,.12)!important}
+.brand-mark{background:#26364a!important;color:#fffefa!important}
+.nav-cta,.button-dark,.nav-cta:hover,.button-dark:hover{background:#26364a!important;color:#fffefa!important}
+.button,.filter-button,.filter-select-wrap select,.circuit-filter-select,.quote-form input,.quote-form select,.quote-form textarea{color:#26364a}
+.button:hover,.filter-button:hover,.filter-button.active,.filter-button[aria-pressed="true"]{background:#f0b544!important;border-color:#f0b544!important;color:#202a34!important}
+.hero-shade{background:linear-gradient(90deg,rgba(250,248,242,.95) 0%,rgba(250,248,242,.78) 34%,rgba(250,248,242,.12) 66%,rgba(38,54,74,.02) 100%)!important}
+.hero-content{color:#202a34!important}
+.hero .eyebrow,.trip-finder-kicker,.filter-label,.filter-theme,.circuit-meta,.value-number,.image-index{color:#9a6916!important}
+.hero h1{color:#17212b!important}
+.hero-copy{color:#3f4b55!important}
+.trip-finder,.filter-bar,.circuit-filters{background:#fffefa!important;color:#202a34!important;border-color:rgba(38,54,74,.13)!important}
+.trip-finder{border:1px solid rgba(38,54,74,.10)!important;border-radius:18px!important;box-shadow:0 18px 50px rgba(38,54,74,.09)!important}
+.trip-finder-kicker,.filter-label{color:#8a641c!important}
+.trip-finder-heading h2,.section-heading h2{color:#202a34!important}
+.trip-finder select,.filter-select-wrap select,.circuit-filter-select{background:#f4f1e9!important;border:1px solid rgba(38,54,74,.14)!important;color:#26364a!important}
+.value-row{background:#faf8f2!important}
+.value-item{border-color:rgba(38,54,74,.15)!important}
+.value-number{color:#c88719!important}
+.intro,.circuits,.contact{background:#faf8f2!important;color:#202a34!important}
+.section-heading h2,.intro h2,.contact h2{color:#202a34!important}
+.section-heading p,.intro-copy,.contact-intro p{color:#65717b!important}
+.circuit-grid{align-items:stretch}
+.circuit-card{background:#fffefa!important;border:1px solid rgba(38,54,74,.10)!important;box-shadow:0 10px 30px rgba(38,54,74,.055)!important;border-radius:15px!important;overflow:hidden}
+.circuit-card:hover{box-shadow:0 18px 42px rgba(38,54,74,.12)!important;transform:translateY(-4px)}
+.image-index{background:#26364a!important;color:#fffefa!important}
+.image-arrow{background:#fffefa!important;color:#26364a!important}
+.circuit-meta,.circuit-price{color:#65717b!important}
+.circuit-card h3,.circuit-card h2,.circuit-link{color:#26364a!important}
+.circuit-detail-trigger{background:#f0b544!important;color:#202a34!important;border-color:#f0b544!important}
+.circuit-detail-trigger:hover{background:#e4a62e!important}
+.button-outline-light{background:transparent!important;border-color:rgba(38,54,74,.3)!important;color:#26364a!important}
+.circuit-card .button,.circuit-card .button-dark{background:#26364a!important;color:#fffefa!important}
+.circuit-card .button:hover,.circuit-card .button-dark:hover{background:#f0b544!important;color:#202a34!important}
+.quote-band{background:#26364a!important;color:#fffefa!important}
+.quote-band h2,.quote-band p,.quote-band .text-link{color:#fffefa!important}
+.quote-band h2 em,.quote-band .eyebrow{color:#f0b544!important}
+.quote-decoration{color:rgba(255,255,255,.07)!important}
+.contact-grid{background:#faf8f2!important}
+.quote-form{background:#fffefa!important;border:1px solid rgba(38,54,74,.12)!important;border-radius:16px!important;box-shadow:0 14px 38px rgba(38,54,74,.06)!important}
+.quote-form label{color:#26364a!important}
+.quote-form input,.quote-form select,.quote-form textarea{background:#faf8f2!important;border-color:rgba(38,54,74,.18)!important;color:#26364a!important}
+.quote-form input::placeholder,.quote-form textarea::placeholder{color:#7a838a!important}
+.form-submit,.quote-form .button{background:#26364a!important;color:#fffefa!important}
+.form-submit:hover,.quote-form .button:hover{background:#f0b544!important;color:#202a34!important}
+.site-footer{background:#202a34!important;color:#fffefa!important}
+.site-footer a,.site-footer p,.footer-bottom{color:rgba(255,254,250,.78)!important}
+.site-footer .brand-mark{background:#f0b544!important;color:#202a34!important}
+.site-footer .brand-name span{color:#d9dfe4!important}
+.gallery-dialog,.circuit-detail-dialog{background:#fffefa!important;color:#202a34!important}
+.gallery-dialog h2,.detail-head h2,.detail-section h3{color:#26364a!important}
+.gallery-close,.detail-close{background:#f0b544!important;color:#202a34!important}
+.detail-label,.detail-day-number{color:#9a6916!important}
+.detail-day{border-color:rgba(38,54,74,.13)!important}
+::selection{background:#f0b544;color:#202a34}
+@media(max-width:760px){
+  .trip-finder{border-radius:14px!important}
+  .hero-shade{background:linear-gradient(90deg,rgba(250,248,242,.93),rgba(250,248,242,.68) 68%,rgba(250,248,242,.24))!important}
+  .circuit-card{box-shadow:0 8px 22px rgba(38,54,74,.07)!important}
+}
