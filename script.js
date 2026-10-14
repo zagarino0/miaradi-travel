@@ -234,6 +234,16 @@ document.addEventListener("DOMContentLoaded", () => {
         ["Indri_indri_Andasibe.jpg","Lémurien indri"]
       ]
     },
+    "Sainte-Marie, l'île nature": {
+      title: { fr: "Sainte-Marie, l'île nature", en: "Sainte-Marie, the natural island" },
+      description: { fr: "Plages paisibles et vie insulaire sur la côte Est.", en: "Quiet beaches and island life on the east coast." },
+      photos: [["Nosy_Boraha_Sainte_Marie_Madagascar.jpg","Littoral de Sainte-Marie"],["Sainte_Marie_Madagascar_beach.jpg","Plage de Sainte-Marie"],["Madagascar_Sainte-Marie_island.jpg","Paysage insulaire de Sainte-Marie"]]
+    },
+    "Les Hautes Terres et Antsirabe": {
+      title: { fr: "Les Hautes Terres et Antsirabe", en: "The Highlands and Antsirabe" },
+      description: { fr: "Villages, artisanat et paysages des Hautes Terres.", en: "Villages, crafts and landscapes of the Highlands." },
+      photos: [["Antsirabe_Madagascar_landscape.jpg","Paysage près d'Antsirabe"],["Antsirabe_Madagascar.jpg","Ville d'Antsirabe"],["Madagascar_Highlands_landscape.jpg","Paysages des Hautes Terres"]]
+    },
     "La Route nationale 7": {
       title: { fr: "La Route nationale 7", en: "The National Route 7" },
       description: { fr: "Un itinéraire du centre vers le Sud, entre Hautes Terres et paysages de l'Isalo.", en: "A route from the highlands to the south, through villages and Isalo landscapes." },
@@ -358,6 +368,32 @@ document.addEventListener("DOMContentLoaded", () => {
       activities: { fr: "Randonnée guidée, observation de la faune et de la flore, photographie", en: "Guided walks, wildlife and plant observation, photography" },
       stay: { fr: "Lodge ou maison d'hôtes à Andasibe, selon disponibilité.", en: "Lodge or guesthouse in Andasibe, subject to availability." }
     },
+    "Sainte-Marie, l'île nature": {
+      region: { fr: "Est · Île Sainte-Marie", en: "East · Sainte-Marie Island" },
+      duration: { fr: "5 à 8 jours indicatifs", en: "Indicative 5–8 days" },
+      intro: { fr: "Un séjour insulaire mêlant plages, villages côtiers et découvertes à un rythme tranquille.", en: "An island stay combining beaches, coastal villages and relaxed exploration." },
+      days: [
+        { fr: ["Arrivée à Sainte-Marie", "Installation et première découverte du littoral.", "Sainte-Marie"], en: ["Arrival in Sainte-Marie", "Check in and enjoy your first look at the coast.", "Sainte-Marie"] },
+        { fr: ["Plages et villages", "Balade sur le littoral et découverte de la vie locale.", "Sainte-Marie"], en: ["Beaches and villages", "Explore the coastline and local life.", "Sainte-Marie"] },
+        { fr: ["Nature et sortie en mer", "Activité en mer selon la saison, la météo et les disponibilités.", "Sainte-Marie"], en: ["Nature and sea outing", "Sea activity depending on season, weather and availability.", "Sainte-Marie"] }
+      ],
+      places: { fr: "Île Sainte-Marie, villages et plages selon le programme", en: "Sainte-Marie Island, villages and beaches depending on the itinerary" },
+      activities: { fr: "Balades, baignade si les conditions le permettent, photographie et découverte locale", en: "Walks, swimming when conditions allow, photography and local discovery" },
+      stay: { fr: "Hébergement insulaire selon budget et disponibilités.", en: "Island accommodation according to budget and availability." }
+    },
+    "Les Hautes Terres et Antsirabe": {
+      region: { fr: "Centre · Hautes Terres et Antsirabe", en: "Central Madagascar · Highlands and Antsirabe" },
+      duration: { fr: "2 à 4 jours indicatifs", en: "Indicative 2–4 days" },
+      intro: { fr: "Une escapade culturelle entre paysages vallonnés, savoir-faire locaux et découverte d'Antsirabe.", en: "A cultural escape through rolling landscapes, local craftsmanship and Antsirabe." },
+      days: [
+        { fr: ["Route vers Antsirabe", "Trajet à travers les Hautes Terres avec arrêts panoramiques.", "Antsirabe"], en: ["Travel to Antsirabe", "Drive through the Highlands with scenic stops.", "Antsirabe"] },
+        { fr: ["Ville et artisanat", "Découverte de la ville et rencontre avec des artisans selon les disponibilités.", "Antsirabe"], en: ["Town and crafts", "Explore the town and meet local craftspeople where available.", "Antsirabe"] },
+        { fr: ["Paysages des Hautes Terres", "Balade et découverte des villages environnants avant le retour.", "Région d'Antsirabe"], en: ["Highlands landscapes", "Walk and explore nearby villages before returning.", "Antsirabe region"] }
+      ],
+      places: { fr: "Antsirabe et villages des Hautes Terres selon le trajet", en: "Antsirabe and Highlands villages along the route" },
+      activities: { fr: "Découverte culturelle, artisanat, balades et photographie", en: "Cultural discovery, crafts, walks and photography" },
+      stay: { fr: "Hôtel ou maison d'hôtes à Antsirabe, selon disponibilité.", en: "Hotel or guesthouse in Antsirabe, subject to availability." }
+    },
     "La Route nationale 7": {
       region: { fr: "Hautes Terres vers le Sud · RN7", en: "Highlands to the South · RN7" }, duration: { fr: "7 à 12 jours indicatifs", en: "Indicative 7–12 days" },
       intro: { fr: "Un grand itinéraire terrestre entre Hautes Terres, villes-étapes et paysages du Sud. Les nuits et distances seront confirmées lors du devis.", en: "A classic overland route through the Highlands, stopover towns and southern landscapes. Overnight stops and distances will be confirmed in the quote." },
@@ -450,18 +486,25 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   document.querySelectorAll(".circuit-card").forEach((card) => {
-    const title = card.querySelector("h3");
     const circuitName = card.querySelector("[data-circuit]")?.dataset.circuit;
-    if (!title || !circuitName || !circuitDetails[circuitName]) return;
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "circuit-detail-trigger";
-    button.textContent = currentLanguage === "fr" ? "Voir le programme détaillé" : "View detailed itinerary";
-    button.addEventListener("click", () => {
+    if (!circuitName || !circuitDetails[circuitName]) return;
+    card.classList.add("circuit-card-clickable");
+    card.setAttribute("aria-label", (currentLanguage === "fr" ? "Ouvrir le programme : " : "Open itinerary: ") + circuitName);
+    const openDetails = () => {
       fillCircuitDetails(circuitName);
       detailDialog.showModal();
+    };
+    card.addEventListener("click", (event) => {
+      if (event.target.closest("button, .circuit-link")) return;
+      event.preventDefault();
+      openDetails();
     });
-    title.insertAdjacentElement("afterend", button);
+    card.addEventListener("keydown", (event) => {
+      if ((event.key === "Enter" || event.key === " ") && !event.target.closest("a, button")) {
+        event.preventDefault();
+        openDetails();
+      }
+    });
   });
   document.querySelector(".detail-close")?.addEventListener("click", () => detailDialog.close());
   detailDialog.addEventListener("click", (event) => { if (event.target === detailDialog) detailDialog.close(); });
