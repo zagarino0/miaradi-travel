@@ -13,11 +13,12 @@
   <link rel="stylesheet" href="wandernest.css">
   <link rel="stylesheet" href="miaradi-refresh.css">
   <link rel="stylesheet" href="roamora-inspired.css">
+  <link rel="stylesheet" href="final-polish.css">
   <script src="script.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Aller au contenu</a>
-  <div class="promo-bar"><span>VOTRE PROCHAINE AVENTURE COMMENCE ICI, <strong>CONTACTEZ-NOUS !</strong></span><a href="#contact">Préparer mon voyage <span aria-hidden="true">↗</span></a></div>
+  <div class="promo-bar"><span>VOTRE PROCHAINE AVENTURE COMMENCE ICI, <a class="promo-contact-link" href="#contact">CONTACTEZ-NOUS !</a></span><a class="promo-cta" href="#contact">Préparer mon voyage <span aria-hidden="true">↗</span></a></div>
   <header class="site-header" id="top">
     <div class="container header-inner">
       <a class="brand" href="#top" aria-label="MIARADI-TRAVEL, accueil">
@@ -261,6 +262,30 @@
           <button class="gallery-trigger" type="button" data-gallery="La Route nationale 7" aria-label="Voir la galerie : La Route nationale 7"><span data-i18n="viewGallery">Voir la galerie</span><span aria-hidden="true">↗</span></button>
           <a class="underlined-link circuit-link" href="#contact" data-circuit="La Route nationale 7"><span data-i18n="askQuote">Demander un devis</span><span aria-hidden="true">↗</span></a>
         </article>
+        <article class="circuit-card" data-category="coast" data-region="east" data-duration="5-8" tabindex="0" role="button" aria-label="Découvrir le circuit Sainte-Marie, l'île nature">
+          <a href="#circuits" class="circuit-image-link" data-circuit="Sainte-Marie, l'île nature" aria-label="Découvrir Sainte-Marie, l'île nature">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Nosy_Boraha_Sainte_Marie_Madagascar.jpg?width=1600" alt="Littoral de Sainte-Marie à Madagascar" loading="lazy">
+            <span class="image-index">07 / EST</span><span class="image-arrow" aria-hidden="true">↗</span>
+          </a>
+          <div class="circuit-meta"><span>CÔTE & ÎLES</span><span>5–8 jours</span></div>
+          <div class="circuit-price"><span data-i18n="priceLabel">TARIF</span><strong data-i18n="priceQuote">Sur devis</strong></div>
+          <h3>Sainte-Marie, l'île nature</h3>
+          <p>Plages paisibles, villages côtiers et découverte de la vie insulaire.</p>
+          <button class="gallery-trigger" type="button" data-gallery="Sainte-Marie, l'île nature" aria-label="Voir la galerie : Sainte-Marie, l'île nature"><span data-i18n="viewGallery">Voir la galerie</span><span aria-hidden="true">↗</span></button>
+          <a class="underlined-link circuit-link" href="#contact" data-circuit="Sainte-Marie, l'île nature"><span data-i18n="askQuote">Demander un devis</span><span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="circuit-card" data-category="culture" data-region="highlands" data-duration="2-4" tabindex="0" role="button" aria-label="Découvrir le circuit Les Hautes Terres et Antsirabe">
+          <a href="#circuits" class="circuit-image-link" data-circuit="Les Hautes Terres et Antsirabe" aria-label="Découvrir les Hautes Terres et Antsirabe">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Antsirabe_Madagascar_landscape.jpg?width=1600" alt="Paysage des Hautes Terres malgaches près d'Antsirabe" loading="lazy">
+            <span class="image-index">08 / HAUTES TERRES</span><span class="image-arrow" aria-hidden="true">↗</span>
+          </a>
+          <div class="circuit-meta"><span>CULTURE & RENCONTRES</span><span>2–4 jours</span></div>
+          <div class="circuit-price"><span data-i18n="priceLabel">TARIF</span><strong data-i18n="priceQuote">Sur devis</strong></div>
+          <h3>Les Hautes Terres et Antsirabe</h3>
+          <p>Architecture des Hautes Terres, artisanat local et paysages vallonnés.</p>
+          <button class="gallery-trigger" type="button" data-gallery="Les Hautes Terres et Antsirabe" aria-label="Voir la galerie : Les Hautes Terres et Antsirabe"><span data-i18n="viewGallery">Voir la galerie</span><span aria-hidden="true">↗</span></button>
+          <a class="underlined-link circuit-link" href="#contact" data-circuit="Les Hautes Terres et Antsirabe"><span data-i18n="askQuote">Demander un devis</span><span aria-hidden="true">↗</span></a>
+        </article>
       </div>
       <div class="container circuits-foot"><p data-i18n="circuitsFoot">Chaque voyage est personnalisable. Les tarifs sont établis sur devis.</p><a class="button button-outline-light" href="#contact"><span data-i18n="customTrip">Créer mon voyage</span><span aria-hidden="true">↗</span></a></div>
     </section>
@@ -294,7 +319,7 @@
             <label><span data-i18n="fieldDate">Date de départ souhaitée</span><input name="date" type="date"></label>
             <label><span data-i18n="fieldPeople">Nombre de voyageurs</span><select name="people"><option value="1">1 personne</option><option value="2" selected>2 personnes</option><option value="3-4">3–4 personnes</option><option value="5+">5 personnes ou plus</option></select></label>
           </div>
-          <label><span data-i18n="fieldCircuit">Circuit qui vous intéresse</span><select name="circuit" id="circuit-select"><option value="" data-i18n="optionCustom">Je souhaite un voyage sur mesure</option><option value="L'Ouest sauvage">L'Ouest sauvage</option><option value="L'appel du lagon">L'appel du lagon</option><option value="Routes & rencontres">Routes & rencontres</option><option value="Les Tsingy de Bemaraha">Les Tsingy de Bemaraha</option><option value="La forêt d'Andasibe">La forêt d'Andasibe</option><option value="La Route nationale 7">La Route nationale 7</option></select></label>
+          <label><span data-i18n="fieldCircuit">Circuit qui vous intéresse</span><select name="circuit" id="circuit-select"><option value="" data-i18n="optionCustom">Je souhaite un voyage sur mesure</option><option value="L'Ouest sauvage">L'Ouest sauvage</option><option value="L'appel du lagon">L'appel du lagon</option><option value="Routes & rencontres">Routes & rencontres</option><option value="Les Tsingy de Bemaraha">Les Tsingy de Bemaraha</option><option value="La forêt d'Andasibe">La forêt d'Andasibe</option><option value="La Route nationale 7">La Route nationale 7</option><option value="Sainte-Marie, l'île nature">Sainte-Marie, l'île nature</option><option value="Les Hautes Terres et Antsirabe">Les Hautes Terres et Antsirabe</option></select></label>
           <label><span data-i18n="fieldMessage">Parlez-nous de votre projet *</span><textarea name="message" rows="4" required placeholder="Vos envies, la durée du séjour, les lieux rêvés…"></textarea></label>
           <button class="button button-dark form-submit" type="submit"><span data-i18n="formSubmit">Préparer ma demande</span><span aria-hidden="true">↗</span></button>
           <p class="form-disclaimer" data-i18n="formDisclaimer">Maquette de démonstration : l'envoi réel sera activé après configuration du service de messagerie.</p>
