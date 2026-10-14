@@ -265,7 +265,7 @@ document.addEventListener("DOMContentLoaded", () => {
       data.photos.forEach(([file, alt]) => {
         const figure = document.createElement("figure");
         const img = document.createElement("img");
-        img.src = "https://commons.wikimedia.org/wiki/Special:FilePath/" + file + "?width=1000";
+        img.src = "https://commons.wikimedia.org/wiki/Special:FilePath/" + file + "?width=1600";
         img.alt = alt;
         img.loading = "lazy";
         img.addEventListener("error", () => { figure.classList.add("gallery-image-error"); img.alt = currentLanguage === "fr" ? "Image indisponible — consultez les autres photos de la galerie" : "Image unavailable — see other gallery photos"; });
@@ -430,7 +430,7 @@ document.addEventListener("DOMContentLoaded", () => {
     (galleryData[key]?.photos || []).forEach(([file, alt]) => {
       const figure = document.createElement("figure");
       const img = document.createElement("img");
-      img.src = "https://commons.wikimedia.org/wiki/Special:FilePath/" + file + "?width=900";
+      img.src = "https://commons.wikimedia.org/wiki/Special:FilePath/" + file + "?width=1400";
       img.alt = alt;
       img.loading = "lazy";
       const caption = document.createElement("figcaption");
