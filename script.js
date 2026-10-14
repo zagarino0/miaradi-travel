@@ -23,6 +23,8 @@ const translations = {
     circuit4Title: "Les Tsingy de Bemaraha", circuit4Copy: "Un labyrinthe minéral spectaculaire, des passerelles et des panoramas uniques.",
     circuit5Title: "La forêt d'Andasibe", circuit5Copy: "Forêt humide, chants des indris et observation de la faune endémique.",
     circuit6Title: "La Route nationale 7", circuit6Copy: "Hautes Terres, villages, paysages de l'Isalo et route vers le sud.",
+    circuit7Title: "Sainte-Marie, l'île nature", circuit7Copy: "Plages paisibles, villages côtiers et découverte de la vie insulaire.",
+    circuit8Title: "Les Hautes Terres et Antsirabe", circuit8Copy: "Architecture des Hautes Terres, artisanat local et paysages vallonnés.",
     askQuote: "Demander un devis", viewGallery: "Voir la galerie", galleryEyebrow: "INSPIRATION EN IMAGES", galleryNote: "Photographies illustratives de Madagascar.", galleryQuote: "Demander un devis pour ce circuit", circuitsFoot: "Chaque voyage est personnalisable. Les tarifs sont établis sur devis.", customTrip: "Créer mon voyage",
     quoteEyebrow: "VOTRE HISTOIRE, VOTRE ITINÉRAIRE", quoteTitle: "Et si votre prochain voyage<br>avait <em>votre signature ?</em>", quoteButton: "Imaginons votre circuit",
     contactEyebrow: "LE PREMIER PAS", contactTitle: "Parlons de<br><em>votre voyage.</em>",
@@ -59,6 +61,8 @@ const translations = {
     circuit4Title: "The Tsingy of Bemaraha", circuit4Copy: "A spectacular stone labyrinth, suspension walkways and unforgettable views.",
     circuit5Title: "Andasibe rainforest", circuit5Copy: "Lush rainforest, indri calls and encounters with endemic wildlife.",
     circuit6Title: "The National Route 7", circuit6Copy: "Highlands, villages, Isalo landscapes and the road towards the south, Madagascar.",
+    circuit7Title: "Sainte-Marie, the natural island", circuit7Copy: "Quiet beaches, coastal villages and island life.",
+    circuit8Title: "The Highlands and Antsirabe", circuit8Copy: "Highlands architecture, local crafts and rolling landscapes.",
     askQuote: "Request a quote", viewGallery: "View gallery", galleryEyebrow: "TRAVEL IN PICTURES", galleryNote: "Illustrative photographs of Madagascar.", galleryQuote: "Request a quote for this journey", circuitsFoot: "Every trip can be tailored. All prices are provided on request.", customTrip: "Create my journey",
     quoteEyebrow: "YOUR STORY, YOUR ITINERARY", quoteTitle: "What if your next journey<br>carried <em>your signature?</em>", quoteButton: "Let's shape your journey",
     contactEyebrow: "THE FIRST STEP", contactTitle: "Tell us about<br><em>your journey.</em>",
@@ -100,9 +104,6 @@ function setLanguage(language) {
   document.title = currentLanguage === "fr"
     ? "MIARADI-TRAVEL — Découvrez Madagascar autrement"
     : "MIARADI-TRAVEL — Discover Madagascar differently";
-  document.querySelectorAll(".circuit-detail-trigger").forEach((button) => {
-    button.textContent = currentLanguage === "fr" ? "Voir le programme détaillé" : "View detailed itinerary";
-  });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
