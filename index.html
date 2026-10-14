@@ -10,10 +10,12 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="vacation-inspired.css">
   <link rel="stylesheet" href="india-escapes.css">
+  <link rel="stylesheet" href="wandernest.css">
   <script src="script.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Aller au contenu</a>
+  <div class="promo-bar"><span>VOTRE PROCHAINE AVENTURE COMMENCE ICI, <strong>CONTACTEZ-NOUS !</strong></span><a href="#contact">Préparer mon voyage <span aria-hidden="true">↗</span></a></div>
   <header class="site-header" id="top">
     <div class="container header-inner">
       <a class="brand" href="#top" aria-label="MIARADI-TRAVEL, accueil">
@@ -68,37 +70,30 @@
           <h2 id="trip-finder-title" data-i18n="finderTitle">Trouvez votre <em>voyage.</em></h2>
         </div>
         <form class="trip-finder-form" id="trip-finder-form">
-          <label><span data-i18n="finderRegion">Région</span>
+          <label><span data-i18n="finderRegion">Destination</span>
             <select id="finder-region">
-              <option value="all" data-i18n="regionAll">Toutes les régions</option>
-              <option value="west" data-i18n="regionWest">Ouest</option>
-              <option value="north" data-i18n="regionNorth">Nord & îles</option>
-              <option value="east" data-i18n="regionEast">Est</option>
-              <option value="south" data-i18n="regionSouth">Sud</option>
-              <option value="highlands" data-i18n="regionHighlands">Hautes Terres</option>
+              <option value="all" data-i18n="regionAll">Où souhaitez-vous aller ?</option>
+              <option value="west" data-i18n="regionWest">Ouest</option><option value="north" data-i18n="regionNorth">Nord & îles</option><option value="east" data-i18n="regionEast">Est</option><option value="south" data-i18n="regionSouth">Sud</option><option value="highlands" data-i18n="regionHighlands">Hautes Terres</option>
             </select>
           </label>
           <label><span data-i18n="finderDuration">Durée du séjour</span>
-            <select id="finder-duration">
-              <option value="all" data-i18n="durationAll">Toutes les durées</option>
-              <option value="2-4">2–4 jours</option><option value="3-5">3–5 jours</option>
-              <option value="3-6">3–6 jours</option><option value="5-8">5–8 jours</option>
-              <option value="7-12">7–12 jours</option><option value="custom" data-i18n="durationCustom">Sur mesure</option>
-            </select>
+            <select id="finder-duration"><option value="all" data-i18n="durationAll">Toutes les durées</option><option value="2-4">2–4 jours</option><option value="3-5">3–5 jours</option><option value="3-6">3–6 jours</option><option value="5-8">5–8 jours</option><option value="7-12">7–12 jours</option><option value="custom" data-i18n="durationCustom">Sur mesure</option></select>
           </label>
-          <label><span data-i18n="finderTheme">Type de voyage</span>
-            <select id="finder-theme">
-              <option value="all" data-i18n="filterAll">Tout voir</option>
-              <option value="nature" data-i18n="filterNature">Nature</option>
-              <option value="coast" data-i18n="filterCoast">Côte & îles</option>
-              <option value="culture" data-i18n="filterCulture">Culture</option>
-            </select>
+          <label><span data-i18n="finderTheme">Expérience</span>
+            <select id="finder-theme"><option value="all" data-i18n="filterAll">Toutes les expériences</option><option value="nature" data-i18n="filterNature">Nature</option><option value="coast" data-i18n="filterCoast">Côte & îles</option><option value="culture" data-i18n="filterCulture">Culture</option></select>
           </label>
-          <button class="button button-dark trip-finder-submit" type="submit"><span data-i18n="finderSubmit">Trouver un circuit</span><span aria-hidden="true">↗</span></button>
+          <button class="button button-dark trip-finder-submit" type="submit"><span data-i18n="finderSubmit">Rechercher un circuit</span><span aria-hidden="true">↗</span></button>
         </form>
       </div>
     </section>
-
+    <section class="trust-strip" aria-label="Nos engagements">
+      <div class="container trust-grid">
+        <article><span aria-hidden="true">◎</span><h3>Destinations choisies</h3><p>Des lieux qui méritent le détour.</p></article>
+        <article><span aria-hidden="true">◇</span><h3>Voyages personnalisés</h3><p>Un circuit pensé selon vos envies.</p></article>
+        <article><span aria-hidden="true">⌕</span><h3>À votre écoute</h3><p>Un accompagnement à chaque étape.</p></article>
+        <article><span aria-hidden="true">♡</span><h3>Rencontres authentiques</h3><p>Des expériences proches du territoire.</p></article>
+      </div>
+    </section>
     <section class="intro section-pad" id="about">
       <div class="container intro-grid">
         <div>
@@ -145,6 +140,12 @@
       </div>
     </section>
 
+    <section class="planning-steps section-pad" id="planning-steps">
+      <div class="container planning-layout">
+        <div class="planning-copy"><p class="eyebrow"><span class="eyebrow-line"></span>EN TOUTE SIMPLICITÉ</p><h2>Votre voyage idéal<br><em>en 3 étapes.</em></h2><p>Vous nous parlez de vos envies, nous imaginons un itinéraire et vous préparez vos valises.</p><a class="button button-dark" href="#contact">Commencer à planifier <span aria-hidden="true">↗</span></a></div>
+        <div class="planning-steps-grid"><article><span class="planning-icon">⌕</span><h3>1. Parlez-nous de vos envies</h3><p>Vos destinations, votre rythme et vos idées.</p></article><article><span class="planning-icon">▤</span><h3>2. Recevez votre itinéraire</h3><p>Une proposition adaptée à votre voyage.</p></article><article><span class="planning-icon">↗</span><h3>3. Partez explorer</h3><p>Profitez de Madagascar, l'esprit libre.</p></article></div>
+      </div>
+    </section>
     <section class="circuits section-pad" id="circuits">
       <div class="container section-heading">
         <div><p class="eyebrow eyebrow-light"><span class="eyebrow-line"></span><span data-i18n="circuitsEyebrow">INSPIRATIONS DE VOYAGE</span></p><h2 data-i18n="circuitsTitle">L'île, en plusieurs<br><em>émotions.</em></h2></div>
@@ -271,6 +272,9 @@
       <div class="quote-decoration" aria-hidden="true">M.</div>
     </section>
 
+    <section class="inspiration-band">
+      <div class="container inspiration-content"><p class="eyebrow eyebrow-light">LES BELLES HISTOIRES COMMENCENT ICI</p><h2>Un peu d'inspiration.<br><em>Beaucoup d'évasion.</em></h2><p>Parlez-nous de votre prochaine escapade à Madagascar.</p><a class="button button-light" href="#contact">Recevoir des idées de voyage <span aria-hidden="true">↗</span></a></div>
+    </section>
     <section class="contact section-pad" id="contact">
       <div class="container contact-grid">
         <div class="contact-intro">
