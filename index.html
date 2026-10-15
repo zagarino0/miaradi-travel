@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="madagascar-mosaic.css">
   <link rel="stylesheet" href="travel-motion.css">
   <link rel="stylesheet" href="discover-editorial.css">
+  <link rel="stylesheet" href="hero-slideshow.css">
 
   <script src="script.js" defer></script>
 </head>
@@ -46,7 +47,11 @@
 
   <main id="main">
     <section class="hero" aria-labelledby="hero-title">
-      <img class="hero-image" src="https://commons.wikimedia.org/wiki/Special:FilePath/Walking_the_Avenue_of_the_Baobabs.jpg?width=2600" alt="Allée des baobabs à Morondava, Madagascar" fetchpriority="high">
+      <div class="hero-slideshow" aria-label="Paysages de Madagascar">
+        <img class="hero-image hero-slide is-active" src="https://i.pinimg.com/1200x/e8/8b/93/e88b93ed052915fd778de66064371cd7.jpg" alt="Paysage tropical de Madagascar" fetchpriority="high" decoding="async">
+        <img class="hero-image hero-slide" src="https://i.pinimg.com/1200x/73/11/56/731156af7645c36c724df7b31f07c82f.jpg" alt="Plage et lagon de Madagascar" loading="lazy" decoding="async">
+        <img class="hero-image hero-slide" src="https://i.pinimg.com/1200x/c2/54/de/c254dee5bce66d9e261929d6e4b37e70.jpg" alt="Autre paysage de voyage à Madagascar" loading="lazy" decoding="async">
+      </div>
       <div class="hero-shade"></div>
       <div class="container hero-content">
         <p class="eyebrow eyebrow-light"><span class="eyebrow-line"></span><span data-i18n="heroEyebrow">VOYAGES AUTHENTIQUES · MADAGASCAR</span></p>
