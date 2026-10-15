@@ -1,0 +1,111 @@
+/* Editorial photo gallery for the circuits section */
+.circuit-photo-gallery {
+  padding-top: clamp(64px, 8vw, 112px);
+  padding-bottom: clamp(58px, 7vw, 96px);
+}
+.circuit-gallery-heading {
+  display: grid;
+  grid-template-columns: 1fr minmax(240px, .72fr);
+  align-items: end;
+  gap: 32px;
+  margin-bottom: 28px;
+}
+.circuit-gallery-heading .eyebrow { margin: 0 0 12px; color: var(--gold, #cda65e); }
+.circuit-gallery-heading h2 {
+  margin: 0;
+  font-family: var(--font-display, Georgia, serif);
+  font-size: clamp(34px, 5vw, 58px);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -.035em;
+}
+.circuit-gallery-heading h2 em { color: var(--gold, #cda65e); font-weight: 400; }
+.circuit-gallery-heading > p {
+  max-width: 430px;
+  margin: 0 0 4px;
+  color: rgba(240,237,229,.72);
+  font-size: 13px;
+  line-height: 1.85;
+}
+.circuit-gallery-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr 1fr;
+  grid-template-rows: repeat(2, minmax(150px, 18vw));
+  gap: 14px;
+}
+.circuit-gallery-item {
+  position: relative;
+  display: block;
+  min-width: 0;
+  min-height: 160px;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 4px;
+  background: rgba(240,237,229,.08);
+  color: var(--paper, #f0ede5);
+  text-decoration: none;
+  box-shadow: 0 10px 28px rgba(0,0,0,.12);
+  opacity: 0;
+  transform: translateY(18px);
+  animation: circuit-gallery-arrive .75s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.circuit-gallery-item:nth-child(2) { animation-delay: .08s; }
+.circuit-gallery-item:nth-child(3) { animation-delay: .16s; }
+.circuit-gallery-item:nth-child(4) { animation-delay: .24s; }
+.circuit-gallery-item:nth-child(5) { animation-delay: .32s; }
+.circuit-gallery-item-large { grid-row: span 2; }
+.circuit-gallery-item img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .8s cubic-bezier(.2,.7,.2,1), filter .5s ease;
+}
+.circuit-gallery-item::after {
+  position: absolute;
+  z-index: 1;
+  inset: 25% 0 0;
+  content: "";
+  background: linear-gradient(180deg, transparent 0%, rgba(8,25,21,.08) 25%, rgba(8,25,21,.78) 100%);
+  transition: opacity .35s ease;
+}
+.circuit-gallery-caption {
+  position: absolute;
+  z-index: 2;
+  right: 18px;
+  bottom: 18px;
+  left: 18px;
+  display: grid;
+  gap: 7px;
+  transform: translateY(4px);
+  transition: transform .35s ease;
+}
+.circuit-gallery-caption small {
+  color: #e3bd74;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .15em;
+}
+.circuit-gallery-caption strong {
+  font-family: var(--font-display, Georgia, serif);
+  font-size: clamp(17px, 2vw, 25px);
+  font-weight: 400;
+  line-height: 1.15;
+}
+.circuit-gallery-item:hover img,
+.circuit-gallery-item:focus-visible img { transform: scale(1.07); filter: saturate(1.08); }
+.circuit-gallery-item:hover .circuit-gallery-caption,
+.circuit-gallery-item:focus-visible .circuit-gallery-caption { transform: translateY(0); }
+.circuit-gallery-item:focus-visible { outline: 2px solid #e3bd74; outline-offset: 4px; }
+@keyframes circuit-gallery-arrive { to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 760px) {
+  .circuit-gallery-heading { grid-template-columns: 1fr; gap: 14px; }
+  .circuit-gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 250px 170px 170px; gap: 10px; }
+  .circuit-gallery-item-large { grid-row: span 1; grid-column: span 2; }
+  .circuit-gallery-caption { right: 12px; bottom: 12px; left: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .circuit-gallery-item { opacity: 1; transform: none; animation: none; }
+  .circuit-gallery-item img, .circuit-gallery-caption { transition: none; }
+}
