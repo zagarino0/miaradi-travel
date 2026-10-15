@@ -3,8 +3,12 @@
   padding: clamp(76px, 9vw, 132px) 0;
   overflow: hidden;
   background:
-    radial-gradient(ellipse at 12% 12%, rgba(214,174,114,.14), transparent 34%),
+    linear-gradient(90deg, rgba(248,246,241,.91) 0%, rgba(248,246,241,.83) 48%, rgba(248,246,241,.89) 100%),
+    linear-gradient(0deg, rgba(248,246,241,.25), rgba(248,246,241,.25)),
+    url("https://i.pinimg.com/1200x/91/46/7d/91467d8b965ac38bc02e280c20877b43.jpg") center / cover no-repeat,
     var(--paper);
+  background-attachment: scroll;
+
 }
 .madagascar-discovery-inner {
   display: grid;
