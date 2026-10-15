@@ -1,103 +1,118 @@
-/* MIARADI-TRAVEL — motion inspired by editorial destination collages */
-:root {
-  --travel-motion-ease: cubic-bezier(.2,.7,.25,1);
-}
+/* MIARADI-TRAVEL — visible, restrained motion system */
+:root { --mt-motion-ease: cubic-bezier(.2,.7,.25,1); }
 
-/* Slow cinematic movement in the main destination photograph */
-.hero {
-  isolation: isolate;
-  overflow: hidden;
-}
-.hero-image {
-  transform-origin: 58% 48%;
-  animation: mt-hero-drift 24s ease-in-out infinite alternate;
+/* Hero: slow cinematic zoom on the actual full-width image */
+.hero { position: relative; isolation: isolate; overflow: hidden; }
+.hero > .hero-image {
+  transform-origin: 55% 48%;
+  animation: mt-cinematic-zoom 28s ease-in-out infinite alternate;
   will-change: transform;
 }
-@keyframes mt-hero-drift {
-  from { transform: scale(1.015) translate3d(0, 0, 0); }
-  to { transform: scale(1.105) translate3d(-1.1%, .6%, 0); }
+@keyframes mt-cinematic-zoom {
+  from { transform: scale(1.015); }
+  to { transform: scale(1.10); }
 }
 
-/* Images feel like layered travel prints, not static tiles */
-.hero-destination,
+/* Circuit photography: smooth hover zoom; image remains clipped to its frame */
 .circuit-card,
-.mosaic-photo,
-.journey-stop img {
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
+.circuit-image-link,
+.hero-destination { overflow: hidden; }
+.circuit-image-link img,
+.circuit-card .circuit-image-link img,
+.hero-destination img {
+  transition: transform .85s var(--mt-motion-ease), filter .65s ease;
+  transform: scale(1);
 }
-.hero-destination img,
-.circuit-card img,
-.journey-stop img {
-  transition: transform .8s var(--travel-motion-ease), filter .6s ease;
-}
-.hero-destination:hover img,
-.circuit-card:hover img,
-.journey-stop:hover img {
-  transform: scale(1.055);
-  filter: saturate(1.08);
-}
-.madagascar-mosaic-photos {
-  perspective: 1000px;
-}
-.mosaic-photo {
-  box-shadow: 0 8px 22px rgba(22, 35, 29, .09);
-  animation: mt-photo-arrive .9s var(--travel-motion-ease) both;
-}
-.mosaic-photo-baobabs { animation-delay: .05s; }
-.mosaic-photo-lagoon { animation-delay: .16s; }
-.mosaic-photo-isalo { animation-delay: .27s; }
-.mosaic-photo-lemur { animation-delay: .38s; }
-.mosaic-photo-tsingy { animation-delay: .49s; }
-@keyframes mt-photo-arrive {
-  from { opacity: 0; transform: translateY(18px) scale(.985); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-.mosaic-photo:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 34px rgba(22, 35, 29, .16);
+.circuit-card:hover .circuit-image-link img,
+.circuit-image-link:hover img,
+.hero-destination:hover img {
+  transform: scale(1.065);
+  filter: saturate(1.07) contrast(1.02);
 }
 
-/* Gentle light sweep in image-led sections; stays behind all text */
-.hero-shade,
-.inspiration-band::before,
-.quote-band::before {
-  pointer-events: none;
+/* Discover collage: staggered entrance, subtle lift and depth */
+.madagascar-mosaic { position: relative; isolation: isolate; overflow: hidden; }
+.madagascar-mosaic-photos { perspective: 1000px; }
+.madagascar-mosaic .mosaic-photo {
+  box-shadow: 0 8px 24px rgba(35, 38, 31, .11);
+  animation: mt-collage-arrive .95s var(--mt-motion-ease) both;
+  transition: transform .65s var(--mt-motion-ease), box-shadow .65s ease, filter .5s ease;
 }
+.madagascar-mosaic .mosaic-photo-baobabs { animation-delay: .05s; }
+.madagascar-mosaic .mosaic-photo-lagoon { animation-delay: .18s; }
+.madagascar-mosaic .mosaic-photo-isalo { animation-delay: .31s; }
+.madagascar-mosaic .mosaic-photo-lemur { animation-delay: .44s; }
+.madagascar-mosaic .mosaic-photo-tsingy { animation-delay: .57s; }
+@keyframes mt-collage-arrive {
+  from { opacity: 0; transform: translate3d(0, 20px, 0) scale(.975); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+.madagascar-mosaic .mosaic-photo:hover {
+  z-index: 6;
+  transform: translateY(-5px) scale(1.012);
+  box-shadow: 0 18px 38px rgba(35, 38, 31, .19);
+  filter: saturate(1.06);
+}
+.madagascar-mosaic .mosaic-photo img {
+  transition: transform .8s var(--mt-motion-ease);
+}
+.madagascar-mosaic .mosaic-photo:hover img { transform: scale(1.055); }
+
+/* Discreet moving light sweep on image-led bands, kept behind content */
 .inspiration-band,
-.quote-band {
-  background-position: center;
-  background-size: cover;
-}
-.inspiration-band::after {
+.quote-band { position: relative; isolation: isolate; overflow: hidden; }
+.inspiration-band::after,
+.quote-band::after {
   content: "";
   position: absolute;
   z-index: -1;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(115deg, transparent 25%, rgba(255,255,255,.055) 48%, transparent 70%);
-  background-size: 220% 100%;
-  animation: mt-light-sweep 18s ease-in-out infinite;
+  background: linear-gradient(112deg, transparent 32%, rgba(255,255,255,.075) 48%, transparent 64%);
+  background-size: 230% 100%;
+  animation: mt-light-sweep 20s ease-in-out infinite;
 }
 @keyframes mt-light-sweep {
-  0%, 15% { background-position: 130% 0; }
-  75%, 100% { background-position: -30% 0; }
+  0%, 18% { background-position: 130% 0; }
+  78%, 100% { background-position: -30% 0; }
 }
 
-/* Keep the motion elegant on touch screens and honor accessibility preferences */
-@media (max-width: 700px) {
-  .hero-image { animation-duration: 32s; }
-  .mosaic-photo { box-shadow: 0 5px 14px rgba(22, 35, 29, .08); }
-  .hero-destination:hover img,
-  .circuit-card:hover img,
-  .journey-stop:hover img { transform: none; }
+/* The Discover heading stays refined and legible */
+.madagascar-mosaic-copy h2 {
+  font-weight: 500;
+  letter-spacing: -.045em;
 }
+.madagascar-mosaic-copy .button {
+  border-radius: 999px;
+  transition: transform .25s ease, background-color .25s ease, box-shadow .25s ease;
+}
+.madagascar-mosaic-copy .button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(23, 58, 50, .15);
+}
+
+/* Mobile: shorter travel, less GPU load, no hover-only effects */
+@media (max-width: 700px) {
+  .hero > .hero-image { animation-duration: 34s; }
+  .circuit-card:hover .circuit-image-link img,
+  .circuit-image-link:hover img,
+  .hero-destination:hover img { transform: none; filter: none; }
+  .madagascar-mosaic .mosaic-photo { box-shadow: 0 5px 14px rgba(35, 38, 31, .09); }
+  .inspiration-band::after,
+  .quote-band::after { animation-duration: 30s; opacity: .6; }
+}
+
+/* Respect system accessibility setting */
 @media (prefers-reduced-motion: reduce) {
-  .hero-image,
-  .mosaic-photo,
-  .inspiration-band::after {
-    animation: none !important;
-    transform: none !important;
-    will-change: auto;
-  }
+  html { scroll-behavior: auto !important; }
+  .hero > .hero-image,
+  .madagascar-mosaic .mosaic-photo,
+  .inspiration-band::after,
+  .quote-band::after { animation: none !important; }
+  .circuit-image-link img,
+  .circuit-card .circuit-image-link img,
+  .hero-destination img,
+  .madagascar-mosaic .mosaic-photo,
+  .madagascar-mosaic .mosaic-photo img,
+  .madagascar-mosaic-copy .button { transition: none !important; transform: none !important; }
 }
