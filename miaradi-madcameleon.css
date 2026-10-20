@@ -1,0 +1,67 @@
+/* MIARADI-TRAVEL — direction éditoriale inspirée des sites de voyage immersifs.
+   Palette de marque conservée : Rouge Miaradi #922D20 et ivoire #FBF8F5. */
+:root {
+  --brand-red: #922D20;
+  --brand-red-dark: #702219;
+  --brand-ivory: #FBF8F5;
+  --brand-paper: #F3EDE6;
+  --brand-ink: #2C2926;
+  --brand-muted: #77716B;
+  --brand-line: rgba(44, 41, 38, .14);
+  --brand-serif: "Playfair Display", Georgia, serif;
+}
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+body { background: var(--brand-ivory); color: var(--brand-ink); }
+::selection { background: var(--brand-red); color: white; }
+a { text-underline-offset: .22em; }
+.promo-bar { background: var(--brand-red); color: #fff; }
+.promo-bar a { color: #fff; }
+.promo-cta { border-color: rgba(255,255,255,.4); }
+.site-header { background: rgba(251,248,245,.96); border-bottom: 1px solid var(--brand-line); backdrop-filter: blur(14px); }
+.brand-logo { max-height: 58px; width: auto; }
+.primary-nav a:not(.nav-cta) { color: var(--brand-ink); }
+.primary-nav a:not(.nav-cta):hover { color: var(--brand-red); }
+.nav-cta, .button-dark { background: var(--brand-red); border-color: var(--brand-red); color: #fff; }
+.nav-cta:hover, .button-dark:hover { background: var(--brand-red-dark); border-color: var(--brand-red-dark); }
+.language-toggle { border-color: var(--brand-line); color: var(--brand-ink); }
+.hero { min-height: min(790px, calc(100svh - 48px)); background: #29231f; }
+.hero-image { filter: saturate(.88); }
+.hero-shade { background: linear-gradient(90deg, rgba(22,17,15,.72) 0%, rgba(22,17,15,.35) 54%, rgba(22,17,15,.08) 100%), linear-gradient(0deg, rgba(22,17,15,.52), transparent 42%); }
+.hero-content { padding-top: clamp(90px, 12vw, 170px); padding-bottom: 230px; }
+.hero h1 { max-width: 850px; font-family: var(--brand-serif); font-weight: 500; letter-spacing: -.045em; line-height: .99; }
+.hero h1 em, h2 em { color: #E7B6A7; font-weight: 400; }
+.eyebrow-light { letter-spacing: .16em; }
+.button-light { background: var(--brand-ivory); border-color: var(--brand-ivory); color: var(--brand-red); }
+.button-light:hover { background: #fff; }
+.hero-destination-strip { background: var(--brand-ivory); color: var(--brand-ink); border: 1px solid var(--brand-line); box-shadow: 0 16px 50px rgba(35,25,20,.12); }
+.hero-destination { border-color: var(--brand-line); }
+.hero-destination small, .hero-destination-prompt > span { color: var(--brand-muted); }
+.hero-destination:hover .destination-name { color: var(--brand-red); }
+.trip-finder { background: var(--brand-paper); }
+.trip-finder-inner { border-color: var(--brand-line); }
+.trip-finder-kicker, .eyebrow, .section-kicker { color: var(--brand-red); letter-spacing: .15em; }
+.trip-finder h2, h2 { font-family: var(--brand-serif); font-weight: 500; letter-spacing: -.035em; }
+.trip-finder h2 em { color: var(--brand-red); }
+select, input, textarea { border-color: #D9CEC4; background-color: #fffdfa; color: var(--brand-ink); }
+select:focus, input:focus, textarea:focus { outline: 2px solid rgba(146,45,32,.25); border-color: var(--brand-red); }
+.button, .nav-cta { border-radius: 2px; }
+section { scroll-margin-top: 86px; }
+.circuit-card, .tour-card, .experience-card { border-radius: 2px; }
+.circuit-card img, .tour-card img, .experience-card img { transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+.circuit-card:hover img, .tour-card:hover img, .experience-card:hover img { transform: scale(1.035); }
+.circuit-card h3, .tour-card h3, .experience-card h3 { font-family: var(--brand-serif); font-weight: 500; }
+a:focus-visible, button:focus-visible { outline: 3px solid #C66B58; outline-offset: 3px; }
+footer, .site-footer { background: #2C2926; color: var(--brand-ivory); }
+footer a, .site-footer a { color: #F2D8D0; }
+@media (max-width: 760px) {
+  .hero { min-height: 780px; }
+  .hero-content { padding-top: 92px; padding-bottom: 260px; }
+  .hero h1 { font-size: clamp(2.7rem, 12vw, 4.5rem); }
+  .hero-destination-strip { margin-inline: 16px; }
+  .brand-logo { max-height: 48px; }
+  .trip-finder-inner { padding-block: 34px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
