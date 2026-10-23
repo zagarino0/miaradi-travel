@@ -252,3 +252,204 @@
     transition: none;
   }
 }
+
+
+/* MIARADI hero — composition inspirée de la référence Wayfare */
+.hero {
+  width: calc(100% - 48px);
+  max-width: 1680px;
+  min-height: clamp(620px, 76vh, 900px);
+  margin: 18px auto 32px;
+  border: 8px solid var(--paper);
+  border-radius: 28px;
+  overflow: hidden;
+  background: #c9b99c;
+  color: #211d1a;
+  box-shadow: 0 18px 50px rgba(38, 29, 18, .12);
+}
+
+.hero-image {
+  object-position: center 52%;
+  filter: saturate(.78) sepia(.12);
+}
+
+.hero-shade {
+  background:
+    linear-gradient(90deg, rgba(251,248,241,.92) 0%, rgba(251,248,241,.82) 31%, rgba(251,248,241,.42) 52%, rgba(251,248,241,.02) 78%),
+    linear-gradient(0deg, rgba(45,34,22,.14), transparent 35%);
+}
+
+.hero-content {
+  width: min(100% - 80px, var(--container));
+  margin: 0 auto;
+  padding-block: clamp(110px, 17vh, 190px) 100px;
+  animation: rise-in .8s .1s both;
+}
+
+.hero .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 28px;
+  padding: 8px 13px;
+  border: 1px solid rgba(33,29,26,.12);
+  border-radius: 999px;
+  background: rgba(251,248,245,.72);
+  color: #383127;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.hero .eyebrow-line {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d6a82d;
+}
+
+.hero h1 {
+  max-width: 790px;
+  color: #211d1a;
+  font-size: clamp(3.5rem, 6.2vw, 6.4rem);
+  font-weight: 500;
+  letter-spacing: -.065em;
+  line-height: .99;
+  text-wrap: balance;
+}
+
+.hero h1 em {
+  color: var(--red);
+  font-family: var(--serif);
+  font-weight: 400;
+}
+
+.hero-copy {
+  max-width: 490px;
+  margin: 25px 0 28px;
+  color: rgba(33,29,26,.76);
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  line-height: 1.7;
+}
+
+.hero .button-light {
+  border-radius: 999px;
+  background: #d9ae35;
+  color: #211d1a;
+}
+
+.hero .button-dark {
+  border-radius: 999px;
+  background: #211d1a;
+  color: #fff;
+}
+
+.hero .button {
+  min-height: 48px;
+  padding: 12px 20px;
+}
+
+.hero-bottom {
+  right: 40px;
+  bottom: 25px;
+  left: 40px;
+  width: auto;
+  transform: none;
+  color: rgba(33,29,26,.72);
+  font-size: 9px;
+  letter-spacing: .12em;
+}
+
+.hero-destination-strip,
+.hero-index {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    width: calc(100% - 32px);
+    min-height: 690px;
+    border-width: 6px;
+    border-radius: 24px;
+  }
+
+  .hero-content {
+    width: calc(100% - 56px);
+    padding-block: 130px 120px;
+  }
+
+  .hero h1 {
+    max-width: 680px;
+    font-size: clamp(3.25rem, 8vw, 5.5rem);
+  }
+
+  .hero-shade {
+    background: linear-gradient(90deg, rgba(251,248,241,.91), rgba(251,248,241,.68) 55%, rgba(251,248,241,.18));
+  }
+}
+
+@media (max-width: 700px) {
+  .hero {
+    width: calc(100% - 20px);
+    min-height: 680px;
+    margin: 10px auto 24px;
+    border-width: 5px;
+    border-radius: 20px;
+  }
+
+  .hero-content {
+    width: calc(100% - 36px);
+    padding-block: 115px 100px;
+  }
+
+  .hero h1 {
+    max-width: 100%;
+    font-size: clamp(2.8rem, 12vw, 4.4rem);
+    letter-spacing: -.055em;
+    line-height: 1.02;
+  }
+
+  .hero-copy {
+    max-width: 100%;
+    margin-block: 22px 26px;
+    font-size: 1rem;
+  }
+
+  .hero-actions {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .hero .button {
+    min-height: 44px;
+    gap: 12px;
+    padding: 10px 15px;
+    font-size: 11px;
+  }
+
+  .hero-bottom {
+    right: 18px;
+    bottom: 18px;
+    left: 18px;
+    margin: 0;
+    font-size: 8px;
+  }
+
+  .hero-bottom span:first-child {
+    display: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero {
+    min-height: 650px;
+  }
+
+  .hero-content {
+    padding-top: 95px;
+  }
+
+  .hero h1 {
+    font-size: 2.8rem;
+  }
+}
