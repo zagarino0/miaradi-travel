@@ -17,3 +17,38 @@
 @media(max-width:700px){.container{width:calc(100% - 40px)}.header-inner{min-height:74px}.brand-logo{width:180px;max-height:58px}.menu-toggle{display:block}.primary-nav{position:fixed;inset:74px 0 auto;display:none;align-items:stretch;gap:0;padding:12px 20px 24px;background:var(--paper);border-bottom:1px solid var(--line);box-shadow:0 20px 25px rgba(20,16,14,.08)}.primary-nav.is-open{display:flex;flex-direction:column}.primary-nav>a,.primary-nav>button{padding:14px 4px;text-align:left;border-bottom:1px solid var(--line)}.primary-nav .nav-cta{margin-top:12px;padding:14px;background:var(--red);color:white}.hero{min-height:calc(90svh - 74px)}.hero-content{padding-block:100px 130px}.hero h1{font-size:clamp(3rem,12vw,5rem)}.hero-bottom{font-size:8px;letter-spacing:.06em}.hero-bottom span:first-child{display:none}.section-pad{padding-block:70px}.about-opening,.section-heading,.personalization-layout,.partners-layout,.contact-grid{grid-template-columns:1fr;gap:26px}.about-heading h2,.section-heading h2,.personalization-intro h2,.partners-copy h2,.contact h2{font-size:clamp(2.6rem,10vw,4.2rem)}.section-heading{margin-bottom:32px}.circuit-filters{align-items:stretch;flex-direction:column}.filter-select-wrap{width:100%}.circuit-grid{grid-template-columns:1fr;gap:38px}.circuit-image-link{aspect-ratio:1.15/1}.circuit-gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.circuit-gallery-item,.circuit-gallery-item img{min-height:150px}.circuit-gallery-item-large{grid-column:span 2}.travel-interest-list{grid-template-columns:1fr 1fr}.partner-stories{gap:12px}.partner-story img{aspect-ratio:1/1}.footer-editorial{grid-template-columns:1fr 1fr;gap:25px}.footer-brand-block{grid-column:1/-1}.footer-bottom{flex-wrap:wrap}.form-row{grid-template-columns:1fr}.gallery-grid,.detail-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}.gallery-dialog-foot{align-items:flex-start;flex-direction:column}.detail-info-grid{grid-template-columns:1fr}}
 @media(max-width:420px){.container{width:calc(100% - 32px)}.brand-logo{width:155px}.hero h1{font-size:2.75rem}.travel-interest-list{grid-template-columns:1fr}.partner-stories,.footer-editorial{grid-template-columns:1fr}.footer-brand-block{grid-column:auto}.partner-story img{aspect-ratio:1.5/1}.detail-day{grid-template-columns:1fr;gap:6px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* Page À propos : récit et FAQ accessibles */
+.about-page-hero{min-height:clamp(560px,72vh,760px)}
+.about-page-hero .hero-content{padding-block:100px 110px}
+.about-mi .about-opening{max-width:1240px}
+.faq-section{background:var(--paper);padding-block:clamp(65px,8vw,110px)}
+.faq-section .container{max-width:980px}
+.faq-heading{max-width:700px;margin-bottom:36px}
+.faq-heading h2{font-size:clamp(2.5rem,5vw,4.5rem)}
+.faq-list{border-top:1px solid var(--line)}
+.faq-list details{border-bottom:1px solid var(--line)}
+.faq-list summary{position:relative;list-style:none;cursor:pointer;padding:22px 48px 22px 0;font-size:clamp(1rem,1.7vw,1.2rem);font-weight:600}
+.faq-list summary::-webkit-details-marker{display:none}
+.faq-list summary:after{content:"+";position:absolute;right:6px;top:17px;color:var(--red);font-size:25px;font-weight:400}
+.faq-list details[open] summary:after{content:"−"}
+.faq-list summary:focus-visible{outline:2px solid var(--red);outline-offset:4px}
+.faq-answer{max-width:760px;padding:0 35px 22px 0;color:var(--muted);line-height:1.85}
+.faq-answer p{margin:0 0 12px}
+.faq-answer ul{padding-left:20px}
+.tourism-vision,.local-network-proof{padding:clamp(64px,8vw,110px) 0;background:var(--soft)}
+.tourism-vision-inner,.local-network-layout{max-width:1240px;margin-inline:auto}
+.tourism-vision-heading{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.8fr);align-items:end;gap:24px 64px;margin-bottom:48px}
+.tourism-vision-heading .eyebrow{grid-column:1/-1;margin:0}
+.tourism-vision-heading h2,.local-network-layout h2{font-size:clamp(2.4rem,5vw,4.6rem)}
+.tourism-vision-heading h2 em,.local-network-layout h2 em{color:var(--red)}
+.tourism-vision-heading>p:last-child,.local-network-layout>div:last-child p{margin:0 0 18px;color:var(--muted);line-height:1.85}
+.tourism-vision-pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-bottom:38px}
+.tourism-pillar{padding-top:17px;border-top:1px solid var(--line)}
+.tourism-pillar-number{color:var(--red);font-size:11px;letter-spacing:.12em}
+.tourism-pillar h3{margin:20px 0 8px;font-size:1.05rem}
+.tourism-pillar p{margin:0;color:var(--muted);font-size:13px;line-height:1.8}
+.tourism-vision-image{margin:0}.tourism-vision-image img{width:100%;max-height:520px;aspect-ratio:2/1;object-fit:cover}.tourism-vision-image figcaption{margin-top:9px;color:var(--muted);font-size:11px}
+.local-network-layout{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(34px,7vw,90px);align-items:start}
+.local-network-emphasis{padding-left:18px;border-left:3px solid var(--red);color:var(--ink)!important;font-weight:700}
+@media(max-width:760px){.tourism-vision-inner,.local-network-layout{width:calc(100% - 40px)}.tourism-vision-heading,.local-network-layout{grid-template-columns:1fr;gap:22px}.tourism-vision-heading .eyebrow{grid-column:auto}.tourism-vision-pillars{grid-template-columns:1fr;gap:24px}.tourism-vision-image img{aspect-ratio:4/3}.faq-list summary{padding-right:36px}}
