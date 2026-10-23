@@ -733,3 +733,272 @@
     margin-top: 48px;
   }
 }
+
+
+/* Circuits as full-bleed editorial image cards: all copy/actions stay on image */
+.circuits {
+  background: #f5f3ef;
+  color: #211f1c;
+}
+
+.circuits .circuit-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(28px, 4vw, 64px);
+  align-items: start;
+}
+
+.circuits .circuit-card {
+  position: relative;
+  display: block;
+  min-width: 0;
+  aspect-ratio: 1.24 / 1;
+  overflow: hidden;
+  isolation: isolate;
+  background: #8c8172;
+  color: #fff;
+}
+
+.circuits .circuit-card:nth-child(4n + 2) {
+  margin-top: 70px;
+}
+
+.circuits .circuit-card:nth-child(4n + 3) {
+  margin-top: -24px;
+}
+
+.circuits .circuit-card .circuit-image-link {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  margin: 0;
+  background: #8c8172;
+}
+
+.circuits .circuit-card .circuit-image-link img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .8s cubic-bezier(.2,.65,.25,1);
+}
+
+.circuits .circuit-card:hover .circuit-image-link img {
+  transform: scale(1.045);
+}
+
+.circuits .circuit-card::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  background: linear-gradient(180deg, rgba(18,17,15,.08) 0%, rgba(18,17,15,.06) 25%, rgba(18,17,15,.48) 58%, rgba(18,17,15,.86) 100%);
+  pointer-events: none;
+}
+
+.circuits .circuit-overlay {
+  position: absolute;
+  inset: auto 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  padding: clamp(20px, 3vw, 42px);
+  color: #fff;
+}
+
+.circuits .circuit-card .circuit-meta {
+  order: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 8px 18px;
+  margin: 0 0 14px;
+  color: rgba(255,255,255,.78);
+  font-size: 9px;
+  letter-spacing: .13em;
+  line-height: 1.5;
+}
+
+.circuits .circuit-card .circuit-price {
+  order: 1;
+  display: flex;
+  justify-content: flex-start;
+  gap: 8px;
+  width: auto;
+  margin: 0 0 12px;
+  padding: 0;
+  border: 0;
+  color: rgba(255,255,255,.7);
+  font-size: 9px;
+}
+
+.circuits .circuit-card .circuit-price strong {
+  color: #fff;
+  font-size: 10px;
+}
+
+.circuits .circuit-card h3 {
+  order: 2;
+  max-width: 640px;
+  margin: 0 0 9px;
+  color: #fff;
+  font-family: var(--sans);
+  font-size: clamp(1.8rem, 3.5vw, 3.25rem);
+  font-weight: 600;
+  letter-spacing: -.055em;
+  line-height: .98;
+}
+
+.circuits .circuit-card > .circuit-overlay > p {
+  order: 3;
+  max-width: 470px;
+  margin: 0 0 18px;
+  color: rgba(255,255,255,.86);
+  font-size: clamp(12px, 1.1vw, 15px);
+  line-height: 1.65;
+}
+
+.circuits .circuit-card .gallery-trigger {
+  order: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+  padding: 0 0 5px;
+  border: 0;
+  border-bottom: 1px solid rgba(255,255,255,.55);
+  background: transparent;
+  color: #fff;
+  font-size: 11px;
+}
+
+.circuits .circuit-card .circuit-link {
+  order: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  justify-self: auto;
+  margin-top: 2px;
+  padding: 10px 0 5px;
+  border-bottom: 1px solid rgba(255,255,255,.68);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.circuits .circuit-card .image-index {
+  left: 18px;
+  bottom: 18px;
+  z-index: 2;
+  color: rgba(255,255,255,.95);
+  font-size: 9px;
+}
+
+.circuits .circuit-card .image-arrow {
+  top: 18px;
+  right: 18px;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  border-color: rgba(255,255,255,.7);
+  background: rgba(20,18,16,.08);
+  color: #fff;
+}
+
+.circuits .section-heading h2 {
+  color: #24211e;
+}
+
+.circuits .section-heading h2 em {
+  color: #922d20;
+}
+
+.circuits .section-heading-copy {
+  color: #706a64;
+}
+
+.circuits .circuit-filters {
+  border-color: rgba(33,31,28,.16);
+}
+
+.circuits .filter-button {
+  border-color: rgba(33,31,28,.22);
+  border-radius: 999px;
+  color: #3c3833;
+}
+
+.circuits .filter-button.is-active,
+.circuits .filter-button:hover {
+  background: #292622;
+  color: #fff;
+}
+
+.circuits .circuit-filter-select {
+  border-color: rgba(33,31,28,.24);
+  background: #f5f3ef;
+  color: #292622;
+}
+
+.circuits .circuits-foot {
+  border-color: rgba(33,31,28,.18);
+}
+
+.circuits .circuits-foot p {
+  color: #706a64;
+}
+
+.circuits .button-outline-light {
+  border-color: #292622;
+  border-radius: 999px;
+  color: #292622;
+}
+
+@media (max-width: 900px) {
+  .circuits .circuit-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 26px;
+  }
+
+  .circuits .circuit-card:nth-child(4n + 2),
+  .circuits .circuit-card:nth-child(4n + 3) {
+    margin-top: 0;
+  }
+
+  .circuits .circuit-card {
+    aspect-ratio: .82 / 1;
+  }
+
+  .circuits .circuit-overlay {
+    padding: 22px;
+  }
+
+  .circuits .circuit-card h3 {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+  }
+}
+
+@media (max-width: 600px) {
+  .circuits .circuit-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .circuits .circuit-card {
+    aspect-ratio: 4 / 4.7;
+  }
+
+  .circuits .circuit-overlay {
+    padding: 24px;
+  }
+
+  .circuits .circuit-card h3 {
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+
+  .circuits .circuit-card > .circuit-overlay > p {
+    font-size: 13px;
+  }
+}
