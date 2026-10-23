@@ -1002,3 +1002,43 @@
     font-size: 13px;
   }
 }
+
+
+/* Ajustement fin : cartes circuits plus grandes et grille plus resserrée */
+.circuits .circuit-grid {
+  column-gap: clamp(18px, 2.2vw, 34px);
+  row-gap: clamp(24px, 2.8vw, 42px);
+}
+
+.circuits .circuit-card {
+  aspect-ratio: 1.12 / 1;
+}
+
+.circuits .circuit-card:nth-child(4n + 2) {
+  margin-top: 48px;
+}
+
+.circuits .circuit-card:nth-child(4n + 3) {
+  margin-top: -14px;
+}
+
+@media (max-width: 900px) {
+  .circuits .circuit-grid {
+    column-gap: 18px;
+    row-gap: 22px;
+  }
+
+  .circuits .circuit-card {
+    aspect-ratio: .76 / 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .circuits .circuit-grid {
+    row-gap: 18px;
+  }
+
+  .circuits .circuit-card {
+    aspect-ratio: 4 / 4.5;
+  }
+}
