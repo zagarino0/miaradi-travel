@@ -347,13 +347,30 @@
     </section>
 
 
-    <section class="journey-together section-pad" aria-labelledby="journey-together-title">
-      <div class="container journey-together-inner">
-        <p class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="togetherEyebrow">À VOTRE RYTHME</span></p>
-        <h2 id="journey-together-title" data-i18n="togetherTitle">Le voyage se construit<br><em>ensemble.</em></h2>
-        <div class="journey-together-copy">
-          <p data-i18n="togetherCopy">Vos envies donnent le premier cap. Nous échangeons avec vous pour ajuster le rythme, la durée, les expériences et les étapes, puis imaginons un itinéraire adapté à votre projet.</p>
-          <a class="button button-primary" href="#contact"><span data-i18n="heroButton">Imaginons votre voyage</span><span aria-hidden="true">↗</span></a>
+    <section class="journey-together section-pad personalization" aria-labelledby="journey-together-title">
+      <div class="container personalization-layout">
+        <div class="personalization-intro">
+          <p class="eyebrow"><span class="eyebrow-line"></span>VOTRE PROJET, NOTRE EXPERTISE</p>
+          <h2 id="journey-together-title">Le plus beau voyage est celui qui vous <em>ressemble.</em></h2>
+          <p>Vous rêvez d’aventure, de nature, de découvertes culturelles ou de quelques jours au bord de l’eau ? Nous construisons avec vous un itinéraire adapté à vos envies, à votre budget et au temps dont vous disposez.</p>
+          <h3>Trois étapes pour imaginer votre voyage</h3>
+          <ol class="planning-list">
+            <li><strong>Vous nous racontez vos envies</strong><span>Vos destinations rêvées, vos centres d’intérêt, vos dates et votre manière de voyager.</span></li>
+            <li><strong>Nous imaginons votre itinéraire</strong><span>Nous étudions les étapes, les activités, les déplacements et les hébergements adaptés à votre projet.</span></li>
+            <li><strong>Nous affinons ensemble votre voyage</strong><span>Nous échangeons sur la proposition pour construire un programme cohérent avec vos attentes.</span></li>
+          </ol>
+        </div>
+        <div class="personalization-card">
+          <p class="eyebrow">IMAGINONS VOTRE VOYAGE</p><h3>Quel voyage vous attire ?</h3>
+          <p>Choisissez une première inspiration. Nous préciserons les détails ensemble.</p>
+          <div class="travel-interest-list">
+            <label><input type="checkbox" name="interest" value="Nature & randonnée"><span aria-hidden="true">↗</span> Nature & randonnée</label>
+            <label><input type="checkbox" name="interest" value="Plages & îles"><span aria-hidden="true">≈</span> Plages & îles</label>
+            <label><input type="checkbox" name="interest" value="Culture & rencontres"><span aria-hidden="true">⌂</span> Culture & rencontres</label>
+            <label><input type="checkbox" name="interest" value="Circuit découverte"><span aria-hidden="true">◎</span> Circuit découverte</label>
+          </div>
+          <p class="personalization-note">Ces choix sont indicatifs : ils pourront être précisés dans votre demande.</p>
+          <a class="button button-primary personalization-submit" href="#contact">Commencer mon projet de voyage <span aria-hidden="true">↗</span></a>
         </div>
       </div>
     </section>
@@ -361,16 +378,21 @@
     <section class="local-partners section-pad" id="partners" aria-labelledby="partners-title">
       <div class="container partners-layout">
         <div class="partners-copy">
-          <p class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="partnersEyebrow">UNE AVENTURE HUMAINE</span></p>
-          <h2 id="partners-title" data-i18n="partnersTitle">Ceux qui font vivre<br><em>le voyage.</em></h2>
-          <p data-i18n="partnersCopy">Autour de notre équipe de 5 personnes, près de 40 collaborateurs et partenaires locaux donnent vie aux circuits : guides, chauffeurs, piroguiers, hébergeurs, artisans et communautés.</p>
-          <a class="underlined-link" href="#about"><span data-i18n="partnersLink">Découvrir notre philosophie</span><span aria-hidden="true">↗</span></a>
+          <p class="eyebrow"><span class="eyebrow-line"></span>UNE AVENTURE HUMAINE</p>
+          <h2 id="partners-title">Derrière chaque voyage,<br><em>des rencontres.</em></h2>
+          <p>Notre connaissance de Madagascar s’enrichit des liens tissés avec les acteurs locaux : guides, hébergeurs, artisans, transporteurs et initiatives de terrain.</p>
+          <p>Ces collaborations contribuent à créer des expériences plus humaines, adaptées aux réalités locales et attentives aux personnes qui accueillent les voyageurs.</p>
+          <a class="underlined-link" href="a-propos.html">Découvrir notre réseau local <span aria-hidden="true">↗</span></a>
         </div>
-        <div class="partners-grid">
-          <article class="partner-card"><span class="partner-number">01</span><h3 data-i18n="partner1Title">Guides et accompagnateurs</h3><p data-i18n="partner1Copy">Découvrir les territoires avec celles et ceux qui les connaissent.</p></article>
-          <article class="partner-card"><span class="partner-number">02</span><h3 data-i18n="partner2Title">Hébergements de caractère</h3><p data-i18n="partner2Copy">Des étapes choisies selon l’esprit de votre voyage.</p></article>
-          <article class="partner-card"><span class="partner-number">03</span><h3 data-i18n="partner3Title">Artisans et initiatives locales</h3><p data-i18n="partner3Copy">Rencontrer des savoir-faire et des histoires du territoire.</p></article>
-        </div>
+        <figure class="partners-feature">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Andasibe_Mantadia_National_Park.jpg?width=1100" alt="Forêt tropicale de Madagascar, territoire de découverte" loading="lazy">
+          <figcaption>Découvrir Madagascar avec celles et ceux qui le connaissent.</figcaption>
+        </figure>
+      </div>
+      <div class="container partner-stories">
+        <article class="partner-story"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Madagascar_local_guide.jpg?width=700" alt="Guide local à Madagascar" loading="lazy"><h3>Guides locaux</h3><p>Partager les richesses du territoire.</p></article>
+        <article class="partner-story"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bungalow_in_Madagascar.jpg?width=700" alt="Hébergement au cœur de la nature malgache" loading="lazy"><h3>Hébergements</h3><p>Des étapes choisies avec soin.</p></article>
+        <article class="partner-story"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Malagasy_crafts.jpg?width=700" alt="Artisanat malgache traditionnel" loading="lazy"><h3>Artisans & savoir-faire</h3><p>Découvrir les traditions vivantes.</p></article>
       </div>
     </section>
 
@@ -399,25 +421,13 @@
             <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Indri_Andasibe.JPG?width=900" alt="Lémurien dans la forêt tropicale d'Andasibe" loading="lazy">
             <span class="circuit-gallery-caption"><small>04 · EST</small><strong>Une nature exceptionnelle</strong></span>
           </a>
-          <a class="circuit-gallery-item" href="#contact" data-circuit="La Route nationale 7" aria-label="Préparer un voyage dans le sud de Madagascar">
-            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Isalo-madagascar.jpg?width=900" alt="Grands espaces et reliefs de l'Isalo" loading="lazy">
-            <span class="circuit-gallery-caption"><small>05 · SUD</small><strong>Les grands espaces</strong></span>
-          </a>
+          
         </div>
       </section>
 
 
-    <section class="quote-band">
-      <div class="container quote-band-inner">
-        <p class="eyebrow"><span class="eyebrow-line"></span><span data-i18n="quoteEyebrow">VOTRE HISTOIRE, VOTRE ITINÉRAIRE</span></p>
-        <h2 data-i18n="quoteTitle">Un voyage qui se construit<br><em>ensemble.</em></h2>
-        <a class="button button-dark" href="#contact"><span data-i18n="quoteButton">Imaginons votre circuit</span><span aria-hidden="true">↗</span></a>
-      </div>
-      <div class="quote-decoration" aria-hidden="true">M.</div>
-    </section>
-
-    <section class="inspiration-band">
-      <div class="container inspiration-content"><p class="eyebrow eyebrow-light">LES BELLES HISTOIRES COMMENCENT ICI</p><h2>Madagascar → Rencontres →<br><em>Votre voyage.</em></h2><p>Parlez-nous de votre prochaine escapade à Madagascar.</p><a class="button button-light" href="#contact">Recevoir des idées de voyage <span aria-hidden="true">↗</span></a></div>
+    <section class="inspiration-band final-invitation" aria-labelledby="final-invitation-title">
+      <div class="container inspiration-content"><p class="eyebrow eyebrow-light">LES BELLES HISTOIRES COMMENCENT ICI</p><h2 id="final-invitation-title">Madagascar. Des rencontres.<br><em>Votre voyage.</em></h2><p>Un projet précis ou une simple envie d’évasion ? Commençons par en parler.</p><a class="button button-light" href="#contact">Imaginons votre voyage <span aria-hidden="true">↗</span></a></div>
     </section>
     <section class="contact section-pad" id="contact">
       <div class="container contact-grid">
@@ -455,14 +465,12 @@
   </dialog>
 
   <footer class="site-footer">
-    <div class="container footer-main">
-      <a class="brand brand-footer" href="#top">
-        <img class="brand-logo brand-logo-footer" src="assets/miaradi-logo.png" alt="Miaradi — Tour Operator Madagascar">
-      </a>
-      <p data-i18n="footerStatement">Madagascar, plus proche. Le monde, autrement.</p>
-      <nav aria-label="Navigation de pied de page"><a href="#top" data-i18n="navHome">Accueil</a><a href="#circuits" data-i18n="navCircuits">Nos circuits</a><a href="a-propos.html" data-i18n="navAbout">À propos</a><a href="#contact" data-i18n="navContact">Contact</a></nav>
+    <div class="container footer-editorial">
+      <div class="footer-brand-block"><a class="brand brand-footer" href="#top"><img class="brand-logo brand-logo-footer" src="assets/miaradi-logo.png" alt="MIARADI-TRAVEL — Tour Operator Madagascar"></a><p>Madagascar se découvre mieux quand le voyage a du sens.</p></div>
+      <div class="footer-link-group"><h2>Explorer</h2><a href="a-propos.html">À propos</a><a href="#circuits">Nos circuits</a><a href="Nosy-Be.html">Carnet de voyage</a><a href="#contact">Contact</a></div>
+      <div class="footer-link-group"><h2>Préparer son voyage</h2><a href="#contact">Voyage sur mesure</a><a href="#contact">Demande de devis</a><a href="a-propos.html#faq">Questions fréquentes</a><a href="a-propos.html">Français / English</a></div>
     </div>
-    <div class="container footer-bottom"><span>© <span id="year"></span> MIARADI-TRAVEL</span><span data-i18n="footerRights">Tous droits réservés</span><a href="#top" data-i18n="backTop">Retour en haut ↑</a></div>
+    <div class="container footer-bottom"><span>© <span id="year"></span> MIARADI-TRAVEL</span><span>Mentions légales · Politique de confidentialité</span><a href="#top">Retour en haut ↑</a></div>
   </footer>
 </body>
 </html>
