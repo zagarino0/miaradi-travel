@@ -39,7 +39,7 @@ const translations = {
     formDemo: "Merci {name}. Votre formulaire fonctionne en mode maquette, mais l'envoi n'est pas activé. Contactez l'agence par e-mail dès que ses coordonnées seront configurées."
   },
   en: {
-    navAbout: "About", navCircuits: "Journeys", navContact: "Contact", navQuote: "Request a quote",
+    navHome: "Home", navAbout: "About", navCircuits: "Our circuits", navContact: "Contact", navQuote: "Plan my trip",
     finderEyebrow: "YOUR NEXT ADVENTURE", finderTitle: "Find your <em>journey.</em>", finderRegion: "Region", finderDuration: "Trip length", finderTheme: "Travel style", finderSubmit: "Find a journey",
     heroEyebrow: "AUTHENTIC JOURNEYS · MADAGASCAR",
     heroTitle: "Madagascar, <em>in a different light.</em><br>Journeys made for you.",
