@@ -1083,3 +1083,28 @@
     aspect-ratio: 4 / 4.4;
   }
 }
+
+
+/* Bordure ivoire et coins arrondis pour les cartes de circuits */
+.circuits .circuit-card {
+  border: 5px solid #fbf8f5;
+  border-radius: 18px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.circuits .circuit-card .circuit-image-link,
+.circuits .circuit-card .circuit-image-link img {
+  border-radius: inherit;
+}
+
+.circuits .circuit-card .image-arrow {
+  border-radius: 50%;
+}
+
+@media (max-width: 600px) {
+  .circuits .circuit-card {
+    border-width: 4px;
+    border-radius: 15px;
+  }
+}
