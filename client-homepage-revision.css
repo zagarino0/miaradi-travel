@@ -614,3 +614,100 @@ img {
   .footer-brand-block { grid-column: auto; }
   .final-invitation h2 { font-size: clamp(2.4rem, 11vw, 3.6rem); }
 }
+
+
+/* Page À propos — philosophie, rencontres et réseau local */
+.tourism-vision {
+  background: #F0EDE7;
+}
+.tourism-vision-inner {
+  max-width: 1240px;
+  margin-inline: auto;
+}
+.tourism-vision-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, .8fr);
+  align-items: end;
+  gap: 28px 64px;
+  margin-bottom: clamp(34px, 5vw, 58px);
+}
+.tourism-vision-heading .eyebrow { grid-column: 1 / -1; margin-bottom: 0; }
+.tourism-vision-heading h2 {
+  margin: 0;
+  font-size: clamp(2.3rem, 5vw, 4.6rem);
+  line-height: 1.02;
+  letter-spacing: -.04em;
+}
+.tourism-vision-heading h2 em,
+.local-network-layout h2 em { color: #922D20; }
+.tourism-vision-heading > p:last-child {
+  max-width: 540px;
+  margin: 0;
+  line-height: 1.8;
+  color: rgba(17,17,15,.72);
+}
+.tourism-vision-pillars {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  margin-bottom: 42px;
+}
+.tourism-pillar {
+  padding-top: 18px;
+  border-top: 1px solid rgba(17,17,15,.22);
+}
+.tourism-pillar-number {
+  color: #922D20;
+  font-family: "DM Mono", monospace;
+  font-size: .82rem;
+}
+.tourism-pillar h3 { margin: 22px 0 10px; font-size: 1.15rem; }
+.tourism-pillar p { margin: 0; color: rgba(17,17,15,.7); line-height: 1.75; }
+.tourism-vision-image { margin: 0; }
+.tourism-vision-image img {
+  display: block;
+  width: 100%;
+  max-height: 540px;
+  aspect-ratio: 2 / 1;
+  object-fit: cover;
+  object-position: center 55%;
+}
+.tourism-vision-image figcaption {
+  margin-top: 10px;
+  color: rgba(17,17,15,.62);
+  font-size: .84rem;
+}
+.local-network-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  gap: clamp(34px, 7vw, 100px);
+  align-items: start;
+  max-width: 1240px;
+  margin-inline: auto;
+}
+.local-network-layout h2 {
+  max-width: 570px;
+  font-size: clamp(2.1rem, 4.5vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -.035em;
+}
+.local-network-layout > div:last-child p {
+  margin-top: 0;
+  line-height: 1.8;
+  color: rgba(17,17,15,.75);
+}
+.local-network-layout .local-network-emphasis {
+  padding-left: 20px;
+  border-left: 3px solid #922D20;
+  color: #11110f;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+@media (max-width: 760px) {
+  .tourism-vision-heading,
+  .local-network-layout { grid-template-columns: 1fr; }
+  .tourism-vision-heading .eyebrow { grid-column: auto; }
+  .tourism-vision-pillars { grid-template-columns: 1fr; gap: 24px; }
+  .tourism-pillar h3 { margin-top: 14px; }
+  .tourism-vision-image img { aspect-ratio: 4 / 3; }
+}
