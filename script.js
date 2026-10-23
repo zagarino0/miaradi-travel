@@ -1,6 +1,6 @@
 const translations = {
   fr: {
-    navAbout: "À propos", navCircuits: "Circuits", navContact: "Contact", navQuote: "Demander un devis",
+    navHome: "Accueil", navAbout: "À propos", navCircuits: "Nos circuits", navContact: "Contact", navQuote: "Préparer mon voyage",
     finderEyebrow: "VOTRE PROCHAINE AVENTURE", finderTitle: "Trouvez votre <em>voyage.</em>", finderRegion: "Région", finderDuration: "Durée du séjour", finderTheme: "Type de voyage", finderSubmit: "Trouver un circuit",
     heroEyebrow: "VOYAGES AUTHENTIQUES · MADAGASCAR",
     heroTitle: "Madagascar, <em>autrement.</em><br>Des voyages qui vous ressemblent.",
