@@ -132,3 +132,14 @@ body{background:var(--miaradi-ivory);color:var(--miaradi-ink)}
  .circuit-grid{grid-template-columns:1fr!important}
  .about-page-hero h1{font-size:clamp(2.5rem,11vw,3.8rem)!important}
 }
+
+/* Collaborative journey is the bridge between inspiration and local partners. */
+.quote-band{display:none!important}
+.journey-together{background:#eee4da!important;color:var(--miaradi-ink)!important}
+.journey-together-inner{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.8fr);column-gap:clamp(36px,8vw,120px);align-items:end}
+.journey-together-inner>.eyebrow{grid-column:1/-1;margin-bottom:24px}
+.journey-together h2{font-size:clamp(2.8rem,5.8vw,5.3rem)!important;line-height:1.02!important;letter-spacing:-.05em!important}
+.journey-together h2 em{font-family:Georgia,serif;font-weight:400;color:var(--miaradi-red)!important}
+.journey-together-copy p{max-width:560px;margin:0 0 26px;color:var(--miaradi-muted);font-size:1.03rem;line-height:1.9}
+.journey-together-copy .button{background:var(--miaradi-red)!important;color:#fff!important}
+@media(max-width:760px){.journey-together-inner{grid-template-columns:1fr;gap:24px}.journey-together-inner>.eyebrow{margin-bottom:0}}
