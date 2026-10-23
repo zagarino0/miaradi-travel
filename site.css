@@ -52,3 +52,203 @@
 .local-network-layout{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(34px,7vw,90px);align-items:start}
 .local-network-emphasis{padding-left:18px;border-left:3px solid var(--red);color:var(--ink)!important;font-weight:700}
 @media(max-width:760px){.tourism-vision-inner,.local-network-layout{width:calc(100% - 40px)}.tourism-vision-heading,.local-network-layout{grid-template-columns:1fr;gap:22px}.tourism-vision-heading .eyebrow{grid-column:auto}.tourism-vision-pillars{grid-template-columns:1fr;gap:24px}.tourism-vision-image img{aspect-ratio:4/3}.faq-list summary{padding-right:36px}}
+
+
+/* Correctif hero : contenir le titre et organiser le collage des destinations */
+.hero {
+  position: relative;
+  min-width: 0;
+  overflow: clip;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  width: min(58%, 760px);
+  margin-left: max(32px, calc((100% - var(--container)) / 2));
+  margin-right: 0;
+}
+
+.hero h1 {
+  max-width: 760px;
+  font-size: clamp(3.25rem, 6.1vw, 6.25rem);
+  line-height: .98;
+  text-wrap: pretty;
+  overflow-wrap: normal;
+}
+
+.hero-copy {
+  max-width: 500px;
+}
+
+.hero-destination-strip {
+  position: absolute;
+  z-index: 1;
+  top: 7%;
+  right: max(24px, calc((100% - var(--container)) / 2));
+  bottom: 7%;
+  width: min(40%, 560px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) auto;
+  gap: 12px;
+  min-width: 0;
+}
+
+.hero-destination {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  color: #fff;
+  background: rgba(25, 20, 17, .45);
+}
+
+.hero-destination img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease;
+}
+
+.hero-destination::after {
+  content: "";
+  position: absolute;
+  inset: 35% 0 0;
+  background: linear-gradient(transparent, rgba(20, 16, 14, .72));
+  pointer-events: none;
+}
+
+.hero-destination:hover img {
+  transform: scale(1.04);
+}
+
+.hero-destination .destination-name,
+.hero-destination small {
+  position: relative;
+  z-index: 1;
+  padding-inline: 12px;
+}
+
+.hero-destination .destination-name {
+  font-size: clamp(.95rem, 1.25vw, 1.2rem);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.hero-destination small {
+  padding-bottom: 12px;
+  font-size: 9px;
+  letter-spacing: .08em;
+  line-height: 1.4;
+}
+
+.hero-destination-prompt {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0 0;
+  border-top: 1px solid rgba(255, 255, 255, .48);
+  font-size: 10px;
+  letter-spacing: .08em;
+}
+
+.hero-destination-prompt a {
+  font-size: 12px;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.hero-index {
+  position: absolute;
+  z-index: 3;
+  right: calc(min(40%, 560px) + max(36px, (100% - var(--container)) / 2 + 12px));
+  bottom: 27px;
+  color: rgba(255, 255, 255, .9);
+  font-size: 12px;
+}
+
+@media (max-width: 1000px) {
+  .hero-content {
+    width: 58%;
+    margin-left: 32px;
+  }
+
+  .hero h1 {
+    font-size: clamp(3rem, 6.2vw, 4.75rem);
+  }
+
+  .hero-destination-strip {
+    right: 24px;
+    width: 38%;
+    gap: 8px;
+  }
+
+  .hero-destination small {
+    font-size: 8px;
+  }
+}
+
+@media (max-width: 700px) {
+  .hero {
+    display: block;
+    min-height: auto;
+    padding-bottom: 24px;
+  }
+
+  .hero-content {
+    width: auto;
+    margin: 0;
+    padding: 100px 20px 28px;
+  }
+
+  .hero h1 {
+    max-width: 100%;
+    font-size: clamp(2.8rem, 11vw, 4.5rem);
+    line-height: 1;
+  }
+
+  .hero-copy {
+    max-width: 100%;
+    font-size: 1rem;
+  }
+
+  .hero-destination-strip {
+    position: relative;
+    inset: auto;
+    width: auto;
+    margin: 0 20px 28px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(150px, 42vw)) auto;
+    gap: 10px;
+  }
+
+  .hero-destination-prompt {
+    flex-wrap: wrap;
+  }
+
+  .hero-index {
+    display: none;
+  }
+
+  .hero-bottom {
+    position: relative;
+    inset: auto;
+    transform: none;
+    width: auto;
+    margin: 0 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-destination img {
+    transition: none;
+  }
+}
