@@ -1276,3 +1276,597 @@
   grid-column: 2;
   grid-row: 2;
 }
+
+
+/* Page À propos — mise en page dédiée, isolée des autres pages */
+.about-page-hero {
+  min-height: clamp(520px, 72vh, 820px);
+}
+
+.about-page-hero .hero-content {
+  max-width: 900px;
+  padding-top: clamp(100px, 15vh, 180px);
+  padding-bottom: clamp(64px, 9vh, 110px);
+}
+
+.about-page-hero .hero-content h1 {
+  max-width: 880px;
+  font-size: clamp(3rem, 7vw, 6.8rem);
+  line-height: .98;
+  letter-spacing: -.065em;
+  text-wrap: balance;
+}
+
+.about-page-hero .hero-content h1 em,
+.about-heading h2 em,
+.about-collaboration-heading h3 em,
+.about-team-heading h3 em,
+.tourism-vision-heading h2 em,
+.local-network-layout h2 em,
+.faq-intro h2 em,
+.about-final-cta h2 em {
+  color: #d9b3a4;
+  font-family: var(--serif, Georgia, serif);
+  font-weight: 400;
+}
+
+.about-mi {
+  padding-bottom: 0;
+}
+
+.about-opening,
+.about-collaboration,
+.about-team-layout,
+.about-closing,
+.tourism-vision-inner,
+.local-network-layout,
+.faq-layout {
+  width: min(100% - 64px, 1380px);
+  margin-inline: auto;
+}
+
+.about-opening {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: clamp(32px, 7vw, 112px);
+  align-items: start;
+}
+
+.about-heading h2,
+.tourism-vision-heading h2,
+.faq-intro h2 {
+  margin: 18px 0 0;
+  font-size: clamp(2.8rem, 5.4vw, 5.5rem);
+  line-height: .98;
+  letter-spacing: -.06em;
+  text-wrap: balance;
+}
+
+.about-lead,
+.about-collaboration-copy,
+.about-team-content,
+.local-network-layout > div:last-child {
+  color: #5f5852;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.about-lead p,
+.about-collaboration-copy p,
+.about-team-content p,
+.local-network-layout > div:last-child p {
+  margin: 0 0 18px;
+}
+
+.about-lead .about-strong,
+.about-collaboration-copy .about-strong {
+  color: #211f1c;
+  font-size: clamp(1.08rem, 1.45vw, 1.35rem);
+  line-height: 1.55;
+}
+
+.about-collaboration {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: clamp(32px, 7vw, 112px);
+  padding-block: clamp(72px, 9vw, 132px);
+}
+
+.about-collaboration-heading h3,
+.about-team-heading h3 {
+  margin: 18px 0 0;
+  font-size: clamp(2.3rem, 4.3vw, 4.2rem);
+  line-height: 1.02;
+  letter-spacing: -.055em;
+  text-wrap: balance;
+}
+
+.about-team-band {
+  padding-block: clamp(60px, 8vw, 112px);
+  background: #eee8e1;
+  border-block: 1px solid rgba(34, 29, 25, .12);
+}
+
+.about-team-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: clamp(32px, 7vw, 112px);
+  align-items: start;
+}
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.about-stats > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 128px;
+  padding: 22px;
+  border: 1px solid rgba(34, 29, 25, .17);
+  border-radius: 14px;
+  background: rgba(251, 248, 245, .7);
+}
+
+.about-stats strong {
+  color: #922d20;
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-weight: 500;
+  letter-spacing: -.06em;
+  line-height: 1;
+}
+
+.about-stats span {
+  color: #5f5852;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.about-closing {
+  position: relative;
+  max-width: 980px;
+  padding-block: clamp(72px, 9vw, 132px);
+  text-align: center;
+}
+
+.about-closing-mark {
+  display: block;
+  color: #d9b3a4;
+  font-family: Georgia, serif;
+  font-size: 6rem;
+  line-height: .7;
+}
+
+.about-closing > p {
+  max-width: 880px;
+  margin: 24px auto 28px;
+  color: #211f1c;
+  font-family: var(--serif, Georgia, serif);
+  font-size: clamp(1.6rem, 3vw, 2.7rem);
+  line-height: 1.3;
+}
+
+.underlined-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  width: fit-content;
+  padding-bottom: 9px;
+  border-bottom: 1px solid #922d20;
+  color: #922d20;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.tourism-vision {
+  background: #f0eae3;
+}
+
+.tourism-vision-inner {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  column-gap: clamp(32px, 6vw, 96px);
+  row-gap: 44px;
+  align-items: start;
+}
+
+.tourism-vision-heading > p:last-child {
+  max-width: 570px;
+  margin-top: 24px;
+  color: #5f5852;
+  line-height: 1.75;
+}
+
+.tourism-vision-pillars {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid rgba(34, 29, 25, .2);
+}
+
+.tourism-pillar {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  column-gap: 18px;
+  padding-block: 22px;
+  border-bottom: 1px solid rgba(34, 29, 25, .2);
+}
+
+.tourism-pillar-number {
+  grid-row: span 2;
+  padding-top: 4px;
+  color: #922d20;
+  font-family: var(--mono, monospace);
+  font-size: 11px;
+  letter-spacing: .08em;
+}
+
+.tourism-pillar h3 {
+  margin: 0 0 8px;
+  color: #211f1c;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.tourism-pillar p {
+  margin: 0;
+  color: #5f5852;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.tourism-vision-image {
+  grid-column: 1 / -1;
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border: 5px solid #fbf8f5;
+  border-radius: 18px;
+  background: #d8d0c7;
+}
+
+.tourism-vision-image img {
+  display: block;
+  width: 100%;
+  max-height: 520px;
+  aspect-ratio: 2.2 / 1;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.tourism-vision-image figcaption {
+  padding: 12px 16px;
+  color: #5f5852;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.local-network-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  gap: clamp(32px, 7vw, 112px);
+  align-items: start;
+}
+
+.local-network-layout h2 {
+  margin: 18px 0 0;
+  font-size: clamp(2.6rem, 5vw, 5rem);
+  line-height: 1;
+  letter-spacing: -.06em;
+  text-wrap: balance;
+}
+
+.local-network-emphasis {
+  color: #211f1c;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.faq-section {
+  background: #f0eae3;
+}
+
+.faq-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, .72fr) minmax(0, 1.28fr);
+  gap: clamp(32px, 7vw, 112px);
+  align-items: start;
+}
+
+.faq-intro {
+  position: sticky;
+  top: 130px;
+}
+
+.faq-intro > p:not(.eyebrow) {
+  max-width: 360px;
+  margin: 22px 0;
+  color: #5f5852;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.faq-list {
+  border-top: 1px solid rgba(34, 29, 25, .22);
+}
+
+.faq-item {
+  border-bottom: 1px solid rgba(34, 29, 25, .22);
+}
+
+.faq-item summary {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) 24px;
+  gap: 14px;
+  align-items: center;
+  padding: 22px 0;
+  color: #211f1c;
+  cursor: pointer;
+  list-style: none;
+  font-size: clamp(15px, 1.3vw, 18px);
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-number {
+  color: #922d20;
+  font-family: var(--mono, monospace);
+  font-size: 11px;
+  letter-spacing: .08em;
+}
+
+.faq-toggle {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  border: 1px solid rgba(34, 29, 25, .35);
+  border-radius: 50%;
+}
+
+.faq-toggle::before,
+.faq-toggle::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 6px;
+  width: 8px;
+  height: 1px;
+  background: #922d20;
+}
+
+.faq-toggle::after {
+  transform: rotate(90deg);
+  transition: transform .2s ease;
+}
+
+.faq-item[open] .faq-toggle::after {
+  transform: rotate(0);
+}
+
+.faq-answer {
+  padding: 0 38px 22px 52px;
+  color: #5f5852;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.faq-answer p {
+  margin: 0 0 12px;
+}
+
+.faq-answer p:last-child {
+  margin-bottom: 0;
+}
+
+.faq-answer ul {
+  display: grid;
+  gap: 9px;
+  margin: 16px 0 0;
+  padding-left: 18px;
+}
+
+.faq-answer li::marker {
+  color: #922d20;
+}
+
+.about-final-cta {
+  padding-block: clamp(72px, 10vw, 144px);
+  color: #fbf8f5;
+  background: #922d20;
+}
+
+.about-final-cta .container {
+  width: min(100% - 64px, 1380px);
+  margin-inline: auto;
+}
+
+.about-final-cta .eyebrow {
+  color: rgba(251, 248, 245, .8);
+}
+
+.about-final-cta h2 {
+  margin: 18px 0 32px;
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  line-height: .98;
+  letter-spacing: -.065em;
+}
+
+.about-final-cta h2 em {
+  color: #f0cfc1;
+}
+
+.about-final-cta .button-primary {
+  background: #fbf8f5;
+  color: #922d20;
+  border-color: #fbf8f5;
+}
+
+body:has(.about-page-hero) .footer-main {
+  display: grid;
+  grid-template-columns: minmax(180px, .8fr) minmax(220px, 1fr) minmax(180px, .8fr);
+  gap: 28px;
+  align-items: center;
+  padding-block: 34px;
+}
+
+body:has(.about-page-hero) .footer-main > p {
+  margin: 0;
+  color: #5f5852;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+body:has(.about-page-hero) .footer-main nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px 20px;
+}
+
+body:has(.about-page-hero) .footer-main nav a,
+body:has(.about-page-hero) .footer-bottom a {
+  color: inherit;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+body:has(.about-page-hero) .brand-logo-footer {
+  display: block;
+  width: min(190px, 100%);
+  height: auto;
+  object-fit: contain;
+}
+
+body:has(.about-page-hero) .footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-block: 18px;
+  border-top: 1px solid rgba(34, 29, 25, .16);
+  color: #766b63;
+  font-size: 11px;
+}
+
+@media (max-width: 900px) {
+  .about-opening,
+  .about-collaboration,
+  .about-team-layout,
+  .local-network-layout,
+  .tourism-vision-inner,
+  .faq-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .about-opening,
+  .about-collaboration,
+  .about-team-layout,
+  .about-closing,
+  .tourism-vision-inner,
+  .local-network-layout,
+  .faq-layout {
+    width: calc(100% - 40px);
+  }
+
+  .faq-intro {
+    position: static;
+  }
+
+  .tourism-vision-image {
+    grid-column: auto;
+  }
+
+  .tourism-vision-image img {
+    aspect-ratio: 1.6 / 1;
+  }
+
+  body:has(.about-page-hero) .footer-main {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  body:has(.about-page-hero) .footer-main nav {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-opening,
+  .about-collaboration,
+  .about-team-layout,
+  .about-closing,
+  .tourism-vision-inner,
+  .local-network-layout,
+  .faq-layout,
+  .about-final-cta .container {
+    width: calc(100% - 32px);
+  }
+
+  .about-page-hero {
+    min-height: 580px;
+  }
+
+  .about-page-hero .hero-content {
+    padding-top: 100px;
+    padding-bottom: 64px;
+  }
+
+  .about-page-hero .hero-content h1 {
+    font-size: clamp(2.8rem, 12vw, 4.5rem);
+  }
+
+  .about-stats {
+    gap: 8px;
+  }
+
+  .about-stats > div {
+    min-height: 112px;
+    padding: 16px;
+  }
+
+  .about-stats strong {
+    font-size: 2.7rem;
+  }
+
+  .faq-item summary {
+    grid-template-columns: 28px minmax(0, 1fr) 22px;
+    gap: 9px;
+    padding-block: 18px;
+  }
+
+  .faq-answer {
+    padding: 0 0 20px 37px;
+  }
+
+  .tourism-vision-image {
+    border-width: 3px;
+    border-radius: 14px;
+  }
+
+  .tourism-vision-image img {
+    border-radius: 10px;
+    aspect-ratio: 1.15 / 1;
+  }
+
+  body:has(.about-page-hero) .footer-main {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  body:has(.about-page-hero) .footer-main nav {
+    grid-column: auto;
+    justify-content: flex-start;
+  }
+
+  body:has(.about-page-hero) .footer-bottom {
+    flex-wrap: wrap;
+  }
+}
