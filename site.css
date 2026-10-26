@@ -38,7 +38,7 @@
 .faq-answer ul{padding-left:20px}
 .tourism-vision,.local-network-proof{padding:clamp(64px,8vw,110px) 0;background:var(--soft)}
 .tourism-vision-inner,.local-network-layout{max-width:1240px;margin-inline:auto}
-.tourism-vision-heading{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.8fr);align-items:end;gap:24px 64px;margin-bottom:48px}
+.tourism-vision-heading{display:block;min-width:0;margin-bottom:48px}.tourism-vision-heading h2{max-width:760px;overflow-wrap:normal;word-break:normal;hyphens:none}.tourism-vision-heading>p:last-child{max-width:600px;margin-top:24px}
 .tourism-vision-heading .eyebrow{grid-column:1/-1;margin:0}
 .tourism-vision-heading h2,.local-network-layout h2{font-size:clamp(2.4rem,5vw,4.6rem)}
 .tourism-vision-heading h2 em,.local-network-layout h2 em{color:var(--red)}
