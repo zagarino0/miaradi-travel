@@ -1,46 +1,61 @@
-# MIARADI-TRAVEL — Maquette statique
+# MIARADI-TRAVEL
 
-Première maquette du site vitrine de l'agence MIARADI-TRAVEL, développée en HTML, CSS et JavaScript natifs. Aucun outil de build n'est nécessaire pour cette version.
+Site vitrine de l'agence MIARADI-TRAVEL, consacré aux voyages sur mesure à Madagascar. Le frontend existant est développé en HTML, CSS et JavaScript natifs afin de préserver la maquette et son identité visuelle.
 
-## Aperçu en local
+## État du projet
 
-1. Clonez le dépôt :
+- `main` : maquette frontend publiée via GitHub Pages.
+- `feat/php-mysql-foundation` : branche de travail pour la migration progressive vers PHP/MySQL et l'administration OVH.
+- Le backend et le schéma SQL de cette branche sont une fondation initiale ; ils ne constituent pas encore une application prête pour la production.
+- GitHub Pages ne peut pas exécuter PHP. La version complète devra être déployée sur un hébergement compatible, prévu chez OVHcloud.
+
+## Aperçu local du frontend
+
+1. Cloner le dépôt :
    ```bash
    git clone https://github.com/zagarino0/miaradi-travel.git
    cd miaradi-travel
    ```
-2. Ouvrez `index.html` dans un navigateur. Pour éviter les restrictions de navigateur autour des fichiers locaux, vous pouvez lancer un serveur HTTP local :
+2. Lancer un serveur HTTP local :
    ```bash
    python -m http.server 5500
    ```
-   Puis ouvrir http://localhost:5500.
+3. Ouvrir http://localhost:5500.
 
-## Fichiers
+Le frontend ne nécessite pas d'outil de build.
 
-- `index.html` : structure des pages/sections.
-- `styles.css` : identité visuelle responsive.
-- `script.js` : menu mobile, filtre de circuits, sélection du circuit et bascule FR/EN.
+## Structure
 
-## Fonctionnalités de la maquette
+- `index.html` : page d'accueil et sections publiques.
+- `a-propos.html` : page À propos.
+- `site.css` : styles responsive et identité visuelle.
+- `script.js` : interactions, filtres de circuits et bascule FR/EN.
+- `assets/miaradi-logo.png` : logo.
+- `docs/AUDIT-TECHNIQUE.md` : audit initial et plan de migration.
+- `database/schema.sql` : schéma initial MySQL.
+- `backend/src/bootstrap.php` : connexion PDO et en-têtes HTTP communs.
+- `backend/public/api/health.php` : vérification de disponibilité API/base de données.
+- `backend/.env.example` : exemple de variables d'environnement, sans identifiants réels.
 
-- Sections Accueil, À propos, Circuits, Contact.
-- Filtrage des cartes de circuits par Nature, Côte & îles et Culture.
-- Bascule entre français et anglais.
-- Formulaire côté navigateur avec validation et message de démonstration.
-- Mise en page responsive et prise en compte de la préférence de réduction des animations.
+## Fonctionnalités frontend actuelles
 
-## Limites actuelles
+- Sections Accueil, À propos, Circuits et Contact.
+- Filtres de circuits et bascule de langue FR/EN.
+- Formulaire avec validation côté navigateur et message de démonstration.
 
-Ceci est une **maquette frontend seulement**. Le formulaire ne transmet aucun e-mail et n'enregistre aucune demande. Les circuits, durées, images et textes sont illustratifs et devront être confirmés par l'agence. Les images distantes et les polices Google nécessitent une connexion Internet.
+Le formulaire actuel n'enregistre aucune demande et n'envoie aucun e-mail. Les circuits et contenus sont encore définis dans le frontend.
 
-Avant la mise en production :
-- remplacer/valider les photos et descriptions ;
-- confirmer les coordonnées professionnelles ;
-- configurer un backend PHP/MySQL ou un service de formulaire compatible avec l'offre OVHcloud ;
-- ajouter politique de confidentialité, traitement des données et protections anti-spam ;
-- optimiser les images, valider le SEO et tester sur plusieurs navigateurs.
+## Identité visuelle
 
-## Direction artistique
+Palette actuelle : rouge `#922D20`, ivoire `#FBF8F5`, tons sombres et neutres. Typographies : DM Sans et Playfair Display.
 
-Palette : vert forêt `#173f35`, ivoire `#f5f1e8`, sable `#d6ae72`.
-Typographies : DM Sans et Playfair Display.
+## Prochaines étapes avant la production
+
+1. Confirmer la version PHP et MySQL/MariaDB disponible chez OVHcloud.
+2. Créer la base de données et importer `database/schema.sql`.
+3. Développer l'authentification admin, la gestion des circuits et des demandes de devis.
+4. Connecter le formulaire public au backend avec validation serveur et protections anti-spam.
+5. Configurer l'envoi d'e-mails, les sauvegardes, SSL et les variables d'environnement privées.
+6. Tester l'application sur OVH avant toute bascule du site public.
+
+**Sécurité :** ne jamais commiter un fichier `.env` réel, des identifiants de base de données ou un mot de passe administrateur. Le squelette backend actuel est un travail en cours et doit être complété et testé avant une utilisation en production.
