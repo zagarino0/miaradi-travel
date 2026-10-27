@@ -38,7 +38,7 @@ require_once dirname(__DIR__, 2) . '/src/bootstrap.php';
   const $ = (s) => document.querySelector(s);
   let csrf = '';
   let circuits = [];
-  const api = (path) => ' . '/api/' . ' + path;
+  const api = (path) => '../api/' + path;
   async function request(path, options = {}) {
     const headers = {'Accept':'application/json', ...(options.body ? {'Content-Type':'application/json'} : {}), ...(options.mutate ? {'X-CSRF-Token':csrf} : {})};
     const response = await fetch(api(path), {credentials:'same-origin', ...options, headers});
