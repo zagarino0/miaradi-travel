@@ -3,99 +3,60 @@
 Date : 2026-10-27
 
 ## Objectif
+Faire évoluer la maquette existante vers un site de production hébergé sur OVHcloud sans remplacement prématuré du site actuel.
 
-Faire évoluer progressivement la maquette existante vers un site de production hébergé sur OVHcloud, sans remplacer ni modifier le site actuellement en ligne pendant la phase de préparation.
-
-## Périmètre observé
-
-- Dépôt : `zagarino0/miaradi-travel`
+## Références
+- Dépôt : https://github.com/zagarino0/miaradi-travel
 - Branche de référence : `main`
 - Branche de préparation : `feat/php-production-foundation`
-- Frontend : HTML, CSS et JavaScript natifs, sans outil de build obligatoire.
-- Pages inspectées : `index.html`, `a-propos.html`.
-- Styles : `site.css`.
-- Interactions : `script.js`.
-- Logo référencé : `assets/miaradi-logo.png`.
-- Hébergement cible : OVHcloud Web Hosting, PHP global 8.2, MySQL 8.4 selon les captures du compte.
-- Répertoire web observé dans FileZilla : `/home/oxdinuv/www`, contenant actuellement une installation WordPress.
+- Environnement observé dans les captures : OVH Web Hosting, PHP global 8.2, MySQL 8.4
+- Répertoire web vu dans FileZilla : `/home/oxdinuv/www`, contenant WordPress.
 
-## Constats
+## État réellement présent dans la branche lors de la vérification du 27 octobre 2026
+Arborescence vérifiée via l'API Git Trees au commit `3d81b882c7e8bcc9286787b8f4155dbd2b2525f5` :
+- `README.md`
+- `a-propos.html`
+- `assets/miaradi-logo.png`
+- `docs/AUDIT-PRODUCTION.md`
+- `index.html`
+- `script.js`
+- `site.css`
 
-### Points réutilisables
+Les dossiers `backend/` et `database/` ne sont pas dans cet arbre et les requêtes GitHub Contents pour ces dossiers renvoient 404. Une capture fournie montre une arborescence différente et un état à 7 commits devant `main`, alors que l'API résout actuellement la branche à 1 commit devant `main`. Cette incohérence doit être considérée explicitement ; ne pas supposer que les fichiers PHP/SQL préparés précédemment se trouvent encore sur cette branche.
 
-1. La page d'accueil comporte déjà le hero, les sections éditoriales, les filtres, les cartes de circuits, les galeries et le formulaire de devis.
-2. La page À propos contient déjà la philosophie de MIARADI, son engagement local et des sections responsive.
-3. Le CSS porte déjà l'identité visuelle rouge `#922D20` et ivoire `#FBF8F5`.
-4. Le JavaScript gère notamment le menu, les filtres, les galeries et la bascule FR/EN.
-5. Le formulaire `#quote-form` est intercepté par JavaScript et affiche un message de démonstration : il n'enregistre donc pas encore de demande côté serveur.
+## Maquette réutilisable
+- `index.html` : accueil, hero, filtres, cartes de circuits, galeries et formulaire.
+- `a-propos.html` : philosophie MIARADI, engagement local, partenaires et FAQ.
+- `site.css` : identité visuelle rouge `#922D20` et ivoire `#FBF8F5`.
+- `script.js` : interactions du menu, filtres, galerie et traductions FR/EN.
+- `assets/miaradi-logo.png` : logo.
+- Aucun framework/build frontend requis.
 
-### Points à corriger ou à vérifier
+## Limites de la maquette
+- Le formulaire `#quote-form` est traité par JavaScript comme une démonstration ; il n'enregistre pas les demandes côté serveur.
+- Les circuits affichés sont intégrés au frontend.
+- Le README est obsolète : il évoque `styles.css` et une palette vert/sable alors que le code charge `site.css` et utilise rouge/ivoire.
+- Les textes et images doivent être validés avant publication.
 
-1. Le README ne correspond plus entièrement au code actuel : il mentionne notamment `styles.css` alors que la page d'accueil charge `site.css`, et annonce une ancienne palette vert/sable.
-2. Les textes, durées, photos et circuits de démonstration doivent être confirmés par l'agence avant publication.
-3. La validation navigateur seule ne suffit pas pour un formulaire public. Il faut valider côté PHP, contrôler les données, limiter le spam et utiliser des requêtes SQL préparées.
-4. Les tables `miaradi_admin_users`, `miaradi_circuits` et `miaradi_quote_requests` ont été visibles dans phpMyAdmin selon les captures fournies. Leur structure, index, contraintes, encodage et privilèges doivent être inspectés avant toute migration. Ne pas les vider ni les supprimer.
-5. Il faut confirmer le domaine final, la configuration SSL, le comportement de PHP 8.2 et la méthode d'envoi d'e-mails disponible sur l'offre OVH.
-6. Le site actuellement dans `/home/oxdinuv/www` contient WordPress. Aucun remplacement, suppression ou écrasement de ses fichiers ne doit être effectué pendant cette phase.
-7. Ne jamais enregistrer les mots de passe MySQL ou administrateur dans GitHub, ni partager `wp-config.php`. Les secrets de production seront stockés dans une configuration non versionnée et protégée.
+## Base MySQL de production déjà manipulée manuellement
+Les captures phpMyAdmin montrent les tables `miaradi_admin_users`, `miaradi_circuits` et `miaradi_quote_requests` dans la base `oxdinuv808`, aux côtés des tables WordPress `mod141_*`. Les trois tables MIARADI étaient affichées avec zéro ligne. Leur structure détaillée (colonnes, contraintes, index) n'est pas encore vérifiée.
+**Ne pas importer de nouveau schéma, vider ou supprimer de table avant d'avoir exporté la base et vérifié la structure existante.** Toute migration doit utiliser des noms préfixés MIARADI et être compatible avec les tables existantes.
 
-## Architecture cible proposée
+## Sécurité et séparation des environnements
+- Ne pas modifier `main`, l'hébergement OVH ou les fichiers WordPress durant l'audit.
+- Ne jamais versionner des identifiants, un `.env` réel, un dump de base ou `wp-config.php`.
+- Configuration de production privée, stockée en dehors des fichiers web accessibles publiquement si l'hébergement le permet.
+- Le ZIP source ne doit pas rester téléchargeable dans la racine web.
+- Sauvegarder les fichiers web et exporter la base avant déploiement.
 
-Conserver les pages et styles actuels, puis ajouter un backend PHP structuré :
+## Prochaines étapes
+1. Régler la divergence de l'arborescence Git et confirmer la branche réellement utilisée.
+2. Exporter uniquement la structure des trois tables MIARADI depuis phpMyAdmin et vérifier la sauvegarde de la base WordPress.
+3. Ajouter sur une branche dédiée `backend/` (configuration PDO, validation d'entrées) et `database/` (schéma/documentation alignés sur les tables actuelles).
+4. Implémenter l'enregistrement réel des devis avec validation serveur, requêtes SQL préparées, contrôle anti-spam et retour utilisateur explicite.
+5. Construire l'administration : authentification avec mots de passe hachés, sessions sécurisées, contrôle d'accès, gestion des circuits et demandes.
+6. Tester en environnement isolé (PHP 8.2/MySQL 8.4) avant toute copie vers OVH.
+7. Déployer seulement après sauvegarde vérifiée et validation explicite.
 
-- `index.html` et `a-propos.html` : frontend existant, avec adaptations progressives.
-- `api/quote.php` : réception et validation des demandes de devis.
-- `includes/config.php` : chargement d'une configuration privée, hors dépôt public.
-- `includes/db.php` : connexion PDO à MySQL avec erreurs non exposées aux visiteurs.
-- `admin/login.php` : authentification administrateur.
-- `admin/index.php` : tableau de bord protégé.
-- `admin/circuits.php` : gestion des circuits.
-- `admin/quotes.php` : consultation et suivi des demandes de devis.
-- `database/schema.sql` : schéma documenté, à comparer d'abord avec les tables OVH existantes.
-- `docs/DEPLOIEMENT-OVH.md` : procédure de déploiement et de retour arrière.
-
-Cette arborescence est une proposition de travail ; elle ne signifie pas que ces fichiers backend existent déjà.
-
-## Plan de réalisation sans risque
-
-### Étape 1 — Audit et sauvegardes
-- Examiner tous les fichiers et les scripts existants.
-- Exporter une sauvegarde de la base OVH et sauvegarder les fichiers WordPress.
-- Inspecter la structure SQL existante avant de rédiger une migration.
-- Documenter les URLs, le domaine et la racine web utilisés.
-
-### Étape 2 — Fondation backend en environnement de préparation
-- Ajouter la configuration privée et la connexion PDO.
-- Vérifier la connexion sans afficher les identifiants.
-- Écrire des tests de validation pour les données du formulaire.
-- Ne pas modifier le contenu du dossier web de production.
-
-### Étape 3 — Formulaire de devis réel
-- Envoyer les données au endpoint PHP avec POST.
-- Ajouter validation serveur, protection anti-spam et réponses d'erreur compréhensibles.
-- Enregistrer les demandes en base avec des requêtes préparées.
-- Configurer l'e-mail après confirmation des paramètres d'envoi OVH.
-
-### Étape 4 — Administration
-- Authentification sécurisée avec mots de passe hachés et sessions protégées.
-- Gestion des circuits et consultation des devis.
-- Contrôle des autorisations pour toutes les opérations.
-- Ne pas utiliser de compte ou mot de passe de démonstration en production.
-
-### Étape 5 — Préproduction et mise en ligne
-- Tester sur une copie ou un emplacement de préparation non public.
-- Vérifier mobile, FR/EN, formulaires, base, e-mails, erreurs et permissions.
-- Déployer après validation explicite, avec sauvegarde et plan de retour arrière.
-
-## Règles de sécurité et de déploiement
-
-- Aucune modification du site OVH en production pendant l'audit.
-- Aucun effacement ou remplacement de WordPress sans sauvegarde vérifiée et décision explicite.
-- Aucun secret, dump de base ou fichier `wp-config.php` dans Git.
-- Ne pas laisser d'archive ZIP contenant le code ou la configuration privée téléchargeable depuis la racine web.
-- Garder le code source et l'historique dans GitHub ; déployer uniquement les fichiers nécessaires sur OVH.
-- Vérifier les tables existantes avant toute création ou migration SQL.
-
-## Limites de cet audit
-
-Cet audit est basé sur les fichiers consultés dans GitHub et les captures d'écran fournies. La totalité des fichiers du dépôt, les structures SQL détaillées, la configuration effective de PHP, les paramètres e-mail, le domaine final et les droits MySQL n'ont pas encore été vérifiés.
+## Limites
+Cet audit s'appuie sur les fichiers effectivement listés via GitHub à la date du rapport et les captures fournies par l'utilisateur. Le domaine final, SSL, mail sortant OVH, privilèges SQL, structure exacte des tables et le contenu actuel du répertoire web ne sont pas entièrement validés.
