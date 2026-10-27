@@ -5,7 +5,7 @@ Site vitrine de l'agence MIARADI-TRAVEL, consacré aux voyages sur mesure à Mad
 ## État du projet
 
 - `main` contient le frontend statique et la fondation initiale PHP/MySQL.
-- Le socle PHP/MySQL a été fusionné dans `main`, mais ne constitue pas encore une application prête pour la production.
+- Le socle PHP/MySQL n'est pas encore une application prête pour la production.
 - Le site publié via GitHub Pages reste statique. GitHub Pages ne peut pas exécuter PHP ; la future version complète devra être déployée sur un hébergement compatible, prévu chez OVHcloud.
 - Aucun déploiement OVH n'est effectué par le dépôt ou par cette documentation.
 
@@ -34,10 +34,10 @@ Le frontend statique ne nécessite pas d'outil de build. Ce serveur Python ne pe
 - `backend/src/bootstrap.php` : socle PDO et en-têtes HTTP communs.
 - `backend/public/api/health.php` : contrôle de connectivité API/base de données.
 - `backend/.env.example` : exemple de variables d'environnement, sans identifiants réels.
-- `database/schema.sql` : schéma SQL initial, à réconcilier avec les tables MIARADI déjà présentes sur OVH avant toute importation.
+- `database/schema.sql` : schéma de référence aligné sur les structures SQL fournies pour les trois tables MIARADI existantes.
 - `docs/AUDIT-TECHNIQUE.md` : audit initial de la maquette.
 - `docs/AUDIT-PRODUCTION.md` : notes de préparation de production.
-- `docs/AUDIT-SOCLE-PHP-MYSQL.md` : audit du socle PHP/MySQL après fusion dans `main`.
+- `docs/AUDIT-SOCLE-PHP-MYSQL.md` : comparaison du socle PHP/MySQL avec les exports de structure.
 
 ## Fonctionnalités frontend actuelles
 
@@ -54,12 +54,13 @@ Palette actuelle : rouge `#922D20`, ivoire `#FBF8F5`, tons sombres et neutres. T
 
 ## Prochaines étapes avant la production
 
-1. Exporter la structure (sans données) des tables existantes `miaradi_admin_users`, `miaradi_circuits` et `miaradi_quote_requests` depuis phpMyAdmin.
-2. Comparer ces structures à `database/schema.sql` et préparer une migration adaptée. **Ne pas importer le schéma actuel directement dans la base OVH** avant cette vérification.
-3. Tester le backend en environnement isolé avec une version compatible de PHP et MySQL.
-4. Développer l'API des circuits, puis l'enregistrement réel des demandes de devis.
-5. Développer l'authentification et l'administration avec contrôle d'accès, sessions sécurisées et protection CSRF.
-6. Configurer les e-mails, les sauvegardes, SSL et les variables d'environnement privées.
-7. Tester l'application et prévoir une procédure de retour arrière avant tout déploiement OVH.
+1. Tester le backend dans un environnement isolé avec une version compatible de PHP et MySQL.
+2. Développer l'API des circuits en lecture seule pour les circuits publiés.
+3. Développer l'enregistrement des demandes de devis, avec validation serveur et protection anti-spam.
+4. Développer l'authentification et l'administration avec contrôle d'accès, sessions sécurisées et protection CSRF.
+5. Configurer les e-mails, les sauvegardes, SSL et les variables d'environnement privées.
+6. Tester l'application et prévoir une procédure de retour arrière avant tout déploiement OVH.
+
+**Attention :** `database/schema.sql` est un schéma de référence, pas une migration de production. `CREATE TABLE IF NOT EXISTS` ne modifie pas les tables déjà existantes. Ne pas l'importer aveuglément dans OVH. Les tables WordPress `mod141_*` ne sont pas concernées.
 
 **Sécurité :** ne jamais commiter un fichier `.env` réel, des identifiants de base de données, un dump de production ou un mot de passe administrateur. Le backend est un socle de développement et doit être complété et testé avant toute utilisation en production.
