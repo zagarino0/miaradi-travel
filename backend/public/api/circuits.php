@@ -5,7 +5,6 @@ require_once dirname(__DIR__, 2) . '/src/bootstrap.php';
 
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: public, max-age=60, stale-while-revalidate=300');
-header('Vary: Accept-Language');
 
 function circuits_json_response(array $payload, int $status = 200): never
 {
