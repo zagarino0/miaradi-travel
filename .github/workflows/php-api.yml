@@ -1,0 +1,86 @@
+name: PHP API checks
+
+on:
+  pull_request:
+    paths:
+      - "backend/**"
+      - "database/schema.sql"
+      - ".github/workflows/php-api.yml"
+  push:
+    branches: [main]
+    paths:
+      - "backend/**"
+      - "database/schema.sql"
+      - ".github/workflows/php-api.yml"
+
+jobs:
+  lint-and-smoke:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: test-root-password
+          MYSQL_DATABASE: miaradi_test
+          MYSQL_USER: miaradi_test
+          MYSQL_PASSWORD: test-db-password
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -ptest-root-password"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
+    env:
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_NAME: miaradi_test
+      DB_USER: miaradi_test
+      DB_PASSWORD: test-db-password
+      APP_ENV: test
+      APP_DEBUG: "0"
+      MAIL_FROM: no-reply@example.com
+      MAIL_TO: contact@example.com
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: pdo_mysql, mbstring
+          coverage: none
+      - name: Lint PHP files
+        shell: bash
+        run: |
+          set -euo pipefail
+          find backend -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: Load reference schema into disposable MySQL
+        run: mysql --host=127.0.0.1 --port=3306 --user=miaradi_test --password=test-db-password miaradi_test < database/schema.sql
+      - name: Seed smoke-test records
+        run: |
+          mysql --host=127.0.0.1 --port=3306 --user=miaradi_test --password=test-db-password miaradi_test <<'SQL'
+          INSERT INTO miaradi_circuits
+            (slug, title_fr, title_en, summary_fr, summary_en, region, theme, duration_min, duration_max, is_published, sort_order)
+          VALUES
+            ('test-circuit', 'Circuit test', 'Test circuit', 'Résumé test', 'Test summary', 'Ouest', 'Nature', 3, 5, 1, 1),
+            ('draft-circuit', 'Brouillon', NULL, 'Non publié', NULL, 'Est', 'Culture', 1, 2, 0, 2);
+          SQL
+      - name: Start PHP development server
+        run: |
+          php -S 127.0.0.1:8080 -t backend/public > /tmp/miaradi-php.log 2>&1 &
+          echo $! > /tmp/miaradi-php.pid
+          for attempt in $(seq 1 30); do
+            if curl --silent --fail http://127.0.0.1:8080/api/health.php >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/miaradi-php.log
+          exit 1
+      - name: Smoke-test health and published circuits API
+        run: |
+          set -euo pipefail
+          curl --silent --show-error --fail http://127.0.0.1:8080/api/health.php | grep -q '"database":"connected"'
+          curl --silent --show-error --fail 'http://127.0.0.1:8080/api/circuits.php?lang=fr' > /tmp/circuits-fr.json
+          php -r '$d=json_decode(file_get_contents("/tmp/circuits-fr.json"), true, 512, JSON_THROW_ON_ERROR); if (($d["meta"]["count"] ?? 0) !== 1 || ($d["data"][0]["title"] ?? "") !== "Circuit test") exit(1);'
+          curl --silent --show-error --fail 'http://127.0.0.1:8080/api/circuits.php?lang=en' > /tmp/circuits-en.json
+          php -r '$d=json_decode(file_get_contents("/tmp/circuits-en.json"), true, 512, JSON_THROW_ON_ERROR); if (($d["data"][0]["title"] ?? "") !== "Test circuit") exit(1);'
+          status=$(curl --silent --output /tmp/invalid-language.json --write-out '%{http_code}' 'http://127.0.0.1:8080/api/circuits.php?lang=xx')
+          test "$status" = "400"
