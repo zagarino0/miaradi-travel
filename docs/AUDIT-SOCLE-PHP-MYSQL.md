@@ -1,67 +1,59 @@
 # Audit du socle PHP/MySQL — MIARADI-TRAVEL
 
 Date : 2026-10-27  
-Branche auditée : `main`  
-Commit audité : `a4cf5db3f76e9e3ac1800c9311ffc9f48a0fb7ce`  
-Périmètre : lecture du dépôt GitHub uniquement. Aucun accès direct au serveur OVH, aucune écriture dans phpMyAdmin et aucun déploiement.
+Branche : `main`  
+Périmètre : dépôt GitHub et trois exports SQL de structure transmis. Aucun accès direct au serveur OVH, aucune écriture dans phpMyAdmin et aucun déploiement.
 
 ## 1. Résumé
 
-Le socle PHP/MySQL est présent dans `main`, mais il est encore minimal. Il ne constitue pas une application prête pour la production. Le frontend existant reste une maquette statique ; son design doit être conservé et raccordé progressivement au backend.
+Le socle PHP/MySQL est minimal et n'est pas prêt pour la production. Les exports SQL ont permis de comparer les tables déjà créées avec `database/schema.sql`. Le schéma du dépôt a été corrigé pour reprendre les noms, colonnes, index et relation observés dans les exports.
 
-## 2. Constats
+## 2. Comparaison du schéma SQL
 
-### Bloquant avant connexion à la base existante — noms des tables divergents
+### `miaradi_admin_users`
 
-Le fichier `database/schema.sql` crée les tables `admin_users`, `circuits` et `quote_requests`.
+Colonnes observées : `id`, `email`, `password_hash`, `is_active`, `last_login_at`, `created_at`, `updated_at`.  
+Contraintes/index : clé primaire sur `id`, index unique `uq_miaradi_admin_email` sur `email`.
 
-Les captures phpMyAdmin partagées pour la base OVH montrent plutôt `miaradi_admin_users`, `miaradi_circuits` et `miaradi_quote_requests`, en plus des tables WordPress `mod141_*`.
+### `miaradi_circuits`
 
-Ces deux ensembles ne sont pas équivalents. Le schéma du dépôt ne doit pas être importé tel quel dans la base OVH avant vérification des colonnes, index et contraintes des trois tables `miaradi_*`. Les structures complètes n'ont pas été fournies dans les captures consultées.
+Colonnes observées : `id`, `slug`, `title_fr`, `title_en`, `summary_fr`, `summary_en`, `region`, `theme`, `duration_min`, `duration_max`, `image_path`, `is_published`, `sort_order`, `created_at`, `updated_at`.  
+Contraintes/index : clé primaire sur `id`, index unique `uq_miaradi_circuits_slug` sur `slug`, index `idx_miaradi_circuits_public` sur `is_published, sort_order`.
 
-### Backend PHP
+### `miaradi_quote_requests`
 
-- `backend/src/bootstrap.php` utilise PDO, les requêtes préparées étant activées par défaut via `PDO::ATTR_EMULATE_PREPARES => false`.
-- La configuration est lue avec `getenv()`. Aucun chargeur de fichier `.env` n'est inclus ; l'environnement d'exécution devra fournir les variables ou un mécanisme privé de configuration.
-- Le bootstrap définit certains en-têtes de sécurité et paramètres de cookie, mais n'implémente pas encore l'authentification, les autorisations, la protection CSRF ni les routes métier.
-- Le paramètre `secure` du cookie de session dépend de `$_SERVER['HTTPS']`. Ce comportement devra être vérifié derrière la configuration réelle du proxy/hébergement OVH.
-- `backend/public/api/health.php` vérifie la connexion à la base avec `SELECT 1` et ne renvoie pas les détails d'exception au client. C'est un contrôle de connectivité, pas une preuve que le schéma applicatif ou les flux métier fonctionnent.
+Colonnes observées : `id`, `full_name`, `email`, `desired_departure_date`, `traveler_count`, `circuit_id`, `message`, `preferred_language`, `status`, `privacy_consent_at`, `created_at`, `updated_at`.  
+Contraintes/index : clé primaire sur `id`, index `idx_miaradi_quotes_status` sur `status, created_at`, index `idx_miaradi_quotes_email` sur `email`, index sur `circuit_id`, clé étrangère `fk_miaradi_quotes_circuit` vers `miaradi_circuits(id)` avec `ON DELETE SET NULL`.
 
-### Schéma SQL
+Les trois exports utilisent InnoDB, `utf8mb4_unicode_ci`, et indiquent MySQL 8.4.11. Les exports ne contiennent pas de données métier.
 
-- Le schéma prévoit trois entités de base : administrateurs, circuits et demandes de devis.
-- Les mots de passe sont prévus sous forme de hachage dans `password_hash`, mais aucun flux de création d'administrateur ou d'authentification n'est implémenté.
-- Le schéma contient des contraintes de clé étrangère et de statut ; elles doivent être comparées aux tables déjà créées dans OVH avant toute migration.
-- Les tables WordPress existantes doivent rester intactes.
+### Correction appliquée dans le dépôt
 
-### Frontend
+`database/schema.sql` a été mis à jour pour utiliser les noms préfixés exacts (`miaradi_*`) et les noms d'index observés. Le `CHECK` sur `status` présent dans l'ancien schéma du dépôt a été retiré, car il ne figure pas dans l'export de la table existante. Le schéma correspond maintenant aux structures fournies, à la différence des commentaires et du contexte d'installation.
 
-- `index.html`, `a-propos.html`, `site.css` et `script.js` forment toujours le frontend statique.
-- Le formulaire de devis affiche encore un message de démonstration et ne persiste pas les demandes dans MySQL.
-- Les circuits et leurs détails sont codés dans le JavaScript, et ne sont pas encore chargés depuis l'API.
-- La migration doit préserver l'identité visuelle existante, notamment le rouge `#922D20` et l'ivoire `#FBF8F5`.
+**Important :** `CREATE TABLE IF NOT EXISTS` n'altère pas les tables existantes. Ce fichier est une référence de structure, pas une migration à exécuter en production. Ne pas l'importer aveuglément sur OVH. Les tables WordPress `mod141_*` ne doivent pas être modifiées.
 
-### Documentation
+## 3. Audit PHP
 
-Le README indique encore que `feat/php-mysql-foundation` est la branche de travail, alors que la fondation a été fusionnée dans `main`. Cette référence doit être actualisée.
+- `backend/src/bootstrap.php` utilise PDO avec `PDO::ERRMODE_EXCEPTION`, résultats associatifs et requêtes préparées natives (`PDO::ATTR_EMULATE_PREPARES = false`).
+- La configuration est lue par `getenv()`. Aucun chargeur de fichier `.env` n'est implémenté ; les variables doivent être fournies par l'environnement ou une configuration privée appropriée.
+- Le bootstrap ne contient pas de requêtes métier vers les tables MIARADI : aucune route PHP de circuits, devis ou administration n'a encore été créée.
+- `backend/public/api/health.php` exécute seulement `SELECT 1`. Il teste la connectivité, pas l'existence ni la compatibilité des tables.
+- Aucun flux de connexion admin, contrôle d'accès, gestion des circuits, enregistrement de devis ou envoi d'e-mail n'est implémenté.
 
-## 3. Compatibilité observée
+## 4. Frontend
 
-Les captures de l'espace OVH indiquent PHP global 8.2 et MySQL 8.4. Cette information provient des captures fournies ; la configuration réellement utilisée par le dossier web et la connexion SQL PHP n'a pas été testée. Le backend doit être validé dans un environnement isolé correspondant à PHP 8.2 et MySQL 8.4 avant toute mise en ligne.
+Le site reste une maquette statique HTML/CSS/JavaScript. Le formulaire de devis utilise encore un retour de démonstration côté navigateur ; il n'enregistre pas les demandes dans MySQL. Les circuits restent définis dans le frontend. La suite devra préserver le design rouge `#922D20` et ivoire `#FBF8F5`.
 
-## 4. Plan d'action priorisé
+## 5. Étapes suivantes
 
-1. **Vérifier la structure réelle des tables existantes** : exporter uniquement leur structure depuis phpMyAdmin pour `miaradi_admin_users`, `miaradi_circuits` et `miaradi_quote_requests`. Ne pas supprimer, vider ou recréer ces tables.
-2. **Réconcilier le schéma** : choisir explicitement les noms et colonnes de référence à partir de l'export. Écrire ensuite une migration idempotente et documentée ; ne pas lancer le schéma actuel directement sur la base existante.
-3. **Tester le backend isolément** : vérifier la syntaxe PHP, la configuration PDO et l'endpoint de santé avec des identifiants de test, sans toucher à OVH.
-4. **Implémenter l'API des circuits** : lecture publique des seuls circuits publiés, validation et réponses d'erreur cohérentes.
-5. **Implémenter l'envoi de devis** : validation côté serveur, requêtes préparées, protection anti-spam, consentement de confidentialité et confirmation claire. Tester l'enregistrement avant de connecter le formulaire public.
-6. **Créer l'administration** : authentification sécurisée, hachage des mots de passe, régénération d'identifiant de session, contrôle d'accès et protection CSRF avant les fonctions de gestion.
-7. **Tester et documenter** : tests automatisés et manuels, sauvegarde vérifiée, procédure de retour arrière et guide de déploiement.
-8. **Déployer uniquement après validation explicite** : aucune modification du site OVH ou de WordPress avant la fin des tests et l'accord de mise en production.
+1. Tester la syntaxe et la connectivité PHP dans un environnement local isolé avec une base de test.
+2. Ajouter un endpoint public en lecture seule pour les circuits publiés, en utilisant `miaradi_circuits`.
+3. Ajouter l'enregistrement des devis dans `miaradi_quote_requests`, avec validation serveur, requêtes préparées, limitation anti-spam et consentement.
+4. Ajouter ensuite l'authentification et les opérations d'administration sur `miaradi_admin_users`, avec mots de passe hachés, sessions sécurisées, protection CSRF et contrôle d'accès.
+5. Créer des tests automatisés couvrant les colonnes et les comportements de ces tables.
+6. Tester en environnement isolé avant de préparer une procédure de déploiement OVH avec sauvegarde et retour arrière.
 
-## 5. Décision
+## 6. État de sécurité et déploiement
 
-**État : fondation initiale, non prête pour la production.**
-
-Aucune modification de la base OVH, aucun déploiement et aucune modification des fichiers web OVH ne sont inclus dans cet audit. La prochaine action requise côté données est de fournir un export SQL de structure (sans lignes ni données personnelles) des trois tables MIARADI existantes.
+**Statut : fondation initiale, non prête pour la production.** Aucun déploiement OVH, aucune modification de la base OVH et aucune modification des fichiers web n'ont été effectués. Les identifiants de production ne doivent jamais être committés dans GitHub.
