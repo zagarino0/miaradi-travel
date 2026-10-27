@@ -4,10 +4,10 @@ Site vitrine de l'agence MIARADI-TRAVEL, consacré aux voyages sur mesure à Mad
 
 ## État du projet
 
-- `main` : maquette frontend publiée via GitHub Pages.
-- `feat/php-mysql-foundation` : branche de travail pour la migration progressive vers PHP/MySQL et l'administration OVH.
-- Le backend et le schéma SQL de cette branche sont une fondation initiale ; ils ne constituent pas encore une application prête pour la production.
-- GitHub Pages ne peut pas exécuter PHP. La version complète devra être déployée sur un hébergement compatible, prévu chez OVHcloud.
+- `main` contient le frontend statique et la fondation initiale PHP/MySQL.
+- Le socle PHP/MySQL a été fusionné dans `main`, mais ne constitue pas encore une application prête pour la production.
+- Le site publié via GitHub Pages reste statique. GitHub Pages ne peut pas exécuter PHP ; la future version complète devra être déployée sur un hébergement compatible, prévu chez OVHcloud.
+- Aucun déploiement OVH n'est effectué par le dépôt ou par cette documentation.
 
 ## Aperçu local du frontend
 
@@ -22,40 +22,44 @@ Site vitrine de l'agence MIARADI-TRAVEL, consacré aux voyages sur mesure à Mad
    ```
 3. Ouvrir http://localhost:5500.
 
-Le frontend ne nécessite pas d'outil de build.
+Le frontend statique ne nécessite pas d'outil de build. Ce serveur Python ne permet pas d'exécuter le backend PHP.
 
 ## Structure
 
 - `index.html` : page d'accueil et sections publiques.
 - `a-propos.html` : page À propos.
 - `site.css` : styles responsive et identité visuelle.
-- `script.js` : interactions, filtres de circuits et bascule FR/EN.
+- `script.js` : interactions, filtres, fiches circuits et bascule FR/EN.
 - `assets/miaradi-logo.png` : logo.
-- `docs/AUDIT-TECHNIQUE.md` : audit initial et plan de migration.
-- `database/schema.sql` : schéma initial MySQL.
-- `backend/src/bootstrap.php` : connexion PDO et en-têtes HTTP communs.
-- `backend/public/api/health.php` : vérification de disponibilité API/base de données.
+- `backend/src/bootstrap.php` : socle PDO et en-têtes HTTP communs.
+- `backend/public/api/health.php` : contrôle de connectivité API/base de données.
 - `backend/.env.example` : exemple de variables d'environnement, sans identifiants réels.
+- `database/schema.sql` : schéma SQL initial, à réconcilier avec les tables MIARADI déjà présentes sur OVH avant toute importation.
+- `docs/AUDIT-TECHNIQUE.md` : audit initial de la maquette.
+- `docs/AUDIT-PRODUCTION.md` : notes de préparation de production.
+- `docs/AUDIT-SOCLE-PHP-MYSQL.md` : audit du socle PHP/MySQL après fusion dans `main`.
 
 ## Fonctionnalités frontend actuelles
 
 - Sections Accueil, À propos, Circuits et Contact.
 - Filtres de circuits et bascule de langue FR/EN.
+- Fiches détaillées de circuits côté navigateur.
 - Formulaire avec validation côté navigateur et message de démonstration.
 
-Le formulaire actuel n'enregistre aucune demande et n'envoie aucun e-mail. Les circuits et contenus sont encore définis dans le frontend.
+Le formulaire actuel n'enregistre aucune demande et n'envoie aucun e-mail. Les circuits et contenus restent définis dans le frontend ; leur chargement depuis l'API n'est pas encore implémenté.
 
 ## Identité visuelle
 
-Palette actuelle : rouge `#922D20`, ivoire `#FBF8F5`, tons sombres et neutres. Typographies : DM Sans et Playfair Display.
+Palette actuelle : rouge `#922D20`, ivoire `#FBF8F5`, tons sombres et neutres. Typographies : DM Sans et Playfair Display. Toute évolution backend doit préserver le design et le comportement responsive existants.
 
 ## Prochaines étapes avant la production
 
-1. Confirmer la version PHP et MySQL/MariaDB disponible chez OVHcloud.
-2. Créer la base de données et importer `database/schema.sql`.
-3. Développer l'authentification admin, la gestion des circuits et des demandes de devis.
-4. Connecter le formulaire public au backend avec validation serveur et protections anti-spam.
-5. Configurer l'envoi d'e-mails, les sauvegardes, SSL et les variables d'environnement privées.
-6. Tester l'application sur OVH avant toute bascule du site public.
+1. Exporter la structure (sans données) des tables existantes `miaradi_admin_users`, `miaradi_circuits` et `miaradi_quote_requests` depuis phpMyAdmin.
+2. Comparer ces structures à `database/schema.sql` et préparer une migration adaptée. **Ne pas importer le schéma actuel directement dans la base OVH** avant cette vérification.
+3. Tester le backend en environnement isolé avec une version compatible de PHP et MySQL.
+4. Développer l'API des circuits, puis l'enregistrement réel des demandes de devis.
+5. Développer l'authentification et l'administration avec contrôle d'accès, sessions sécurisées et protection CSRF.
+6. Configurer les e-mails, les sauvegardes, SSL et les variables d'environnement privées.
+7. Tester l'application et prévoir une procédure de retour arrière avant tout déploiement OVH.
 
-**Sécurité :** ne jamais commiter un fichier `.env` réel, des identifiants de base de données ou un mot de passe administrateur. Le squelette backend actuel est un travail en cours et doit être complété et testé avant une utilisation en production.
+**Sécurité :** ne jamais commiter un fichier `.env` réel, des identifiants de base de données, un dump de production ou un mot de passe administrateur. Le backend est un socle de développement et doit être complété et testé avant toute utilisation en production.
