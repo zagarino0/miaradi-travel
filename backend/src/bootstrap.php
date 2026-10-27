@@ -15,6 +15,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
         'samesite' => 'Lax',
         'path' => '/',
     ]);
+    session_start();
 }
 
 header('X-Content-Type-Options: nosniff');
