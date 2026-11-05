@@ -16,10 +16,11 @@ if (!in_array($lang,['fr','en'],true)) {
     exit;
 }
 try {
-    $stmt=database_connection()->query("SELECT id,media_type,source_type,title_fr,title_en,description_fr,description_en,alt_text,file_path,external_url,thumbnail_path,sort_order,updated_at FROM miaradi_gallery_items WHERE is_published=1 ORDER BY sort_order ASC,id DESC");
+    $stmt=database_connection()->query("SELECT g.id,g.circuit_id,c.slug AS circuit_slug,c.title_fr AS circuit_title_fr,c.title_en AS circuit_title_en,g.media_type,g.source_type,g.title_fr,g.title_en,g.description_fr,g.description_en,g.alt_text,g.file_path,g.external_url,g.thumbnail_path,g.sort_order,g.updated_at FROM miaradi_gallery_items g LEFT JOIN miaradi_circuits c ON c.id=g.circuit_id WHERE g.is_published=1 ORDER BY g.sort_order ASC,g.id DESC");
     $items=array_map(static function(array $r) use ($lang): array {
         return [
             'id'=>(int)$r['id'],
+            'circuit'=> $r['circuit_id'] === null ? null : ['id'=>(int)$r['circuit_id'],'slug'=>$r['circuit_slug'],'title'=>($lang==='en' && !empty($r['circuit_title_en']))?$r['circuit_title_en']:$r['circuit_title_fr']],
             'type'=>$r['media_type'],
             'source'=>$r['source_type'],
             'title'=>($lang==='en' && !empty($r['title_en']))?$r['title_en']:$r['title_fr'],
