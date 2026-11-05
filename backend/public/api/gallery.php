@@ -25,8 +25,8 @@ try {
             'title'=>($lang==='en' && !empty($r['title_en']))?$r['title_en']:$r['title_fr'],
             'description'=>($lang==='en' && !empty($r['description_en']))?$r['description_en']:$r['description_fr'],
             'alt'=>$r['alt_text'],
-            'url'=>$r['file_path'] ? '../'.$r['file_path'] : $r['external_url'],
-            'thumbnail'=>$r['thumbnail_path'] ?: ($r['file_path'] ? '../'.$r['file_path'] : null),
+            'url'=>$r['file_path'] ? rtrim(dirname(dirname((string)($_SERVER['SCRIPT_NAME'] ?? '/api/gallery.php'))), '/').'/'.$r['file_path'] : $r['external_url'],
+            'thumbnail'=>$r['thumbnail_path'] ?: ($r['file_path'] ? rtrim(dirname(dirname((string)($_SERVER['SCRIPT_NAME'] ?? '/api/gallery.php'))), '/').'/'.$r['file_path'] : null),
             'updatedAt'=>$r['updated_at']
         ];
     },$stmt->fetchAll());
