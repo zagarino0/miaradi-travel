@@ -41,10 +41,14 @@ function gallery_external(string $url): array {
 
 if ($method === 'GET') {
     try {
-        $rows = database_connection()->query('SELECT * FROM miaradi_gallery_items ORDER BY sort_order ASC, id DESC')->fetchAll();
-        foreach ($rows as &$row) { $row['id']=(int)$row['id']; $row['is_published']=(bool)$row['is_published']; $row['sort_order']=(int)$row['sort_order']; }
+        $pdo = database_connection();
+        $rows = $pdo->query('SELECT g.*, c.slug AS circuit_slug, c.title_fr AS circuit_title_fr FROM miaradi_gallery_items g LEFT JOIN miaradi_circuits c ON c.id = g.circuit_id ORDER BY g.sort_order ASC, g.id DESC')->fetchAll();
+        foreach ($rows as &$row) { $row['id']=(int)$row['id']; $row['circuit_id']=$row['circuit_id'] === null ? null : (int)$row['circuit_id']; $row['is_published']=(bool)$row['is_published']; $row['sort_order']=(int)$row['sort_order']; }
         unset($row);
-        api_json(['data'=>$rows]);
+        $circuits = $pdo->query('SELECT id, slug, title_fr, title_en, is_published FROM miaradi_circuits ORDER BY sort_order ASC, id ASC')->fetchAll();
+        foreach ($circuits as &$circuit) { $circuit['id']=(int)$circuit['id']; $circuit['is_published']=(bool)$circuit['is_published']; }
+        unset($circuit);
+        api_json(['data'=>$rows, 'circuits'=>$circuits]);
     } catch (Throwable $e) {
         error_log('[miaradi-api] Admin gallery read failed: '.$e->getMessage());
         api_json(['error'=>['code'=>'gallery_unavailable','message'=>'Gallery items could not be loaded.']],503);
@@ -86,6 +90,10 @@ try {
     $descriptionFr=gallery_text($input,'description_fr',10000);
     $descriptionEn=gallery_text($input,'description_en',10000);
     $altText=gallery_text($input,'alt_text',250);
+    $circuitIdRaw = $input['circuit_id'] ?? null;
+    $circuitId = ($circuitIdRaw === null || $circuitIdRaw === '') ? null : filter_var($circuitIdRaw, FILTER_VALIDATE_INT, ['options'=>['min_range'=>1]]);
+    if ($circuitIdRaw !== null && $circuitIdRaw !== '' && !$circuitId) api_json(['error'=>['code'=>'validation_error','message'=>'The selected circuit is invalid.']],422);
+    if ($circuitId !== null) { $checkCircuit=$pdo->prepare('SELECT id FROM miaradi_circuits WHERE id=:id'); $checkCircuit->execute(['id'=>$circuitId]); if (!$checkCircuit->fetch()) api_json(['error'=>['code'=>'circuit_not_found','message'=>'The selected circuit does not exist.']],422); }
     $published = filter_var($input['is_published'] ?? false, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
     $sortOrder = filter_var($input['sort_order'] ?? '0', FILTER_VALIDATE_INT);
     if ($published === null || $sortOrder === false || $sortOrder < -100000 || $sortOrder > 100000) api_json(['error'=>['code'=>'validation_error','message'=>'Publication or display order is invalid.']],422);
@@ -123,11 +131,11 @@ try {
     }
 
     if ($method==='POST') {
-        $stmt=$pdo->prepare('INSERT INTO miaradi_gallery_items (media_type,source_type,title_fr,title_en,description_fr,description_en,alt_text,file_path,external_url,thumbnail_path,is_published,sort_order) VALUES (:media_type,:source_type,:title_fr,:title_en,:description_fr,:description_en,:alt_text,:file_path,:external_url,:thumbnail_path,:published,:sort_order)');
+        $stmt=$pdo->prepare('INSERT INTO miaradi_gallery_items (circuit_id,media_type,source_type,title_fr,title_en,description_fr,description_en,alt_text,file_path,external_url,thumbnail_path,is_published,sort_order) VALUES (:circuit_id,:media_type,:source_type,:title_fr,:title_en,:description_fr,:description_en,:alt_text,:file_path,:external_url,:thumbnail_path,:published,:sort_order)');
     } else {
-        $stmt=$pdo->prepare('UPDATE miaradi_gallery_items SET media_type=:media_type,source_type=:source_type,title_fr=:title_fr,title_en=:title_en,description_fr=:description_fr,description_en=:description_en,alt_text=:alt_text,file_path=COALESCE(:file_path,file_path),external_url=:external_url,thumbnail_path=:thumbnail_path,is_published=:published,sort_order=:sort_order WHERE id=:id');
+        $stmt=$pdo->prepare('UPDATE miaradi_gallery_items SET circuit_id=:circuit_id,media_type=:media_type,source_type=:source_type,title_fr=:title_fr,title_en=:title_en,description_fr=:description_fr,description_en=:description_en,alt_text=:alt_text,file_path=COALESCE(:file_path,file_path),external_url=:external_url,thumbnail_path=:thumbnail_path,is_published=:published,sort_order=:sort_order WHERE id=:id');
     }
-    $values=['media_type'=>$type,'source_type'=>$source,'title_fr'=>$titleFr,'title_en'=>$titleEn,'description_fr'=>$descriptionFr,'description_en'=>$descriptionEn,'alt_text'=>$altText,'file_path'=>$filePath,'external_url'=>$externalUrl,'thumbnail_path'=>$thumbnail,'published'=>$published?1:0,'sort_order'=>$sortOrder];
+    $values=['circuit_id'=>$circuitId,'media_type'=>$type,'source_type'=>$source,'title_fr'=>$titleFr,'title_en'=>$titleEn,'description_fr'=>$descriptionFr,'description_en'=>$descriptionEn,'alt_text'=>$altText,'file_path'=>$filePath,'external_url'=>$externalUrl,'thumbnail_path'=>$thumbnail,'published'=>$published?1:0,'sort_order'=>$sortOrder];
     if ($method==='PATCH') $values['id']=$id;
     $stmt->execute($values);
     $savedId=$method==='POST'?(int)$pdo->lastInsertId():(int)$id;
