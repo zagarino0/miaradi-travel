@@ -13,7 +13,7 @@ require_once dirname(__DIR__, 2) . '/src/bootstrap.php';
 </head>
 <body>
 <div class="shell">
-  <header class="top"><div><div class="brand">MIARADI — ADMINISTRATION</div><h1>Gestion du site</h1><div class="muted">Circuits et demandes de devis</div></div><button class="button secondary hidden" id="logout">Déconnexion</button></header>
+  <header class="top"><div><div class="brand">MIARADI — ADMINISTRATION</div><h1>Gestion du site</h1><div class="muted">Circuits, demandes de devis et galerie multimédia</div><p><a href="gallery.php" style="color:var(--red);font-weight:700">Ouvrir la galerie photos et vidéos →</a></p></div><button class="button secondary hidden" id="logout">Déconnexion</button></header>
   <section class="panel login" id="login-panel"><h2>Connexion administrateur</h2><p class="muted">Utilisez le compte administrateur déjà créé dans la base MIARADI.</p><form id="login-form"><label class="field">Adresse e-mail<input type="email" name="email" autocomplete="username" required maxlength="254"></label><label class="field">Mot de passe<input type="password" name="password" autocomplete="current-password" required maxlength="1024"></label><button class="button" type="submit">Se connecter</button><p class="notice" id="login-status" role="status"></p></form></section>
   <main id="dashboard" class="hidden">
     <nav class="tabs"><button class="active" data-tab="circuits">Circuits</button><button data-tab="quotes">Demandes de devis</button></nav>
