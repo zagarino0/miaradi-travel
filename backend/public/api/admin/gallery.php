@@ -24,7 +24,7 @@ function gallery_external(string $url): array {
     $id = null;
     if (in_array($host, ['youtube.com','www.youtube.com','m.youtube.com','youtu.be','www.youtu.be','youtube-nocookie.com','www.youtube-nocookie.com'], true)) {
         if ($host === 'youtu.be' || $host === 'www.youtu.be') $id = explode('/', $path)[0] ?? null;
-        else parse_str((string)($parts['query'] ?? ''), $query) && $id = $query['v'] ?? null;
+        else { parse_str((string)($parts['query'] ?? ''), $query); $id = $query['v'] ?? null; }
         if (!$id && preg_match('~^(?:embed|shorts|live)/([A-Za-z0-9_-]{6,20})$~', $path, $m)) $id = $m[1];
         if (!is_string($id) || !preg_match('/^[A-Za-z0-9_-]{6,20}$/', $id)) {
             api_json(['error'=>['code'=>'invalid_video_url','message'=>'The YouTube URL does not contain a valid video ID.']], 422);
