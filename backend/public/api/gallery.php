@@ -16,7 +16,17 @@ if (!in_array($lang,['fr','en'],true)) {
     exit;
 }
 try {
-    $stmt=database_connection()->query("SELECT g.id,g.circuit_id,c.slug AS circuit_slug,c.title_fr AS circuit_title_fr,c.title_en AS circuit_title_en,g.media_type,g.source_type,g.title_fr,g.title_en,g.description_fr,g.description_en,g.alt_text,g.file_path,g.external_url,g.thumbnail_path,g.sort_order,g.updated_at FROM miaradi_gallery_items g LEFT JOIN miaradi_circuits c ON c.id=g.circuit_id WHERE g.is_published=1 ORDER BY g.sort_order ASC,g.id DESC");
+    $sql="SELECT g.id,g.circuit_id,c.slug AS circuit_slug,c.title_fr AS circuit_title_fr,c.title_en AS circuit_title_en,g.media_type,g.source_type,g.title_fr,g.title_en,g.description_fr,g.description_en,g.alt_text,g.file_path,g.external_url,g.thumbnail_path,g.sort_order,g.updated_at FROM miaradi_gallery_items g LEFT JOIN miaradi_circuits c ON c.id=g.circuit_id WHERE g.is_published=1";
+    $params=[];
+    $circuitIdRaw=$_GET['circuit_id'] ?? null;
+    if ($circuitIdRaw !== null && $circuitIdRaw !== '') {
+        $circuitId=filter_var($circuitIdRaw,FILTER_VALIDATE_INT,['options'=>['min_range'=>1]]);
+        if (!$circuitId) { http_response_code(400); echo json_encode(['error'=>['code'=>'invalid_circuit_id','message'=>'circuit_id must be a positive integer.']]); exit; }
+        $sql.=' AND g.circuit_id=:circuit_id'; $params['circuit_id']=$circuitId;
+    }
+    $sql.=' ORDER BY g.sort_order ASC,g.id DESC';
+    $stmt=database_connection()->prepare($sql);
+    $stmt->execute($params);
     $items=array_map(static function(array $r) use ($lang): array {
         return [
             'id'=>(int)$r['id'],
