@@ -534,16 +534,125 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelector(".detail-close")?.addEventListener("click", () => detailDialog.close());
   detailDialog.addEventListener("click", (event) => { if (event.target === detailDialog) detailDialog.close(); });
 
-  document.getElementById("quote-form")?.addEventListener("submit", (event) => {
+  const quoteForm = document.getElementById("quote-form");
+  const quoteStatus = document.getElementById("form-status");
+  const circuitSelect = document.getElementById("circuit-select");
+  const quoteApiBase = document.documentElement.dataset.apiBase || "backend/public/api";
+
+  const showQuoteStatus = (message, isError = false) => {
+    if (!quoteStatus) return;
+    quoteStatus.textContent = message;
+    quoteStatus.hidden = false;
+    quoteStatus.classList.toggle("is-error", isError);
+    quoteStatus.setAttribute("role", isError ? "alert" : "status");
+  };
+
+  const loadQuoteCircuits = async () => {
+    if (!circuitSelect) return;
+    try {
+      const response = await fetch(`${quoteApiBase}/circuits.php?lang=${encodeURIComponent(currentLanguage)}`, {
+        headers: { Accept: "application/json" },
+        cache: "no-store"
+      });
+      const payload = await response.json();
+      if (!response.ok || !Array.isArray(payload.data)) {
+        throw new Error(payload.error?.message || "Circuit catalogue unavailable.");
+      }
+      const selected = circuitSelect.value;
+      const customLabel = currentLanguage === "fr" ? "Je souhaite un voyage sur mesure" : "I would like a tailor-made trip";
+      circuitSelect.replaceChildren(new Option(customLabel, ""));
+      payload.data.forEach((circuit) => {
+        const option = new Option(circuit.title, String(circuit.id));
+        option.dataset.slug = circuit.slug;
+        circuitSelect.add(option);
+      });
+      if ([...circuitSelect.options].some((option) => option.value === selected)) {
+        circuitSelect.value = selected;
+      }
+    } catch (error) {
+      console.error("[MIARADI] Could not load published circuits:", error);
+      showQuoteStatus(
+        currentLanguage === "fr"
+          ? "Les circuits ne peuvent pas être chargés pour le moment. Vous pouvez toujours demander un voyage sur mesure."
+          : "Circuits cannot be loaded right now. You can still request a tailor-made trip.",
+        true
+      );
+    }
+  };
+
+  quoteForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
-    if (!form.reportValidity()) return;
-    const name = String(new FormData(form).get("name") || "").trim();
-    const status = document.getElementById("form-status");
-    const message = translations[currentLanguage].formDemo.replace("{name}", name || (currentLanguage === "fr" ? "voyageur" : "traveller"));
-    status.textContent = message;
-    status.hidden = false;
+    if (!(form instanceof HTMLFormElement) || !form.reportValidity()) return;
+
+    const data = new FormData(form);
+    const rawCircuit = String(data.get("circuit") || "");
+    const payload = {
+      fullName: String(data.get("name") || "").trim(),
+      email: String(data.get("email") || "").trim(),
+      departureDate: String(data.get("date") || "") || null,
+      travelerCount: Number(data.get("people") || 2),
+      circuitId: rawCircuit ? Number(rawCircuit) : null,
+      message: String(data.get("message") || "").trim(),
+      language: currentLanguage === "en" ? "en" : "fr",
+      privacyConsent: data.get("privacyConsent") === "on"
+    };
+
+    if (!Number.isInteger(payload.travelerCount) || payload.travelerCount < 1 || payload.travelerCount > 100) {
+      showQuoteStatus(currentLanguage === "fr" ? "Le nombre de voyageurs est invalide." : "The number of travellers is invalid.", true);
+      return;
+    }
+
+    const submitButton = form.querySelector('[type="submit"]');
+    if (submitButton) submitButton.disabled = true;
+    if (quoteStatus) quoteStatus.hidden = true;
+
+    try {
+      const response = await fetch(`${quoteApiBase}/quotes.php`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        const code = result.error?.code || "quote_unavailable";
+        const messages = {
+          invalid_email: currentLanguage === "fr" ? "Veuillez saisir une adresse e-mail valide." : "Please enter a valid email address.",
+          consent_required: currentLanguage === "fr" ? "Votre consentement est nécessaire pour envoyer la demande." : "Your consent is required to submit this request.",
+          invalid_departure_date: currentLanguage === "fr" ? "La date de départ est invalide." : "The departure date is invalid.",
+          invalid_traveler_count: currentLanguage === "fr" ? "Le nombre de voyageurs doit être compris entre 1 et 100." : "The number of travellers must be between 1 and 100.",
+          circuit_not_found: currentLanguage === "fr" ? "Ce circuit n’est plus disponible. Choisissez un autre circuit ou un voyage sur mesure." : "This circuit is no longer available. Choose another circuit or a tailor-made trip."
+        };
+        throw new Error(messages[code] || (currentLanguage === "fr"
+          ? "Votre demande n’a pas pu être envoyée. Réessayez dans quelques instants."
+          : "Your request could not be sent. Please try again shortly."));
+      }
+
+      showQuoteStatus(
+        currentLanguage === "fr"
+          ? `Merci ${payload.fullName}, votre demande a bien été enregistrée (référence ${result.data?.id ?? "—"}).`
+          : `Thank you ${payload.fullName}, your request has been received (reference ${result.data?.id ?? "—"}).`
+      );
+      form.reset();
+      await loadQuoteCircuits();
+    } catch (error) {
+      showQuoteStatus(
+        error instanceof TypeError
+          ? (currentLanguage === "fr"
+            ? "Impossible de joindre le serveur. Vérifiez que l’API locale est démarrée et que son URL est correcte."
+            : "Could not reach the server. Check that the local API is running and its URL is correct.")
+          : (error.message || (currentLanguage === "fr" ? "Une erreur est survenue." : "Something went wrong.")),
+        true
+      );
+    } finally {
+      if (submitButton) submitButton.disabled = false;
+    }
   });
+
+  loadQuoteCircuits();
 
   setLanguage("fr");
 });
