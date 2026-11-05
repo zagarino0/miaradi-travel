@@ -302,12 +302,13 @@
           </div>
           <div class="form-row">
             <label><span data-i18n="fieldDate">Date de départ souhaitée</span><input name="date" type="date"></label>
-            <label><span data-i18n="fieldPeople">Nombre de voyageurs</span><select name="people"><option value="1">1 personne</option><option value="2" selected>2 personnes</option><option value="3-4">3–4 personnes</option><option value="5+">5 personnes ou plus</option></select></label>
+            <label><span data-i18n="fieldPeople">Nombre de voyageurs</span><select name="people"><option value="1">1 personne</option><option value="2" selected>2 personnes</option><option value="3">3 personnes</option><option value="4">4 personnes</option><option value="5">5 personnes</option><option value="6">6 personnes</option><option value="7">7 personnes</option><option value="8">8 personnes</option><option value="9">9 personnes</option><option value="10">10 personnes</option></select></label>
           </div>
-          <label><span data-i18n="fieldCircuit">Circuit qui vous intéresse</span><select name="circuit" id="circuit-select"><option value="" data-i18n="optionCustom">Je souhaite un voyage sur mesure</option><option value="L'Ouest sauvage">L'Ouest sauvage</option><option value="L'appel du lagon">L'appel du lagon</option><option value="Routes & rencontres">Routes & rencontres</option><option value="Les Tsingy de Bemaraha">Les Tsingy de Bemaraha</option><option value="La forêt d'Andasibe">La forêt d'Andasibe</option><option value="La Route nationale 7">La Route nationale 7</option><option value="Sainte-Marie, l'île nature">Sainte-Marie, l'île nature</option><option value="Les Hautes Terres et Antsirabe">Les Hautes Terres et Antsirabe</option></select></label>
+          <label><span data-i18n="fieldCircuit">Circuit qui vous intéresse</span><select name="circuit" id="circuit-select"><option value="" data-i18n="optionCustom">Je souhaite un voyage sur mesure</option></select></label>
           <label><span data-i18n="fieldMessage">Parlez-nous de votre projet *</span><textarea name="message" rows="4" required placeholder="Vos envies, la durée du séjour, les lieux rêvés…"></textarea></label>
+          <label class="form-consent"><input type="checkbox" name="privacyConsent" required><span>J’accepte que MIARADI-TRAVEL utilise ces informations pour répondre à ma demande de devis. <a href="politique-confidentialite.html" target="_blank" rel="noopener">Politique de confidentialité</a>.</span></label>
           <button class="button button-dark form-submit" type="submit"><span data-i18n="formSubmit">Préparer ma demande</span><span aria-hidden="true">↗</span></button>
-          <p class="form-disclaimer" data-i18n="formDisclaimer">Maquette de démonstration : l'envoi réel sera activé après configuration du service de messagerie.</p>
+          <p class="form-disclaimer" data-i18n="formDisclaimer">Votre demande est transmise à MIARADI-TRAVEL. La confirmation à l’écran ne garantit pas la réception d’un e-mail.</p>
           <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
         </form>
       </div>
