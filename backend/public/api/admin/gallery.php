@@ -105,6 +105,11 @@ try {
         $name=bin2hex(random_bytes(18)).'.'.$allowed[$mime];
         if (!move_uploaded_file($tmp,$uploadDir.'/'.$name)) throw new RuntimeException('Unable to store uploaded media.');
         $filePath='uploads/gallery/'.$name;
+    } elseif ($type==='video' && $method==='PATCH' && empty($input['external_url'])) {
+        $existing=$pdo->prepare('SELECT file_path, source_type, external_url, thumbnail_path FROM miaradi_gallery_items WHERE id=:id');
+        $existing->execute(['id'=>$id]); $old=$existing->fetch();
+        if (!$old) api_json(['error'=>['code'=>'not_found','message'=>'Media item not found.']],404);
+        $source=$old['source_type']; $filePath=$old['file_path']; $externalUrl=$old['external_url']; $thumbnail=$old['thumbnail_path'];
     } elseif ($type==='video') {
         $url=gallery_text($input,'external_url',1000,true);
         $external=gallery_external((string)$url); $source=$external['source_type']; $externalUrl=$external['external_url']; $thumbnail=$external['thumbnail_path'];
