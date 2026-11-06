@@ -14,3 +14,9 @@ uploads/
 Thumbs.db
 .vscode/
 .idea/
+
+# Local database credentials
+/miaradi-local-config.php
+
+# Local database credentials
+/miaradi-local-config.php
