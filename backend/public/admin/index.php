@@ -20,7 +20,7 @@ require_once dirname(__DIR__, 2) . '/src/bootstrap.php';
     <p class="notice" id="notice" role="status"></p>
     <section class="panel" id="circuits-panel"><div class="actions" style="justify-content:space-between;align-items:center"><h2>Catalogue des circuits</h2><button class="button" id="new-circuit">Ajouter un circuit</button></div><div class="table-wrap"><table><thead><tr><th>Circuit</th><th>Région / thème</th><th>Durée</th><th>État</th><th>Actions</th></tr></thead><tbody id="circuits-list"></tbody></table></div></section>
     <section class="panel hidden" id="quotes-panel"><div class="actions" style="justify-content:space-between;align-items:center"><h2>Demandes reçues</h2><button class="button secondary" id="refresh-quotes" type="button">Actualiser</button></div><p class="muted">Ouvrez une demande pour consulter ses détails, répondre au client et suivre son statut.</p><div class="table-wrap"><table><thead><tr><th>Contact</th><th>Voyage</th><th>Message</th><th>Statut</th><th>Actions</th></tr></thead><tbody id="quotes-list"></tbody></table></div></section>
-    <section class="panel hidden" id="quote-detail-panel" aria-labelledby="quote-detail-title"><div class="actions" style="justify-content:space-between;align-items:center"><h2 id="quote-detail-title">Détail de la demande</h2><button class="button secondary" id="close-quote-detail" type="button">Fermer</button></div><div id="quote-detail-content"></div><div class="actions" style="margin-top:18px"><a class="button" id="quote-reply-email" href="#">Répondre par e-mail</a><button class="button secondary" id="quote-detail-close-status" type="button">Clôturer la demande</button></div><p class="hint">Le bouton e-mail ouvre votre logiciel de messagerie : vérifiez puis envoyez la réponse. Le statut est enregistré séparément dans MIARADI.</p></section>
+    <section class="panel hidden" id="quote-detail-panel" aria-labelledby="quote-detail-title"><div class="actions" style="justify-content:space-between;align-items:center"><h2 id="quote-detail-title">Détail de la demande</h2><button class="button secondary" id="close-quote-detail" type="button">Fermer</button></div><div id="quote-detail-content"></div><form id="quote-reply-form" style="margin-top:20px;border-top:1px solid var(--line);padding-top:18px"><h3>Répondre au client</h3><label class="field">Objet de l’e-mail<input id="quote-reply-subject" name="subject" required maxlength="200" value="Votre demande de voyage — MIARADI-TRAVEL"></label><label class="field">Message<textarea id="quote-reply-message" name="message" required maxlength="10000" rows="8" placeholder="Rédigez votre réponse au client…"></textarea></label><div class="actions"><button class="button" id="quote-send-reply" type="submit">Envoyer la réponse</button><span class="hint">Le statut et la date ne changent que si le serveur de messagerie accepte l’envoi.</span></div><p class="notice" id="quote-reply-status" role="status"></p></form><div class="actions" style="margin-top:18px"><button class="button secondary" id="quote-detail-close-status" type="button">Clôturer la demande</button></div></section>
     <section class="panel hidden" id="editor-panel"><h2 id="editor-title">Modifier un circuit</h2><form id="circuit-form">
       <input type="hidden" name="id">
       <div class="row"><label class="field">Slug (URL)<input name="slug" required maxlength="180" pattern="[a-z0-9]+(-[a-z0-9]+)*"></label><label class="field">Ordre d'affichage<input name="sort_order" type="number" value="0" required></label></div>
@@ -147,17 +147,21 @@ require_once dirname(__DIR__, 2) . '/src/bootstrap.php';
       ['Nombre de voyageurs', q.traveler_count ?? 'Non précisé'],
       ['Langue préférée', q.preferred_language === 'en' ? 'Anglais' : 'Français'],
       ['Date de réception', formatQuoteDate(q.created_at)],
+      ['Date de réponse envoyée', formatQuoteDate(q.replied_at)],
       ['Consentement de confidentialité', q.privacy_consent_at ? 'Consentement enregistré' : 'Non indiqué'],
-      ['Message du client', q.message || 'Aucun message fourni', true]
+      ['Message du client', q.message || 'Aucun message fourni', true],
+      ...(q.reply_message ? [['Dernière réponse envoyée', q.reply_message, true]] : [])
     ];
     $('#quote-detail-content').innerHTML = '<div class="detail-grid">' + fields.map(([label,value,wide]) => '<div class="detail-item '+(wide?'detail-wide':'')+'"><strong>'+esc(label)+'</strong><p>'+esc(value)+'</p></div>').join('') +
       '<div class="detail-item"><strong>Statut actuel</strong><label class="field"><select id="quote-detail-status" class="quote-status" aria-label="Statut de la demande">'+quoteStatusOptions(q.status)+'</select></label></div></div>';
-    const subject = 'Votre demande de voyage — MIARADI-TRAVEL';
+    const subject = q.reply_subject || 'Votre demande de voyage — MIARADI-TRAVEL';
     const firstName = String(q.full_name || '').trim().split(/\s+/)[0] || 'Bonjour';
-    const body = firstName + ',\n\nNous vous remercions d’avoir contacté MIARADI-TRAVEL. Nous avons bien reçu votre demande' +
-      (q.circuit_title_fr ? ' concernant « ' + q.circuit_title_fr + ' »' : '') +
-      ' et étudions votre projet de voyage à Madagascar. Nous reviendrons vers vous avec les prochaines étapes.\n\nBien cordialement,\nLe service clientèle\nMIARADI-TRAVEL';
-    $('#quote-reply-email').href = 'mailto:' + encodeURIComponent(String(q.email || '')) + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    const defaultBody = q.preferred_language === 'en'
+      ? 'Thank you for contacting MIARADI-TRAVEL. We are reviewing your travel project and will get back to you with the next steps.'
+      : 'Nous vous remercions d’avoir contacté MIARADI-TRAVEL. Nous étudions votre projet de voyage à Madagascar et reviendrons vers vous avec les prochaines étapes.';
+    $('#quote-reply-subject').value = subject;
+    $('#quote-reply-message').value = q.reply_message || defaultBody;
+    $('#quote-reply-status').textContent = '';
     $('#quote-detail-status').addEventListener('change', async event => {
       const select = event.currentTarget;
       select.disabled = true;
@@ -175,6 +179,38 @@ require_once dirname(__DIR__, 2) . '/src/bootstrap.php';
     $('#quote-detail-panel').classList.remove('hidden');
     $('#quote-detail-panel').scrollIntoView({behavior:'smooth',block:'start'});
   }
+  $('#quote-reply-form').addEventListener('submit', async event => {
+    event.preventDefault();
+    if (!selectedQuote) return;
+    const button = $('#quote-send-reply');
+    const status = $('#quote-reply-status');
+    const subject = $('#quote-reply-subject').value.trim();
+    const message = $('#quote-reply-message').value.trim();
+    if (!subject || !message) { status.textContent = 'Renseignez l’objet et le message.'; return; }
+    button.disabled = true;
+    status.textContent = 'Envoi en cours…';
+    try {
+      const result = await request('admin/quote-reply.php', {
+        method: 'POST',
+        mutate: true,
+        body: JSON.stringify({id: Number(selectedQuote.id), subject, message})
+      });
+      selectedQuote.reply_subject = subject;
+      selectedQuote.reply_message = message;
+      selectedQuote.replied_at = result.data.replied_at;
+      selectedQuote.status = 'replied';
+      status.textContent = result.message || 'Réponse acceptée par le serveur de messagerie.';
+      notice('Réponse envoyée au transport de messagerie. Statut mis à jour : Client contacté.');
+      await loadQuotes();
+      const refreshed = quoteRequests.find(item => Number(item.id) === Number(selectedQuote.id)) || selectedQuote;
+      renderQuoteDetail(refreshed);
+    } catch (error) {
+      status.textContent = error.message;
+      notice(error.message);
+    } finally {
+      button.disabled = false;
+    }
+  });
   async function loadQuotes() {
     try {
       const result = await request('admin/quotes.php');
