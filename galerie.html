@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#FBF8F5">
+  <meta name="description" content="Parcourez les photos et vidéos des circuits MIARADI-TRAVEL à Madagascar.">
+  <title>Galerie du circuit — MIARADI-TRAVEL</title>
+  <link rel="preconnect" href="https://commons.wikimedia.org">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="gallery-page.css">
+  <script src="gallery-page.js" defer></script>
+  <link rel="icon" type="image/png" href="assets/miaradi-logo.png">
+</head>
+<body class="gallery-page">
+  <header class="gallery-page-header">
+    <a class="gallery-page-brand" href="index.html#top" aria-label="MIARADI-TRAVEL, accueil">
+      <img src="assets/miaradi-logo.png" alt="MIARADI-TRAVEL">
+      <span><strong>MIARADI <em>TRAVEL</em></strong><small>AGENCE DE VOYAGE À MADAGASCAR</small></span>
+    </a>
+    <a class="gallery-back-link" href="index.html#circuits"><span aria-hidden="true">←</span> Tous les circuits</a>
+  </header>
+
+  <main>
+    <section class="gallery-page-main" aria-labelledby="gallery-page-title">
+      <div class="gallery-page-editorial">
+        <p class="gallery-page-kicker"><span></span><span id="gallery-region">MADAGASCAR · INSPIRATIONS</span></p>
+        <h1 id="gallery-page-title">Galerie du circuit</h1>
+        <p class="gallery-page-intro" id="gallery-page-description">Découvrez Madagascar à travers nos inspirations de voyage.</p>
+        <div class="gallery-page-meta"><span class="gallery-meta-pin" aria-hidden="true">⌖</span><span id="gallery-region-short">Madagascar</span><span class="gallery-meta-separator">·</span><span id="gallery-media-count">0 média</span></div>
+        <div class="gallery-page-bottom">
+          <p class="gallery-page-note">LE VOYAGE COMMENCE ICI</p>
+          <p class="gallery-page-note-copy">Un itinéraire imaginé avec vous, au rythme de vos envies.</p>
+          <a class="gallery-page-quote" id="gallery-page-quote" href="index.html#contact">Demander un devis pour ce circuit <span aria-hidden="true">↗</span></a>
+          <p class="gallery-page-caption-note">Photographies et vidéos illustratives de Madagascar.</p>
+        </div>
+      </div>
+
+      <div class="gallery-page-viewer">
+        <div class="gallery-page-stage" id="gallery-stage">
+          <img id="gallery-stage-image" alt="" fetchpriority="high">
+          <video id="gallery-stage-video" controls playsinline preload="metadata" hidden></video>
+          <div class="gallery-page-unavailable" id="gallery-unavailable" hidden role="status">
+            <span class="gallery-unavailable-mark">M</span>
+            <strong>Photo momentanément indisponible</strong>
+            <span>Cette image ou cette vidéo n'est pas disponible pour le moment. Vous pouvez consulter les autres médias du circuit.</span>
+          </div>
+          <div class="gallery-page-counter" id="gallery-page-counter">01 / 03</div>
+          <button class="gallery-page-nav gallery-page-prev" id="gallery-page-prev" type="button" aria-label="Média précédent">←</button>
+          <button class="gallery-page-nav gallery-page-next" id="gallery-page-next" type="button" aria-label="Média suivant">→</button>
+          <div class="gallery-page-stage-caption">
+            <strong id="gallery-stage-title"></strong>
+            <span id="gallery-stage-description"></span>
+          </div>
+        </div>
+        <div class="gallery-page-thumbs-head"><span>GALERIE DU CIRCUIT</span><span id="gallery-page-thumbs-count">03 MÉDIAS</span></div>
+        <div class="gallery-page-thumbnails" id="gallery-page-thumbnails" aria-label="Choisir une photo ou vidéo"></div>
+        <p class="gallery-page-keyboard-note">Astuce : utilisez les flèches du clavier pour parcourir la galerie.</p>
+      </div>
+    </section>
+
+    <section class="gallery-suggestions" aria-labelledby="gallery-suggestions-title">
+      <div class="gallery-suggestions-heading">
+        <div><p class="gallery-page-kicker"><span></span>POURSUIVRE L'INSPIRATION</p><h2 id="gallery-suggestions-title">D'autres façons de <em>découvrir l'île.</em></h2></div>
+        <a href="index.html#circuits">Explorer tous les circuits <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="gallery-suggestions-grid" id="gallery-suggestions-grid"></div>
+    </section>
+  </main>
+  <footer class="gallery-page-footer"><span>MIARADI <em>TRAVEL</em></span><span>Madagascar, voyageons ensemble.</span><a href="index.html#top">Retour à l'accueil ↑</a></footer>
+</body>
+</html>
