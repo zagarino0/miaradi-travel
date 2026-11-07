@@ -188,9 +188,34 @@ require_once dirname(__DIR__, 2) . '/src/bootstrap.php';
         catch (error) { notice(error.message); select.value = previous; }
         finally { select.disabled = false; }
       }));
-      $('#quotes-list').querySelectorAll('[data-detail]').forEach(button => button.addEventListener('click', () => {
+      $('#quotes-list').querySelectorAll('[data-detail]').forEach(button => button.addEventListener('click', async () => {
         const quote = quoteRequests.find(item => Number(item.id) === Number(button.dataset.detail));
-        if (quote) renderQuoteDetail(quote);
+        if (!quote) return;
+
+        // Prendre automatiquement en charge une nouvelle demande dès son ouverture.
+        if (quote.status === 'new') {
+          button.disabled = true;
+          try {
+            await request('admin/quotes.php', {
+              method: 'PATCH',
+              mutate: true,
+              body: JSON.stringify({id: Number(quote.id), status: 'in_progress'})
+            });
+            quote.status = 'in_progress';
+            notice('Demande prise en charge automatiquement.');
+            await loadQuotes();
+            const refreshedQuote = quoteRequests.find(item => Number(item.id) === Number(quote.id)) || quote;
+            renderQuoteDetail(refreshedQuote);
+          } catch (error) {
+            notice(error.message);
+            renderQuoteDetail(quote);
+          } finally {
+            button.disabled = false;
+          }
+          return;
+        }
+
+        renderQuoteDetail(quote);
       }));
     } catch (error) { notice(error.message); }
   }
