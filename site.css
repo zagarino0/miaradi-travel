@@ -2259,3 +2259,146 @@ dialog#circuit-gallery.gallery-dialog .gallery-caption-copy strong{font-size:14p
 dialog#circuit-gallery.gallery-dialog .gallery-caption-copy #gallery-main-description{font-size:12px;line-height:1.5;letter-spacing:0;white-space:normal;opacity:.9}
 dialog#circuit-gallery.gallery-dialog .gallery-main-overlay #gallery-counter{align-self:end}
 @media(max-width:700px){dialog#circuit-gallery.gallery-dialog .gallery-main-overlay .gallery-caption-copy{max-width:calc(100% - 65px)}dialog#circuit-gallery.gallery-dialog .gallery-caption-copy strong{font-size:12px}dialog#circuit-gallery.gallery-dialog .gallery-caption-copy #gallery-main-description{font-size:10px}}
+
+
+/* Correctif visuel — cartes de circuits alimentées dynamiquement par l’API.
+   Les couches image/voile/texte sont explicites pour éviter que l’image sorte de la carte. */
+.circuits {
+  overflow: clip;
+}
+.circuits .container {
+  width: min(100% - 48px, var(--container));
+  max-width: var(--container);
+  margin-inline: auto;
+}
+.circuits .circuit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: clamp(22px, 3vw, 44px);
+}
+.circuits .circuit-card {
+  position: relative;
+  display: block;
+  min-width: 0;
+  width: 100%;
+  aspect-ratio: 1.12 / 1;
+  margin: 0;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 4px;
+  background: #8c8172;
+  color: #fff;
+}
+.circuits .circuit-card:nth-child(4n + 2),
+.circuits .circuit-card:nth-child(4n + 3) {
+  margin-top: 0;
+}
+.circuits .circuit-card .circuit-image-link {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+  aspect-ratio: auto;
+  background: linear-gradient(135deg, #b7a18a, #65584d);
+}
+.circuits .circuit-card .circuit-image-link img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center;
+  transition: transform .7s cubic-bezier(.2,.65,.25,1);
+}
+.circuits .circuit-card:hover .circuit-image-link img {
+  transform: scale(1.035);
+}
+.circuits .circuit-card::after {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  content: "";
+  background: linear-gradient(180deg, rgba(18,17,15,.02) 10%, rgba(18,17,15,.12) 38%, rgba(18,17,15,.82) 100%);
+  pointer-events: none;
+}
+.circuits .circuit-card .circuit-overlay {
+  position: absolute;
+  z-index: 2;
+  inset: auto 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: clamp(22px, 3vw, 40px);
+  color: #fff;
+}
+.circuits .circuit-card .circuit-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin: 0 0 14px;
+  color: rgba(255,255,255,.82);
+}
+.circuits .circuit-card .circuit-price {
+  display: flex;
+  gap: 8px;
+  margin: 0 0 12px;
+  padding: 0;
+  border: 0;
+  color: rgba(255,255,255,.78);
+}
+.circuits .circuit-card h3 {
+  max-width: 640px;
+  margin: 0 0 10px;
+  color: #fff;
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  line-height: 1.02;
+  overflow-wrap: anywhere;
+}
+.circuits .circuit-card > .circuit-overlay > p {
+  max-width: 480px;
+  margin: 0 0 18px;
+  color: rgba(255,255,255,.9);
+  font-size: clamp(13px, 1.05vw, 15px);
+  line-height: 1.6;
+}
+.circuits .circuit-card .gallery-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+  padding: 0 0 5px;
+  border-bottom: 1px solid rgba(255,255,255,.7);
+  color: #fff;
+}
+.circuits .circuit-card .circuit-link {
+  color: #fff;
+}
+.circuits .circuit-card .circuit-image-link.has-image-fallback {
+  background: linear-gradient(135deg, #c9b9a8, #6f6258);
+}
+.circuits .circuit-card .circuit-image-link.has-image-fallback::after {
+  content: "MIARADI · MADAGASCAR";
+  position: absolute;
+  inset: auto 20px 20px;
+  color: #fff;
+  font-size: 10px;
+  letter-spacing: .18em;
+}
+@media (max-width: 900px) {
+  .circuits .circuit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+  .circuits .circuit-card { aspect-ratio: .82 / 1; }
+  .circuits .circuit-card .circuit-overlay { padding: 22px; }
+}
+@media (max-width: 600px) {
+  .circuits .container { width: min(100% - 32px, var(--container)); }
+  .circuits .circuit-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .circuits .circuit-card { aspect-ratio: 4 / 4.5; }
+  .circuits .circuit-card .circuit-overlay { padding: 24px; }
+  .circuits .circuit-card h3 { font-size: clamp(1.9rem, 8vw, 2.7rem); }
+}
