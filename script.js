@@ -219,6 +219,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const galleryNext = document.getElementById("gallery-next");
   const galleryMainImage = document.getElementById("gallery-main-image");
   const galleryMainCaption = document.getElementById("gallery-main-caption");
+  const galleryImageFallback = document.getElementById("gallery-image-fallback");
+  const galleryThumbCount = document.getElementById("gallery-thumb-count");
   let activeGalleryPhotos = [];
   let activeGalleryIndex = 0;
 
@@ -314,16 +316,23 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!activeGalleryPhotos.length || !galleryMainImage) return;
     activeGalleryIndex = (index + activeGalleryPhotos.length) % activeGalleryPhotos.length;
     const photo = activeGalleryPhotos[activeGalleryIndex];
+    if (galleryImageFallback) galleryImageFallback.hidden = true;
     galleryMainImage.hidden = false;
-    galleryMainImage.src = galleryImageUrl(photo.file);
     galleryMainImage.alt = photo.alt;
     galleryMainImage.onerror = () => {
       galleryMainImage.hidden = true;
-      if (galleryMainCaption) galleryMainCaption.textContent = galleryFallbackText();
+      if (galleryImageFallback) {
+        galleryImageFallback.hidden = false;
+        const title = galleryImageFallback.querySelector("[data-fallback-title]");
+        const copy = galleryImageFallback.querySelector("[data-fallback-copy]");
+        if (title) title.textContent = currentLanguage === "fr" ? "Photo momentanément indisponible" : "Photo temporarily unavailable";
+        if (copy) copy.textContent = galleryFallbackText();
+      }
       const thumb = galleryGrid?.querySelector('[data-photo-index="' + activeGalleryIndex + '"]');
       thumb?.classList.add("is-unavailable");
       thumb?.setAttribute("aria-disabled", "true");
     };
+    galleryMainImage.src = galleryImageUrl(photo.file);
     if (galleryMainCaption) galleryMainCaption.textContent = photo.alt;
     if (galleryCounter) galleryCounter.textContent = String(activeGalleryIndex + 1).padStart(2, "0") + " / " + String(activeGalleryPhotos.length).padStart(2, "0");
     galleryGrid?.querySelectorAll("[data-photo-index]").forEach((thumb) => {
@@ -345,6 +354,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (galleryEyebrow) galleryEyebrow.textContent = data.region[currentLanguage] || data.region.fr;
       activeGalleryPhotos = data.photos.map(([file, alt]) => ({ file, alt })).filter((photo) => Boolean(photo.file));
       activeGalleryIndex = 0;
+      if (galleryThumbCount) galleryThumbCount.textContent = String(activeGalleryPhotos.length).padStart(2, "0") + (currentLanguage === "fr" ? " PHOTOS" : " PHOTOS");
+      if (galleryImageFallback) galleryImageFallback.hidden = true;
       galleryGrid.replaceChildren();
       activeGalleryPhotos.forEach((photo, index) => {
         const thumb = document.createElement("button");
@@ -360,7 +371,7 @@ document.addEventListener("DOMContentLoaded", () => {
         img.onerror = () => {
           thumb.classList.add("is-unavailable");
           thumb.disabled = true;
-          thumb.querySelector(".gallery-thumb-label").textContent = currentLanguage === "fr" ? "Photo indisponible" : "Photo unavailable";
+          thumb.setAttribute("aria-label", currentLanguage === "fr" ? "Photo indisponible" : "Photo unavailable");
         };
         const label = document.createElement("span");
         label.className = "gallery-thumb-label";
