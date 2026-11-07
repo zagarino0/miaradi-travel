@@ -1,167 +1,379 @@
 (() => {
-  const circuits = {
-    "L'Ouest sauvage": {
-      title: "L'Ouest sauvage", region: "OUEST · MORONDAVA", shortRegion: "Morondava · Ouest",
-      description: "Baobabs, pistes rouges et couchers de soleil autour de Morondava.",
-      photos: [
-        {file:"Walking_the_Avenue_of_the_Baobabs.jpg",title:"L'allée des baobabs",description:"Les silhouettes emblématiques des baobabs au cœur de l'Ouest malgache."},
-        {file:"Avenue_of_the_Baobabs_Madagascar.jpg",title:"Baobabs de Madagascar",description:"Une lumière chaude révèle les formes singulières de ces arbres majestueux."},
-        {file:"Baobab_allee_Morondava_Madagascar.jpg",title:"Les paysages de Morondava",description:"Un décor ouvert sur les pistes rouges et les horizons de l'Ouest."}
-      ]
-    },
-    "L'appel du lagon": {
-      title:"L'appel du lagon",region:"NORD · NOSY BE",shortRegion:"Nosy Be · Nord",
-      description:"Plages, eaux turquoise et îles du Nord malgache.",
-      photos:[
-        {file:"Beach_at_Nosy_Be.jpg",title:"Le lagon de Nosy Be",description:"Une plage lumineuse bordée par les eaux du canal du Mozambique."},
-        {file:"Nosy_Be_Madagascar.jpg",title:"Le littoral de Nosy Be",description:"Des paysages côtiers qui invitent à ralentir et à explorer les îles."},
-        {file:"Nosy_Iranja_Madagascar.jpg",title:"L'île de Nosy Iranja",description:"Un paysage insulaire entre sable clair, mer et végétation tropicale."}
-      ]
-    },
-    "Routes & rencontres": {
-      title:"Les paysages de l'Isalo",region:"SUD · ISALO",shortRegion:"Isalo · Sud",
-      description:"Massifs rocheux, canyons et grands espaces du Sud.",
-      photos:[
-        {file:"Isalo_landscape.jpg",title:"Les reliefs de l'Isalo",description:"Les formes sculptées du massif donnent au paysage un caractère minéral."},
-        {file:"Isalo-madagascar.jpg",title:"Les grands espaces du Sud",description:"Un panorama de roches, de vallées et d'horizons ouverts."},
-        {file:"Isalo_National_Park_Madagascar.jpg",title:"Canyons de l'Isalo",description:"Une invitation à parcourir les sentiers et les paysages du parc."}
-      ]
-    },
-    "Les Tsingy de Bemaraha": {
-      title:"Les Tsingy de Bemaraha",region:"OUEST · MENABE",shortRegion:"Bemaraha · Ouest",
-      description:"Un paysage calcaire spectaculaire classé au patrimoine mondial.",
-      photos:[
-        {file:"Tsingy_de_Bemaraha%2C_Madagascar.jpg",title:"Les Tsingy de Bemaraha",description:"Un relief calcaire spectaculaire façonné par le temps."},
-        {file:"Tsingy_de_Bemaraha.jpg",title:"Formations calcaires des Tsingy",description:"Des aiguilles de pierre composent un paysage rare et impressionnant."},
-        {file:"Grand_Tsingy_Bemaraha_Madagascar.jpg",title:"Aiguilles rocheuses du Bemaraha",description:"Une vue sur les formations minérales caractéristiques du parc."}
-      ]
-    },
-    "La forêt d'Andasibe": {
-      title:"La forêt d'Andasibe",region:"EST · ANDASIBE",shortRegion:"Andasibe · Est",
-      description:"Forêt humide, biodiversité endémique et observation des indris.",
-      photos:[
-        {file:"Indri_Andasibe.JPG",title:"Indri dans la forêt d'Andasibe",description:"Une rencontre avec l'un des lémuriens emblématiques des forêts de l'Est."},
-        {file:"Andasibe-Mantadia_National_Park.jpg",title:"La forêt humide d'Andasibe",description:"Une végétation dense et vivante, refuge d'une biodiversité exceptionnelle."},
-        {file:"Indri_indri_Andasibe.jpg",title:"Le lémurien indri",description:"L'indri, espèce endémique, est célèbre pour ses appels puissants."}
-      ]
-    },
-    "Sainte-Marie, l'île nature": {
-      title:"Sainte-Marie, l'île nature",region:"EST · SAINTE-MARIE",shortRegion:"Sainte-Marie · Est",
-      description:"Plages paisibles et vie insulaire sur la côte Est.",
-      photos:[
-        {file:"Nosy_Boraha_Sainte_Marie_Madagascar.jpg",title:"Le littoral de Sainte-Marie",description:"Une côte insulaire à découvrir au fil des villages et des plages."},
-        {file:"Sainte_Marie_Madagascar_beach.jpg",title:"Plage de Sainte-Marie",description:"Un paysage de bord de mer pour prendre le temps de voyager."},
-        {file:"Madagascar_Sainte-Marie_island.jpg",title:"Une île à explorer",description:"La douceur d'un itinéraire entre nature, villages et océan."}
-      ]
-    },
-    "Les Hautes Terres et Antsirabe": {
-      title:"Les Hautes Terres et Antsirabe",region:"HAUTES TERRES · ANTSIRABE",shortRegion:"Antsirabe · Hautes Terres",
-      description:"Villages, artisanat et paysages des Hautes Terres.",
-      photos:[
-        {file:"Antsirabe_Madagascar_landscape.jpg",title:"Les paysages d'Antsirabe",description:"Des collines et des campagnes façonnent les paysages du centre."},
-        {file:"Antsirabe_Madagascar.jpg",title:"À la découverte d'Antsirabe",description:"Une étape culturelle au cœur des Hautes Terres malgaches."},
-        {file:"Madagascar_Highlands_landscape.jpg",title:"Les Hautes Terres",description:"Des paysages vallonnés, des villages et des scènes de vie locale."}
-      ]
-    },
-    "La Route nationale 7": {
-      title:"La Route nationale 7",region:"RN7 · DES HAUTES TERRES AU SUD",shortRegion:"RN7 · Centre et Sud",
-      description:"Un itinéraire du centre vers le Sud, entre Hautes Terres et paysages de l'Isalo.",
-      photos:[
-        {file:"Isalo-madagascar.jpg",title:"Les paysages de l'Isalo",description:"Une étape marquante sur la route vers les paysages du Sud."},
-        {file:"Antsirabe_Madagascar_landscape.jpg",title:"Les Hautes Terres",description:"Des routes qui traversent collines, villages et terres cultivées."},
-        {file:"Madagascar_RN7.jpg",title:"Sur la Route nationale 7",description:"Un voyage par étapes entre le centre de Madagascar et le Sud."}
-      ]
-    }
-  };
-  const params = new URLSearchParams(window.location.search);
-  const requestedKey = params.get("circuit") || "L'Ouest sauvage";
-  const selectedKey = Object.prototype.hasOwnProperty.call(circuits, requestedKey) ? requestedKey : "L'Ouest sauvage";
-  const activeCircuit = circuits[selectedKey];
-  const allMedia = activeCircuit.photos.map((item) => ({...item, type:item.type || (/\.(mp4|webm|ogg)(?:[?#].*)?$/i.test(item.file) ? "video" : "image")}));
-  const $ = (id) => document.getElementById(id);
-  const image = $("gallery-stage-image"), video = $("gallery-stage-video"), fallback = $("gallery-unavailable");
-  const title = $("gallery-stage-title"), description = $("gallery-stage-description"), counter = $("gallery-page-counter");
-  const thumbs = $("gallery-page-thumbnails");
-  let activeIndex = 0;
-  const urlFor = (file, width=1800) => /^(https?:)?\/\//i.test(file) || file.startsWith("/") || file.startsWith("../") ? file : "https://commons.wikimedia.org/wiki/Special:FilePath/" + file + "?width=" + width;
-  const isVideo = (item) => item.type === "video" || /\.(mp4|webm|ogg)(?:[?#].*)?$/i.test(item.file);
-  $("gallery-page-title").textContent = activeCircuit.title;
-  $("gallery-region").textContent = activeCircuit.region;
-  $("gallery-region-short").textContent = activeCircuit.shortRegion;
-  $("gallery-page-description").textContent = activeCircuit.description;
-  $("gallery-media-count").textContent = allMedia.length + " média" + (allMedia.length > 1 ? "s" : "");
-  $("gallery-page-thumbs-count").textContent = String(allMedia.length).padStart(2,"0") + " MÉDIAS";
-  $("gallery-page-quote").href = "index.html?circuit=" + encodeURIComponent(selectedKey) + "#contact";
-  document.title = activeCircuit.title + " — Galerie MIARADI-TRAVEL";
+  "use strict";
 
-  function unavailable() {
-    if (video) { video.pause(); video.hidden = true; video.removeAttribute("src"); video.load(); }
-    image.hidden = true;
-    fallback.hidden = false;
-    fallback.querySelector("strong").textContent = isVideo(allMedia[activeIndex]) ? "Vidéo momentanément indisponible" : "Photo momentanément indisponible";
+  const API_BASE = "backend/public/api/";
+  const LANGUAGE = (document.documentElement.lang || "fr").toLowerCase() === "en" ? "en" : "fr";
+  const $ = (id) => document.getElementById(id);
+  const params = new URLSearchParams(window.location.search);
+  const requestedCircuit = (params.get("circuit") || "").trim();
+
+  const image = $("gallery-stage-image");
+  const video = $("gallery-stage-video");
+  const stage = $("gallery-stage");
+  const fallback = $("gallery-unavailable");
+  const title = $("gallery-stage-title");
+  const description = $("gallery-stage-description");
+  const counter = $("gallery-page-counter");
+  const thumbs = $("gallery-page-thumbnails");
+  const suggestionsGrid = $("gallery-suggestions-grid");
+  const prevButton = $("gallery-page-prev");
+  const nextButton = $("gallery-page-next");
+
+  let circuits = [];
+  let activeCircuit = null;
+  let allMedia = [];
+  let activeIndex = 0;
+  let frame = null;
+  let loadGeneration = 0;
+
+  const text = (value, backup = "") => String(value == null || value === "" ? backup : value);
+  const normalize = (value) => text(value).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+  const isVideo = (item) => item.type === "video" || /\.(mp4|webm|ogg)(?:[?#].*)?$/i.test(text(item.url));
+  const rootUrl = (value) => {
+    if (!value) return "";
+    try { return new URL(value, document.baseURI).href; } catch (_) { return ""; }
+  };
+
+  async function getJson(url) {
+    const response = await fetch(url, { headers: { Accept: "application/json" }, credentials: "same-origin" });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      throw new Error(payload.error?.message || "Impossible de charger les données de la galerie.");
+    }
+    if (payload.error) throw new Error(payload.error.message || "Une erreur est survenue.");
+    return payload;
   }
-  function showMedia(nextIndex) {
-    activeIndex = (nextIndex + allMedia.length) % allMedia.length;
-    const item = allMedia[activeIndex];
-    fallback.hidden = true;
+
+  function clearCurrentMedia() {
+    if (video) {
+      video.pause();
+      video.hidden = true;
+      video.onerror = null;
+      video.removeAttribute("src");
+      video.load();
+    }
+    if (frame) {
+      frame.remove();
+      frame = null;
+    }
     image.hidden = true;
     image.onerror = null;
-    if (video) { video.pause(); video.hidden = true; video.onerror = null; video.removeAttribute("src"); video.load(); }
+    image.removeAttribute("src");
+  }
+
+  function showUnavailable(message) {
+    clearCurrentMedia();
+    fallback.hidden = false;
+    fallback.querySelector("strong").textContent = message || (allMedia[activeIndex] && isVideo(allMedia[activeIndex])
+      ? "Vidéo momentanément indisponible"
+      : "Photo momentanément indisponible");
+  }
+
+  function videoEmbedUrl(rawUrl) {
+    try {
+      const url = new URL(rawUrl);
+      const host = url.hostname.replace(/^www\./, "").toLowerCase();
+      if (host === "youtu.be") {
+        const id = url.pathname.split("/").filter(Boolean)[0];
+        return id ? "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(id) : "";
+      }
+      if (host === "youtube.com" || host === "m.youtube.com" || host === "youtube-nocookie.com") {
+        let id = url.searchParams.get("v");
+        if (!id && /^\/(embed|shorts|live)\//.test(url.pathname)) id = url.pathname.split("/")[2];
+        return id ? "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(id) : "";
+      }
+      if (host === "vimeo.com" || host === "player.vimeo.com") {
+        const match = url.pathname.match(/(?:video\/)?(\d+)/);
+        return match ? "https://player.vimeo.com/video/" + match[1] : "";
+      }
+    } catch (_) {}
+    return "";
+  }
+
+  function renderMediaContent(item) {
+    clearCurrentMedia();
+    fallback.hidden = true;
+
     if (isVideo(item)) {
-      video.hidden = false;
-      video.onerror = unavailable;
-      video.src = item.file;
-      video.load();
-    } else {
-      image.hidden = false;
-      image.alt = item.title;
-      image.onerror = unavailable;
-      image.src = urlFor(item.file);
+      const mediaUrl = rootUrl(item.url);
+      if (/\.(mp4|webm|ogg)(?:[?#].*)?$/i.test(text(item.url))) {
+        video.hidden = false;
+        video.onerror = () => showUnavailable("Vidéo momentanément indisponible");
+        video.src = mediaUrl;
+        video.load();
+        return;
+      }
+
+      const embed = videoEmbedUrl(text(item.url));
+      if (embed) {
+        frame = document.createElement("iframe");
+        frame.className = "gallery-page-stage-embed";
+        frame.src = embed;
+        frame.title = text(item.title, "Vidéo MIARADI-TRAVEL");
+        frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+        frame.allowFullscreen = true;
+        frame.loading = "eager";
+        frame.referrerPolicy = "strict-origin-when-cross-origin";
+        frame.addEventListener("error", () => showUnavailable("Vidéo momentanément indisponible"), { once: true });
+        stage.insertBefore(frame, fallback);
+        return;
+      }
+
+      showUnavailable("Lien vidéo indisponible");
+      return;
     }
-    title.textContent = item.title;
-    description.textContent = item.description || activeCircuit.description;
-    counter.textContent = String(activeIndex+1).padStart(2,"0") + " / " + String(allMedia.length).padStart(2,"0");
+
+    image.hidden = false;
+    image.alt = text(item.alt, text(item.title));
+    image.onerror = () => showUnavailable("Photo momentanément indisponible");
+    image.src = rootUrl(item.url);
+  }
+
+  function updateCounter() {
+    counter.textContent = allMedia.length
+      ? String(activeIndex + 1).padStart(2, "0") + " / " + String(allMedia.length).padStart(2, "0")
+      : "00 / 00";
+  }
+
+  function showMedia(nextIndex) {
+    if (!allMedia.length) {
+      activeIndex = 0;
+      title.textContent = "Aucun média publié pour ce circuit";
+      description.textContent = "Les photos et vidéos de ce circuit apparaîtront ici dès leur publication dans l’administration.";
+      updateCounter();
+      prevButton.disabled = true;
+      nextButton.disabled = true;
+      thumbs.replaceChildren();
+      showUnavailable("Galerie en cours de préparation");
+      return;
+    }
+
+    activeIndex = (nextIndex + allMedia.length) % allMedia.length;
+    const item = allMedia[activeIndex];
+    renderMediaContent(item);
+
+    title.textContent = text(item.title, isVideo(item) ? "Vidéo du circuit" : "Photo du circuit");
+    description.textContent = text(item.description, activeCircuit.summary || "Découvrez ce paysage de Madagascar.");
+    updateCounter();
+
     thumbs.querySelectorAll("[data-index]").forEach((button) => {
       const selected = Number(button.dataset.index) === activeIndex;
       button.classList.toggle("is-active", selected);
       button.setAttribute("aria-pressed", String(selected));
     });
-    $("gallery-page-prev").disabled = allMedia.length < 2;
-    $("gallery-page-next").disabled = allMedia.length < 2;
-  }
-  allMedia.forEach((item,index) => {
-    const button = document.createElement("button");
-    button.type = "button"; button.className = "gallery-page-thumb" + (isVideo(item) ? " is-video" : "");
-    button.dataset.index = String(index); button.setAttribute("aria-pressed","false");
-    button.setAttribute("aria-label",item.title + " — " + (item.description || activeCircuit.description));
-    if (!isVideo(item)) {
-      const thumb = document.createElement("img"); thumb.alt=""; thumb.loading="lazy"; thumb.src=urlFor(item.file,480);
-      thumb.onerror=()=>{button.classList.add("is-unavailable");button.innerHTML="Photo indisponible";button.disabled=true;};
-      button.append(thumb);
-    } else {
-      const label=document.createElement("span"); label.className="gallery-page-thumb-label"; label.textContent="▶ Vidéo"; button.append(label);
-    }
-    const caption=document.createElement("span"); caption.className="gallery-page-thumb-label"; caption.textContent=item.title; button.append(caption);
-    button.addEventListener("click",()=>showMedia(index)); thumbs.append(button);
-  });
-  $("gallery-page-prev").addEventListener("click",()=>showMedia(activeIndex-1));
-  $("gallery-page-next").addEventListener("click",()=>showMedia(activeIndex+1));
-  document.addEventListener("keydown",(event)=>{if(event.key==="ArrowLeft")showMedia(activeIndex-1);if(event.key==="ArrowRight")showMedia(activeIndex+1);});
-  showMedia(0);
 
-  const suggestions = Object.entries(circuits).filter(([key])=>key!==selectedKey).slice(0,3);
-  const suggestionsGrid = $("gallery-suggestions-grid");
-  suggestions.forEach(([key,circuit])=>{
-    const link=document.createElement("a"); link.className="gallery-suggestion-card"; link.href="galerie.html?circuit="+encodeURIComponent(key);
-    const visual=document.createElement("div"); visual.className="gallery-suggestion-image";
-    const img=document.createElement("img"); img.src=urlFor(circuit.photos[0].file,900); img.alt=circuit.photos[0].title; img.loading="lazy";
-    img.onerror=()=>{img.hidden=true;visual.classList.add("is-image-unavailable");};
-    const badge=document.createElement("span"); badge.textContent=circuit.region;
-    visual.append(img,badge);
-    const copy=document.createElement("div"); copy.className="gallery-suggestion-copy";
-    const h3=document.createElement("h3"); h3.textContent=circuit.title;
-    const p=document.createElement("p"); p.textContent=circuit.description;
-    const cta=document.createElement("strong"); cta.textContent="Découvrir la galerie ↗";
-    copy.append(h3,p,cta); link.append(visual,copy); suggestionsGrid.append(link);
+    prevButton.disabled = allMedia.length < 2;
+    nextButton.disabled = allMedia.length < 2;
+  }
+
+  function renderThumbnails() {
+    thumbs.replaceChildren();
+    allMedia.forEach((item, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "gallery-page-thumb" + (isVideo(item) ? " is-video" : "");
+      button.dataset.index = String(index);
+      button.setAttribute("aria-pressed", "false");
+      button.setAttribute("aria-label", text(item.title, "Média") + " — " + text(item.description, ""));
+      button.addEventListener("click", () => showMedia(index));
+
+      if (isVideo(item)) {
+        const posterUrl = rootUrl(item.thumbnail);
+        if (posterUrl) {
+          const poster = document.createElement("img");
+          poster.alt = "";
+          poster.loading = "lazy";
+          poster.src = posterUrl;
+          poster.onerror = () => {
+            poster.remove();
+            button.classList.add("is-unavailable");
+          };
+          button.append(poster);
+        } else {
+          button.classList.add("is-unavailable");
+          const label = document.createElement("span");
+          label.className = "gallery-page-thumb-label";
+          label.textContent = "▶ Vidéo";
+          button.append(label);
+        }
+      } else {
+        const thumb = document.createElement("img");
+        thumb.alt = "";
+        thumb.loading = "lazy";
+        thumb.src = rootUrl(item.thumbnail || item.url);
+        thumb.onerror = () => {
+          thumb.remove();
+          button.classList.add("is-unavailable");
+          const label = document.createElement("span");
+          label.className = "gallery-page-thumb-label";
+          label.textContent = "Photo indisponible";
+          button.append(label);
+        };
+        button.append(thumb);
+      }
+
+      const caption = document.createElement("span");
+      caption.className = "gallery-page-thumb-label";
+      caption.textContent = text(item.title, isVideo(item) ? "Vidéo" : "Photo");
+      button.append(caption);
+      thumbs.append(button);
+    });
+  }
+
+  function circuitMatches(circuit, requested) {
+    const needle = normalize(requested);
+    return normalize(circuit.id) === needle ||
+      normalize(circuit.slug) === needle ||
+      normalize(circuit.title) === needle;
+  }
+
+  function chooseCircuit(list) {
+    if (!list.length) return null;
+    if (requestedCircuit) {
+      const found = list.find((circuit) => circuitMatches(circuit, requestedCircuit));
+      if (found) return found;
+    }
+    return list[0];
+  }
+
+  function setCircuitHeader(circuit, media) {
+    activeCircuit = circuit;
+    $("gallery-page-title").textContent = circuit.title;
+    $("gallery-region").textContent = text(circuit.region, "MADAGASCAR · INSPIRATIONS").toUpperCase();
+    $("gallery-region-short").textContent = [circuit.region, circuit.theme].filter(Boolean).join(" · ");
+    $("gallery-page-description").textContent = text(circuit.summary, "Découvrez Madagascar à travers nos inspirations de voyage.");
+    $("gallery-media-count").textContent = media.length + " média" + (media.length > 1 ? "s" : "");
+    $("gallery-page-thumbs-count").textContent = String(media.length).padStart(2, "0") + " MÉDIAS";
+    $("gallery-page-quote").href = "index.html?circuit=" + encodeURIComponent(circuit.slug || circuit.id) + "#contact";
+    document.title = circuit.title + " — Galerie MIARADI-TRAVEL";
+  }
+
+  function renderSuggestions(suggestions, mediaByCircuit) {
+    suggestionsGrid.replaceChildren();
+    if (!suggestions.length) {
+      const note = document.createElement("p");
+      note.className = "gallery-suggestions-empty";
+      note.textContent = "D’autres circuits seront bientôt disponibles.";
+      suggestionsGrid.append(note);
+      return;
+    }
+
+    suggestions.forEach((circuit) => {
+      const media = mediaByCircuit.get(String(circuit.id)) || [];
+      const cover = media.find((item) => item.type !== "video" && item.url) || null;
+      const link = document.createElement("a");
+      link.className = "gallery-suggestion-card";
+      link.href = "galerie.html?circuit=" + encodeURIComponent(circuit.slug || circuit.id);
+
+      const visual = document.createElement("div");
+      visual.className = "gallery-suggestion-image";
+      if (cover) {
+        const img = document.createElement("img");
+        img.src = rootUrl(cover.thumbnail || cover.url);
+        img.alt = text(cover.alt, text(cover.title, circuit.title));
+        img.loading = "lazy";
+        img.onerror = () => {
+          img.remove();
+          visual.classList.add("is-image-unavailable");
+        };
+        visual.append(img);
+      } else if (circuit.image) {
+        const img = document.createElement("img");
+        img.src = rootUrl(circuit.image);
+        img.alt = circuit.title;
+        img.loading = "lazy";
+        img.onerror = () => {
+          img.remove();
+          visual.classList.add("is-image-unavailable");
+        };
+        visual.append(img);
+      } else {
+        visual.classList.add("is-image-unavailable");
+      }
+
+      const badge = document.createElement("span");
+      badge.textContent = text(circuit.region, "Madagascar");
+      visual.append(badge);
+
+      const copy = document.createElement("div");
+      copy.className = "gallery-suggestion-copy";
+      const heading = document.createElement("h3");
+      heading.textContent = circuit.title;
+      const summary = document.createElement("p");
+      summary.textContent = text(circuit.summary, "Découvrez ce circuit à Madagascar.");
+      const cta = document.createElement("strong");
+      cta.textContent = "Découvrir la galerie ↗";
+      copy.append(heading, summary, cta);
+      link.append(visual, copy);
+      suggestionsGrid.append(link);
+    });
+  }
+
+  async function init() {
+    try {
+      const circuitPayload = await getJson(API_BASE + "circuits.php?lang=" + encodeURIComponent(LANGUAGE));
+      circuits = Array.isArray(circuitPayload.data) ? circuitPayload.data : [];
+      if (!circuits.length) throw new Error("Aucun circuit publié n’est disponible pour le moment.");
+
+      const requestedMatch = requestedCircuit
+        ? circuits.find((circuit) => circuitMatches(circuit, requestedCircuit))
+        : null;
+      activeCircuit = requestedMatch || chooseCircuit(circuits);
+
+      if (!requestedMatch && requestedCircuit) {
+        const notice = $("gallery-page-load-status");
+        if (notice) {
+          notice.hidden = false;
+          notice.textContent = "Le circuit demandé n’est pas disponible. Voici la galerie du premier circuit publié.";
+        }
+      }
+
+      const mediaPayload = await getJson(API_BASE + "gallery.php?circuit_id=" + encodeURIComponent(activeCircuit.id) + "&lang=" + encodeURIComponent(LANGUAGE));
+      allMedia = Array.isArray(mediaPayload.data) ? mediaPayload.data : [];
+      setCircuitHeader(activeCircuit, allMedia);
+      renderThumbnails();
+      showMedia(0);
+
+      const suggestions = circuits.filter((circuit) => String(circuit.id) !== String(activeCircuit.id)).slice(0, 3);
+      const mediaResults = await Promise.all(suggestions.map(async (circuit) => {
+        try {
+          const payload = await getJson(API_BASE + "gallery.php?circuit_id=" + encodeURIComponent(circuit.id) + "&lang=" + encodeURIComponent(LANGUAGE));
+          return [String(circuit.id), Array.isArray(payload.data) ? payload.data : []];
+        } catch (_) {
+          return [String(circuit.id), []];
+        }
+      }));
+      renderSuggestions(suggestions, new Map(mediaResults));
+    } catch (error) {
+      $("gallery-page-title").textContent = "Galerie momentanément indisponible";
+      $("gallery-page-description").textContent = error.message || "Impossible de charger les circuits et les médias.";
+      $("gallery-region").textContent = "MIARADI-TRAVEL";
+      $("gallery-region-short").textContent = "Madagascar";
+      $("gallery-media-count").textContent = "0 média";
+      $("gallery-page-thumbs-count").textContent = "00 MÉDIAS";
+      title.textContent = "La galerie n’a pas pu être chargée";
+      description.textContent = "Vérifiez que l’API PHP et la base de données sont accessibles.";
+      thumbs.replaceChildren();
+      suggestionsGrid.replaceChildren();
+      showUnavailable("Galerie momentanément indisponible");
+      prevButton.disabled = true;
+      nextButton.disabled = true;
+      const status = $("gallery-page-load-status");
+      if (status) {
+        status.hidden = false;
+        status.textContent = error.message || "Erreur de chargement.";
+      }
+    }
+  }
+
+  prevButton.addEventListener("click", () => showMedia(activeIndex - 1));
+  nextButton.addEventListener("click", () => showMedia(activeIndex + 1));
+  document.addEventListener("keydown", (event) => {
+    if (event.altKey || event.ctrlKey || event.metaKey || /INPUT|TEXTAREA|SELECT/.test(event.target.tagName)) return;
+    if (event.key === "ArrowLeft") showMedia(activeIndex - 1);
+    if (event.key === "ArrowRight") showMedia(activeIndex + 1);
+    if (event.key === "Escape") window.location.href = "index.html#circuits";
   });
+
+  init();
 })();
