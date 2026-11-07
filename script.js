@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const filters = document.querySelectorAll(".filter-button");
   const circuitGrid = document.querySelector(".circuit-grid");
-  const cards = () => document.querySelectorAll(".circuit-card");
+  const cards = () => circuitGrid ? circuitGrid.querySelectorAll(".circuit-card") : [];
   const regionFilter = document.getElementById("region-filter");
   const durationFilter = document.getElementById("duration-filter");
   let selectedTheme = "all";
@@ -180,7 +180,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const matchesTheme = selectedTheme === "all" || card.dataset.category === selectedTheme;
       const matchesRegion = !regionFilter || regionFilter.value === "all" || card.dataset.region === regionFilter.value;
       const matchesDuration = !durationFilter || durationFilter.value === "all" || card.dataset.duration === durationFilter.value;
-      card.hidden = !(matchesTheme && matchesRegion && matchesDuration);
+      const visible = matchesTheme && matchesRegion && matchesDuration;
+      card.hidden = !visible;
+      card.setAttribute("aria-hidden", String(!visible));
     });
   };
 
