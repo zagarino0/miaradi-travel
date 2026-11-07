@@ -169,17 +169,20 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const filters = document.querySelectorAll(".filter-button");
-  const cards = document.querySelectorAll(".circuit-card");
+  const circuitGrid = document.querySelector(".circuit-grid");
+  const cards = () => circuitGrid ? circuitGrid.querySelectorAll(".circuit-card") : [];
   const regionFilter = document.getElementById("region-filter");
   const durationFilter = document.getElementById("duration-filter");
   let selectedTheme = "all";
 
   const applyCircuitFilters = () => {
-    cards.forEach((card) => {
+    cards().forEach((card) => {
       const matchesTheme = selectedTheme === "all" || card.dataset.category === selectedTheme;
       const matchesRegion = !regionFilter || regionFilter.value === "all" || card.dataset.region === regionFilter.value;
       const matchesDuration = !durationFilter || durationFilter.value === "all" || card.dataset.duration === durationFilter.value;
-      card.hidden = !(matchesTheme && matchesRegion && matchesDuration);
+      const visible = matchesTheme && matchesRegion && matchesDuration;
+      card.hidden = !visible;
+      card.setAttribute("aria-hidden", String(!visible));
     });
   };
 
@@ -197,6 +200,139 @@ document.addEventListener("DOMContentLoaded", () => {
   if (regionFilter) regionFilter.addEventListener("change", applyCircuitFilters);
   if (durationFilter) durationFilter.addEventListener("change", applyCircuitFilters);
 
+  // Catalogue public : les cartes sont générées depuis les circuits publiés en base.
+  const publicCircuitsApi = document.documentElement.dataset.apiBase || "backend/public/api";
+  const normalizeCircuitText = (value) => String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  const circuitTheme = (value) => {
+    const theme = normalizeCircuitText(value);
+    if (theme.includes("coast") || theme.includes("island") || theme.includes("lagon") || theme.includes("cote") || theme.includes("ile")) return "coast";
+    if (theme.includes("culture") || theme.includes("rencontre") || theme.includes("heritage")) return "culture";
+    return "nature";
+  };
+  const circuitRegion = (value) => {
+    const region = normalizeCircuitText(value);
+    if (/ouest|west|menabe|boeny|melaky|betsiboka/.test(region)) return "west";
+    if (/nord|north|nosy|sava|diana|analanjirofo|sainte.?marie/.test(region)) return "north";
+    if (/est|east|alaotra|mangoro|atsinanana/.test(region)) return "east";
+    if (/sud|south|androy|anosy|ihorombe|atsimo/.test(region)) return "south";
+    if (/haute|highland|analamanga|vakinankaratra|amoron|betsileo/.test(region)) return "highlands";
+    return "all";
+  };
+  const durationLabel = (duration) => {
+    const min = Number(duration?.min);
+    const max = Number(duration?.max);
+    if (min > 0 && max > 0) return min + "–" + max + (currentLanguage === "fr" ? " jours" : " days");
+    if (min > 0) return (currentLanguage === "fr" ? "À partir de " : "From ") + min + (currentLanguage === "fr" ? " jours" : " days");
+    return currentLanguage === "fr" ? "Sur mesure" : "Tailor-made";
+  };
+  const durationFilterValue = (duration) => {
+    const min = Number(duration?.min);
+    const max = Number(duration?.max);
+    return min > 0 && max > 0 ? min + "-" + max : "custom";
+  };
+  const createCircuitElement = (tag, className, value) => {
+    const element = document.createElement(tag);
+    if (className) element.className = className;
+    if (value !== undefined) element.textContent = value;
+    return element;
+  };
+  const renderPublicCircuitCards = (items) => {
+    if (!circuitGrid) return;
+    circuitGrid.replaceChildren();
+    if (!items.length) {
+      circuitGrid.append(createCircuitElement("p", "circuit-load-status", currentLanguage === "fr"
+        ? "Aucun circuit n’est publié pour le moment."
+        : "No circuits are published yet."));
+      return;
+    }
+    items.forEach((circuit, index) => {
+      const card = createCircuitElement("article", "circuit-card" + (index % 3 === 1 ? " circuit-card-offset" : ""));
+      card.dataset.category = circuitTheme(circuit.theme);
+      card.dataset.region = circuitRegion(circuit.region);
+      card.dataset.duration = durationFilterValue(circuit.duration);
+      card.dataset.circuitId = String(circuit.id);
+      card.dataset.circuitSlug = circuit.slug || "";
+
+      const imageLink = createCircuitElement("a", "circuit-image-link");
+      imageLink.href = "galerie.html?circuit=" + encodeURIComponent(circuit.slug || circuit.id);
+      imageLink.setAttribute("aria-label", (currentLanguage === "fr" ? "Voir la galerie : " : "View gallery: ") + circuit.title);
+      const image = document.createElement("img");
+      image.src = circuit.image || "";
+      image.alt = circuit.title;
+      image.loading = "lazy";
+      image.decoding = "async";
+      image.onerror = () => {
+        image.onerror = null;
+        image.removeAttribute("src");
+        image.classList.add("image-unavailable");
+        imageLink.classList.add("has-image-fallback");
+      };
+      if (!circuit.image) imageLink.classList.add("has-image-fallback");
+      imageLink.append(image);
+      const imageIndex = createCircuitElement("span", "image-index", String(index + 1).padStart(2, "0") + " / " + String(circuit.region || "MADAGASCAR").toUpperCase());
+      const imageArrow = createCircuitElement("span", "image-arrow", "↗");
+      imageArrow.setAttribute("aria-hidden", "true");
+      imageLink.append(imageIndex, imageArrow);
+
+      const overlay = createCircuitElement("div", "circuit-overlay");
+      const meta = createCircuitElement("div", "circuit-meta");
+      const themeLabel = createCircuitElement("span", "", String(circuit.theme || (currentLanguage === "fr" ? "Voyage" : "Journey")).toUpperCase());
+      const duration = createCircuitElement("span", "", durationLabel(circuit.duration));
+      meta.append(themeLabel, duration);
+      const price = createCircuitElement("div", "circuit-price");
+      price.append(createCircuitElement("span", "", currentLanguage === "fr" ? "TARIF" : "PRICE"));
+      price.append(createCircuitElement("strong", "", currentLanguage === "fr" ? "Sur devis" : "Quote only"));
+      const heading = createCircuitElement("h3", "", circuit.title || (currentLanguage === "fr" ? "Circuit à découvrir" : "Journey to discover"));
+      const summary = createCircuitElement("p", "", circuit.summary || "");
+      const galleryLink = createCircuitElement("a", "gallery-trigger", currentLanguage === "fr" ? "Voir la galerie ↗" : "View gallery ↗");
+      galleryLink.href = imageLink.href;
+      galleryLink.setAttribute("aria-label", (currentLanguage === "fr" ? "Voir la galerie : " : "View gallery: ") + circuit.title);
+      const quoteLink = createCircuitElement("a", "underlined-link circuit-link");
+      quoteLink.href = "#contact";
+      quoteLink.dataset.circuit = String(circuit.id);
+      quoteLink.append(createCircuitElement("span", "", currentLanguage === "fr" ? "Demander un devis" : "Request a quote"));
+      quoteLink.append(createCircuitElement("span", "", "↗"));
+      overlay.append(meta, price, heading, summary, galleryLink, quoteLink);
+      card.append(imageLink, overlay);
+      circuitGrid.append(card);
+    });
+    applyCircuitFilters();
+  };
+
+  const loadPublicCircuits = async () => {
+    if (!circuitGrid) return;
+    try {
+      const response = await fetch(publicCircuitsApi + "/circuits.php?lang=" + encodeURIComponent(currentLanguage), {
+        headers: { Accept: "application/json" },
+        credentials: "same-origin",
+        cache: "no-store"
+      });
+      const payload = await response.json();
+      if (!response.ok || !Array.isArray(payload.data)) {
+        throw new Error(payload.error?.message || "Circuit catalogue unavailable.");
+      }
+      renderPublicCircuitCards(payload.data);
+    } catch (error) {
+      console.error("[MIARADI] Impossible de charger les circuits publiés :", error);
+      circuitGrid.replaceChildren(createCircuitElement("p", "circuit-load-status",
+        currentLanguage === "fr"
+          ? "Les circuits ne peuvent pas être chargés. Vérifiez la connexion à l’API et à la base de données."
+          : "Circuits could not be loaded. Check the API and database connection."));
+    }
+  };
+
+  circuitGrid?.addEventListener("click", (event) => {
+    const link = event.target.closest("[data-circuit]");
+    if (!link) return;
+    const select = document.getElementById("circuit-select");
+    const circuitId = link.dataset.circuit;
+    if (select && Array.from(select.options).some((option) => option.value === circuitId)) {
+      select.value = circuitId;
+    }
+  });
+  loadPublicCircuits();
+
+
   document.querySelectorAll("[data-circuit]").forEach((link) => {
     link.addEventListener("click", () => {
       const select = document.getElementById("circuit-select");
@@ -213,9 +349,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const galleryDescription = document.getElementById("gallery-description");
   const galleryGrid = document.getElementById("gallery-grid");
   const galleryQuote = document.getElementById("gallery-quote");
+  const galleryEyebrow = document.getElementById("gallery-circuit-label");
+  const galleryCounter = document.getElementById("gallery-counter");
+  const galleryPrevious = document.getElementById("gallery-previous");
+  const galleryNext = document.getElementById("gallery-next");
+  const galleryMainImage = document.getElementById("gallery-main-image");
+  const galleryMainCaption = document.getElementById("gallery-main-caption")
+  const galleryMainDescription = document.getElementById("gallery-main-description");
+  const galleryImageFallback = document.getElementById("gallery-image-fallback");
+  const galleryThumbCount = document.getElementById("gallery-thumb-count");
+  let activeGalleryPhotos = [];
+  let activeGalleryIndex = 0;
+
   const galleryData = {
     "L'Ouest sauvage": {
       title: { fr: "L'Ouest sauvage", en: "The wild west" },
+      region: { fr: "OUEST · MORONDAVA", en: "WEST · MORONDAVA" },
       description: { fr: "Baobabs, pistes rouges et couchers de soleil autour de Morondava.", en: "Baobabs, red-earth tracks and sunsets around Morondava." },
       photos: [
         ["Walking_the_Avenue_of_the_Baobabs.jpg","Allée des Baobabs à Morondava"],
@@ -225,6 +374,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     "L'appel du lagon": {
       title: { fr: "L'appel du lagon", en: "Call of the lagoon" },
+      region: { fr: "NORD · NOSY BE", en: "NORTH · NOSY BE" },
       description: { fr: "Plages, eaux turquoise et îles du Nord malgache.", en: "Beaches, turquoise water and islands in northern Madagascar." },
       photos: [
         ["Beach_at_Nosy_Be.jpg","Plage de Nosy Be"],
@@ -234,6 +384,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     "Routes & rencontres": {
       title: { fr: "Les paysages de l'Isalo", en: "Isalo landscapes" },
+      region: { fr: "SUD · ISALO", en: "SOUTH · ISALO" },
       description: { fr: "Massifs rocheux, canyons et grands espaces du Sud.", en: "Rocky massifs, canyons and wide-open southern landscapes." },
       photos: [
         ["Isalo_landscape.jpg","Paysage du parc national de l'Isalo"],
@@ -243,6 +394,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     "Les Tsingy de Bemaraha": {
       title: { fr: "Les Tsingy de Bemaraha", en: "The Tsingy of Bemaraha" },
+      region: { fr: "OUEST · MENABE", en: "WEST · MENABE" },
       description: { fr: "Un paysage calcaire spectaculaire classé au patrimoine mondial.", en: "A spectacular limestone landscape recognised as a World Heritage site." },
       photos: [
         ["Tsingy_de_Bemaraha%2C_Madagascar.jpg","Tsingy de Bemaraha"],
@@ -252,6 +404,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     "La forêt d'Andasibe": {
       title: { fr: "La forêt d'Andasibe", en: "Andasibe rainforest" },
+      region: { fr: "EST · ANDASIBE", en: "EAST · ANDASIBE" },
       description: { fr: "Forêt humide, biodiversité endémique et observation des indris.", en: "Rainforest, endemic biodiversity and indri observation." },
       photos: [
         ["Indri_Andasibe.JPG","Indri dans la forêt d'Andasibe"],
@@ -261,25 +414,27 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     "Sainte-Marie, l'île nature": {
       title: { fr: "Sainte-Marie, l'île nature", en: "Sainte-Marie, the natural island" },
+      region: { fr: "EST · SAINTE-MARIE", en: "EAST · SAINTE-MARIE" },
       description: { fr: "Plages paisibles et vie insulaire sur la côte Est.", en: "Quiet beaches and island life on the east coast." },
-      photos: [["Nosy_Boraha_Sainte_Marie_Madagascar.jpg","Littoral de Sainte-Marie"],["Sainte_Marie_Madagascar_beach.jpg","Plage de Sainte-Marie"],["Madagascar_Sainte-Marie_island.jpg","Paysage insulaire de Sainte-Marie"]]
+      photos: [
+        ["Nosy_Boraha_Sainte_Marie_Madagascar.jpg","Littoral de Sainte-Marie"],
+        ["Sainte_Marie_Madagascar_beach.jpg","Plage de Sainte-Marie"],
+        ["Madagascar_Sainte-Marie_island.jpg","Paysage insulaire de Sainte-Marie"]
+      ]
     },
     "Les Hautes Terres et Antsirabe": {
       title: { fr: "Les Hautes Terres et Antsirabe", en: "The Highlands and Antsirabe" },
+      region: { fr: "HAUTES TERRES · ANTSIRABE", en: "HIGHLANDS · ANTSIRABE" },
       description: { fr: "Villages, artisanat et paysages des Hautes Terres.", en: "Villages, crafts and landscapes of the Highlands." },
-      photos: [["Antsirabe_Madagascar_landscape.jpg","Paysage près d'Antsirabe"],["Antsirabe_Madagascar.jpg","Ville d'Antsirabe"],["Madagascar_Highlands_landscape.jpg","Paysages des Hautes Terres"]]
-    },
-    "La Route nationale 7": {
-      title: { fr: "La Route nationale 7", en: "The National Route 7" },
-      description: { fr: "Un itinéraire du centre vers le Sud, entre Hautes Terres et paysages de l'Isalo.", en: "A route from the highlands to the south, through villages and Isalo landscapes." },
       photos: [
-        ["Isalo-madagascar.jpg","Paysages de l'Isalo"],
-        ["Antsirabe_Madagascar_landscape.jpg","Paysage des Hautes Terres"],
-        ["Madagascar_RN7.jpg","Route nationale 7 à Madagascar"]
+        ["Antsirabe_Madagascar_landscape.jpg","Paysage près d'Antsirabe"],
+        ["Antsirabe_Madagascar.jpg","Ville d'Antsirabe"],
+        ["Madagascar_Highlands_landscape.jpg","Paysages des Hautes Terres"]
       ]
     },
     "La Route nationale 7": {
       title: { fr: "La Route nationale 7", en: "The National Route 7" },
+      region: { fr: "RN7 · DES HAUTES TERRES AU SUD", en: "RN7 · HIGHLANDS TO THE SOUTH" },
       description: { fr: "Un itinéraire du centre vers le Sud, entre Hautes Terres et paysages de l'Isalo.", en: "A route from the highlands to the south, through villages and Isalo landscapes." },
       photos: [
         ["Isalo-madagascar.jpg","Paysages de l'Isalo"],
@@ -289,40 +444,89 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  const galleryImageUrl = (file) => /^https?:\/\//i.test(file) || file.startsWith("/") || file.startsWith("../")
+    ? file
+    : "https://commons.wikimedia.org/wiki/Special:FilePath/" + file + "?width=1800";
+  const galleryIsVideo = (photo) => photo.type === "video" || /\.(mp4|webm|ogg)(?:[?#].*)?$/i.test(photo.file);
+  const galleryMediaTitle = (photo) => photo.title || photo.alt || (currentLanguage === "fr" ? "Média du circuit" : "Tour media");
+  const galleryMediaDescription = (photo) => photo.description || photo.alt || (currentLanguage === "fr" ? "Photographie illustrative du circuit sélectionné." : "Illustrative media from the selected tour.");
+  const galleryFallbackText = () => currentLanguage === "fr"
+    ? "Cette photo ou vidéo n'est pas disponible pour le moment."
+    : "This photo or video is currently unavailable.";
+
+  function renderGalleryPhoto(index) {
+    if (!activeGalleryPhotos.length || !galleryMainImage) return;
+    activeGalleryIndex = (index + activeGalleryPhotos.length) % activeGalleryPhotos.length;
+    const photo = activeGalleryPhotos[activeGalleryIndex];
+    const frame = galleryMainImage.parentElement;
+    let video = frame?.querySelector("#gallery-main-video");
+    if (video) {
+      video.pause();
+      video.hidden = true;
+      video.removeAttribute("src");
+      video.load();
+    }
+    if (galleryImageFallback) galleryImageFallback.hidden = true;
+    galleryMainImage.hidden = true;
+    galleryMainImage.onerror = null;
+
+    const markUnavailable = () => {
+      if (video) video.hidden = true;
+      galleryMainImage.hidden = true;
+      if (galleryImageFallback) {
+        galleryImageFallback.hidden = false;
+        const title = galleryImageFallback.querySelector("[data-fallback-title]");
+        const copy = galleryImageFallback.querySelector("[data-fallback-copy]");
+        if (title) title.textContent = currentLanguage === "fr" ? "Média momentanément indisponible" : "Media temporarily unavailable";
+        if (copy) copy.textContent = galleryFallbackText();
+      }
+      const thumb = galleryGrid?.querySelector('[data-photo-index="' + activeGalleryIndex + '"]');
+      thumb?.classList.add("is-unavailable");
+      thumb?.setAttribute("aria-disabled", "true");
+    };
+
+    if (galleryIsVideo(photo)) {
+      if (!video) {
+        video = document.createElement("video");
+        video.id = "gallery-main-video";
+        video.className = "gallery-main-video";
+        video.controls = true;
+        video.playsInline = true;
+        video.preload = "metadata";
+        frame?.insertBefore(video, galleryMainImage);
+      }
+      video.hidden = false;
+      video.setAttribute("aria-label", photo.alt);
+      video.onerror = markUnavailable;
+      video.src = photo.file;
+    } else {
+      galleryMainImage.hidden = false;
+      galleryMainImage.alt = photo.alt;
+      galleryMainImage.onerror = markUnavailable;
+      galleryMainImage.src = galleryImageUrl(photo.file);
+    }
+
+    if (galleryMainCaption) galleryMainCaption.textContent = galleryMediaTitle(photo);
+    if (galleryMainDescription) galleryMainDescription.textContent = galleryMediaDescription(photo);
+    if (galleryCounter) galleryCounter.textContent = String(activeGalleryIndex + 1).padStart(2, "0") + " / " + String(activeGalleryPhotos.length).padStart(2, "0");
+    galleryGrid?.querySelectorAll("[data-photo-index]").forEach((thumb) => {
+      const selected = Number(thumb.dataset.photoIndex) === activeGalleryIndex;
+      thumb.classList.toggle("is-active", selected);
+      thumb.setAttribute("aria-pressed", String(selected));
+    });
+    if (galleryPrevious) galleryPrevious.disabled = activeGalleryPhotos.length < 2;
+    if (galleryNext) galleryNext.disabled = activeGalleryPhotos.length < 2;
+  }
+
+  // La galerie est désormais une page dédiée, ouverte avec le circuit sélectionné.
   document.querySelectorAll("[data-gallery]").forEach((button) => {
     button.addEventListener("click", () => {
       const key = button.dataset.gallery;
-      const data = galleryData[key];
-      if (!data || !galleryDialog || !galleryGrid) return;
-      galleryTitle.textContent = data.title[currentLanguage] || data.title.fr;
-      galleryDescription.textContent = data.description[currentLanguage] || data.description.fr;
-      galleryGrid.replaceChildren();
-      data.photos.forEach(([file, alt]) => {
-        const figure = document.createElement("figure");
-        const img = document.createElement("img");
-        img.src = "https://commons.wikimedia.org/wiki/Special:FilePath/" + file + "?width=1600";
-        img.alt = alt;
-        img.loading = "lazy";
-        img.addEventListener("error", () => { figure.classList.add("gallery-image-error"); img.alt = currentLanguage === "fr" ? "Image indisponible — consultez les autres photos de la galerie" : "Image unavailable — see other gallery photos"; });
-        const caption = document.createElement("figcaption");
-        caption.textContent = alt;
-        figure.append(img, caption);
-        galleryGrid.append(figure);
-      });
-      galleryQuote.href = "#contact";
-      galleryQuote.dataset.circuit = key === "Routes & rencontres" ? "Routes & rencontres" : key;
-      galleryQuote.onclick = () => {
-        const select = document.getElementById("circuit-select");
-        if (select && Array.from(select.options).some((option) => option.value === galleryQuote.dataset.circuit)) select.value = galleryQuote.dataset.circuit;
-        galleryDialog.close();
-      };
-      galleryDialog.showModal();
+      if (!key) return;
+      window.location.href = "galerie.html?circuit=" + encodeURIComponent(key);
     });
   });
-  document.querySelector(".gallery-close")?.addEventListener("click", () => galleryDialog?.close());
-  galleryDialog?.addEventListener("click", (event) => {
-    if (event.target === galleryDialog) galleryDialog.close();
-  });
+
 
 
   // Detailed circuit sheets: itinerary, places, activities, accommodation and dedicated photos.
@@ -534,16 +738,154 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelector(".detail-close")?.addEventListener("click", () => detailDialog.close());
   detailDialog.addEventListener("click", (event) => { if (event.target === detailDialog) detailDialog.close(); });
 
-  document.getElementById("quote-form")?.addEventListener("submit", (event) => {
+  const quoteForm = document.getElementById("quote-form");
+  const quoteStatus = document.getElementById("form-status");
+  const circuitSelect = document.getElementById("circuit-select");
+  const requestedCircuit = new URLSearchParams(window.location.search).get("circuit");
+  if (requestedCircuit && circuitSelect) {
+    const applyRequestedCircuit = () => {
+      let matchingOption = Array.from(circuitSelect.options).find((option) =>
+        option.value === requestedCircuit ||
+        option.textContent.trim() === requestedCircuit ||
+        option.dataset.slug === requestedCircuit
+      );
+      if (!matchingOption) {
+        matchingOption = new Option(requestedCircuit + " — à confirmer", "");
+        matchingOption.dataset.requestedCircuit = requestedCircuit;
+        circuitSelect.add(matchingOption);
+      }
+      circuitSelect.value = matchingOption.value;
+      const messageField = document.querySelector('#quote-form textarea[name="message"]');
+      if (messageField && !messageField.value.trim()) {
+        messageField.value = "Je souhaite recevoir un devis pour le circuit : " + requestedCircuit + ".";
+      }
+      circuitSelect.dispatchEvent(new Event("change", { bubbles: true }));
+      return true;
+    };
+    if (!applyRequestedCircuit()) {
+      const observer = new MutationObserver(() => {
+        if (applyRequestedCircuit()) observer.disconnect();
+      });
+      observer.observe(circuitSelect, { childList: true, subtree: true });
+      window.setTimeout(() => observer.disconnect(), 8000);
+    }
+  }
+  const quoteApiBase = document.documentElement.dataset.apiBase || "backend/public/api";
+
+  const showQuoteStatus = (message, isError = false) => {
+    if (!quoteStatus) return;
+    quoteStatus.textContent = message;
+    quoteStatus.hidden = false;
+    quoteStatus.classList.toggle("is-error", isError);
+    quoteStatus.setAttribute("role", isError ? "alert" : "status");
+  };
+
+  const loadQuoteCircuits = async () => {
+    if (!circuitSelect) return;
+    try {
+      const response = await fetch(`${quoteApiBase}/circuits.php?lang=${encodeURIComponent(currentLanguage)}`, {
+        headers: { Accept: "application/json" },
+        cache: "no-store"
+      });
+      const payload = await response.json();
+      if (!response.ok || !Array.isArray(payload.data)) {
+        throw new Error(payload.error?.message || "Circuit catalogue unavailable.");
+      }
+      const selected = circuitSelect.value;
+      const customLabel = currentLanguage === "fr" ? "Je souhaite un voyage sur mesure" : "I would like a tailor-made trip";
+      circuitSelect.replaceChildren(new Option(customLabel, ""));
+      payload.data.forEach((circuit) => {
+        const option = new Option(circuit.title, String(circuit.id));
+        option.dataset.slug = circuit.slug;
+        circuitSelect.add(option);
+      });
+      if ([...circuitSelect.options].some((option) => option.value === selected)) {
+        circuitSelect.value = selected;
+      }
+    } catch (error) {
+      console.error("[MIARADI] Could not load published circuits:", error);
+      showQuoteStatus(
+        currentLanguage === "fr"
+          ? "Les circuits ne peuvent pas être chargés pour le moment. Vous pouvez toujours demander un voyage sur mesure."
+          : "Circuits cannot be loaded right now. You can still request a tailor-made trip.",
+        true
+      );
+    }
+  };
+
+  quoteForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
-    if (!form.reportValidity()) return;
-    const name = String(new FormData(form).get("name") || "").trim();
-    const status = document.getElementById("form-status");
-    const message = translations[currentLanguage].formDemo.replace("{name}", name || (currentLanguage === "fr" ? "voyageur" : "traveller"));
-    status.textContent = message;
-    status.hidden = false;
+    if (!(form instanceof HTMLFormElement) || !form.reportValidity()) return;
+
+    const data = new FormData(form);
+    const rawCircuit = String(data.get("circuit") || "");
+    const payload = {
+      fullName: String(data.get("name") || "").trim(),
+      email: String(data.get("email") || "").trim(),
+      departureDate: String(data.get("date") || "") || null,
+      travelerCount: Number(data.get("people") || 2),
+      circuitId: rawCircuit ? Number(rawCircuit) : null,
+      message: String(data.get("message") || "").trim(),
+      language: currentLanguage === "en" ? "en" : "fr",
+      privacyConsent: data.get("privacyConsent") === "on"
+    };
+
+    if (!Number.isInteger(payload.travelerCount) || payload.travelerCount < 1 || payload.travelerCount > 100) {
+      showQuoteStatus(currentLanguage === "fr" ? "Le nombre de voyageurs est invalide." : "The number of travellers is invalid.", true);
+      return;
+    }
+
+    const submitButton = form.querySelector('[type="submit"]');
+    if (submitButton) submitButton.disabled = true;
+    if (quoteStatus) quoteStatus.hidden = true;
+
+    try {
+      const response = await fetch(`${quoteApiBase}/quotes.php`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        const code = result.error?.code || "quote_unavailable";
+        const messages = {
+          invalid_email: currentLanguage === "fr" ? "Veuillez saisir une adresse e-mail valide." : "Please enter a valid email address.",
+          consent_required: currentLanguage === "fr" ? "Votre consentement est nécessaire pour envoyer la demande." : "Your consent is required to submit this request.",
+          invalid_departure_date: currentLanguage === "fr" ? "La date de départ est invalide." : "The departure date is invalid.",
+          invalid_traveler_count: currentLanguage === "fr" ? "Le nombre de voyageurs doit être compris entre 1 et 100." : "The number of travellers must be between 1 and 100.",
+          circuit_not_found: currentLanguage === "fr" ? "Ce circuit n’est plus disponible. Choisissez un autre circuit ou un voyage sur mesure." : "This circuit is no longer available. Choose another circuit or a tailor-made trip."
+        };
+        throw new Error(messages[code] || (currentLanguage === "fr"
+          ? "Votre demande n’a pas pu être envoyée. Réessayez dans quelques instants."
+          : "Your request could not be sent. Please try again shortly."));
+      }
+
+      showQuoteStatus(
+        currentLanguage === "fr"
+          ? `Merci ${payload.fullName}, votre demande a bien été enregistrée (référence ${result.data?.id ?? "—"}).`
+          : `Thank you ${payload.fullName}, your request has been received (reference ${result.data?.id ?? "—"}).`
+      );
+      form.reset();
+      await loadQuoteCircuits();
+    } catch (error) {
+      showQuoteStatus(
+        error instanceof TypeError
+          ? (currentLanguage === "fr"
+            ? "Impossible de joindre le serveur. Vérifiez que l’API locale est démarrée et que son URL est correcte."
+            : "Could not reach the server. Check that the local API is running and its URL is correct.")
+          : (error.message || (currentLanguage === "fr" ? "Une erreur est survenue." : "Something went wrong.")),
+        true
+      );
+    } finally {
+      if (submitButton) submitButton.disabled = false;
+    }
   });
+
+  loadQuoteCircuits();
 
   setLanguage("fr");
 });

@@ -15,6 +15,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
         'samesite' => 'Lax',
         'path' => '/',
     ]);
+    session_start();
 }
 
 header('X-Content-Type-Options: nosniff');
@@ -24,7 +25,22 @@ header('X-Frame-Options: DENY');
 function app_env(string $name, ?string $default = null): ?string
 {
     $value = getenv($name);
-    return $value === false ? $default : $value;
+
+    if ($value !== false) {
+        return $value;
+    }
+
+   $configFile = dirname(__DIR__, 2) . '/miaradi-local-config.php';
+
+    if (is_file($configFile)) {
+        $config = require $configFile;
+
+        if (is_array($config) && array_key_exists($name, $config)) {
+            return (string) $config[$name];
+        }
+    }
+
+    return $default;
 }
 
 function database_connection(): PDO
