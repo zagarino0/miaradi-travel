@@ -382,75 +382,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if (galleryNext) galleryNext.disabled = activeGalleryPhotos.length < 2;
   }
 
+  // La galerie est désormais une page dédiée, ouverte avec le circuit sélectionné.
   document.querySelectorAll("[data-gallery]").forEach((button) => {
     button.addEventListener("click", () => {
       const key = button.dataset.gallery;
-      const data = galleryData[key];
-      if (!data || !galleryDialog || !galleryGrid) return;
-      galleryTitle.textContent = data.title[currentLanguage] || data.title.fr;
-      galleryDescription.textContent = data.description[currentLanguage] || data.description.fr;
-      if (galleryEyebrow) galleryEyebrow.textContent = data.region[currentLanguage] || data.region.fr;
-      activeGalleryPhotos = data.photos.map(([file, alt, description, type]) => ({ file, alt, title: alt, description: description || data.description[currentLanguage] || data.description.fr, type: type || (/\.(mp4|webm|ogg)(?:[?#].*)?$/i.test(file || "") ? "video" : "image") })).filter((photo) => Boolean(photo.file));
-      activeGalleryIndex = 0;
-      if (galleryThumbCount) galleryThumbCount.textContent = String(activeGalleryPhotos.length).padStart(2, "0") + (currentLanguage === "fr" ? " PHOTOS" : " PHOTOS");
-      if (galleryImageFallback) galleryImageFallback.hidden = true;
-      galleryGrid.replaceChildren();
-      activeGalleryPhotos.forEach((photo, index) => {
-        const thumb = document.createElement("button");
-        thumb.type = "button";
-        thumb.className = "gallery-thumb";
-        thumb.dataset.photoIndex = String(index);
-        thumb.setAttribute("aria-label", galleryMediaTitle(photo) + ". " + galleryMediaDescription(photo));
-        thumb.setAttribute("aria-pressed", "false");
-        const img = document.createElement("img");
-        img.alt = "";
-        img.loading = "lazy";
-        if (galleryIsVideo(photo)) {
-          thumb.classList.add("is-video");
-          const playMark = document.createElement("span");
-          playMark.className = "gallery-thumb-play";
-          playMark.setAttribute("aria-hidden", "true");
-          playMark.textContent = "▶";
-          thumb.append(playMark);
-        } else {
-          img.src = galleryImageUrl(photo.file).replace("width=1800", "width=480");
-          img.onerror = () => {
-            thumb.classList.add("is-unavailable");
-            thumb.disabled = true;
-            thumb.setAttribute("aria-label", currentLanguage === "fr" ? "Photo indisponible" : "Photo unavailable");
-          };
-          thumb.append(img);
-        }
-        const label = document.createElement("span");
-        label.className = "gallery-thumb-label";
-        label.textContent = galleryMediaTitle(photo);
-        thumb.append(label);
-        thumb.addEventListener("click", () => renderGalleryPhoto(index));
-        galleryGrid.append(thumb);
-      });
-      galleryQuote.href = "#contact";
-      galleryQuote.dataset.circuit = key === "Routes & rencontres" ? "Les paysages de l'Isalo" : key;
-      galleryQuote.onclick = () => {
-        const select = document.getElementById("circuit-select");
-        const circuitValue = galleryQuote.dataset.circuit;
-        if (select && Array.from(select.options).some((option) => option.value === circuitValue)) select.value = circuitValue;
-        galleryDialog.close();
-      };
-      renderGalleryPhoto(0);
-      galleryDialog.showModal();
+      if (!key) return;
+      window.location.href = "galerie.html?circuit=" + encodeURIComponent(key);
     });
   });
-  galleryPrevious?.addEventListener("click", () => renderGalleryPhoto(activeGalleryIndex - 1));
-  galleryNext?.addEventListener("click", () => renderGalleryPhoto(activeGalleryIndex + 1));
-  document.addEventListener("keydown", (event) => {
-    if (!galleryDialog?.open) return;
-    if (event.key === "ArrowLeft") renderGalleryPhoto(activeGalleryIndex - 1);
-    if (event.key === "ArrowRight") renderGalleryPhoto(activeGalleryIndex + 1);
-  });
-  document.querySelector(".gallery-close")?.addEventListener("click", () => galleryDialog?.close());
-  galleryDialog?.addEventListener("click", (event) => {
-    if (event.target === galleryDialog) galleryDialog.close();
-  });
+
 
 
   // Detailed circuit sheets: itinerary, places, activities, accommodation and dedicated photos.
@@ -665,6 +605,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const quoteForm = document.getElementById("quote-form");
   const quoteStatus = document.getElementById("form-status");
   const circuitSelect = document.getElementById("circuit-select");
+  const requestedCircuit = new URLSearchParams(window.location.search).get("circuit");
+  if (requestedCircuit && circuitSelect) {
+    const applyRequestedCircuit = () => {
+      const matchingOption = Array.from(circuitSelect.options).find((option) =>
+        option.value === requestedCircuit || option.textContent.trim() === requestedCircuit
+      );
+      if (matchingOption) {
+        circuitSelect.value = matchingOption.value;
+        circuitSelect.dispatchEvent(new Event("change", { bubbles: true }));
+        return true;
+      }
+      return false;
+    };
+    if (!applyRequestedCircuit()) {
+      const observer = new MutationObserver(() => {
+        if (applyRequestedCircuit()) observer.disconnect();
+      });
+      observer.observe(circuitSelect, { childList: true, subtree: true });
+      window.setTimeout(() => observer.disconnect(), 8000);
+    }
+  }
   const quoteApiBase = document.documentElement.dataset.apiBase || "backend/public/api";
 
   const showQuoteStatus = (message, isError = false) => {
