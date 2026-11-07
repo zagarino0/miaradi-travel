@@ -318,15 +318,29 @@
       const requestedMatch = requestedCircuit
         ? circuits.find((circuit) => circuitMatches(circuit, requestedCircuit))
         : null;
-      activeCircuit = requestedMatch || chooseCircuit(circuits);
 
-      if (!requestedMatch && requestedCircuit) {
+      if (requestedCircuit && !requestedMatch) {
         const notice = $("gallery-page-load-status");
         if (notice) {
           notice.hidden = false;
-          notice.textContent = "Le circuit demandé n’est pas disponible. Voici la galerie du premier circuit publié.";
+          notice.textContent = "Ce circuit n’est pas publié dans le catalogue. Choisissez l’un des circuits disponibles ci-dessous.";
         }
+        $("gallery-page-title").textContent = "Circuit indisponible";
+        $("gallery-page-description").textContent = "La galerie est reliée au catalogue publié. Le circuit demandé doit être publié et posséder une entrée correspondante dans l’administration.";
+        $("gallery-region").textContent = "MIARADI-TRAVEL";
+        $("gallery-region-short").textContent = "Catalogue des circuits";
+        $("gallery-media-count").textContent = "0 média";
+        $("gallery-page-thumbs-count").textContent = "00 MÉDIAS";
+        title.textContent = "Choisissez un circuit publié";
+        description.textContent = "Les médias seront chargés automatiquement depuis la base de données.";
+        showUnavailable("Aucune galerie pour ce circuit");
+        prevButton.disabled = true;
+        nextButton.disabled = true;
+        renderSuggestions(circuits.slice(0, 3), new Map());
+        return;
       }
+
+      activeCircuit = requestedMatch || chooseCircuit(circuits);
 
       const mediaPayload = await getJson(API_BASE + "gallery.php?circuit_id=" + encodeURIComponent(activeCircuit.id) + "&lang=" + encodeURIComponent(LANGUAGE));
       allMedia = Array.isArray(mediaPayload.data) ? mediaPayload.data : [];
