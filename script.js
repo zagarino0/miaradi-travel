@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Catalogue public : les cartes sont générées depuis les circuits publiés en base.
   const publicCircuitsApi = document.documentElement.dataset.apiBase || "backend/public/api";
-  const normalizeCircuitText = (value) => String(value || "").normalize("NFD").replace(/[\\u0300-\\u036f]/g, "").toLowerCase();
+  const normalizeCircuitText = (value) => String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
   const circuitTheme = (value) => {
     const theme = normalizeCircuitText(value);
     if (theme.includes("coast") || theme.includes("island") || theme.includes("lagon") || theme.includes("cote") || theme.includes("ile")) return "coast";
