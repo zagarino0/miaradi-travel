@@ -13,7 +13,8 @@ if ($method === 'GET') {
         $stmt = database_connection()->query(
             'SELECT q.id, q.full_name, q.email, q.desired_departure_date, q.traveler_count,
                     q.circuit_id, c.title_fr AS circuit_title_fr, c.title_en AS circuit_title_en,
-                    q.message, q.preferred_language, q.status, q.privacy_consent_at, q.created_at
+                    q.message, q.reply_subject, q.reply_message, q.replied_at,
+                    q.preferred_language, q.status, q.privacy_consent_at, q.created_at
              FROM miaradi_quote_requests q
              LEFT JOIN miaradi_circuits c ON c.id = q.circuit_id
              ORDER BY q.created_at DESC, q.id DESC LIMIT 200'
