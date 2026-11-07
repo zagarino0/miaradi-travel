@@ -8,7 +8,7 @@ require_once dirname(__DIR__, 2) . '/src/bootstrap.php';
 <title>Administration — MIARADI-TRAVEL</title>
 <style>
 :root{--red:#922D20;--paper:#FBF8F5;--ink:#211d1a;--muted:#706761;--line:rgba(33,29,26,.16);--soft:#F0EDE7;--serif:Georgia,serif;--sans:Arial,sans-serif}
-*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.55 var(--sans)}button,input,select,textarea{font:inherit}button{cursor:pointer}.shell{max-width:1180px;margin:auto;padding:28px 20px 60px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;border-bottom:1px solid var(--line);padding-bottom:20px}.brand{color:var(--red);font-size:13px;letter-spacing:.16em;font-weight:700}.top h1{font:normal clamp(28px,5vw,48px)/1.1 var(--serif);margin:8px 0}.muted{color:var(--muted)}.button{border:0;padding:11px 15px;background:var(--red);color:white}.button.secondary{background:var(--soft);color:var(--ink);border:1px solid var(--line)}.panel{margin-top:24px;padding:clamp(18px,3vw,30px);background:white;border:1px solid var(--line)}.login{max-width:480px;margin:9vh auto}.field{display:grid;gap:6px;margin:12px 0}.field input,.field select,.field textarea{width:100%;padding:11px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}.field textarea{min-height:90px}.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.tabs{display:flex;gap:8px;margin:24px 0}.tabs button{padding:10px 15px;border:1px solid var(--line);background:transparent}.tabs button.active{background:var(--ink);color:white}.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;min-width:700px}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line);vertical-align:top}th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.status{display:inline-block;padding:3px 7px;background:var(--soft);font-size:12px}.notice{min-height:24px;color:var(--red)}.actions{display:flex;gap:8px;flex-wrap:wrap}.quote-message{max-width:380px;white-space:pre-wrap;overflow-wrap:anywhere}.hidden{display:none!important}.hint{font-size:12px;color:var(--muted)}@media(max-width:650px){.row{grid-template-columns:1fr}.top{align-items:flex-start}.tabs{flex-wrap:wrap}.shell{padding-inline:14px}}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.55 var(--sans)}button,input,select,textarea{font:inherit}button{cursor:pointer}.shell{max-width:1180px;margin:auto;padding:28px 20px 60px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;border-bottom:1px solid var(--line);padding-bottom:20px}.brand{color:var(--red);font-size:13px;letter-spacing:.16em;font-weight:700}.top h1{font:normal clamp(28px,5vw,48px)/1.1 var(--serif);margin:8px 0}.muted{color:var(--muted)}.button{border:0;padding:11px 15px;background:var(--red);color:white}.button.secondary{background:var(--soft);color:var(--ink);border:1px solid var(--line)}.panel{margin-top:24px;padding:clamp(18px,3vw,30px);background:white;border:1px solid var(--line)}.login{max-width:480px;margin:9vh auto}.field{display:grid;gap:6px;margin:12px 0}.field input,.field select,.field textarea{width:100%;padding:11px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}.field textarea{min-height:90px}.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.tabs{display:flex;gap:8px;margin:24px 0}.tabs button{padding:10px 15px;border:1px solid var(--line);background:transparent}.tabs button.active{background:var(--ink);color:white}.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;min-width:700px}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line);vertical-align:top}th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.status{display:inline-block;padding:3px 7px;background:var(--soft);font-size:12px}.notice{min-height:24px;color:var(--red)}.actions{display:flex;gap:8px;flex-wrap:wrap}.quote-message{max-width:380px;white-space:pre-wrap;overflow-wrap:anywhere}.hidden{display:none!important}.hint{font-size:12px;color:var(--muted)}.cover-tools{display:grid;grid-template-columns:minmax(0,1fr) 180px;gap:16px;align-items:start}.cover-preview{width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--soft);border:1px solid var(--line);display:block}.cover-preview-wrap{display:grid;gap:6px}.upload-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 15px;border:1px solid var(--red);background:var(--red);color:#fff;cursor:pointer;width:max-content;max-width:100%}.cover-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.upload-progress{font-size:12px;color:var(--muted)}@media(max-width:650px){.row{grid-template-columns:1fr}.top{align-items:flex-start}.tabs{flex-wrap:wrap}.shell{padding-inline:14px}}
 </style>
 </head>
 <body>
@@ -27,7 +27,7 @@ require_once dirname(__DIR__, 2) . '/src/bootstrap.php';
       <div class="row"><label class="field">Résumé français<textarea name="summary_fr" required maxlength="10000"></textarea></label><label class="field">Résumé anglais<textarea name="summary_en" maxlength="10000"></textarea></label></div>
       <div class="row"><label class="field">Région<input name="region" maxlength="80"></label><label class="field">Thème<input name="theme" maxlength="80"></label></div>
       <div class="row"><label class="field">Durée minimale (jours)<input name="duration_min" type="number" min="1" max="365"></label><label class="field">Durée maximale (jours)<input name="duration_max" type="number" min="1" max="365"></label></div>
-      <label class="field">Chemin de l'image<input name="image_path" maxlength="500" placeholder="assets/circuits/nom.jpg"></label>
+      <div class="field"><label for="cover-file">Photo de couverture du circuit</label><div class="cover-tools"><div><div class="cover-actions"><label class="upload-button" for="cover-file">＋ Ajouter une photo de couverture</label><input id="cover-file" type="file" accept="image/jpeg,image/png,image/webp" hidden><span class="hint">JPG, PNG ou WebP · 10 Mo maximum</span></div><p class="hint" id="cover-status" role="status">Sélectionnez une photo pour remplacer la couverture actuelle.</p><label class="field">Chemin de l'image (avancé)<input name="image_path" maxlength="500" placeholder="assets/images/circuits/nom.jpg"></label></div><div class="cover-preview-wrap"><img id="cover-preview" class="cover-preview" alt="Aperçu de la couverture du circuit" hidden><span id="cover-empty" class="hint">Aucun aperçu disponible</span></div></div></div>
       <label class="field"><span><input name="is_published" type="checkbox"> Publier ce circuit</span></label>
       <div class="actions"><button class="button" type="submit">Enregistrer</button><button class="button secondary" type="button" id="cancel-editor">Annuler</button></div>
     </form></section>
@@ -38,9 +38,15 @@ require_once dirname(__DIR__, 2) . '/src/bootstrap.php';
   const $ = (s) => document.querySelector(s);
   let csrf = '';
   let circuits = [];
+  let selectedCover = null;
+  let coverPreviewUrl = null;
+  const coverFile = () => $('#cover-file');
+  function siteRoot() { const marker = '/backend/public/admin/'; const path = location.pathname; const index = path.indexOf(marker); return index >= 0 ? path.slice(0, index) : ''; }
+  function showCoverPreview(path) { const img = $('#cover-preview'); if (coverPreviewUrl) { URL.revokeObjectURL(coverPreviewUrl); coverPreviewUrl = null; } const src = path ? (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('/') ? path : siteRoot() + '/' + path.replace(/^\\//, '')) : ''; if (!src) { img.hidden = true; img.removeAttribute('src'); $('#cover-empty').hidden = false; return; } img.src = src; img.hidden = false; $('#cover-empty').hidden = true; img.onerror = () => { img.hidden = true; $('#cover-empty').hidden = false; $('#cover-empty').textContent = 'Aperçu indisponible pour ce chemin.'; }; img.onload = () => { $('#cover-empty').hidden = true; }; }
+  coverFile().addEventListener('change', () => { selectedCover = coverFile().files?.[0] || null; if (coverPreviewUrl) URL.revokeObjectURL(coverPreviewUrl); if (selectedCover) { if (selectedCover.size > 10 * 1024 * 1024) { selectedCover = null; coverFile().value = ''; $('#cover-status').textContent = 'Fichier trop volumineux : 10 Mo maximum.'; return; } coverPreviewUrl = URL.createObjectURL(selectedCover); $('#cover-preview').src = coverPreviewUrl; $('#cover-preview').hidden = false; $('#cover-empty').hidden = true; $('#cover-status').textContent = selectedCover.name + ' — prêt à être envoyé à l’enregistrement.'; } else { $('#cover-status').textContent = 'Aucune nouvelle photo sélectionnée.'; showCoverPreview($('#circuit-form').elements.image_path.value); } });
   const api = (path) => '../api/' + path;
   async function request(path, options = {}) {
-    const headers = {'Accept':'application/json', ...(options.body ? {'Content-Type':'application/json'} : {}), ...(options.mutate ? {'X-CSRF-Token':csrf} : {})};
+    const headers = {'Accept':'application/json', ...(options.body && !(options.body instanceof FormData) ? {'Content-Type':'application/json'} : {}), ...(options.mutate ? {'X-CSRF-Token':csrf} : {})};
     const response = await fetch(api(path), {credentials:'same-origin', ...options, headers});
     const payload = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(payload.error?.message || 'Une erreur est survenue.');
@@ -78,11 +84,11 @@ require_once dirname(__DIR__, 2) . '/src/bootstrap.php';
     } catch (error) { notice(error.message); }
   }
   function editCircuit(id = null) {
-    const form = $('#circuit-form'); form.reset();
+    const form = $('#circuit-form'); form.reset(); selectedCover = null; coverFile().value = ''; $('#cover-status').textContent = 'Sélectionnez une photo pour remplacer la couverture actuelle.';
     const c = circuits.find(item => item.id === id);
     $('#editor-title').textContent = c ? 'Modifier un circuit' : 'Ajouter un circuit';
     for (const key of ['id','slug','title_fr','title_en','summary_fr','summary_en','region','theme','duration_min','duration_max','image_path','sort_order']) form.elements[key].value = c?.[key] ?? (key === 'sort_order' ? 0 : '');
-    form.elements.is_published.checked = Boolean(c?.is_published);
+    form.elements.is_published.checked = Boolean(c?.is_published); showCoverPreview(c?.image_path || '');
     $('#editor-panel').classList.remove('hidden'); $('#editor-panel').scrollIntoView({behavior:'smooth',block:'start'});
   }
   async function deleteCircuit(id) {
@@ -100,6 +106,13 @@ require_once dirname(__DIR__, 2) . '/src/bootstrap.php';
     const payload = {slug:value('slug'),title_fr:value('title_fr'),title_en:value('title_en')||null,summary_fr:value('summary_fr'),summary_en:value('summary_en')||null,region:value('region')||null,theme:value('theme')||null,duration_min:intOrNull('duration_min'),duration_max:intOrNull('duration_max'),image_path:value('image_path')||null,is_published:f.elements.is_published.checked,sort_order:Number(value('sort_order')||0)};
     if (id) payload.id = Number(id);
     try {
+      if (selectedCover) {
+        $('#cover-status').textContent = 'Envoi de la photo…';
+        const upload = new FormData(); upload.append('cover', selectedCover);
+        const uploaded = await request('admin/circuit-cover.php', {method:'POST', mutate:true, body:upload});
+        payload.image_path = uploaded.data.image_path;
+        selectedCover = null; coverFile().value = ''; $('#cover-status').textContent = 'Photo envoyée. Enregistrement du circuit…';
+      }
       await request('admin/circuits.php', {method:id?'PATCH':'POST', mutate:true, body:JSON.stringify(payload)});
       $('#editor-panel').classList.add('hidden'); notice('Circuit enregistré.'); await loadCircuits();
     } catch (error) { notice(error.message); }
