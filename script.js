@@ -307,32 +307,66 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  const galleryImageUrl = (file) => "https://commons.wikimedia.org/wiki/Special:FilePath/" + file + "?width=1800";
+  const galleryImageUrl = (file) => /^https?:\/\//i.test(file) || file.startsWith("/") || file.startsWith("../")
+    ? file
+    : "https://commons.wikimedia.org/wiki/Special:FilePath/" + file + "?width=1800";
+  const galleryIsVideo = (photo) => photo.type === "video" || /\.(mp4|webm|ogg)(?:[?#].*)?$/i.test(photo.file);
   const galleryFallbackText = () => currentLanguage === "fr"
-    ? "Cette photo n'est pas disponible pour le moment."
-    : "This photo is currently unavailable.";
+    ? "Cette photo ou vidéo n'est pas disponible pour le moment."
+    : "This photo or video is currently unavailable.";
 
   function renderGalleryPhoto(index) {
     if (!activeGalleryPhotos.length || !galleryMainImage) return;
     activeGalleryIndex = (index + activeGalleryPhotos.length) % activeGalleryPhotos.length;
     const photo = activeGalleryPhotos[activeGalleryIndex];
+    const frame = galleryMainImage.parentElement;
+    let video = frame?.querySelector("#gallery-main-video");
+    if (video) {
+      video.pause();
+      video.hidden = true;
+      video.removeAttribute("src");
+      video.load();
+    }
     if (galleryImageFallback) galleryImageFallback.hidden = true;
-    galleryMainImage.hidden = false;
-    galleryMainImage.alt = photo.alt;
-    galleryMainImage.onerror = () => {
+    galleryMainImage.hidden = true;
+    galleryMainImage.onerror = null;
+
+    const markUnavailable = () => {
+      if (video) video.hidden = true;
       galleryMainImage.hidden = true;
       if (galleryImageFallback) {
         galleryImageFallback.hidden = false;
         const title = galleryImageFallback.querySelector("[data-fallback-title]");
         const copy = galleryImageFallback.querySelector("[data-fallback-copy]");
-        if (title) title.textContent = currentLanguage === "fr" ? "Photo momentanément indisponible" : "Photo temporarily unavailable";
+        if (title) title.textContent = currentLanguage === "fr" ? "Média momentanément indisponible" : "Media temporarily unavailable";
         if (copy) copy.textContent = galleryFallbackText();
       }
       const thumb = galleryGrid?.querySelector('[data-photo-index="' + activeGalleryIndex + '"]');
       thumb?.classList.add("is-unavailable");
       thumb?.setAttribute("aria-disabled", "true");
     };
-    galleryMainImage.src = galleryImageUrl(photo.file);
+
+    if (galleryIsVideo(photo)) {
+      if (!video) {
+        video = document.createElement("video");
+        video.id = "gallery-main-video";
+        video.className = "gallery-main-video";
+        video.controls = true;
+        video.playsInline = true;
+        video.preload = "metadata";
+        frame?.insertBefore(video, galleryMainImage);
+      }
+      video.hidden = false;
+      video.setAttribute("aria-label", photo.alt);
+      video.onerror = markUnavailable;
+      video.src = photo.file;
+    } else {
+      galleryMainImage.hidden = false;
+      galleryMainImage.alt = photo.alt;
+      galleryMainImage.onerror = markUnavailable;
+      galleryMainImage.src = galleryImageUrl(photo.file);
+    }
+
     if (galleryMainCaption) galleryMainCaption.textContent = photo.alt;
     if (galleryCounter) galleryCounter.textContent = String(activeGalleryIndex + 1).padStart(2, "0") + " / " + String(activeGalleryPhotos.length).padStart(2, "0");
     galleryGrid?.querySelectorAll("[data-photo-index]").forEach((thumb) => {
@@ -352,7 +386,7 @@ document.addEventListener("DOMContentLoaded", () => {
       galleryTitle.textContent = data.title[currentLanguage] || data.title.fr;
       galleryDescription.textContent = data.description[currentLanguage] || data.description.fr;
       if (galleryEyebrow) galleryEyebrow.textContent = data.region[currentLanguage] || data.region.fr;
-      activeGalleryPhotos = data.photos.map(([file, alt]) => ({ file, alt })).filter((photo) => Boolean(photo.file));
+      activeGalleryPhotos = data.photos.map(([file, alt, type]) => ({ file, alt, type: type || (/\.(mp4|webm|ogg)(?:[?#].*)?$/i.test(file || "") ? "video" : "image") })).filter((photo) => Boolean(photo.file));
       activeGalleryIndex = 0;
       if (galleryThumbCount) galleryThumbCount.textContent = String(activeGalleryPhotos.length).padStart(2, "0") + (currentLanguage === "fr" ? " PHOTOS" : " PHOTOS");
       if (galleryImageFallback) galleryImageFallback.hidden = true;
@@ -365,18 +399,28 @@ document.addEventListener("DOMContentLoaded", () => {
         thumb.setAttribute("aria-label", photo.alt);
         thumb.setAttribute("aria-pressed", "false");
         const img = document.createElement("img");
-        img.src = galleryImageUrl(photo.file).replace("width=1800", "width=480");
         img.alt = "";
         img.loading = "lazy";
-        img.onerror = () => {
-          thumb.classList.add("is-unavailable");
-          thumb.disabled = true;
-          thumb.setAttribute("aria-label", currentLanguage === "fr" ? "Photo indisponible" : "Photo unavailable");
-        };
+        if (galleryIsVideo(photo)) {
+          thumb.classList.add("is-video");
+          const playMark = document.createElement("span");
+          playMark.className = "gallery-thumb-play";
+          playMark.setAttribute("aria-hidden", "true");
+          playMark.textContent = "▶";
+          thumb.append(playMark);
+        } else {
+          img.src = galleryImageUrl(photo.file).replace("width=1800", "width=480");
+          img.onerror = () => {
+            thumb.classList.add("is-unavailable");
+            thumb.disabled = true;
+            thumb.setAttribute("aria-label", currentLanguage === "fr" ? "Photo indisponible" : "Photo unavailable");
+          };
+          thumb.append(img);
+        }
         const label = document.createElement("span");
         label.className = "gallery-thumb-label";
         label.textContent = photo.alt;
-        thumb.append(img, label);
+        thumb.append(label);
         thumb.addEventListener("click", () => renderGalleryPhoto(index));
         galleryGrid.append(thumb);
       });
