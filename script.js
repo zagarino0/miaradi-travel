@@ -169,13 +169,14 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const filters = document.querySelectorAll(".filter-button");
-  const cards = document.querySelectorAll(".circuit-card");
+  const circuitGrid = document.querySelector(".circuit-grid");
+  const cards = () => document.querySelectorAll(".circuit-card");
   const regionFilter = document.getElementById("region-filter");
   const durationFilter = document.getElementById("duration-filter");
   let selectedTheme = "all";
 
   const applyCircuitFilters = () => {
-    cards.forEach((card) => {
+    cards().forEach((card) => {
       const matchesTheme = selectedTheme === "all" || card.dataset.category === selectedTheme;
       const matchesRegion = !regionFilter || regionFilter.value === "all" || card.dataset.region === regionFilter.value;
       const matchesDuration = !durationFilter || durationFilter.value === "all" || card.dataset.duration === durationFilter.value;
@@ -196,6 +197,139 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   if (regionFilter) regionFilter.addEventListener("change", applyCircuitFilters);
   if (durationFilter) durationFilter.addEventListener("change", applyCircuitFilters);
+
+  // Catalogue public : les cartes sont générées depuis les circuits publiés en base.
+  const publicCircuitsApi = document.documentElement.dataset.apiBase || "backend/public/api";
+  const normalizeCircuitText = (value) => String(value || "").normalize("NFD").replace(/[\\u0300-\\u036f]/g, "").toLowerCase();
+  const circuitTheme = (value) => {
+    const theme = normalizeCircuitText(value);
+    if (theme.includes("coast") || theme.includes("island") || theme.includes("lagon") || theme.includes("cote") || theme.includes("ile")) return "coast";
+    if (theme.includes("culture") || theme.includes("rencontre") || theme.includes("heritage")) return "culture";
+    return "nature";
+  };
+  const circuitRegion = (value) => {
+    const region = normalizeCircuitText(value);
+    if (/ouest|west|menabe|boeny|melaky|betsiboka/.test(region)) return "west";
+    if (/nord|north|nosy|sava|diana|analanjirofo|sainte.?marie/.test(region)) return "north";
+    if (/est|east|alaotra|mangoro|atsinanana/.test(region)) return "east";
+    if (/sud|south|androy|anosy|ihorombe|atsimo/.test(region)) return "south";
+    if (/haute|highland|analamanga|vakinankaratra|amoron|betsileo/.test(region)) return "highlands";
+    return "all";
+  };
+  const durationLabel = (duration) => {
+    const min = Number(duration?.min);
+    const max = Number(duration?.max);
+    if (min > 0 && max > 0) return min + "–" + max + (currentLanguage === "fr" ? " jours" : " days");
+    if (min > 0) return (currentLanguage === "fr" ? "À partir de " : "From ") + min + (currentLanguage === "fr" ? " jours" : " days");
+    return currentLanguage === "fr" ? "Sur mesure" : "Tailor-made";
+  };
+  const durationFilterValue = (duration) => {
+    const min = Number(duration?.min);
+    const max = Number(duration?.max);
+    return min > 0 && max > 0 ? min + "-" + max : "custom";
+  };
+  const createCircuitElement = (tag, className, value) => {
+    const element = document.createElement(tag);
+    if (className) element.className = className;
+    if (value !== undefined) element.textContent = value;
+    return element;
+  };
+  const renderPublicCircuitCards = (items) => {
+    if (!circuitGrid) return;
+    circuitGrid.replaceChildren();
+    if (!items.length) {
+      circuitGrid.append(createCircuitElement("p", "circuit-load-status", currentLanguage === "fr"
+        ? "Aucun circuit n’est publié pour le moment."
+        : "No circuits are published yet."));
+      return;
+    }
+    items.forEach((circuit, index) => {
+      const card = createCircuitElement("article", "circuit-card" + (index % 3 === 1 ? " circuit-card-offset" : ""));
+      card.dataset.category = circuitTheme(circuit.theme);
+      card.dataset.region = circuitRegion(circuit.region);
+      card.dataset.duration = durationFilterValue(circuit.duration);
+      card.dataset.circuitId = String(circuit.id);
+      card.dataset.circuitSlug = circuit.slug || "";
+
+      const imageLink = createCircuitElement("a", "circuit-image-link");
+      imageLink.href = "galerie.html?circuit=" + encodeURIComponent(circuit.slug || circuit.id);
+      imageLink.setAttribute("aria-label", (currentLanguage === "fr" ? "Voir la galerie : " : "View gallery: ") + circuit.title);
+      const image = document.createElement("img");
+      image.src = circuit.image || "";
+      image.alt = circuit.title;
+      image.loading = "lazy";
+      image.decoding = "async";
+      image.onerror = () => {
+        image.onerror = null;
+        image.removeAttribute("src");
+        image.classList.add("image-unavailable");
+        imageLink.classList.add("has-image-fallback");
+      };
+      if (!circuit.image) imageLink.classList.add("has-image-fallback");
+      imageLink.append(image);
+      const imageIndex = createCircuitElement("span", "image-index", String(index + 1).padStart(2, "0") + " / " + String(circuit.region || "MADAGASCAR").toUpperCase());
+      const imageArrow = createCircuitElement("span", "image-arrow", "↗");
+      imageArrow.setAttribute("aria-hidden", "true");
+      imageLink.append(imageIndex, imageArrow);
+
+      const overlay = createCircuitElement("div", "circuit-overlay");
+      const meta = createCircuitElement("div", "circuit-meta");
+      const themeLabel = createCircuitElement("span", "", String(circuit.theme || (currentLanguage === "fr" ? "Voyage" : "Journey")).toUpperCase());
+      const duration = createCircuitElement("span", "", durationLabel(circuit.duration));
+      meta.append(themeLabel, duration);
+      const price = createCircuitElement("div", "circuit-price");
+      price.append(createCircuitElement("span", "", currentLanguage === "fr" ? "TARIF" : "PRICE"));
+      price.append(createCircuitElement("strong", "", currentLanguage === "fr" ? "Sur devis" : "Quote only"));
+      const heading = createCircuitElement("h3", "", circuit.title || (currentLanguage === "fr" ? "Circuit à découvrir" : "Journey to discover"));
+      const summary = createCircuitElement("p", "", circuit.summary || "");
+      const galleryLink = createCircuitElement("a", "gallery-trigger", currentLanguage === "fr" ? "Voir la galerie ↗" : "View gallery ↗");
+      galleryLink.href = imageLink.href;
+      galleryLink.setAttribute("aria-label", (currentLanguage === "fr" ? "Voir la galerie : " : "View gallery: ") + circuit.title);
+      const quoteLink = createCircuitElement("a", "underlined-link circuit-link");
+      quoteLink.href = "#contact";
+      quoteLink.dataset.circuit = String(circuit.id);
+      quoteLink.append(createCircuitElement("span", "", currentLanguage === "fr" ? "Demander un devis" : "Request a quote"));
+      quoteLink.append(createCircuitElement("span", "", "↗"));
+      overlay.append(meta, price, heading, summary, galleryLink, quoteLink);
+      card.append(imageLink, overlay);
+      circuitGrid.append(card);
+    });
+    applyCircuitFilters();
+  };
+
+  const loadPublicCircuits = async () => {
+    if (!circuitGrid) return;
+    try {
+      const response = await fetch(publicCircuitsApi + "/circuits.php?lang=" + encodeURIComponent(currentLanguage), {
+        headers: { Accept: "application/json" },
+        credentials: "same-origin",
+        cache: "no-store"
+      });
+      const payload = await response.json();
+      if (!response.ok || !Array.isArray(payload.data)) {
+        throw new Error(payload.error?.message || "Circuit catalogue unavailable.");
+      }
+      renderPublicCircuitCards(payload.data);
+    } catch (error) {
+      console.error("[MIARADI] Impossible de charger les circuits publiés :", error);
+      circuitGrid.replaceChildren(createCircuitElement("p", "circuit-load-status",
+        currentLanguage === "fr"
+          ? "Les circuits ne peuvent pas être chargés. Vérifiez la connexion à l’API et à la base de données."
+          : "Circuits could not be loaded. Check the API and database connection."));
+    }
+  };
+
+  circuitGrid?.addEventListener("click", (event) => {
+    const link = event.target.closest("[data-circuit]");
+    if (!link) return;
+    const select = document.getElementById("circuit-select");
+    const circuitId = link.dataset.circuit;
+    if (select && Array.from(select.options).some((option) => option.value === circuitId)) {
+      select.value = circuitId;
+    }
+  });
+  loadPublicCircuits();
+
 
   document.querySelectorAll("[data-circuit]").forEach((link) => {
     link.addEventListener("click", () => {
