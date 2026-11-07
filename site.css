@@ -2251,3 +2251,11 @@ dialog#circuit-gallery.gallery-dialog .gallery-main-frame > #gallery-main-video{
 dialog#circuit-gallery.gallery-dialog .gallery-main-frame > #gallery-main-video[hidden]{display:none}
 dialog#circuit-gallery.gallery-dialog .gallery-thumb.is-video::after{content:"VIDÉO";position:absolute;right:7px;top:7px;z-index:2;padding:4px 6px;border-radius:4px;background:rgba(25,20,17,.78);color:#fff;font-size:9px;letter-spacing:.1em}
 dialog#circuit-gallery.gallery-dialog .gallery-thumb-play{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:20px;text-shadow:0 1px 8px rgba(0,0,0,.7);background:linear-gradient(145deg,#d8c8b7,#8b7462)}
+
+
+/* Titre et description du média actif : mis à jour avec chaque navigation */
+dialog#circuit-gallery.gallery-dialog .gallery-main-overlay .gallery-caption-copy{display:grid;gap:5px;max-width:75%}
+dialog#circuit-gallery.gallery-dialog .gallery-caption-copy strong{font-size:14px;font-weight:600;line-height:1.35}
+dialog#circuit-gallery.gallery-dialog .gallery-caption-copy #gallery-main-description{font-size:12px;line-height:1.5;letter-spacing:0;white-space:normal;opacity:.9}
+dialog#circuit-gallery.gallery-dialog .gallery-main-overlay #gallery-counter{align-self:end}
+@media(max-width:700px){dialog#circuit-gallery.gallery-dialog .gallery-main-overlay .gallery-caption-copy{max-width:calc(100% - 65px)}dialog#circuit-gallery.gallery-dialog .gallery-caption-copy strong{font-size:12px}dialog#circuit-gallery.gallery-dialog .gallery-caption-copy #gallery-main-description{font-size:10px}}
