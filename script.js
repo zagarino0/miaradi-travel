@@ -213,9 +213,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const galleryDescription = document.getElementById("gallery-description");
   const galleryGrid = document.getElementById("gallery-grid");
   const galleryQuote = document.getElementById("gallery-quote");
+  const galleryEyebrow = document.getElementById("gallery-circuit-label");
+  const galleryCounter = document.getElementById("gallery-counter");
+  const galleryPrevious = document.getElementById("gallery-previous");
+  const galleryNext = document.getElementById("gallery-next");
+  const galleryMainImage = document.getElementById("gallery-main-image");
+  const galleryMainCaption = document.getElementById("gallery-main-caption");
+  let activeGalleryPhotos = [];
+  let activeGalleryIndex = 0;
+
   const galleryData = {
     "L'Ouest sauvage": {
       title: { fr: "L'Ouest sauvage", en: "The wild west" },
+      region: { fr: "OUEST · MORONDAVA", en: "WEST · MORONDAVA" },
       description: { fr: "Baobabs, pistes rouges et couchers de soleil autour de Morondava.", en: "Baobabs, red-earth tracks and sunsets around Morondava." },
       photos: [
         ["Walking_the_Avenue_of_the_Baobabs.jpg","Allée des Baobabs à Morondava"],
@@ -225,6 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     "L'appel du lagon": {
       title: { fr: "L'appel du lagon", en: "Call of the lagoon" },
+      region: { fr: "NORD · NOSY BE", en: "NORTH · NOSY BE" },
       description: { fr: "Plages, eaux turquoise et îles du Nord malgache.", en: "Beaches, turquoise water and islands in northern Madagascar." },
       photos: [
         ["Beach_at_Nosy_Be.jpg","Plage de Nosy Be"],
@@ -234,6 +245,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     "Routes & rencontres": {
       title: { fr: "Les paysages de l'Isalo", en: "Isalo landscapes" },
+      region: { fr: "SUD · ISALO", en: "SOUTH · ISALO" },
       description: { fr: "Massifs rocheux, canyons et grands espaces du Sud.", en: "Rocky massifs, canyons and wide-open southern landscapes." },
       photos: [
         ["Isalo_landscape.jpg","Paysage du parc national de l'Isalo"],
@@ -243,6 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     "Les Tsingy de Bemaraha": {
       title: { fr: "Les Tsingy de Bemaraha", en: "The Tsingy of Bemaraha" },
+      region: { fr: "OUEST · MENABE", en: "WEST · MENABE" },
       description: { fr: "Un paysage calcaire spectaculaire classé au patrimoine mondial.", en: "A spectacular limestone landscape recognised as a World Heritage site." },
       photos: [
         ["Tsingy_de_Bemaraha%2C_Madagascar.jpg","Tsingy de Bemaraha"],
@@ -252,6 +265,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     "La forêt d'Andasibe": {
       title: { fr: "La forêt d'Andasibe", en: "Andasibe rainforest" },
+      region: { fr: "EST · ANDASIBE", en: "EAST · ANDASIBE" },
       description: { fr: "Forêt humide, biodiversité endémique et observation des indris.", en: "Rainforest, endemic biodiversity and indri observation." },
       photos: [
         ["Indri_Andasibe.JPG","Indri dans la forêt d'Andasibe"],
@@ -261,25 +275,27 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     "Sainte-Marie, l'île nature": {
       title: { fr: "Sainte-Marie, l'île nature", en: "Sainte-Marie, the natural island" },
+      region: { fr: "EST · SAINTE-MARIE", en: "EAST · SAINTE-MARIE" },
       description: { fr: "Plages paisibles et vie insulaire sur la côte Est.", en: "Quiet beaches and island life on the east coast." },
-      photos: [["Nosy_Boraha_Sainte_Marie_Madagascar.jpg","Littoral de Sainte-Marie"],["Sainte_Marie_Madagascar_beach.jpg","Plage de Sainte-Marie"],["Madagascar_Sainte-Marie_island.jpg","Paysage insulaire de Sainte-Marie"]]
+      photos: [
+        ["Nosy_Boraha_Sainte_Marie_Madagascar.jpg","Littoral de Sainte-Marie"],
+        ["Sainte_Marie_Madagascar_beach.jpg","Plage de Sainte-Marie"],
+        ["Madagascar_Sainte-Marie_island.jpg","Paysage insulaire de Sainte-Marie"]
+      ]
     },
     "Les Hautes Terres et Antsirabe": {
       title: { fr: "Les Hautes Terres et Antsirabe", en: "The Highlands and Antsirabe" },
+      region: { fr: "HAUTES TERRES · ANTSIRABE", en: "HIGHLANDS · ANTSIRABE" },
       description: { fr: "Villages, artisanat et paysages des Hautes Terres.", en: "Villages, crafts and landscapes of the Highlands." },
-      photos: [["Antsirabe_Madagascar_landscape.jpg","Paysage près d'Antsirabe"],["Antsirabe_Madagascar.jpg","Ville d'Antsirabe"],["Madagascar_Highlands_landscape.jpg","Paysages des Hautes Terres"]]
-    },
-    "La Route nationale 7": {
-      title: { fr: "La Route nationale 7", en: "The National Route 7" },
-      description: { fr: "Un itinéraire du centre vers le Sud, entre Hautes Terres et paysages de l'Isalo.", en: "A route from the highlands to the south, through villages and Isalo landscapes." },
       photos: [
-        ["Isalo-madagascar.jpg","Paysages de l'Isalo"],
-        ["Antsirabe_Madagascar_landscape.jpg","Paysage des Hautes Terres"],
-        ["Madagascar_RN7.jpg","Route nationale 7 à Madagascar"]
+        ["Antsirabe_Madagascar_landscape.jpg","Paysage près d'Antsirabe"],
+        ["Antsirabe_Madagascar.jpg","Ville d'Antsirabe"],
+        ["Madagascar_Highlands_landscape.jpg","Paysages des Hautes Terres"]
       ]
     },
     "La Route nationale 7": {
       title: { fr: "La Route nationale 7", en: "The National Route 7" },
+      region: { fr: "RN7 · DES HAUTES TERRES AU SUD", en: "RN7 · HIGHLANDS TO THE SOUTH" },
       description: { fr: "Un itinéraire du centre vers le Sud, entre Hautes Terres et paysages de l'Isalo.", en: "A route from the highlands to the south, through villages and Isalo landscapes." },
       photos: [
         ["Isalo-madagascar.jpg","Paysages de l'Isalo"],
@@ -289,6 +305,36 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  const galleryImageUrl = (file) => "https://commons.wikimedia.org/wiki/Special:FilePath/" + file + "?width=1800";
+  const galleryFallbackText = () => currentLanguage === "fr"
+    ? "Cette photo n'est pas disponible pour le moment."
+    : "This photo is currently unavailable.";
+
+  function renderGalleryPhoto(index) {
+    if (!activeGalleryPhotos.length || !galleryMainImage) return;
+    activeGalleryIndex = (index + activeGalleryPhotos.length) % activeGalleryPhotos.length;
+    const photo = activeGalleryPhotos[activeGalleryIndex];
+    galleryMainImage.hidden = false;
+    galleryMainImage.src = galleryImageUrl(photo.file);
+    galleryMainImage.alt = photo.alt;
+    galleryMainImage.onerror = () => {
+      galleryMainImage.hidden = true;
+      if (galleryMainCaption) galleryMainCaption.textContent = galleryFallbackText();
+      const thumb = galleryGrid?.querySelector('[data-photo-index="' + activeGalleryIndex + '"]');
+      thumb?.classList.add("is-unavailable");
+      thumb?.setAttribute("aria-disabled", "true");
+    };
+    if (galleryMainCaption) galleryMainCaption.textContent = photo.alt;
+    if (galleryCounter) galleryCounter.textContent = String(activeGalleryIndex + 1).padStart(2, "0") + " / " + String(activeGalleryPhotos.length).padStart(2, "0");
+    galleryGrid?.querySelectorAll("[data-photo-index]").forEach((thumb) => {
+      const selected = Number(thumb.dataset.photoIndex) === activeGalleryIndex;
+      thumb.classList.toggle("is-active", selected);
+      thumb.setAttribute("aria-pressed", String(selected));
+    });
+    if (galleryPrevious) galleryPrevious.disabled = activeGalleryPhotos.length < 2;
+    if (galleryNext) galleryNext.disabled = activeGalleryPhotos.length < 2;
+  }
+
   document.querySelectorAll("[data-gallery]").forEach((button) => {
     button.addEventListener("click", () => {
       const key = button.dataset.gallery;
@@ -296,28 +342,51 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!data || !galleryDialog || !galleryGrid) return;
       galleryTitle.textContent = data.title[currentLanguage] || data.title.fr;
       galleryDescription.textContent = data.description[currentLanguage] || data.description.fr;
+      if (galleryEyebrow) galleryEyebrow.textContent = data.region[currentLanguage] || data.region.fr;
+      activeGalleryPhotos = data.photos.map(([file, alt]) => ({ file, alt })).filter((photo) => Boolean(photo.file));
+      activeGalleryIndex = 0;
       galleryGrid.replaceChildren();
-      data.photos.forEach(([file, alt]) => {
-        const figure = document.createElement("figure");
+      activeGalleryPhotos.forEach((photo, index) => {
+        const thumb = document.createElement("button");
+        thumb.type = "button";
+        thumb.className = "gallery-thumb";
+        thumb.dataset.photoIndex = String(index);
+        thumb.setAttribute("aria-label", photo.alt);
+        thumb.setAttribute("aria-pressed", "false");
         const img = document.createElement("img");
-        img.src = "https://commons.wikimedia.org/wiki/Special:FilePath/" + file + "?width=1600";
-        img.alt = alt;
+        img.src = galleryImageUrl(photo.file).replace("width=1800", "width=480");
+        img.alt = "";
         img.loading = "lazy";
-        img.addEventListener("error", () => { figure.classList.add("gallery-image-error"); img.alt = currentLanguage === "fr" ? "Image indisponible — consultez les autres photos de la galerie" : "Image unavailable — see other gallery photos"; });
-        const caption = document.createElement("figcaption");
-        caption.textContent = alt;
-        figure.append(img, caption);
-        galleryGrid.append(figure);
+        img.onerror = () => {
+          thumb.classList.add("is-unavailable");
+          thumb.disabled = true;
+          thumb.querySelector(".gallery-thumb-label").textContent = currentLanguage === "fr" ? "Photo indisponible" : "Photo unavailable";
+        };
+        const label = document.createElement("span");
+        label.className = "gallery-thumb-label";
+        label.textContent = photo.alt;
+        thumb.append(img, label);
+        thumb.addEventListener("click", () => renderGalleryPhoto(index));
+        galleryGrid.append(thumb);
       });
       galleryQuote.href = "#contact";
-      galleryQuote.dataset.circuit = key === "Routes & rencontres" ? "Routes & rencontres" : key;
+      galleryQuote.dataset.circuit = key === "Routes & rencontres" ? "Les paysages de l'Isalo" : key;
       galleryQuote.onclick = () => {
         const select = document.getElementById("circuit-select");
-        if (select && Array.from(select.options).some((option) => option.value === galleryQuote.dataset.circuit)) select.value = galleryQuote.dataset.circuit;
+        const circuitValue = galleryQuote.dataset.circuit;
+        if (select && Array.from(select.options).some((option) => option.value === circuitValue)) select.value = circuitValue;
         galleryDialog.close();
       };
+      renderGalleryPhoto(0);
       galleryDialog.showModal();
     });
+  });
+  galleryPrevious?.addEventListener("click", () => renderGalleryPhoto(activeGalleryIndex - 1));
+  galleryNext?.addEventListener("click", () => renderGalleryPhoto(activeGalleryIndex + 1));
+  document.addEventListener("keydown", (event) => {
+    if (!galleryDialog?.open) return;
+    if (event.key === "ArrowLeft") renderGalleryPhoto(activeGalleryIndex - 1);
+    if (event.key === "ArrowRight") renderGalleryPhoto(activeGalleryIndex + 1);
   });
   document.querySelector(".gallery-close")?.addEventListener("click", () => galleryDialog?.close());
   galleryDialog?.addEventListener("click", (event) => {
