@@ -24,7 +24,6 @@
   let allMedia = [];
   let activeIndex = 0;
   let frame = null;
-  let loadGeneration = 0;
 
   const text = (value, backup = "") => String(value == null || value === "" ? backup : value);
   const normalize = (value) => text(value).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
@@ -75,16 +74,16 @@
       const host = url.hostname.replace(/^www\./, "").toLowerCase();
       if (host === "youtu.be") {
         const id = url.pathname.split("/").filter(Boolean)[0];
-        return id ? "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(id) : "";
+        return id ? "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(id) + "?autoplay=1&mute=1&playsinline=1&rel=0" : "";
       }
       if (host === "youtube.com" || host === "m.youtube.com" || host === "youtube-nocookie.com") {
         let id = url.searchParams.get("v");
         if (!id && /^\/(embed|shorts|live)\//.test(url.pathname)) id = url.pathname.split("/")[2];
-        return id ? "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(id) : "";
+        return id ? "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(id) + "?autoplay=1&mute=1&playsinline=1&rel=0" : "";
       }
       if (host === "vimeo.com" || host === "player.vimeo.com") {
         const match = url.pathname.match(/(?:video\/)?(\d+)/);
-        return match ? "https://player.vimeo.com/video/" + match[1] : "";
+        return match ? "https://player.vimeo.com/video/" + match[1] + "?autoplay=1&muted=1&playsinline=1" : "";
       }
     } catch (_) {}
     return "";
@@ -98,9 +97,23 @@
       const mediaUrl = rootUrl(item.url);
       if (/\.(mp4|webm|ogg)(?:[?#].*)?$/i.test(text(item.url))) {
         video.hidden = false;
+        video.autoplay = true;
+        video.muted = true;
+        video.defaultMuted = true;
+        video.playsInline = true;
+        video.setAttribute("playsinline", "");
+        video.setAttribute("autoplay", "");
+        video.setAttribute("muted", "");
         video.onerror = () => showUnavailable("Vidéo momentanément indisponible");
         video.src = mediaUrl;
         video.load();
+        const playAttempt = video.play();
+        if (playAttempt && typeof playAttempt.catch === "function") {
+          playAttempt.catch(() => {
+            // Le navigateur peut bloquer la lecture automatique selon ses réglages.
+            // La vidéo reste disponible avec les contrôles pour lancer la lecture manuellement.
+          });
+        }
         return;
       }
 
