@@ -315,10 +315,22 @@
     </section>
 </main>
 <dialog class="gallery-dialog" id="circuit-gallery" aria-labelledby="gallery-title">
-    <div class="gallery-dialog-head"><div><p class="eyebrow" data-i18n="galleryEyebrow">INSPIRATION EN IMAGES</p><h2 id="gallery-title">Galerie du circuit</h2></div><button class="gallery-close" type="button" aria-label="Fermer la galerie">×</button></div>
-    <p class="gallery-description" id="gallery-description"></p>
-    <div class="gallery-grid" id="gallery-grid"></div>
-    <div class="gallery-dialog-foot"><span data-i18n="galleryNote">Photographies illustratives de Madagascar.</span><a class="button button-dark" href="#contact" id="gallery-quote"><span data-i18n="galleryQuote">Demander un devis pour ce circuit</span><span aria-hidden="true">↗</span></a></div>
+    <div class="gallery-dialog-topline"><span class="gallery-brand-mark">MIARADI <span>TRAVEL</span></span><button class="gallery-close" type="button" aria-label="Fermer la galerie">×</button></div>
+    <div class="gallery-editorial-head">
+      <p class="eyebrow"><span class="eyebrow-line"></span><span id="gallery-circuit-label">MADAGASCAR · INSPIRATIONS</span></p>
+      <h2 id="gallery-title">Galerie du circuit</h2>
+      <p class="gallery-description" id="gallery-description"></p>
+    </div>
+    <div class="gallery-viewer">
+      <div class="gallery-main-frame">
+        <img id="gallery-main-image" src="" alt="">
+        <div class="gallery-main-overlay"><span id="gallery-main-caption"></span><span id="gallery-counter">01 / 03</span></div>
+        <button class="gallery-nav gallery-nav-prev" id="gallery-previous" type="button" aria-label="Photo précédente">←</button>
+        <button class="gallery-nav gallery-nav-next" id="gallery-next" type="button" aria-label="Photo suivante">→</button>
+      </div>
+      <div class="gallery-grid" id="gallery-grid" aria-label="Choisir une photo"></div>
+    </div>
+    <div class="gallery-dialog-foot"><p><span class="gallery-foot-kicker">LE VOYAGE COMMENCE ICI</span><span class="gallery-foot-note" data-i18n="galleryNote">Photographies illustratives de Madagascar.</span></p><a class="button button-dark" href="#contact" id="gallery-quote"><span data-i18n="galleryQuote">Demander un devis pour ce circuit</span><span aria-hidden="true">↗</span></a></div>
   </dialog>
 <footer class="site-footer">
     <div class="container footer-editorial">
