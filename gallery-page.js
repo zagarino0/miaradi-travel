@@ -35,7 +35,7 @@
   };
 
   async function getJson(url) {
-    const response = await fetch(url, { headers: { Accept: "application/json" }, credentials: "same-origin" });
+    const response = await fetch(url, { headers: { Accept: "application/json" }, credentials: "same-origin", cache: "no-store" });
     const payload = await response.json().catch(() => ({}));
     if (!response.ok) {
       throw new Error(payload.error?.message || "Impossible de charger les données de la galerie.");
