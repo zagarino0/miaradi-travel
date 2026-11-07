@@ -2244,3 +2244,10 @@ dialog#circuit-gallery.gallery-dialog .gallery-dialog-foot{display:none !importa
     min-height:0;
   }
 }
+
+
+/* Vidéos intégrées dans la galerie de circuit */
+dialog#circuit-gallery.gallery-dialog .gallery-main-frame > #gallery-main-video{position:absolute;inset:0;z-index:1;width:100%;height:100%;object-fit:contain;background:#171411}
+dialog#circuit-gallery.gallery-dialog .gallery-main-frame > #gallery-main-video[hidden]{display:none}
+dialog#circuit-gallery.gallery-dialog .gallery-thumb.is-video::after{content:"VIDÉO";position:absolute;right:7px;top:7px;z-index:2;padding:4px 6px;border-radius:4px;background:rgba(25,20,17,.78);color:#fff;font-size:9px;letter-spacing:.1em}
+dialog#circuit-gallery.gallery-dialog .gallery-thumb-play{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:20px;text-shadow:0 1px 8px rgba(0,0,0,.7);background:linear-gradient(145deg,#d8c8b7,#8b7462)}
