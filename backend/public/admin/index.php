@@ -118,20 +118,88 @@ require_once dirname(__DIR__, 2) . '/src/bootstrap.php';
       $('#editor-panel').classList.add('hidden'); notice('Circuit enregistré.'); await loadCircuits();
     } catch (error) { notice(error.message); }
   });
+  const quoteStatusLabels = {new:'Nouvelle demande',in_progress:'En cours de traitement',replied:'Client contacté',closed:'Clôturée',spam:'Indésirable'};
+  let quoteRequests = [];
+  let selectedQuote = null;
+  function quoteStatusOptions(selected) {
+    return Object.entries(quoteStatusLabels).map(([value,label]) => '<option value="'+value+'" '+(selected===value?'selected':'')+'>'+label+'</option>').join('');
+  }
+  function formatQuoteDate(value) {
+    if (!value) return 'Non renseignée';
+    const parsed = new Date(String(value).replace(' ', 'T'));
+    return Number.isNaN(parsed.getTime()) ? String(value) : parsed.toLocaleString('fr-FR');
+  }
+  async function saveQuoteStatus(id, status, reload) {
+    await request('admin/quotes.php', {method:'PATCH', mutate:true, body:JSON.stringify({id:Number(id),status})});
+    const quote = quoteRequests.find(item => Number(item.id) === Number(id));
+    if (quote) quote.status = status;
+    notice('Statut enregistré : ' + quoteStatusLabels[status] + '.');
+    if (reload) await loadQuotes();
+    if (selectedQuote && Number(selectedQuote.id) === Number(id)) renderQuoteDetail(selectedQuote);
+  }
+  function renderQuoteDetail(q) {
+    selectedQuote = q;
+    const fields = [
+      ['Nom du client', q.full_name],
+      ['Adresse e-mail', q.email],
+      ['Circuit demandé', q.circuit_title_fr || q.circuit_title_en || 'Voyage sur mesure'],
+      ['Date de départ souhaitée', q.desired_departure_date || 'À définir'],
+      ['Nombre de voyageurs', q.traveler_count ?? 'Non précisé'],
+      ['Langue préférée', q.preferred_language === 'en' ? 'Anglais' : 'Français'],
+      ['Date de réception', formatQuoteDate(q.created_at)],
+      ['Consentement de confidentialité', q.privacy_consent_at ? 'Consentement enregistré' : 'Non indiqué'],
+      ['Message du client', q.message || 'Aucun message fourni', true]
+    ];
+    $('#quote-detail-content').innerHTML = '<div class="detail-grid">' + fields.map(([label,value,wide]) => '<div class="detail-item '+(wide?'detail-wide':'')+'"><strong>'+esc(label)+'</strong><p>'+esc(value)+'</p></div>').join('') +
+      '<div class="detail-item"><strong>Statut actuel</strong><label class="field"><select id="quote-detail-status" class="quote-status" aria-label="Statut de la demande">'+quoteStatusOptions(q.status)+'</select></label></div></div>';
+    const subject = 'Votre demande de voyage — MIARADI-TRAVEL';
+    const firstName = String(q.full_name || '').trim().split(/\s+/)[0] || 'Bonjour';
+    const body = firstName + ',\n\nNous vous remercions d’avoir contacté MIARADI-TRAVEL. Nous avons bien reçu votre demande' +
+      (q.circuit_title_fr ? ' concernant « ' + q.circuit_title_fr + ' »' : '') +
+      ' et étudions votre projet de voyage à Madagascar. Nous reviendrons vers vous avec les prochaines étapes.\n\nBien cordialement,\nLe service clientèle\nMIARADI-TRAVEL';
+    $('#quote-reply-email').href = 'mailto:' + encodeURIComponent(String(q.email || '')) + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    $('#quote-detail-status').addEventListener('change', async event => {
+      const select = event.currentTarget;
+      select.disabled = true;
+      try { await saveQuoteStatus(q.id, select.value, true); }
+      catch (error) { notice(error.message); select.value = q.status; }
+      finally { select.disabled = false; }
+    });
+    const closeButton = $('#quote-detail-close-status');
+    closeButton.textContent = q.status === 'closed' ? 'Demande clôturée' : 'Clôturer la demande';
+    closeButton.disabled = q.status === 'closed';
+    closeButton.onclick = async () => {
+      try { await saveQuoteStatus(q.id, 'closed', true); }
+      catch (error) { notice(error.message); }
+    };
+    $('#quote-detail-panel').classList.remove('hidden');
+    $('#quote-detail-panel').scrollIntoView({behavior:'smooth',block:'start'});
+  }
   async function loadQuotes() {
     try {
       const result = await request('admin/quotes.php');
-      $('#quotes-list').innerHTML = result.data.map(q => '<tr><td><strong>'+esc(q.full_name)+'</strong><br><a href="mailto:'+esc(q.email)+'">'+esc(q.email)+'</a><br><span class="muted">'+esc(q.created_at)+'</span></td><td>'+esc(q.circuit_title_fr || 'Sur mesure')+'<br>'+esc(q.desired_departure_date || 'Date à définir')+' · '+esc(q.traveler_count ?? '—')+' voyageur(s)</td><td><div class="quote-message">'+esc(q.message)+'</div></td><td><select data-status="'+q.id+'">'+['new','in_progress','replied','closed','spam'].map(s=>'<option value="'+s+'" '+(q.status===s?'selected':'')+'>'+s+'</option>').join('')+'</select></td></tr>').join('') || '<tr><td colspan="4">Aucune demande reçue.</td></tr>';
+      quoteRequests = result.data || [];
+      $('#quotes-list').innerHTML = quoteRequests.map(q => '<tr><td><strong>'+esc(q.full_name)+'</strong><br><a href="mailto:'+esc(q.email)+'">'+esc(q.email)+'</a><br><span class="muted">'+esc(formatQuoteDate(q.created_at))+'</span></td><td>'+esc(q.circuit_title_fr || q.circuit_title_en || 'Sur mesure')+'<br>'+esc(q.desired_departure_date || 'Date à définir')+' · '+esc(q.traveler_count ?? '—')+' voyageur(s)</td><td><div class="quote-message">'+esc(q.message)+'</div></td><td><select class="quote-status" data-status="'+q.id+'" aria-label="Statut de la demande">'+quoteStatusOptions(q.status)+'</select></td><td><div class="actions"><button class="button secondary" type="button" data-detail="'+q.id+'">Détails / répondre</button></div></td></tr>').join('') || '<tr><td colspan="5">Aucune demande reçue.</td></tr>';
       $('#quotes-list').querySelectorAll('[data-status]').forEach(select => select.addEventListener('change', async () => {
-        try { await request('admin/quotes.php', {method:'PATCH', mutate:true, body:JSON.stringify({id:Number(select.dataset.status),status:select.value})}); notice('Statut de la demande mis à jour.'); }
-        catch (error) { notice(error.message); await loadQuotes(); }
+        const quote = quoteRequests.find(item => Number(item.id) === Number(select.dataset.status));
+        const previous = quote ? quote.status : 'new';
+        select.disabled = true;
+        try { await saveQuoteStatus(select.dataset.status, select.value, false); }
+        catch (error) { notice(error.message); select.value = previous; }
+        finally { select.disabled = false; }
+      }));
+      $('#quotes-list').querySelectorAll('[data-detail]').forEach(button => button.addEventListener('click', () => {
+        const quote = quoteRequests.find(item => Number(item.id) === Number(button.dataset.detail));
+        if (quote) renderQuoteDetail(quote);
       }));
     } catch (error) { notice(error.message); }
   }
+  $('#refresh-quotes').addEventListener('click', loadQuotes);
+  $('#close-quote-detail').addEventListener('click', () => $('#quote-detail-panel').classList.add('hidden'));
   document.querySelectorAll('[data-tab]').forEach(button => button.addEventListener('click', async () => {
     document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b===button));
     const quotes = button.dataset.tab === 'quotes';
-    $('#circuits-panel').classList.toggle('hidden',quotes); $('#quotes-panel').classList.toggle('hidden',!quotes); $('#editor-panel').classList.add('hidden');
+    $('#circuits-panel').classList.toggle('hidden',quotes); $('#quotes-panel').classList.toggle('hidden',!quotes); $('#editor-panel').classList.add('hidden'); if (!quotes) $('#quote-detail-panel').classList.add('hidden');
     if (quotes) await loadQuotes(); else await loadCircuits();
   }));
   checkSession();
