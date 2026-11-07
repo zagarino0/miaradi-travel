@@ -2402,3 +2402,174 @@ dialog#circuit-gallery.gallery-dialog .gallery-main-overlay #gallery-counter{ali
   .circuits .circuit-card .circuit-overlay { padding: 24px; }
   .circuits .circuit-card h3 { font-size: clamp(1.9rem, 8vw, 2.7rem); }
 }
+
+
+/* FINAL FIX — grille et cadres de la section Circuits.
+   Ces règles ciblées neutralisent les anciens styles éditoriaux contradictoires. */
+#circuits .circuit-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  align-items: stretch !important;
+  gap: clamp(24px, 3vw, 42px) !important;
+  width: 100%;
+}
+#circuits .circuit-card,
+#circuits .circuit-card.circuit-card-offset {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  aspect-ratio: 1.12 / 1 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  isolation: isolate;
+  background: #8c8172 !important;
+  color: #fff !important;
+  border: 0;
+}
+#circuits .circuit-card .circuit-image-link {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  aspect-ratio: auto !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  background: linear-gradient(135deg, #b7a18a, #65584d) !important;
+}
+#circuits .circuit-card .circuit-image-link img {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+#circuits .circuit-card .circuit-image-link::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  background: linear-gradient(180deg, rgba(18,17,15,.02) 10%, rgba(18,17,15,.12) 38%, rgba(18,17,15,.84) 100%) !important;
+  pointer-events: none !important;
+}
+#circuits .circuit-card .circuit-overlay {
+  position: absolute !important;
+  inset: auto 0 0 !important;
+  z-index: 2 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  width: 100% !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: clamp(20px, 2.7vw, 34px) !important;
+  background: transparent !important;
+  color: #fff !important;
+  pointer-events: none;
+}
+#circuits .circuit-card .circuit-overlay > * {
+  position: relative;
+  max-width: 100%;
+  pointer-events: auto;
+}
+#circuits .circuit-card .circuit-meta {
+  display: flex !important;
+  flex-wrap: wrap;
+  justify-content: flex-start !important;
+  gap: 8px 16px !important;
+  margin: 0 0 10px !important;
+  color: rgba(255,255,255,.84) !important;
+  font-size: 10px !important;
+}
+#circuits .circuit-card .circuit-price {
+  display: flex !important;
+  justify-content: flex-start !important;
+  gap: 8px !important;
+  margin: 0 0 10px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  color: rgba(255,255,255,.78) !important;
+  font-size: 10px !important;
+}
+#circuits .circuit-card .circuit-price strong {
+  color: #fff !important;
+  font-size: 11px !important;
+}
+#circuits .circuit-card h3 {
+  display: block !important;
+  margin: 0 0 8px !important;
+  color: #fff !important;
+  font-family: var(--serif) !important;
+  font-size: clamp(1.7rem, 2.8vw, 2.8rem) !important;
+  font-weight: 400 !important;
+  letter-spacing: -.025em !important;
+  line-height: 1.04 !important;
+}
+#circuits .circuit-card .circuit-overlay > p {
+  display: block !important;
+  margin: 0 0 12px !important;
+  color: rgba(255,255,255,.9) !important;
+  font-size: 13px !important;
+  line-height: 1.55 !important;
+}
+#circuits .circuit-card .gallery-trigger {
+  display: inline-flex !important;
+  margin: 0 0 8px !important;
+  padding: 7px 0 4px !important;
+  border-bottom: 1px solid rgba(255,255,255,.65) !important;
+  color: #fff !important;
+  font-size: 11px !important;
+}
+#circuits .circuit-card .circuit-link {
+  display: inline-flex !important;
+  color: #fff !important;
+  border-color: rgba(255,255,255,.7) !important;
+  font-size: 11px !important;
+}
+#circuits .circuit-card .image-index {
+  z-index: 2 !important;
+  left: 14px !important;
+  bottom: 14px !important;
+  color: #fff !important;
+}
+#circuits .circuit-card .image-arrow {
+  z-index: 2 !important;
+  color: #fff !important;
+}
+#circuits .circuit-card .circuit-image-link.has-image-fallback {
+  background: linear-gradient(135deg, #b7a18a, #65584d) !important;
+}
+@media (max-width: 900px) {
+  #circuits .circuit-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 22px !important;
+  }
+  #circuits .circuit-card,
+  #circuits .circuit-card.circuit-card-offset {
+    aspect-ratio: .82 / 1 !important;
+  }
+  #circuits .circuit-card .circuit-overlay { padding: 20px !important; }
+  #circuits .circuit-card h3 { font-size: clamp(1.5rem, 4vw, 2.2rem) !important; }
+}
+@media (max-width: 600px) {
+  #circuits .circuit-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 20px !important;
+  }
+  #circuits .circuit-card,
+  #circuits .circuit-card.circuit-card-offset {
+    aspect-ratio: 4 / 4.3 !important;
+  }
+  #circuits .circuit-card .circuit-overlay { padding: 24px !important; }
+  #circuits .circuit-card h3 { font-size: clamp(1.8rem, 8vw, 2.5rem) !important; }
+}
