@@ -218,7 +218,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const galleryPrevious = document.getElementById("gallery-previous");
   const galleryNext = document.getElementById("gallery-next");
   const galleryMainImage = document.getElementById("gallery-main-image");
-  const galleryMainCaption = document.getElementById("gallery-main-caption");
+  const galleryMainCaption = document.getElementById("gallery-main-caption")
+  const galleryMainDescription = document.getElementById("gallery-main-description");
   const galleryImageFallback = document.getElementById("gallery-image-fallback");
   const galleryThumbCount = document.getElementById("gallery-thumb-count");
   let activeGalleryPhotos = [];
@@ -311,6 +312,8 @@ document.addEventListener("DOMContentLoaded", () => {
     ? file
     : "https://commons.wikimedia.org/wiki/Special:FilePath/" + file + "?width=1800";
   const galleryIsVideo = (photo) => photo.type === "video" || /\.(mp4|webm|ogg)(?:[?#].*)?$/i.test(photo.file);
+  const galleryMediaTitle = (photo) => photo.title || photo.alt || (currentLanguage === "fr" ? "Média du circuit" : "Tour media");
+  const galleryMediaDescription = (photo) => photo.description || photo.alt || (currentLanguage === "fr" ? "Photographie illustrative du circuit sélectionné." : "Illustrative media from the selected tour.");
   const galleryFallbackText = () => currentLanguage === "fr"
     ? "Cette photo ou vidéo n'est pas disponible pour le moment."
     : "This photo or video is currently unavailable.";
@@ -367,7 +370,8 @@ document.addEventListener("DOMContentLoaded", () => {
       galleryMainImage.src = galleryImageUrl(photo.file);
     }
 
-    if (galleryMainCaption) galleryMainCaption.textContent = photo.alt;
+    if (galleryMainCaption) galleryMainCaption.textContent = galleryMediaTitle(photo);
+    if (galleryMainDescription) galleryMainDescription.textContent = galleryMediaDescription(photo);
     if (galleryCounter) galleryCounter.textContent = String(activeGalleryIndex + 1).padStart(2, "0") + " / " + String(activeGalleryPhotos.length).padStart(2, "0");
     galleryGrid?.querySelectorAll("[data-photo-index]").forEach((thumb) => {
       const selected = Number(thumb.dataset.photoIndex) === activeGalleryIndex;
@@ -386,7 +390,7 @@ document.addEventListener("DOMContentLoaded", () => {
       galleryTitle.textContent = data.title[currentLanguage] || data.title.fr;
       galleryDescription.textContent = data.description[currentLanguage] || data.description.fr;
       if (galleryEyebrow) galleryEyebrow.textContent = data.region[currentLanguage] || data.region.fr;
-      activeGalleryPhotos = data.photos.map(([file, alt, type]) => ({ file, alt, type: type || (/\.(mp4|webm|ogg)(?:[?#].*)?$/i.test(file || "") ? "video" : "image") })).filter((photo) => Boolean(photo.file));
+      activeGalleryPhotos = data.photos.map(([file, alt, description, type]) => ({ file, alt, title: alt, description: description || data.description[currentLanguage] || data.description.fr, type: type || (/\.(mp4|webm|ogg)(?:[?#].*)?$/i.test(file || "") ? "video" : "image") })).filter((photo) => Boolean(photo.file));
       activeGalleryIndex = 0;
       if (galleryThumbCount) galleryThumbCount.textContent = String(activeGalleryPhotos.length).padStart(2, "0") + (currentLanguage === "fr" ? " PHOTOS" : " PHOTOS");
       if (galleryImageFallback) galleryImageFallback.hidden = true;
@@ -396,7 +400,7 @@ document.addEventListener("DOMContentLoaded", () => {
         thumb.type = "button";
         thumb.className = "gallery-thumb";
         thumb.dataset.photoIndex = String(index);
-        thumb.setAttribute("aria-label", photo.alt);
+        thumb.setAttribute("aria-label", galleryMediaTitle(photo) + ". " + galleryMediaDescription(photo));
         thumb.setAttribute("aria-pressed", "false");
         const img = document.createElement("img");
         img.alt = "";
@@ -419,7 +423,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         const label = document.createElement("span");
         label.className = "gallery-thumb-label";
-        label.textContent = photo.alt;
+        label.textContent = galleryMediaTitle(photo);
         thumb.append(label);
         thumb.addEventListener("click", () => renderGalleryPhoto(index));
         galleryGrid.append(thumb);
