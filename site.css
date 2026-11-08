@@ -3821,3 +3821,29 @@ body{background:#fbf8f7;color:var(--ink);font-family:var(--sans)}
 
 /* Preserve filtering while the carousel track uses flex layout */
 #circuits .circuit-grid > .circuit-card[hidden]{display:none !important}
+
+
+/* Final fix: distribute duration, region and theme evenly across each featured circuit card. */
+#circuits .circuit-grid > .circuit-card .circuit-meta{
+  display:grid !important;
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  align-items:center !important;
+  justify-content:stretch !important;
+  column-gap:12px !important;
+  row-gap:8px !important;
+  width:100% !important;
+  box-sizing:border-box !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-meta > .circuit-fact{
+  display:inline-flex !important;
+  align-items:center !important;
+  min-width:0 !important;
+  margin:0 !important;
+  white-space:nowrap !important;
+}
+@media(max-width:1100px){
+  #circuits .circuit-grid > .circuit-card .circuit-meta{column-gap:8px !important;font-size:12px !important}
+}
+@media(max-width:520px){
+  #circuits .circuit-grid > .circuit-card .circuit-meta{column-gap:6px !important;font-size:11px !important}
+}
