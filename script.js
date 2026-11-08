@@ -6,7 +6,7 @@ const translations = {
     heroTitle: "Imaginons votre voyage<br>à Madagascar",
     heroCopy: "Des circuits authentiques, des rencontres uniques et des paysages d’exception.",
     heroButton: "Demander un devis", heroSecondary: "Découvrir nos circuits", heroCaption: "MADAGASCAR, UNE ÎLE À PART",
-    introEyebrow: "L'ESPRIT MIARADI", introTitle: "Voyager autrement.<br><em>Rencontrer vraiment.</em>",
+    introEyebrow: "L'ESPRIT MIARADI", introTitle: "Voyager<br><em>autrement.</em>",
     introCopy: "MIARADI est un tour-opérateur réceptif local créé en 2024. Nous imaginons des voyages qui privilégient la découverte, la rencontre humaine et le respect des territoires.",
     togetherEyebrow: "À VOTRE RYTHME", togetherTitle: "Le voyage se construit<br><em>ensemble.</em>", togetherCopy: "Vos envies donnent le premier cap. Nous échangeons avec vous pour ajuster le rythme, la durée, les expériences et les étapes, puis imaginons un itinéraire adapté à votre projet.",
     footerStatement: "MIARADI — Voyageons ensemble, partageons l’essentiel.",
@@ -293,7 +293,7 @@ document.addEventListener("DOMContentLoaded", () => {
       quoteLink.dataset.circuit = String(circuit.id);
       quoteLink.append(createCircuitElement("span", "", currentLanguage === "fr" ? "Demander un devis" : "Request a quote"));
       quoteLink.append(createCircuitElement("span", "", "↗"));
-      overlay.append(meta, price, heading, summary, galleryLink, quoteLink);
+      overlay.append(heading, meta, quoteLink, summary, galleryLink, price);
       card.append(imageLink, overlay);
       circuitGrid.append(card);
     });
