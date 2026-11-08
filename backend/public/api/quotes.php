@@ -65,7 +65,7 @@ try {
     ]);
 
     $quoteId = (int) $pdo->lastInsertId();
-    $mailTo = app_env('MAIL_TO');
+    $mailTo = app_env('MAIL_TO', 'rrandriamanantsoa07@gmail.com');
     $mailFrom = app_env('MAIL_FROM');
     if ($mailTo && filter_var($mailTo, FILTER_VALIDATE_EMAIL) && $mailFrom && filter_var($mailFrom, FILTER_VALIDATE_EMAIL)) {
         $subject = ($language === 'en' ? 'New MIARADI travel quote request #' : 'Nouvelle demande de devis MIARADI n°') . $quoteId;
