@@ -661,15 +661,52 @@ td strong{color:#34303e;font-size:12px}
   });
   filterOptionForm.addEventListener('submit', async event => {
     event.preventDefault();
+    filterOptionNotice('');
+
+    // Lire les champs directement évite d'envoyer des valeurs absentes si le formulaire
+    // est réorganisé ou si le navigateur restaure des valeurs automatiquement.
+    const type = $('#filter-option-type').value;
+    const label = $('#filter-option-label').value.trim();
+    const valueInput = $('#filter-option-value');
+    const sortInput = filterOptionForm.elements.sort_order;
+    let optionValue = valueInput.value.trim().toLocaleLowerCase('fr')
+      .normalize('NFD').replace(/[\\u0300-\\u036f]/g, '')
+      .replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '');
+
+    if (!label) {
+      filterOptionNotice('Le libellé affiché au public est obligatoire.');
+      $('#filter-option-label').focus();
+      return;
+    }
+
+    // Une plage numérique correspond à une durée, pas à un identifiant de région/thème.
+    // Dans ce cas, générer un identifiant stable à partir du libellé (ex. Ouest -> ouest).
+    if (type !== 'duration' && /^\\d{1,3}(?:-\\d{1,3})?$/.test(optionValue)) {
+      optionValue = label.toLocaleLowerCase('fr').normalize('NFD')
+        .replace(/[\\u0300-\\u036f]/g, '').replace(/[^a-z0-9-]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+      valueInput.value = optionValue;
+    }
+    if (!optionValue) {
+      filterOptionNotice('L’identifiant utilisé par le filtre est obligatoire.');
+      valueInput.focus();
+      return;
+    }
+
+    const order = Number(sortInput.value);
+    if (!Number.isInteger(order)) {
+      filterOptionNotice('L’ordre d’affichage doit être un nombre entier.');
+      sortInput.focus();
+      return;
+    }
+
     const button = $('#save-filter-option');
     button.disabled = true;
-    filterOptionNotice('');
-    const form = new FormData(filterOptionForm);
     const payload = {
-      option_type: String(form.get('option_type') || ''),
-      option_label: String(form.get('option_label') || '').trim(),
-      option_value: String(form.get('option_value') || '').trim().toLocaleLowerCase('fr').normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, ''),
-      sort_order: Number(form.get('sort_order') || 0)
+      option_type: type,
+      option_label: label,
+      option_value: optionValue,
+      sort_order: order
     };
     try {
       await request('admin/filter-options.php', {method:'POST', mutate:true, body:JSON.stringify(payload)});
