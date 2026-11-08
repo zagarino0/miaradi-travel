@@ -247,7 +247,7 @@ td strong{color:#34303e;font-size:12px}
 </head>
 <body>
 <div class="app-shell">
-  <aside class="sidebar" id="admin-sidebar"><div class="side-brand"><img src="../../../assets/miaradi-logo.png" alt="" class="side-logo"><span class="side-brand-copy"><strong>MIARADI</strong><small>ESPACE ADMIN</small></span></div><div><div class="side-label">Espace de gestion</div><nav class="side-nav"><button class="active" data-tab="circuits"><span class="nav-icon">▦</span> Catalogue des circuits</button><button data-tab="quotes"><span class="nav-icon">✉</span> Demandes de devis</button><button type="button" id="site-management-shortcut"><span class="nav-icon">⚙</span> Gestion du site</button><a href="gallery.php"><span class="nav-icon">▧</span> Galerie médias ↗</a></nav></div><div class="side-bottom">MIARADI-TRAVEL<br>Administration sécurisée</div></aside>
+  <aside class="sidebar" id="admin-sidebar"><div class="side-brand"><img src="../../../assets/miaradi-logo.png" alt="" class="side-logo"><span class="side-brand-copy"><strong>MIARADI</strong><small>ESPACE ADMIN</small></span></div><div><div class="side-label">Espace de gestion</div><nav class="side-nav"><button class="active" data-tab="circuits"><span class="nav-icon">▦</span> Catalogue des circuits</button><button data-tab="quotes"><span class="nav-icon">✉</span> Demandes de devis</button><button type="button" id="site-management-shortcut"><span class="nav-icon">⚙</span> Paramètres du catalogue</button><a href="gallery.php"><span class="nav-icon">▧</span> Galerie médias ↗</a></nav></div><div class="side-bottom">MIARADI-TRAVEL<br>Administration sécurisée</div></aside>
   <div class="workspace"><header class="topbar"><div class="topbar-left"><button class="topbar-menu" id="sidebar-toggle" type="button" aria-label="Afficher ou masquer le menu" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><span class="crumb">Espace de travail <span class="crumb-divider">/</span> <strong id="breadcrumb-current">Tableau de bord</strong></span></div><div class="topbar-actions"><span class="topbar-status"><span></span> Administration sécurisée</span><span class="avatar" title="Administrateur">M</span><button class="button secondary hidden" id="logout"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg> Déconnexion</button></div></header><div class="content"><div class="page-heading"><div><div class="eyebrow">Vue d’ensemble</div><h1>Tableau de bord</h1><p class="muted">Suivez le catalogue et les demandes de voyage MIARADI.</p></div></div>
   <main id="dashboard" class="hidden">
     <section class="kpi-grid" aria-label="Indicateurs du site"><article class="kpi"><span class="kpi-mark">▦</span><div class="kpi-label">Circuits au catalogue</div><div class="kpi-value" id="kpi-circuits">—</div><div class="kpi-note" id="kpi-circuits-note">Chargement des données</div></article><article class="kpi"><span class="kpi-mark">✉</span><div class="kpi-label">Demandes de devis</div><div class="kpi-value" id="kpi-quotes">—</div><div class="kpi-note">Demandes enregistrées en base</div></article><article class="kpi"><span class="kpi-mark">◷</span><div class="kpi-label">À traiter</div><div class="kpi-value" id="kpi-pending">—</div><div class="kpi-note">Nouvelles demandes et en cours</div></article><article class="kpi"><span class="kpi-mark">✓</span><div class="kpi-label">Clients contactés</div><div class="kpi-value" id="kpi-replied">—</div><div class="kpi-note">Réponses enregistrées</div></article></section>
@@ -256,7 +256,7 @@ td strong{color:#34303e;font-size:12px}
     <section class="panel circuits-workspace" id="circuits-panel">
       <div class="catalogue-heading">
         <div><div class="eyebrow">Vos destinations</div><h2>Catalogue des circuits</h2><p class="muted">Organisez vos voyages, leurs visuels et leur visibilité sur le site MIARADI.</p></div>
-        <div class="actions"><button class="button secondary" id="manage-filter-options" type="button">⚙ Gérer les filtres</button><button class="button" id="new-circuit" type="button"><span aria-hidden="true">＋</span> Ajouter un circuit</button></div>
+        <div class="actions"><button class="button" id="new-circuit" type="button"><span aria-hidden="true">＋</span> Ajouter un circuit</button></div>
       </div>
       <div class="catalogue-toolbar">
         <label class="catalogue-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg><input id="circuit-search" type="search" placeholder="Rechercher un circuit, une région…" aria-label="Rechercher un circuit"></label>
@@ -266,14 +266,14 @@ td strong{color:#34303e;font-size:12px}
       <div class="circuit-grid" id="circuits-list" aria-live="polite"></div>
     </section>
     <section class="panel hidden filter-options-panel" id="filter-options-panel">
-        <div class="catalogue-heading"><div><div class="eyebrow">Paramètres du site</div><h2>Options de recherche</h2><p>Ajoutez les régions, thématiques et durées qui seront proposées dans les filtres publics.</p></div><button class="button secondary" id="close-filter-options" type="button">Fermer</button></div>
+        <div class="catalogue-heading"><div><div class="eyebrow">Configuration du catalogue</div><h2>Paramètres du catalogue</h2><p>Gérez les régions, les thématiques et les durées disponibles pour classer les circuits et filtrer les résultats sur le site public.</p></div><button class="button secondary" id="close-filter-options" type="button">Fermer</button></div>
         <form id="filter-option-form">
           <div class="row">
-            <label class="field">Catégorie<select name="option_type" id="filter-option-type" required><option value="region">Région</option><option value="theme">Thématique</option><option value="duration">Durée</option></select></label>
-            <label class="field">Nom affiché<input name="option_label" id="filter-option-label" maxlength="120" required placeholder="Ex. Ouest, Nature, 3–5 jours"></label>
+            <label class="field">Type de paramètre<select name="option_type" id="filter-option-type" required><option value="region">Région</option><option value="theme">Thématique</option><option value="duration">Durée</option></select></label>
+            <label class="field">Libellé affiché au public<input name="option_label" id="filter-option-label" maxlength="120" required placeholder="Ex. Ouest, Nature, 3–5 jours"></label>
           </div>
           <div class="row">
-            <label class="field">Valeur technique<input name="option_value" id="filter-option-value" maxlength="100" required placeholder="Ex. west, nature, 3-5"><span class="hint">Pour une durée, saisissez un nombre de jours ou une plage, par exemple 3-5.</span></label>
+            <label class="field">Identifiant utilisé par le filtre<input name="option_value" id="filter-option-value" maxlength="100" required placeholder="Ex. west, nature, 3-5"><span class="hint">Utilisez une valeur courte et stable. Pour une durée, indiquez un nombre ou une plage de jours, par exemple 3-5.</span></label>
             <label class="field">Ordre d’affichage<input name="sort_order" type="number" value="0" required></label>
           </div>
           <div class="actions"><button class="button" id="save-filter-option" type="submit">＋ Ajouter cette option</button><button class="button secondary" id="reload-filter-options" type="button">Actualiser la liste</button></div>
@@ -623,14 +623,14 @@ td strong{color:#34303e;font-size:12px}
       filterOptionNotice(error.message);
     }
   }
-  async function openSiteManagement() {
-    // Les paramètres du site occupent un écran indépendant du catalogue des circuits.
+  async function openCatalogSettings() {
+    // Ouvrir un écran dédié à la configuration des filtres du catalogue.
     document.querySelectorAll('[data-tab]').forEach(button => button.classList.remove('active'));
     $('#site-management-shortcut').classList.add('active');
-    $('#breadcrumb-current').textContent = 'Gestion du site';
-    document.querySelector('.page-heading h1').textContent = 'Gestion du site';
-    document.querySelector('.page-heading .eyebrow').textContent = 'Paramètres du site';
-    document.querySelector('.page-heading p').textContent = 'Gérez séparément les régions, thématiques et durées proposées dans les filtres publics.';
+    $('#breadcrumb-current').textContent = 'Paramètres du catalogue';
+    document.querySelector('.page-heading h1').textContent = 'Paramètres du catalogue';
+    document.querySelector('.page-heading .eyebrow').textContent = 'Configuration du catalogue';
+    document.querySelector('.page-heading p').textContent = 'Configurez les régions, thématiques et durées proposées dans les filtres publics, sans modifier les fiches des circuits.';
     $('#circuits-panel').classList.add('hidden');
     $('#quotes-panel').classList.add('hidden');
     $('#editor-panel').classList.add('hidden');
@@ -639,11 +639,10 @@ td strong{color:#34303e;font-size:12px}
     filterOptionPanel.scrollIntoView({behavior:'smooth', block:'start'});
     await loadFilterOptions();
   }
-  $('#manage-filter-options').addEventListener('click', openSiteManagement);
   $('#site-management-shortcut').addEventListener('click', async () => {
     $('#admin-sidebar').classList.remove('is-open');
     $('#sidebar-toggle').setAttribute('aria-expanded', 'false');
-    await openSiteManagement();
+    await openCatalogSettings();
   });
   $('#close-filter-options').addEventListener('click', () => {
     filterOptionPanel.classList.add('hidden');
