@@ -58,7 +58,7 @@ try {
     if ($type !== 'duration' && !preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', (string) $value)) {
         api_json(['error' => ['code' => 'invalid_value', 'message' => 'La valeur technique doit être un identifiant minuscule avec des tirets, par exemple nord-ouest.']], 422);
     }
-    if ($type === 'duration' && !preg_match('/^\d{1,3}(?:-\d{1,3})?$/', (string) $value)) {
+    if ($type === 'duration' && $value !== 'custom' && !preg_match('/^\d{1,3}(?:-\d{1,3})?$/', (string) $value)) {
         api_json(['error' => ['code' => 'invalid_duration', 'message' => 'La durée doit être un nombre de jours ou une plage, par exemple 3-5.']], 422);
     }
     if ($type === 'duration' && $value === 'custom') {
