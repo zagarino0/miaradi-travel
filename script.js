@@ -245,20 +245,22 @@ document.addEventListener("DOMContentLoaded", () => {
         : "No circuits are published yet."));
       return;
     }
-    items.forEach((circuit, index) => {
-      const card = createCircuitElement("article", "circuit-card" + (index % 3 === 1 ? " circuit-card-offset" : ""));
+
+    items.forEach((circuit) => {
+      const card = createCircuitElement("article", "circuit-card");
       card.dataset.category = circuitTheme(circuit.theme);
       card.dataset.region = circuitRegion(circuit.region);
       card.dataset.duration = durationFilterValue(circuit.duration);
       card.dataset.circuitId = String(circuit.id);
       card.dataset.circuitSlug = circuit.slug || "";
 
+      const galleryUrl = "galerie.html?circuit=" + encodeURIComponent(circuit.slug || circuit.id);
       const imageLink = createCircuitElement("a", "circuit-image-link");
-      imageLink.href = "galerie.html?circuit=" + encodeURIComponent(circuit.slug || circuit.id);
+      imageLink.href = galleryUrl;
       imageLink.setAttribute("aria-label", (currentLanguage === "fr" ? "Voir la galerie : " : "View gallery: ") + circuit.title);
       const image = document.createElement("img");
       image.src = circuit.image || "";
-      image.alt = circuit.title;
+      image.alt = circuit.title || (currentLanguage === "fr" ? "Photo du circuit" : "Journey photo");
       image.loading = "lazy";
       image.decoding = "async";
       image.onerror = () => {
@@ -269,32 +271,40 @@ document.addEventListener("DOMContentLoaded", () => {
       };
       if (!circuit.image) imageLink.classList.add("has-image-fallback");
       imageLink.append(image);
-      const imageIndex = createCircuitElement("span", "image-index", String(circuit.theme || (currentLanguage === "fr" ? "Découverte" : "Discovery")));
+
+      const themeName = String(circuit.theme || (currentLanguage === "fr" ? "Découverte" : "Discovery"));
+      const themeBadge = createCircuitElement("span", "image-index", themeName);
       const imageArrow = createCircuitElement("span", "image-arrow", "↗");
       imageArrow.setAttribute("aria-hidden", "true");
-      imageLink.append(imageIndex, imageArrow);
+      imageLink.append(themeBadge, imageArrow);
 
-      const overlay = createCircuitElement("div", "circuit-overlay");
-      const meta = createCircuitElement("div", "circuit-meta");
-      const themeLabel = createCircuitElement("span", "", String(circuit.theme || (currentLanguage === "fr" ? "Voyage" : "Journey")).toUpperCase());
-      const duration = createCircuitElement("span", "", durationLabel(circuit.duration));
-      const region = createCircuitElement("span", "circuit-region", String(circuit.region || "Madagascar"));
-      meta.append(duration, region, themeLabel);
-      const price = createCircuitElement("div", "circuit-price");
-      price.append(createCircuitElement("span", "", currentLanguage === "fr" ? "TARIF" : "PRICE"));
-      price.append(createCircuitElement("strong", "", currentLanguage === "fr" ? "Sur devis" : "Quote only"));
+      const content = createCircuitElement("div", "circuit-overlay");
       const heading = createCircuitElement("h3", "", circuit.title || (currentLanguage === "fr" ? "Circuit à découvrir" : "Journey to discover"));
-      const summary = createCircuitElement("p", "", circuit.summary || "");
-      const galleryLink = createCircuitElement("a", "gallery-trigger", currentLanguage === "fr" ? "Voir la galerie ↗" : "View gallery ↗");
-      galleryLink.href = imageLink.href;
-      galleryLink.setAttribute("aria-label", (currentLanguage === "fr" ? "Voir la galerie : " : "View gallery: ") + circuit.title);
-      const quoteLink = createCircuitElement("a", "underlined-link circuit-link");
+      const meta = createCircuitElement("div", "circuit-meta");
+      const duration = createCircuitElement("span", "circuit-fact circuit-duration", durationLabel(circuit.duration));
+      const region = createCircuitElement("span", "circuit-fact circuit-region", String(circuit.region || "Madagascar"));
+      const themeLabel = createCircuitElement("span", "circuit-fact circuit-theme", themeName);
+      meta.append(duration, region, themeLabel);
+
+      const status = createCircuitElement("span", "circuit-status", currentLanguage === "fr" ? "Sur demande" : "By request");
+      status.setAttribute("aria-label", currentLanguage === "fr" ? "Disponibilité : sur demande" : "Availability: by request");
+
+      const actions = createCircuitElement("div", "circuit-card-actions");
+      const quoteLink = createCircuitElement("a", "button button-quote circuit-link");
       quoteLink.href = "#contact";
       quoteLink.dataset.circuit = String(circuit.id);
-      quoteLink.append(createCircuitElement("span", "", currentLanguage === "fr" ? "Demander un devis" : "Request a quote"));
-      quoteLink.append(createCircuitElement("span", "", "↗"));
-      overlay.append(heading, meta, quoteLink, summary, galleryLink, price);
-      card.append(imageLink, overlay);
+      quoteLink.append(
+        createCircuitElement("span", "quote-plane", "➤"),
+        createCircuitElement("span", "", currentLanguage === "fr" ? "Demander un devis" : "Request a quote")
+      );
+      const galleryLink = createCircuitElement("a", "gallery-trigger", "→");
+      galleryLink.href = galleryUrl;
+      galleryLink.setAttribute("aria-label", (currentLanguage === "fr" ? "Ouvrir la galerie du circuit : " : "Open journey gallery: ") + circuit.title);
+      galleryLink.title = currentLanguage === "fr" ? "Voir la galerie" : "View gallery";
+      actions.append(quoteLink, galleryLink);
+
+      content.append(heading, meta, status, actions);
+      card.append(imageLink, content);
       circuitGrid.append(card);
     });
     applyCircuitFilters();
