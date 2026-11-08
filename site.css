@@ -2881,7 +2881,7 @@ body{background:#fbf8f7;color:var(--ink);font-family:var(--sans)}
 .circuits .circuit-card .image-arrow{position:absolute;right:12px;top:12px;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#fff;color:var(--red);font-size:1.25rem;line-height:1;box-shadow:0 2px 8px rgba(0,0,0,.08)}
 .circuits .circuit-card .circuit-overlay{display:flex;position:static;inset:auto;flex:1;flex-direction:column;gap:10px;padding:13px 15px 15px;background:#fff;color:#111c32;opacity:1;transform:none;min-height:0}
 .circuits .circuit-card .circuit-overlay h3{order:0;margin:0;color:#111c32;font-family:"Plus Jakarta Sans",var(--sans);font-size:1rem;line-height:1.35;letter-spacing:-.025em;font-weight:800}
-.circuits .circuit-card .circuit-meta{order:1;display:flex;flex-wrap:wrap;align-items:center;column-gap:40px;row-gap:12px;margin:0;padding:0;color:#17253b;font-size:.78rem;line-height:1.4}.circuits .circuit-card .circuit-fact{margin-right:4px}
+.circuits .circuit-card .circuit-meta{order:1;display:flex;width:100%;flex-wrap:wrap;align-items:center;justify-content:space-between;column-gap:12px;row-gap:12px;margin:0;padding:0;color:#17253b;font-size:.78rem;line-height:1.4}.circuits .circuit-card .circuit-fact{display:inline-flex;align-items:center;gap:5px;min-width:0;margin:0}
 .circuits .circuit-card .circuit-fact{display:inline-flex;align-items:center;gap:5px;min-width:0}
 .circuits .circuit-card .circuit-duration::before{content:"▦";font-size:1rem;color:#17253b}
 .circuits .circuit-card .circuit-region::before{content:"⌖";font-size:1rem;color:#17253b}
@@ -2897,7 +2897,7 @@ body{background:#fbf8f7;color:var(--ink);font-family:var(--sans)}
 .circuits .circuits-foot{margin-top:32px;border-top:1px solid rgba(146,45,32,.15);padding-top:22px}
 .circuits .circuits-foot p{color:#65758a}
 @media(max-width:1050px){.circuits .circuit-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.circuits .circuit-card .circuit-image-link{aspect-ratio:2.15/1}}
-@media(max-width:620px){.circuits.section-pad{padding-top:24px;padding-bottom:42px}.circuits .section-heading{align-items:flex-start;flex-direction:column;gap:12px}.circuits .section-heading h2{font-size:2rem}.circuits .circuit-grid{grid-template-columns:1fr;gap:16px}.circuits .circuit-card .circuit-image-link{aspect-ratio:1.8/1}.circuits .circuit-card .circuit-overlay{padding:13px}.circuits .circuit-card .circuit-meta{column-gap:24px;row-gap:10px}.circuits .circuit-card .circuit-link{font-size:.78rem;padding-inline:12px}}
+@media(max-width:620px){.circuits.section-pad{padding-top:24px;padding-bottom:42px}.circuits .section-heading{align-items:flex-start;flex-direction:column;gap:12px}.circuits .section-heading h2{font-size:2rem}.circuits .circuit-grid{grid-template-columns:1fr;gap:16px}.circuits .circuit-card .circuit-image-link{aspect-ratio:1.8/1}.circuits .circuit-card .circuit-overlay{padding:13px}.circuits .circuit-card .circuit-meta{column-gap:10px;row-gap:10px;justify-content:space-between}.circuits .circuit-card .circuit-link{font-size:.78rem;padding-inline:12px}}
 @media(prefers-reduced-motion:reduce){.circuits .circuit-card .circuit-image-link img{transition:none}}
 
 /* The circuit catalogue is quote-based: communicate request status without implying live availability. */
