@@ -3,9 +3,9 @@ const translations = {
     navHome: "Accueil", navAbout: "À propos", navCircuits: "Nos circuits", navContact: "Contact", navQuote: "Préparer mon voyage",
     finderEyebrow: "VOTRE PROCHAINE AVENTURE", finderTitle: "Trouvez votre <em>voyage.</em>", finderRegion: "Région", finderDuration: "Durée du séjour", finderTheme: "Type de voyage", finderSubmit: "Trouver un circuit",
     heroEyebrow: "VOYAGES AUTHENTIQUES · MADAGASCAR",
-    heroTitle: "Madagascar, <em>autrement.</em><br>Des voyages qui vous ressemblent.",
-    heroCopy: "Explorez une île de contrastes, de rencontres et de paysages extraordinaires. Nous imaginons avec vous un voyage à votre rythme, au plus près de l’essentiel.",
-    heroButton: "Imaginons votre voyage", heroSecondary: "Découvrir nos circuits", heroCaption: "MADAGASCAR, UNE ÎLE À PART",
+    heroTitle: "Imaginons votre voyage<br>à Madagascar",
+    heroCopy: "Des circuits authentiques, des rencontres uniques et des paysages d’exception.",
+    heroButton: "Demander un devis", heroSecondary: "Découvrir nos circuits", heroCaption: "MADAGASCAR, UNE ÎLE À PART",
     introEyebrow: "L'ESPRIT MIARADI", introTitle: "Voyager autrement.<br><em>Rencontrer vraiment.</em>",
     introCopy: "MIARADI est un tour-opérateur réceptif local créé en 2024. Nous imaginons des voyages qui privilégient la découverte, la rencontre humaine et le respect des territoires.",
     togetherEyebrow: "À VOTRE RYTHME", togetherTitle: "Le voyage se construit<br><em>ensemble.</em>", togetherCopy: "Vos envies donnent le premier cap. Nous échangeons avec vous pour ajuster le rythme, la durée, les expériences et les étapes, puis imaginons un itinéraire adapté à votre projet.",
@@ -46,7 +46,7 @@ const translations = {
     heroEyebrow: "AUTHENTIC JOURNEYS · MADAGASCAR",
     heroTitle: "Madagascar, <em>in a different light.</em><br>Journeys made for you.",
     heroCopy: "Explore an island of contrasts, meaningful encounters and extraordinary landscapes. We shape each journey with you, at your pace and close to what matters.",
-    heroButton: "Let’s imagine your journey", heroSecondary: "Discover our journeys", heroCaption: "MADAGASCAR, ONE OF A KIND",
+    heroButton: "Request a quote", heroSecondary: "Discover our journeys", heroCaption: "MADAGASCAR, ONE OF A KIND",
     introEyebrow: "THE MIARADI SPIRIT", introTitle: "Travel differently.<br><em>Connect deeply.</em>",
     introCopy: "MIARADI is a local inbound tour operator founded in 2024. We create journeys shaped by discovery, human connection and respect for local territories.",
     togetherEyebrow: "AT YOUR PACE", togetherTitle: "A journey shaped<br><em>together.</em>", togetherCopy: "Your wishes set the direction. We listen and work with you to shape the pace, duration, experiences and stops, then create an itinerary that fits your plans.",
@@ -886,6 +886,22 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   loadQuoteCircuits();
+
+
+  const homepageFinder = document.getElementById("homepage-finder");
+  homepageFinder?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const region = document.getElementById("region-filter");
+    const duration = document.getElementById("duration-filter");
+    if (region) region.value = document.getElementById("finder-region")?.value || "all";
+    if (duration) duration.value = document.getElementById("finder-duration")?.value || "all";
+    const theme = document.getElementById("finder-theme")?.value || "all";
+    const themeButton = Array.from(document.querySelectorAll(".filter-button")).find((button) => button.dataset.filter === theme);
+    themeButton?.click();
+    region?.dispatchEvent(new Event("change", { bubbles: true }));
+    duration?.dispatchEvent(new Event("change", { bubbles: true }));
+    document.getElementById("circuits")?.scrollIntoView({ behavior: "smooth" });
+  });
 
   setLanguage("fr");
 });
