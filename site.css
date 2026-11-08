@@ -3348,3 +3348,206 @@ body{background:#fbf8f7;color:var(--ink);font-family:var(--sans)}
   .circuits .circuit-grid .circuit-card .circuit-meta{font-size:12px}
   .circuits .circuit-grid .circuit-card .circuit-link{font-size:11px}
 }
+
+
+/* HOTFIX v2 — neutralise legacy #circuits editorial overlays.
+   Keep the image in its own row and render metadata/actions in a visible card body. */
+#circuits .circuit-grid{
+  display:grid !important;
+  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+  align-items:stretch !important;
+  gap:16px !important;
+}
+#circuits .circuit-card,
+#circuits .circuit-card.circuit-card-offset{
+  display:flex !important;
+  position:relative !important;
+  flex-direction:column !important;
+  width:100% !important;
+  height:auto !important;
+  min-height:0 !important;
+  aspect-ratio:auto !important;
+  overflow:hidden !important;
+  isolation:auto !important;
+  border:1px solid #eee4e1 !important;
+  border-radius:20px !important;
+  background:#fff !important;
+  color:#101b32 !important;
+  box-shadow:0 7px 20px rgba(30,25,20,.07) !important;
+}
+#circuits .circuit-card .circuit-image-link{
+  position:relative !important;
+  inset:auto !important;
+  display:block !important;
+  flex:0 0 auto !important;
+  width:100% !important;
+  height:auto !important;
+  aspect-ratio:1.9 / 1 !important;
+  min-height:0 !important;
+  margin:0 !important;
+  overflow:hidden !important;
+  border-radius:0 !important;
+  background:#e9e4df !important;
+}
+#circuits .circuit-card .circuit-image-link img{
+  position:absolute !important;
+  inset:0 !important;
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+}
+#circuits .circuit-card .circuit-image-link::after{display:none !important;content:none !important}
+#circuits .circuit-card .image-index{
+  position:absolute !important;
+  z-index:3 !important;
+  top:12px !important;
+  right:auto !important;
+  bottom:auto !important;
+  left:12px !important;
+  display:inline-flex !important;
+  max-width:calc(100% - 60px) !important;
+  padding:6px 11px !important;
+  border:0 !important;
+  border-radius:999px !important;
+  background:rgba(255,255,255,.97) !important;
+  color:#17233a !important;
+  font-size:10px !important;
+  font-weight:750 !important;
+  letter-spacing:0 !important;
+}
+#circuits .circuit-card .image-arrow{
+  position:absolute !important;
+  z-index:3 !important;
+  top:10px !important;
+  right:10px !important;
+  bottom:auto !important;
+  display:grid !important;
+  place-items:center !important;
+  width:36px !important;
+  height:36px !important;
+  padding:0 !important;
+  border:1px solid #f0d8d3 !important;
+  border-radius:50% !important;
+  background:#fff !important;
+  color:#922D20 !important;
+  font-size:18px !important;
+}
+#circuits .circuit-card .circuit-overlay{
+  position:static !important;
+  inset:auto !important;
+  z-index:auto !important;
+  display:flex !important;
+  flex:1 1 auto !important;
+  flex-direction:column !important;
+  align-items:stretch !important;
+  gap:9px !important;
+  width:100% !important;
+  height:auto !important;
+  margin:0 !important;
+  padding:13px 14px 14px !important;
+  background:#fff !important;
+  color:#101b32 !important;
+  pointer-events:auto !important;
+}
+#circuits .circuit-card .circuit-overlay > *{pointer-events:auto !important}
+#circuits .circuit-card h3{
+  display:block !important;
+  order:1 !important;
+  margin:0 !important;
+  color:#101b32 !important;
+  font-family:var(--sans) !important;
+  font-size:clamp(14px,1.1vw,17px) !important;
+  font-weight:850 !important;
+  line-height:1.3 !important;
+  letter-spacing:-.025em !important;
+}
+#circuits .circuit-card .circuit-meta{
+  order:2 !important;
+  display:flex !important;
+  flex-wrap:wrap !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+  gap:7px 12px !important;
+  margin:0 !important;
+  color:#17233a !important;
+  font-size:11px !important;
+  font-weight:500 !important;
+  letter-spacing:0 !important;
+}
+#circuits .circuit-card .circuit-fact{display:inline-flex !important;align-items:center !important}
+#circuits .circuit-card .circuit-status{
+  order:3 !important;
+  display:inline-flex !important;
+  align-self:flex-start !important;
+  align-items:center !important;
+  gap:5px !important;
+  margin:0 !important;
+  padding:4px 9px !important;
+  border:0 !important;
+  border-radius:999px !important;
+  background:#fff0c9 !important;
+  color:#a64b00 !important;
+  font-size:11px !important;
+  font-weight:800 !important;
+  line-height:1.25 !important;
+}
+#circuits .circuit-card .circuit-status::before{content:"◷" !important;font-size:12px !important}
+#circuits .circuit-card .circuit-card-actions{
+  order:4 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:8px !important;
+  width:100% !important;
+  margin:auto 0 0 !important;
+  padding:0 !important;
+}
+#circuits .circuit-card .circuit-link{
+  display:inline-flex !important;
+  flex:0 1 auto !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:7px !important;
+  min-width:0 !important;
+  max-width:calc(100% - 48px) !important;
+  min-height:39px !important;
+  margin:0 !important;
+  padding:9px 12px !important;
+  border:0 !important;
+  border-radius:999px !important;
+  background:#fde9e7 !important;
+  color:#922D20 !important;
+  font-size:clamp(10px,.85vw,12px) !important;
+  font-weight:800 !important;
+  line-height:1.2 !important;
+  white-space:nowrap !important;
+}
+#circuits .circuit-card .gallery-trigger{
+  display:inline-flex !important;
+  flex:0 0 41px !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:41px !important;
+  height:41px !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:1px solid rgba(146,45,32,.24) !important;
+  border-radius:50% !important;
+  background:#fff !important;
+  color:#922D20 !important;
+  font-size:22px !important;
+  line-height:1 !important;
+  text-decoration:none !important;
+}
+#circuits .circuit-card .circuit-price{display:none !important}
+@media(max-width:900px){
+  #circuits .circuit-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:16px !important}
+  #circuits .circuit-card .circuit-link{font-size:11px !important}
+}
+@media(max-width:520px){
+  #circuits .circuit-grid{grid-template-columns:minmax(0,1fr) !important;gap:18px !important}
+  #circuits .circuit-card .circuit-image-link{aspect-ratio:1.8 / 1 !important}
+  #circuits .circuit-card .circuit-meta{font-size:12px !important}
+  #circuits .circuit-card .circuit-link{font-size:12px !important}
+}
