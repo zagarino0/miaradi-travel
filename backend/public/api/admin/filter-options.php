@@ -55,6 +55,9 @@ try {
     if (!$label || !$value || !is_int($order) || $order < -100000 || $order > 100000) {
         api_json(['error' => ['code' => 'validation_error', 'message' => 'Renseignez un libellé, une valeur et un ordre valides.']], 422);
     }
+    if ($type !== 'duration' && !preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', (string) $value)) {
+        api_json(['error' => ['code' => 'invalid_value', 'message' => 'La valeur technique doit être un identifiant minuscule avec des tirets, par exemple nord-ouest.']], 422);
+    }
     if ($type === 'duration' && !preg_match('/^\d{1,3}(?:-\d{1,3})?$/', (string) $value)) {
         api_json(['error' => ['code' => 'invalid_duration', 'message' => 'La durée doit être un nombre de jours ou une plage, par exemple 3-5.']], 422);
     }
