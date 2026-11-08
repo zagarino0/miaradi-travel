@@ -3707,12 +3707,12 @@ body{background:#fbf8f7;color:var(--ink);font-family:var(--sans)}
 }
 
 
-/* Featured circuits: enlarge cards and use the available section width */
+/* Featured circuits: keep four desktop columns and slightly increase card proportions */
 #circuits .circuit-grid{
   display:grid !important;
-  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
   align-items:stretch !important;
-  gap:24px !important;
+  gap:20px !important;
   width:100% !important;
   max-width:none !important;
 }
@@ -3724,48 +3724,47 @@ body{background:#fbf8f7;color:var(--ink);font-family:var(--sans)}
   max-width:none !important;
   min-height:0 !important;
   overflow:hidden !important;
-  border-radius:24px !important;
+  border-radius:22px !important;
 }
 #circuits .circuit-grid .circuit-card .circuit-image-link{
   width:100% !important;
-  aspect-ratio:1.75 / 1 !important;
-  min-height:250px !important;
-  border-radius:24px 24px 0 0 !important;
+  aspect-ratio:1.5 / 1 !important;
+  min-height:205px !important;
+  border-radius:22px 22px 0 0 !important;
 }
 #circuits .circuit-grid .circuit-card .circuit-overlay{
-  gap:12px !important;
-  padding:20px 22px 22px !important;
+  gap:11px !important;
+  padding:16px 17px 18px !important;
 }
 #circuits .circuit-grid .circuit-card h3{
-  font-size:clamp(18px,1.5vw,23px) !important;
-  line-height:1.3 !important;
+  font-size:clamp(15px,1.15vw,19px) !important;
+  line-height:1.35 !important;
 }
 #circuits .circuit-grid .circuit-card .circuit-meta{
-  gap:10px 18px !important;
-  font-size:14px !important;
+  gap:8px 12px !important;
+  font-size:12px !important;
 }
 #circuits .circuit-grid .circuit-card .circuit-status{
-  padding:6px 12px !important;
-  font-size:13px !important;
+  padding:5px 10px !important;
+  font-size:12px !important;
 }
 #circuits .circuit-grid .circuit-card .circuit-link{
-  min-height:46px !important;
-  padding:12px 18px !important;
-  font-size:14px !important;
+  min-height:43px !important;
+  padding:10px 13px !important;
+  font-size:13px !important;
 }
 #circuits .circuit-grid .circuit-card .gallery-trigger{
-  flex-basis:46px !important;
-  width:46px !important;
-  height:46px !important;
-  font-size:24px !important;
+  flex-basis:42px !important;
+  width:42px !important;
+  height:42px !important;
+  font-size:22px !important;
 }
-@media(max-width:760px){
-  #circuits .circuit-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:16px !important}
-  #circuits .circuit-grid .circuit-card .circuit-image-link{aspect-ratio:1.45 / 1 !important;min-height:180px !important}
-  #circuits .circuit-grid .circuit-card .circuit-overlay{padding:15px !important;gap:10px !important}
-  #circuits .circuit-grid .circuit-card h3{font-size:17px !important}
-  #circuits .circuit-grid .circuit-card .circuit-meta{font-size:12px !important;gap:8px 12px !important}
-  #circuits .circuit-grid .circuit-card .circuit-link{font-size:12px !important;padding:10px 12px !important;white-space:normal !important}
+@media(max-width:1100px){
+  #circuits .circuit-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:18px !important}
+  #circuits .circuit-grid .circuit-card .circuit-image-link{aspect-ratio:1.7 / 1 !important;min-height:220px !important}
+  #circuits .circuit-grid .circuit-card .circuit-overlay{padding:18px !important;gap:11px !important}
+  #circuits .circuit-grid .circuit-card h3{font-size:18px !important}
+  #circuits .circuit-grid .circuit-card .circuit-meta{font-size:13px !important;gap:8px 14px !important}
 }
 @media(max-width:520px){
   #circuits .circuit-grid{grid-template-columns:minmax(0,1fr) !important;gap:18px !important}
