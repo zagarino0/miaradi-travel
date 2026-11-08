@@ -914,5 +914,41 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("circuits")?.scrollIntoView({ behavior: "smooth" });
   });
 
+
+  // Hero panorama slideshow: automatic rotation, arrow and dot navigation.
+  const hero = document.querySelector(".hero");
+  if (hero) {
+    const slides = Array.from(hero.querySelectorAll(".hero-slide"));
+    const dots = Array.from(hero.querySelectorAll(".hero-dot"));
+    const previous = hero.querySelector(".hero-prev");
+    const next = hero.querySelector(".hero-next");
+    let activeSlide = 0;
+    let slideshowTimer;
+    const showSlide = (index) => {
+      activeSlide = (index + slides.length) % slides.length;
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("is-active", i === activeSlide);
+        slide.setAttribute("aria-hidden", i === activeSlide ? "false" : "true");
+      });
+      dots.forEach((dot, i) => {
+        dot.classList.toggle("is-active", i === activeSlide);
+        dot.setAttribute("aria-pressed", i === activeSlide ? "true" : "false");
+      });
+    };
+    const startSlideshow = () => {
+      window.clearInterval(slideshowTimer);
+      slideshowTimer = window.setInterval(() => showSlide(activeSlide + 1), 6500);
+    };
+    previous?.addEventListener("click", () => { showSlide(activeSlide - 1); startSlideshow(); });
+    next?.addEventListener("click", () => { showSlide(activeSlide + 1); startSlideshow(); });
+    dots.forEach((dot, i) => dot.addEventListener("click", () => { showSlide(i); startSlideshow(); }));
+    hero.addEventListener("mouseenter", () => window.clearInterval(slideshowTimer));
+    hero.addEventListener("mouseleave", startSlideshow);
+    hero.addEventListener("focusin", () => window.clearInterval(slideshowTimer));
+    hero.addEventListener("focusout", startSlideshow);
+    showSlide(0);
+    startSlideshow();
+  }
+
   setLanguage("fr");
 });
