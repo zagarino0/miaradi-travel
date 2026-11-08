@@ -2576,7 +2576,7 @@ dialog#circuit-gallery.gallery-dialog .gallery-main-overlay #gallery-counter{ali
 
 
 /* MIARADI public refresh — aligned with the admin dashboard */
-:root{--red:#922D20;--paper:#F7F8FC;--ink:#101b32;--muted:#66758c;--line:#e8edf5;--soft:#edf4fc;--dark:#f7f8fc;--sans:"DM Sans",Inter,Arial,sans-serif;--container:1400px}
+:root{--red:#922D20;--paper:#F7F8FC;--ink:#101b32;--muted:#66758c;--line:#e8edf5;--soft:#edf4fc;--dark:#211e1b;--sans:"DM Sans",Inter,Arial,sans-serif;--container:1400px}
 body{background:#f7f8fc;color:#101b32;font-family:var(--sans);font-size:14px;line-height:1.55}
 .site-header{background:rgba(255,255,255,.94);border-bottom:1px solid #e9edf4;box-shadow:0 2px 12px rgba(23,36,62,.025)}
 .header-inner{min-height:78px;gap:24px}.brand-logo{width:170px;max-height:54px}
