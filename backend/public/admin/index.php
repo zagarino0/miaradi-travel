@@ -595,6 +595,70 @@ td strong{color:#34303e;font-size:12px}
     $('#admin-sidebar').classList.remove('is-open');
     sidebarToggle.setAttribute('aria-expanded', 'false');
   }));
+  const filterOptionForm = $('#filter-option-form');
+  const filterOptionPanel = $('#filter-options-panel');
+  const filterOptionLabels = {region:'Région',theme:'Thématique',duration:'Durée'};
+  function filterOptionNotice(message) { $('#filter-option-notice').textContent = message || ''; }
+  async function loadFilterOptions() {
+    const tbody = $('#filter-options-list');
+    tbody.innerHTML = '<tr><td colspan="5">Chargement des options…</td></tr>';
+    try {
+      const result = await request('admin/filter-options.php');
+      const options = result.data || [];
+      tbody.innerHTML = options.map(option => '<tr><td>'+esc(filterOptionLabels[option.option_type] || option.option_type)+'</td><td><strong>'+esc(option.option_label)+'</strong></td><td><code>'+esc(option.option_value)+'</code></td><td>'+Number(option.sort_order)+'</td><td><button type="button" class="button filter-option-delete" data-delete-filter-option="'+Number(option.id)+'">Supprimer</button></td></tr>').join('') || '<tr><td colspan="5">Aucune option enregistrée pour le moment.</td></tr>';
+      tbody.querySelectorAll('[data-delete-filter-option]').forEach(button => button.addEventListener('click', async () => {
+        if (!window.confirm('Supprimer cette option des filtres publics ?')) return;
+        button.disabled = true;
+        try {
+          await request('admin/filter-options.php?id='+encodeURIComponent(button.dataset.deleteFilterOption), {method:'DELETE', mutate:true});
+          filterOptionNotice('Option supprimée.');
+          await loadFilterOptions();
+        } catch (error) {
+          filterOptionNotice(error.message);
+          button.disabled = false;
+        }
+      }));
+    } catch (error) {
+      tbody.innerHTML = '<tr><td colspan="5">'+esc(error.message)+'</td></tr>';
+      filterOptionNotice(error.message);
+    }
+  }
+  $('#manage-filter-options').addEventListener('click', async () => {
+    filterOptionPanel.classList.remove('hidden');
+    filterOptionPanel.scrollIntoView({behavior:'smooth', block:'start'});
+    await loadFilterOptions();
+  });
+  $('#close-filter-options').addEventListener('click', () => filterOptionPanel.classList.add('hidden'));
+  $('#reload-filter-options').addEventListener('click', loadFilterOptions);
+  $('#filter-option-type').addEventListener('change', () => {
+    const type = $('#filter-option-type').value;
+    $('#filter-option-label').placeholder = type === 'region' ? 'Ex. Ouest' : type === 'theme' ? 'Ex. Nature' : 'Ex. 3–5 jours';
+    $('#filter-option-value').placeholder = type === 'region' ? 'Ex. west' : type === 'theme' ? 'Ex. nature' : 'Ex. 3-5';
+  });
+  filterOptionForm.addEventListener('submit', async event => {
+    event.preventDefault();
+    const button = $('#save-filter-option');
+    button.disabled = true;
+    filterOptionNotice('');
+    const form = new FormData(filterOptionForm);
+    const payload = {
+      option_type: String(form.get('option_type') || ''),
+      option_label: String(form.get('option_label') || '').trim(),
+      option_value: String(form.get('option_value') || '').trim().toLocaleLowerCase('fr'),
+      sort_order: Number(form.get('sort_order') || 0)
+    };
+    try {
+      await request('admin/filter-options.php', {method:'POST', mutate:true, body:JSON.stringify(payload)});
+      filterOptionForm.elements.option_label.value = '';
+      filterOptionForm.elements.option_value.value = '';
+      filterOptionNotice('Option ajoutée. Elle sera proposée dans les filtres publics après actualisation.');
+      await loadFilterOptions();
+    } catch (error) {
+      filterOptionNotice(error.message);
+    } finally {
+      button.disabled = false;
+    }
+  });
   checkSession();
 })();
 </script>
