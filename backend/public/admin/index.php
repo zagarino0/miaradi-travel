@@ -241,6 +241,8 @@ td strong{color:#34303e;font-size:12px}
 @media(max-width:1050px){.crm-layout{grid-template-columns:minmax(270px,.8fr) minmax(0,1.2fr)}.crm-list-panel{padding:16px 12px}.quote-conversation>.actions{padding:15px}.quote-thread{padding:16px 13px}#quote-detail-content{padding:15px 13px 0}#quote-reply-form{padding:15px 13px!important}}
 @media(max-width:760px){#quotes-panel{padding:14px 10px}.crm-layout{grid-template-columns:1fr;min-height:0}.crm-list-panel{border-right:0;border-bottom:1px solid #eeecf3;padding:14px 0}.quote-list{max-height:430px}.quote-conversation{min-height:400px}.quote-conversation>.actions{padding:14px 4px}.quote-thread{padding:16px 4px}.quote-bubble-row{max-width:96%}#quote-detail-content{padding:14px 4px 0}#quote-reply-form{padding:14px 4px!important}#quote-detail-content .detail-grid{grid-template-columns:1fr}.quote-client-meta{display:none}}
 
+
+.filter-options-panel{margin-top:22px;background:#fffdfc;border-color:#e8d9d4}.filter-options-panel .catalogue-heading{margin-bottom:16px}.filter-options-panel form{padding:18px;background:#fbf8f6;border:1px solid #eee3df;border-radius:12px}.filter-options-panel .table-wrap{margin-top:18px}.filter-options-panel table{min-width:560px}.filter-options-panel .button.secondary{box-shadow:none}.filter-option-delete{padding:7px 10px!important;color:#922D20!important;background:#fff!important;border:1px solid #ecd2cb!important;border-radius:8px!important}
 </style>
 </head>
 <body>
@@ -254,7 +256,7 @@ td strong{color:#34303e;font-size:12px}
     <section class="panel circuits-workspace" id="circuits-panel">
       <div class="catalogue-heading">
         <div><div class="eyebrow">Vos destinations</div><h2>Catalogue des circuits</h2><p class="muted">Organisez vos voyages, leurs visuels et leur visibilité sur le site MIARADI.</p></div>
-        <button class="button" id="new-circuit" type="button"><span aria-hidden="true">＋</span> Ajouter un circuit</button>
+        <div class="actions"><button class="button secondary" id="manage-filter-options" type="button">⚙ Gérer les filtres</button><button class="button" id="new-circuit" type="button"><span aria-hidden="true">＋</span> Ajouter un circuit</button></div>
       </div>
       <div class="catalogue-toolbar">
         <label class="catalogue-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg><input id="circuit-search" type="search" placeholder="Rechercher un circuit, une région…" aria-label="Rechercher un circuit"></label>
@@ -262,6 +264,22 @@ td strong{color:#34303e;font-size:12px}
         <span class="catalogue-count" id="catalogue-count">Chargement des circuits…</span>
       </div>
       <div class="circuit-grid" id="circuits-list" aria-live="polite"></div>
+      <section class="panel hidden filter-options-panel" id="filter-options-panel">
+        <div class="catalogue-heading"><div><div class="eyebrow">Paramètres du site</div><h2>Options de recherche</h2><p>Ajoutez les régions, thématiques et durées qui seront proposées dans les filtres publics.</p></div><button class="button secondary" id="close-filter-options" type="button">Fermer</button></div>
+        <form id="filter-option-form">
+          <div class="row">
+            <label class="field">Catégorie<select name="option_type" id="filter-option-type" required><option value="region">Région</option><option value="theme">Thématique</option><option value="duration">Durée</option></select></label>
+            <label class="field">Nom affiché<input name="option_label" id="filter-option-label" maxlength="120" required placeholder="Ex. Ouest, Nature, 3–5 jours"></label>
+          </div>
+          <div class="row">
+            <label class="field">Valeur technique<input name="option_value" id="filter-option-value" maxlength="100" required placeholder="Ex. west, nature, 3-5"><span class="hint">Pour une durée, saisissez un nombre de jours ou une plage, par exemple 3-5.</span></label>
+            <label class="field">Ordre d’affichage<input name="sort_order" type="number" value="0" required></label>
+          </div>
+          <div class="actions"><button class="button" id="save-filter-option" type="submit">＋ Ajouter cette option</button><button class="button secondary" id="reload-filter-options" type="button">Actualiser la liste</button></div>
+          <p class="notice" id="filter-option-notice" role="status"></p>
+        </form>
+        <div class="table-wrap"><table><thead><tr><th>Catégorie</th><th>Libellé public</th><th>Valeur</th><th>Ordre</th><th>Action</th></tr></thead><tbody id="filter-options-list"><tr><td colspan="5">Chargement des options…</td></tr></tbody></table></div>
+      </section>
     </section>
         <section class="panel hidden" id="quotes-panel">
       <div class="actions" style="justify-content:space-between;align-items:center">
