@@ -119,6 +119,54 @@ td strong{color:#34303e;font-size:12px}
 @media(max-width:420px){.kpi-grid{grid-template-columns:1fr}.kpi{min-height:100px}.page-heading{gap:10px}.topbar-actions{gap:6px}.crumb{font-size:10px}.button{padding:9px 11px}}
 @media(prefers-reduced-motion:reduce){.sidebar{transition:none}}
 
+
+/* Travel package catalogue inspired by the supplied dashboard reference */
+.circuits-workspace{padding:25px;margin-top:0}
+.catalogue-heading{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:22px}
+.catalogue-heading h2{font-size:23px;margin:5px 0 7px;letter-spacing:-.035em}
+.catalogue-heading p{margin:0;max-width:560px;color:var(--muted);font-size:11px;line-height:1.65}
+.catalogue-heading .button{flex-shrink:0;padding:12px 16px}
+.catalogue-toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:21px}
+.catalogue-search{display:flex;align-items:center;gap:10px;flex:1;min-width:220px;height:42px;padding:0 13px;border:1px solid #eceaf2;border-radius:10px;background:#fbfaff;color:#9994a6}
+.catalogue-search svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.catalogue-search input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:var(--ink);font:inherit;font-size:11px}
+.catalogue-search input:focus{box-shadow:none}
+.catalogue-search:focus-within{border-color:#a69be9;box-shadow:0 0 0 3px #7568d81a}
+.catalogue-filter{height:42px;display:flex;align-items:center;gap:9px;padding:0 11px;border:1px solid #eceaf2;border-radius:10px;background:#fff;color:#9994a6;font-size:10px}
+.catalogue-filter select{max-width:140px;border:0;outline:0;background:transparent;color:#4c4858;font:inherit;font-weight:700;cursor:pointer}
+.catalogue-count{font-size:10px;color:#9691a2;white-space:nowrap}
+.circuit-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.circuit-card{min-width:0;overflow:hidden;border:1px solid #eeecf3;border-radius:15px;background:#fff;box-shadow:0 4px 18px #2c234008;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+.circuit-card:hover{transform:translateY(-3px);box-shadow:0 12px 27px #2c234011;border-color:#e0dbea}
+.circuit-cover{position:relative;aspect-ratio:1.55/1;overflow:hidden;background:linear-gradient(135deg,#eeeaff,#f8e7dc)}
+.circuit-cover img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
+.circuit-card:hover .circuit-cover img{transform:scale(1.035)}
+.circuit-cover-placeholder{display:grid;place-items:center;width:100%;height:100%;color:#a49cb9;font-size:36px}
+.circuit-cover-placeholder svg{width:42px;height:42px;fill:none;stroke:currentColor;stroke-width:1.2}
+.circuit-status{position:absolute;top:12px;left:12px;display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border:1px solid #ffffffa6;border-radius:7px;background:#ffffffed;color:#26865c;font-size:9px;font-weight:800;box-shadow:0 3px 9px #24152a0a}
+.circuit-status:before{content:"";width:6px;height:6px;border-radius:50%;background:#35b47a}
+.circuit-status.draft{color:#a36a09}
+.circuit-status.draft:before{background:#e5a52e}
+.circuit-card-body{padding:15px 15px 14px}
+.circuit-meta{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:9px}
+.circuit-chip{display:inline-flex;align-items:center;padding:5px 8px;border-radius:6px;background:#f1edff;color:#6b5dcd;font-size:9px;font-weight:750}
+.circuit-chip.region{background:#eef6fc;color:#4386b5}
+.circuit-card h3{margin:0 0 7px;color:#302c3a;font-size:15px;line-height:1.35;font-weight:800;letter-spacing:-.02em}
+.circuit-summary{display:-webkit-box;min-height:36px;margin:0;color:#898596;font-size:10px;line-height:1.65;overflow:hidden;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.circuit-card-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:15px;padding-top:12px;border-top:1px solid #f0eef5}
+.circuit-duration{display:flex;align-items:center;gap:7px;color:#777286;font-size:10px;font-weight:700;white-space:nowrap}
+.circuit-duration svg{width:15px;height:15px;fill:none;stroke:#9993a6;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.circuit-actions{display:flex;align-items:center;gap:6px}
+.circuit-actions .button{padding:7px 9px;border-radius:7px;font-size:10px;box-shadow:none}
+.circuit-actions .circuit-delete{color:#a34b45;background:#fff;border-color:#f0e5e4}
+.circuit-actions .circuit-delete:hover{background:#fff3f2;border-color:#e8c9c6}
+.circuit-empty{grid-column:1/-1;display:grid;justify-items:center;gap:9px;padding:48px 20px;border:1px dashed #ded9e9;border-radius:14px;text-align:center;color:#8f899f}
+.circuit-empty strong{color:#454052;font-size:13px}
+.circuit-empty span{font-size:11px}
+@media(max-width:1250px){.circuit-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.circuits-workspace{padding:16px 12px}.catalogue-heading{align-items:flex-start;flex-direction:column}.catalogue-heading .button{width:100%;justify-content:center}.catalogue-heading h2{font-size:21px}.catalogue-toolbar{gap:9px}.catalogue-search{flex-basis:100%;min-width:0}.catalogue-filter{flex:1;justify-content:space-between}.catalogue-count{width:100%}.circuit-grid{grid-template-columns:1fr;gap:13px}.circuit-cover{aspect-ratio:1.7/1}.circuit-card-body{padding:14px}.circuit-card-footer{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){.circuit-card,.circuit-cover img{transition:none}}
+
 </style>
 </head>
 <body>
@@ -129,7 +177,18 @@ td strong{color:#34303e;font-size:12px}
     <section class="kpi-grid" aria-label="Indicateurs du site"><article class="kpi"><span class="kpi-mark">▦</span><div class="kpi-label">Circuits au catalogue</div><div class="kpi-value" id="kpi-circuits">—</div><div class="kpi-note" id="kpi-circuits-note">Chargement des données</div></article><article class="kpi"><span class="kpi-mark">✉</span><div class="kpi-label">Demandes de devis</div><div class="kpi-value" id="kpi-quotes">—</div><div class="kpi-note">Demandes enregistrées en base</div></article><article class="kpi"><span class="kpi-mark">◷</span><div class="kpi-label">À traiter</div><div class="kpi-value" id="kpi-pending">—</div><div class="kpi-note">Nouvelles demandes et en cours</div></article><article class="kpi"><span class="kpi-mark">✓</span><div class="kpi-label">Clients contactés</div><div class="kpi-value" id="kpi-replied">—</div><div class="kpi-note">Réponses enregistrées</div></article></section>
     <nav class="tabs"><button class="active" data-tab="circuits">Catalogue des circuits</button><button data-tab="quotes">Demandes de devis</button></nav>
     <p class="notice" id="notice" role="status"></p>
-    <section class="panel" id="circuits-panel"><div class="actions" style="justify-content:space-between;align-items:center"><h2>Catalogue des circuits</h2><button class="button" id="new-circuit">Ajouter un circuit</button></div><div class="table-wrap"><table><thead><tr><th>Circuit</th><th>Région / thème</th><th>Durée</th><th>État</th><th>Actions</th></tr></thead><tbody id="circuits-list"></tbody></table></div></section>
+    <section class="panel circuits-workspace" id="circuits-panel">
+      <div class="catalogue-heading">
+        <div><div class="eyebrow">Vos destinations</div><h2>Catalogue des circuits</h2><p class="muted">Organisez vos voyages, leurs visuels et leur visibilité sur le site MIARADI.</p></div>
+        <button class="button" id="new-circuit" type="button"><span aria-hidden="true">＋</span> Ajouter un circuit</button>
+      </div>
+      <div class="catalogue-toolbar">
+        <label class="catalogue-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg><input id="circuit-search" type="search" placeholder="Rechercher un circuit, une région…" aria-label="Rechercher un circuit"></label>
+        <label class="catalogue-filter"><span>Visibilité</span><select id="circuit-filter"><option value="all">Tous les circuits</option><option value="published">Publiés</option><option value="draft">Brouillons</option></select></label>
+        <span class="catalogue-count" id="catalogue-count">Chargement des circuits…</span>
+      </div>
+      <div class="circuit-grid" id="circuits-list" aria-live="polite"></div>
+    </section>
         <section class="panel hidden" id="quotes-panel">
       <div class="actions" style="justify-content:space-between;align-items:center">
         <div><div class="eyebrow">Service clientèle</div><h2>Boîte de réception</h2><p class="muted">Sélectionnez une demande pour consulter le voyage, répondre au client et suivre son statut.</p></div>
@@ -191,14 +250,41 @@ td strong{color:#34303e;font-size:12px}
     try { await request('admin/session.php', {method:'POST', mutate:true, body:JSON.stringify({action:'logout'})}); } catch (_) {}
     location.replace('login.php');
   });
+  function circuitImagePath(path) {
+    const value = String(path || '').trim();
+    if (!value) return '';
+    if (/^(https?:)?\\//i.test(value) || value.startsWith('data:')) return value;
+    return value.startsWith('assets/') ? '../../../' + value : (value.startsWith('../') ? value : '../../../' + value.replace(/^\\.\\//, ''));
+  }
+  function renderCircuits() {
+    const search = ($('#circuit-search')?.value || '').trim().toLocaleLowerCase('fr');
+    const filter = $('#circuit-filter')?.value || 'all';
+    const filtered = circuits.filter(c => {
+      const searchable = [c.title_fr,c.title_en,c.region,c.theme,c.slug,c.summary_fr].filter(Boolean).join(' ').toLocaleLowerCase('fr');
+      return (!search || searchable.includes(search)) && (filter === 'all' || (filter === 'published' ? Boolean(c.is_published) : !Boolean(c.is_published)));
+    });
+    $('#catalogue-count').textContent = filtered.length + ' circuit' + (filtered.length > 1 ? 's' : '') + (filtered.length !== circuits.length ? ' affiché(s) sur ' + circuits.length : ' au catalogue');
+    $('#circuits-list').innerHTML = filtered.map(c => {
+      const image = circuitImagePath(c.image_path);
+      const duration = c.duration_min && c.duration_max ? c.duration_min + '–' + c.duration_max + ' jours' : (c.duration_min ? 'Dès ' + c.duration_min + ' jours' : (c.duration_max ? 'Jusqu’à ' + c.duration_max + ' jours' : 'Durée sur devis'));
+      const region = c.region ? '<span class="circuit-chip region">' + esc(c.region) + '</span>' : '';
+      const theme = c.theme ? '<span class="circuit-chip">' + esc(c.theme) + '</span>' : '';
+      const imageMarkup = image ? '<img src="' + esc(image) + '" alt="Photo du circuit ' + esc(c.title_fr) + '" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.hidden=false"><div class="circuit-cover-placeholder" hidden aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.5"/><path d="m21 15-5-5L5 20"/></svg></div>' : '<div class="circuit-cover-placeholder" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.5"/><path d="m21 15-5-5L5 20"/></svg></div>';
+      return '<article class="circuit-card"><div class="circuit-cover">' + imageMarkup + '<span class="circuit-status ' + (c.is_published ? '' : 'draft') + '">' + (c.is_published ? 'Publié' : 'Brouillon') + '</span></div><div class="circuit-card-body"><div class="circuit-meta">' + region + theme + '</div><h3>' + esc(c.title_fr || 'Circuit sans titre') + '</h3><p class="circuit-summary">' + esc(c.summary_fr || 'Ajoutez une description pour présenter ce circuit aux voyageurs.') + '</p><div class="circuit-card-footer"><span class="circuit-duration"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>' + esc(duration) + '</span><div class="circuit-actions"><button class="button secondary" type="button" data-edit="' + Number(c.id) + '">Modifier</button><button class="button secondary circuit-delete" type="button" data-delete="' + Number(c.id) + '">Supprimer</button></div></div></div></article>';
+    }).join('') || '<div class="circuit-empty"><strong>' + (circuits.length ? 'Aucun circuit trouvé' : 'Votre catalogue est prêt à commencer') + '</strong><span>' + (circuits.length ? 'Essayez un autre mot-clé ou modifiez le filtre de visibilité.' : 'Ajoutez votre premier circuit pour le présenter dans cet espace.') + '</span></div>';
+    $('#circuits-list').querySelectorAll('[data-edit]').forEach(b => b.addEventListener('click', () => editCircuit(Number(b.dataset.edit))));
+    $('#circuits-list').querySelectorAll('[data-delete]').forEach(b => b.addEventListener('click', () => deleteCircuit(Number(b.dataset.delete))));
+  }
   async function loadCircuits() {
     try {
       const result = await request('admin/circuits.php'); circuits = result.data;
-      $('#kpi-circuits').textContent = circuits.length; $('#kpi-circuits-note').textContent = circuits.filter(c => Boolean(c.is_published)).length + ' publié(s) · ' + circuits.filter(c => !Boolean(c.is_published)).length + ' brouillon(s)'; $('#circuits-list').innerHTML = circuits.map(c => '<tr><td><strong>'+esc(c.title_fr)+'</strong><br><span class="muted">'+esc(c.slug)+'</span></td><td>'+esc(c.region)+'<br>'+esc(c.theme)+'</td><td>'+esc(c.duration_min ?? '—')+' – '+esc(c.duration_max ?? '—')+' j</td><td><span class="status">'+(c.is_published?'Publié':'Brouillon')+'</span></td><td><div class="actions"><button class="button secondary" data-edit="'+c.id+'">Modifier</button><button class="button secondary" data-delete="'+c.id+'">Supprimer</button></div></td></tr>').join('') || '<tr><td colspan="5">Aucun circuit dans la base.</td></tr>';
-      $('#circuits-list').querySelectorAll('[data-edit]').forEach(b => b.addEventListener('click', () => editCircuit(Number(b.dataset.edit))));
-      $('#circuits-list').querySelectorAll('[data-delete]').forEach(b => b.addEventListener('click', () => deleteCircuit(Number(b.dataset.delete))));
+      $('#kpi-circuits').textContent = circuits.length;
+      $('#kpi-circuits-note').textContent = circuits.filter(c => Boolean(c.is_published)).length + ' publié(s) · ' + circuits.filter(c => !Boolean(c.is_published)).length + ' brouillon(s)';
+      renderCircuits();
     } catch (error) { notice(error.message); }
   }
+  $('#circuit-search').addEventListener('input', renderCircuits);
+  $('#circuit-filter').addEventListener('change', renderCircuits);
   function editCircuit(id = null) {
     const form = $('#circuit-form'); form.reset(); selectedCover = null; coverFile().value = ''; $('#cover-status').textContent = 'Sélectionnez une photo pour remplacer la couverture actuelle.';
     const c = circuits.find(item => item.id === id);
