@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("circuits")?.scrollIntoView({ behavior: "smooth" });
   });
 
-  const filters = document.querySelectorAll(".filter-button");
+  let filters = document.querySelectorAll(".filter-button");
   const circuitGrid = document.querySelector(".circuit-grid");
   const cards = () => circuitGrid ? circuitGrid.querySelectorAll(".circuit-card") : [];
   const regionFilter = document.getElementById("region-filter");
@@ -186,17 +186,23 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  filters.forEach((button) => {
-    button.addEventListener("click", () => {
-      selectedTheme = button.dataset.filter;
-      filters.forEach((filter) => {
-        const active = filter === button;
-        filter.classList.toggle("is-active", active);
-        filter.setAttribute("aria-pressed", String(active));
+  const bindThemeFilterButtons = () => {
+    filters = document.querySelectorAll(".filter-button");
+    filters.forEach((button) => {
+      if (button.dataset.filterBound === "true") return;
+      button.dataset.filterBound = "true";
+      button.addEventListener("click", () => {
+        selectedTheme = button.dataset.filter;
+        filters.forEach((filter) => {
+          const active = filter === button;
+          filter.classList.toggle("is-active", active);
+          filter.setAttribute("aria-pressed", String(active));
+        });
+        applyCircuitFilters();
       });
-      applyCircuitFilters();
     });
-  });
+  };
+  bindThemeFilterButtons();
   if (regionFilter) regionFilter.addEventListener("change", applyCircuitFilters);
   if (durationFilter) durationFilter.addEventListener("change", applyCircuitFilters);
 
@@ -207,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const theme = normalizeCircuitText(value);
     if (theme.includes("coast") || theme.includes("island") || theme.includes("lagon") || theme.includes("cote") || theme.includes("ile")) return "coast";
     if (theme.includes("culture") || theme.includes("rencontre") || theme.includes("heritage")) return "culture";
-    return "nature";
+    return theme.replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "nature";
   };
   const circuitRegion = (value) => {
     const region = normalizeCircuitText(value);
@@ -216,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (/est|east|alaotra|mangoro|atsinanana/.test(region)) return "east";
     if (/sud|south|androy|anosy|ihorombe|atsimo/.test(region)) return "south";
     if (/haute|highland|analamanga|vakinankaratra|amoron|betsileo/.test(region)) return "highlands";
-    return "all";
+    return region.replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "all";
   };
   const durationLabel = (duration) => {
     const min = Number(duration?.min);
@@ -310,6 +316,53 @@ document.addEventListener("DOMContentLoaded", () => {
     applyCircuitFilters();
   };
 
+  const loadPublicFilterOptions = async () => {
+    try {
+      const response = await fetch(publicCircuitsApi + "/filter-options.php", {
+        headers: { Accept: "application/json" }, credentials: "same-origin", cache: "no-store"
+      });
+      const payload = await response.json();
+      if (!response.ok || !payload.data) return;
+      const options = payload.data;
+      const fillSelect = (id, rows, allLabel) => {
+        const select = document.getElementById(id);
+        if (!select || !Array.isArray(rows) || !rows.length) return;
+        const previous = select.value;
+        select.replaceChildren(new Option(allLabel, "all"));
+        rows.forEach((row) => select.add(new Option(row.label, row.value)));
+        if (Array.from(select.options).some((option) => option.value === previous)) select.value = previous;
+      };
+      fillSelect("finder-region", options.region, currentLanguage === "fr" ? "Toutes les régions" : "All regions");
+      fillSelect("region-filter", options.region, currentLanguage === "fr" ? "Toutes les régions" : "All regions");
+      fillSelect("finder-theme", options.theme, currentLanguage === "fr" ? "Toutes les thématiques" : "All themes");
+      fillSelect("finder-duration", options.duration, currentLanguage === "fr" ? "Indifférente" : "Any duration");
+      fillSelect("duration-filter", options.duration, currentLanguage === "fr" ? "Toutes les durées" : "Any duration");
+
+      const themeGroup = document.querySelector(".filter-buttons");
+      if (themeGroup && Array.isArray(options.theme) && options.theme.length) {
+        const allButton = themeGroup.querySelector('[data-filter="all"]');
+        themeGroup.replaceChildren();
+        if (allButton) themeGroup.append(allButton);
+        options.theme.forEach((row) => {
+          const button = createCircuitElement("button", "filter-button", row.label);
+          button.type = "button";
+          button.dataset.filter = row.value;
+          button.setAttribute("aria-pressed", "false");
+          themeGroup.append(button);
+        });
+        if (allButton) {
+          allButton.classList.add("is-active");
+          allButton.setAttribute("aria-pressed", "true");
+        }
+        selectedTheme = "all";
+        bindThemeFilterButtons();
+      }
+      applyCircuitFilters();
+    } catch (error) {
+      console.warn("[MIARADI] Options de recherche administrables indisponibles :", error);
+    }
+  };
+
   const loadPublicCircuits = async () => {
     if (!circuitGrid) return;
     try {
@@ -342,6 +395,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
   loadPublicCircuits();
+  loadPublicFilterOptions();
 
   // Défilement automatique des circuits : quatre cartes restent visibles sur desktop.
   const circuitCarousel = circuitGrid?.parentElement;
