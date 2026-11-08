@@ -644,7 +644,7 @@ td strong{color:#34303e;font-size:12px}
     const payload = {
       option_type: String(form.get('option_type') || ''),
       option_label: String(form.get('option_label') || '').trim(),
-      option_value: String(form.get('option_value') || '').trim().toLocaleLowerCase('fr'),
+      option_value: String(form.get('option_value') || '').trim().toLocaleLowerCase('fr').normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, ''),
       sort_order: Number(form.get('sort_order') || 0)
     };
     try {
