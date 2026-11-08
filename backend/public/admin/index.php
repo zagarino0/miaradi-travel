@@ -167,6 +167,80 @@ td strong{color:#34303e;font-size:12px}
 @media(max-width:760px){.circuits-workspace{padding:16px 12px}.catalogue-heading{align-items:flex-start;flex-direction:column}.catalogue-heading .button{width:100%;justify-content:center}.catalogue-heading h2{font-size:21px}.catalogue-toolbar{gap:9px}.catalogue-search{flex-basis:100%;min-width:0}.catalogue-filter{flex:1;justify-content:space-between}.catalogue-count{width:100%}.circuit-grid{grid-template-columns:1fr;gap:13px}.circuit-cover{aspect-ratio:1.7/1}.circuit-card-body{padding:14px}.circuit-card-footer{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){.circuit-card,.circuit-cover img{transition:none}}
 
+
+/* Quote requests — conversation-first CRM inspired by the reference */
+#quotes-panel{padding:24px;margin-top:0;background:#fff}
+#quotes-panel>.actions{padding:0 2px 20px;border-bottom:1px solid #f0eef5}
+#quotes-panel>.actions h2{font-size:24px;letter-spacing:-.04em}
+#quotes-panel>.actions p{margin-top:7px;font-size:11px}
+.crm-layout{display:grid;grid-template-columns:minmax(320px,.83fr) minmax(0,1.17fr);align-items:stretch;gap:0;margin-top:0;min-height:600px}
+.crm-list-panel{padding:21px 18px 18px;border:0;border-right:1px solid #eeecf3;border-radius:0;background:#fff;min-width:0}
+.crm-list-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 16px}
+.crm-list-heading strong{font-size:15px;color:#302c3a}
+.crm-list-heading p{margin:5px 0 0;font-size:10px}
+#crm-quote-count{padding:5px 8px;background:#f4f1ff;color:#7062ce;border-radius:7px;white-space:nowrap;font-size:10px}
+.quote-search{display:flex;align-items:center;gap:9px;height:40px;padding:0 11px;border:1px solid #eceaf2;border-radius:10px;background:#fbfaff;color:#a09bad}
+.quote-search svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.quote-search input{width:100%;min-width:0;border:0;outline:0;background:transparent;font:inherit;font-size:11px;color:#302c3a}
+.quote-search:focus-within{border-color:#a69be9;box-shadow:0 0 0 3px #7568d81a}
+.quote-filter-tabs{display:flex;align-items:center;gap:5px;overflow-x:auto;margin:15px 0 10px;padding-bottom:9px;border-bottom:1px solid #f0eef5}
+.quote-filter-tabs button{display:flex;align-items:center;gap:6px;flex-shrink:0;padding:8px 9px;border:0;border-radius:8px;background:transparent;color:#777286;font:inherit;font-size:10px;font-weight:650;cursor:pointer}
+.quote-filter-tabs button span{padding:2px 5px;border-radius:5px;background:#f0eef5;color:#7d778b;font-size:9px}
+.quote-filter-tabs button.active{background:#eeeaff;color:#685acb}
+.quote-filter-tabs button.active span{background:#fff;color:#685acb}
+.quote-list{display:flex;flex-direction:column;gap:5px;max-height:680px;overflow:auto}
+.quote-list-item{display:grid;grid-template-columns:37px minmax(0,1fr);gap:10px;width:100%;padding:12px 10px;border:1px solid transparent;border-radius:11px;background:#fff;text-align:left;cursor:pointer;transition:background .16s,border-color .16s}
+.quote-list-item:hover{background:#faf9fe;border-color:#f0edf8}
+.quote-list-item.active{background:#fff2a9;border-color:#f6e58d}
+.quote-avatar{display:grid;place-items:center;width:37px;height:37px;border-radius:50%;background:#f1edff;color:#695ac9;font-size:12px;font-weight:850;letter-spacing:-.03em}
+.quote-list-copy{min-width:0}
+.quote-list-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.quote-list-top strong{overflow:hidden;color:#302c3a;font-size:11px;font-weight:800;text-overflow:ellipsis;white-space:nowrap}
+.quote-list-date{flex-shrink:0;color:#9994a5;font-size:9px}
+.quote-list-circuit{display:block;margin-top:4px;overflow:hidden;color:#635d70;font-size:10px;text-overflow:ellipsis;white-space:nowrap}
+.quote-list-message{display:block;margin-top:5px;overflow:hidden;color:#898596;font-size:10px;line-height:1.5;text-overflow:ellipsis;white-space:nowrap}
+.quote-list-bottom{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:7px}
+.quote-list-bottom .status{padding:4px 7px;font-size:9px}
+.quote-conversation{display:flex;flex-direction:column;min-width:0;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:#fff!important}
+.quote-conversation>.actions{padding:17px 20px;border-bottom:1px solid #f0eef5}
+.quote-conversation>.actions h2{font-size:15px!important;letter-spacing:-.02em}
+.quote-conversation>.actions .button{font-size:10px}
+#quote-detail-content{padding:18px 20px 0}
+.quote-client-header{display:flex;align-items:center;gap:12px;padding-bottom:17px;border-bottom:1px solid #f0eef5}
+.quote-client-header .quote-avatar{width:44px;height:44px;font-size:14px}
+.quote-client-header strong{display:block;color:#302c3a;font-size:13px}
+.quote-client-header a{display:block;margin-top:4px;color:#898596;font-size:10px;text-decoration:none}
+.quote-client-header a:hover{color:var(--red);text-decoration:underline}
+.quote-client-meta{margin-left:auto;text-align:right;color:#898596;font-size:9px;line-height:1.8}
+.quote-thread{display:flex;flex-direction:column;gap:14px;padding:21px 20px;min-height:150px}
+.quote-day-divider{align-self:center;padding:6px 11px;border-radius:99px;background:#f5f3f8;color:#898596;font-size:9px}
+.quote-bubble-row{display:flex;align-items:flex-end;gap:8px;max-width:92%}
+.quote-bubble-row.outgoing{align-self:flex-end;flex-direction:row-reverse}
+.quote-bubble-row .quote-avatar{width:27px;height:27px;flex-shrink:0;font-size:9px}
+.quote-bubble-wrap{min-width:0}
+.quote-bubble{padding:11px 13px;border:1px solid #eeecf3;border-radius:13px 13px 13px 4px;background:#fff;color:#363241;font-size:11px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+.quote-bubble-row.outgoing .quote-bubble{border-color:#e9def9;border-radius:13px 13px 4px 13px;background:#f0e3ff}
+.quote-bubble-meta{margin-top:5px;color:#9a95a4;font-size:9px}
+.quote-thread-empty{padding:15px;border:1px dashed #e8e3f0;border-radius:10px;color:#898596;font-size:10px;text-align:center}
+#quote-detail-content .detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:15px}
+#quote-detail-content .detail-item{padding:11px;border:1px solid #efedf4;border-radius:9px;background:#fbfaff;min-width:0}
+#quote-detail-content .detail-item strong{font-size:9px;color:#9691a2}
+#quote-detail-content .detail-item p{margin:6px 0 0;color:#403b4d;font-size:10px;line-height:1.6;overflow-wrap:anywhere}
+#quote-detail-content .detail-wide{grid-column:1/-1}
+#quote-detail-content .hint{font-size:9px}
+#quote-reply-form{margin:0!important;padding:17px 20px 20px!important;border-top:1px solid #eeecf3!important;background:#fdfcff}
+#quote-reply-form h3{margin-bottom:12px;font-size:13px}
+#quote-reply-form .field{margin-bottom:10px;font-size:10px}
+#quote-reply-form input,#quote-reply-form textarea{background:#fff;font-size:11px}
+#quote-reply-form textarea{min-height:100px;resize:vertical}
+#quote-reply-form .actions{align-items:center;justify-content:space-between;gap:10px}
+#quote-send-reply{min-width:140px}
+#quote-detail-close-status{border-radius:8px}
+.quote-empty{padding:40px 15px;text-align:center;color:#9691a2;font-size:11px;line-height:1.7}
+.quote-empty strong{display:block;margin-bottom:5px;color:#454052;font-size:12px}
+@media(max-width:1050px){.crm-layout{grid-template-columns:minmax(270px,.8fr) minmax(0,1.2fr)}.crm-list-panel{padding:16px 12px}.quote-conversation>.actions{padding:15px}.quote-thread{padding:16px 13px}#quote-detail-content{padding:15px 13px 0}#quote-reply-form{padding:15px 13px!important}}
+@media(max-width:760px){#quotes-panel{padding:14px 10px}.crm-layout{grid-template-columns:1fr;min-height:0}.crm-list-panel{border-right:0;border-bottom:1px solid #eeecf3;padding:14px 0}.quote-list{max-height:430px}.quote-conversation{min-height:400px}.quote-conversation>.actions{padding:14px 4px}.quote-thread{padding:16px 4px}.quote-bubble-row{max-width:96%}#quote-detail-content{padding:14px 4px 0}#quote-reply-form{padding:14px 4px!important}#quote-detail-content .detail-grid{grid-template-columns:1fr}.quote-client-meta{display:none}}
+
 </style>
 </head>
 <body>
@@ -196,10 +270,17 @@ td strong{color:#34303e;font-size:12px}
       </div>
       <div class="crm-layout">
         <div class="crm-list-panel">
-          <div class="crm-list-heading"><strong>Demandes reçues</strong><span id="crm-quote-count" class="hint">Chargement…</span></div>
-          <div class="table-wrap"><table class="crm-table"><thead><tr><th>Client / demande</th><th>Statut</th><th>Ouvrir</th></tr></thead><tbody id="quotes-list"></tbody></table></div>
+          <div class="crm-list-heading"><div><strong>Boîte de réception</strong><p class="muted">Suivez les projets de voyage de vos clients.</p></div><span id="crm-quote-count" class="hint">Chargement…</span></div>
+          <label class="quote-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg><input id="quote-search" type="search" placeholder="Rechercher un client, un circuit…" aria-label="Rechercher une demande de devis"></label>
+          <div class="quote-filter-tabs" role="group" aria-label="Filtrer les demandes">
+            <button type="button" class="active" data-quote-filter="all">Toutes <span id="quote-count-all">0</span></button>
+            <button type="button" data-quote-filter="new">Nouvelles <span id="quote-count-new">0</span></button>
+            <button type="button" data-quote-filter="in_progress">En cours <span id="quote-count-progress">0</span></button>
+            <button type="button" data-quote-filter="replied">Répondues <span id="quote-count-replied">0</span></button>
+          </div>
+          <div class="quote-list" id="quotes-list" aria-live="polite"></div>
         </div>
-        <section class="panel hidden" id="quote-detail-panel" aria-labelledby="quote-detail-title"><div class="actions" style="justify-content:space-between;align-items:center"><h2 id="quote-detail-title">Détail de la demande</h2><button class="button secondary" id="close-quote-detail" type="button">Fermer</button></div><div id="quote-detail-content"></div><form id="quote-reply-form" style="margin-top:20px;border-top:1px solid var(--line);padding-top:18px"><h3>Répondre au client</h3><label class="field">Objet de l’e-mail<input id="quote-reply-subject" name="subject" required maxlength="200" value="Votre demande de voyage — MIARADI-TRAVEL"></label><label class="field">Message<textarea id="quote-reply-message" name="message" required maxlength="10000" rows="8" placeholder="Rédigez votre réponse au client…"></textarea></label><div class="actions"><button class="button" id="quote-send-reply" type="submit">Envoyer la réponse</button><span class="hint">Le statut et la date ne changent que si le serveur de messagerie accepte l’envoi.</span></div><p class="notice" id="quote-reply-status" role="status"></p></form><div class="actions" style="margin-top:18px"><button class="button secondary" id="quote-detail-close-status" type="button">Clôturer la demande</button></div></section>
+        <section class="panel quote-conversation hidden" id="quote-detail-panel" aria-labelledby="quote-detail-title"><div class="actions" style="justify-content:space-between;align-items:center"><h2 id="quote-detail-title">Détail de la demande</h2><button class="button secondary" id="close-quote-detail" type="button">Fermer</button></div><div id="quote-detail-content"></div><form id="quote-reply-form" style="margin-top:20px;border-top:1px solid var(--line);padding-top:18px"><h3>Répondre au client</h3><label class="field">Objet de l’e-mail<input id="quote-reply-subject" name="subject" required maxlength="200" value="Votre demande de voyage — MIARADI-TRAVEL"></label><label class="field">Message<textarea id="quote-reply-message" name="message" required maxlength="10000" rows="8" placeholder="Rédigez votre réponse au client…"></textarea></label><div class="actions"><button class="button" id="quote-send-reply" type="submit">Envoyer la réponse</button><span class="hint">Le statut et la date ne changent que si le serveur de messagerie accepte l’envoi.</span></div><p class="notice" id="quote-reply-status" role="status"></p></form><div class="actions" style="margin-top:18px"><button class="button secondary" id="quote-detail-close-status" type="button">Clôturer la demande</button></div></section>
       </div>
     </section>
     <section class="panel hidden" id="editor-panel"><h2 id="editor-title">Modifier un circuit</h2><form id="circuit-form">
@@ -356,8 +437,11 @@ td strong{color:#34303e;font-size:12px}
       ['Message du client', q.message || 'Aucun message fourni', true],
       ...(q.reply_message ? [['Dernière réponse envoyée', q.reply_message, true]] : [])
     ];
-    $('#quote-detail-content').innerHTML = '<div class="detail-grid">' + fields.map(([label,value,wide]) => '<div class="detail-item '+(wide?'detail-wide':'')+'"><strong>'+esc(label)+'</strong><p>'+esc(value)+'</p></div>').join('') +
-      '<div class="detail-item"><strong>Statut actuel</strong><p>'+quoteStatusBadge(q.status)+'</p><p class="hint">Le statut évolue automatiquement selon le traitement de la demande.</p></div></div>';
+    const initials = quoteInitials(q.full_name);
+    const thread = '<div class="quote-thread"><span class="quote-day-divider">'+esc(formatQuoteDate(q.created_at))+'</span><div class="quote-bubble-row"><span class="quote-avatar">'+esc(initials)+'</span><div class="quote-bubble-wrap"><div class="quote-bubble">'+esc(q.message || 'Aucun message fourni.')+'</div><div class="quote-bubble-meta">Demande initiale · '+esc(formatQuoteDate(q.created_at))+'</div></div></div>'+(q.reply_message ? '<div class="quote-bubble-row outgoing"><span class="quote-avatar">M</span><div class="quote-bubble-wrap"><div class="quote-bubble">'+esc(q.reply_message)+'</div><div class="quote-bubble-meta">MIARADI · '+esc(formatQuoteDate(q.replied_at || q.updated_at || q.created_at))+'</div></div></div>' : '<div class="quote-thread-empty">Aucune réponse envoyée. Vous pouvez répondre au client ci-dessous.</div>')+'</div>';
+    const clientHeader = '<div class="quote-client-header"><span class="quote-avatar">'+esc(initials)+'</span><div><strong>'+esc(q.full_name || 'Client')+'</strong><a href="mailto:'+esc(q.email || '')+'">'+esc(q.email || 'E-mail non renseigné')+'</a></div><div class="quote-client-meta">'+quoteStatusBadge(q.status)+'<br>'+esc(q.traveler_count ?? '—')+' voyageur(s)</div></div>';
+    const detailGrid = '<div class="detail-grid">' + fields.filter(([label]) => !['Nom du client','Adresse e-mail','Message du client','Dernière réponse envoyée'].includes(label)).map(([label,value,wide]) => '<div class="detail-item '+(wide?'detail-wide':'')+'"><strong>'+esc(label)+'</strong><p>'+esc(value)+'</p></div>').join('') + '<div class="detail-item"><strong>Statut actuel</strong><p>'+quoteStatusBadge(q.status)+'</p><p class="hint">Le statut évolue automatiquement selon le traitement de la demande.</p></div></div>';
+    $('#quote-detail-content').innerHTML = clientHeader + thread + detailGrid;
     const subject = q.reply_subject || 'Votre demande de voyage — MIARADI-TRAVEL';
     const firstName = String(q.full_name || '').trim().split(/\s+/)[0] || 'Bonjour';
     const defaultBody = q.preferred_language === 'en'
@@ -416,8 +500,28 @@ td strong{color:#34303e;font-size:12px}
       $('#kpi-pending').textContent = quoteRequests.filter(q => ['new','in_progress'].includes(q.status)).length;
       $('#kpi-replied').textContent = quoteRequests.filter(q => q.status === 'replied').length;
       $('#crm-quote-count').textContent = quoteRequests.length + (quoteRequests.length === 1 ? ' demande' : ' demandes');
-      $('#quotes-list').innerHTML = quoteRequests.map(q => '<tr><td><strong>'+esc(q.full_name)+'</strong><br><span class="muted">'+esc(q.email)+'</span><br><strong>'+esc(q.circuit_title_fr || q.circuit_title_en || 'Voyage sur mesure')+'</strong><br><span class="muted">'+esc(formatQuoteDate(q.created_at))+'</span><div class="quote-message">'+esc(q.message)+'</div></td><td>'+quoteStatusBadge(q.status)+'</td><td><button class="button secondary" type="button" data-detail="'+q.id+'">Ouvrir</button></td></tr>').join('') || '<tr><td colspan="3">Aucune demande reçue.</td></tr>';
-      $('#quotes-list').querySelectorAll('[data-detail]').forEach(button => button.addEventListener('click', async () => {
+      $('#quote-count-all').textContent = quoteRequests.length;
+      $('#quote-count-new').textContent = quoteRequests.filter(q => q.status === 'new').length;
+      $('#quote-count-progress').textContent = quoteRequests.filter(q => q.status === 'in_progress').length;
+      $('#quote-count-replied').textContent = quoteRequests.filter(q => q.status === 'replied').length;
+      renderQuoteList();
+    } catch (error) { notice(error.message); }
+  }
+  let activeQuoteFilter = 'all';
+  function quoteInitials(name) {
+    return String(name || '?').trim().split(/\\s+/).filter(Boolean).slice(0,2).map(part => part[0]).join('').toLocaleUpperCase('fr') || '?';
+  }
+  function renderQuoteList() {
+    const query = ($('#quote-search')?.value || '').trim().toLocaleLowerCase('fr');
+    const visible = quoteRequests.filter(q => {
+      const content = [q.full_name,q.email,q.circuit_title_fr,q.circuit_title_en,q.message].filter(Boolean).join(' ').toLocaleLowerCase('fr');
+      return (!query || content.includes(query)) && (activeQuoteFilter === 'all' || q.status === activeQuoteFilter);
+    });
+    $('#quotes-list').innerHTML = visible.map(q => {
+      const active = selectedQuote && Number(selectedQuote.id) === Number(q.id);
+      return '<button type="button" class="quote-list-item '+(active?'active':'')+'" data-detail="'+Number(q.id)+'" aria-pressed="'+Boolean(active)+'"><span class="quote-avatar">'+esc(quoteInitials(q.full_name))+'</span><span class="quote-list-copy"><span class="quote-list-top"><strong>'+esc(q.full_name || 'Client')+'</strong><span class="quote-list-date">'+esc(formatQuoteDate(q.created_at))+'</span></span><span class="quote-list-circuit">'+esc(q.circuit_title_fr || q.circuit_title_en || 'Voyage sur mesure')+'</span><span class="quote-list-message">'+esc(q.message || 'Aucun message')+'</span><span class="quote-list-bottom">'+quoteStatusBadge(q.status)+'<span class="hint">'+esc(q.preferred_language === 'en' ? 'EN' : 'FR')+'</span></span></span></button>';
+    }).join('') || '<div class="quote-empty"><strong>'+(quoteRequests.length?'Aucun résultat':'Votre boîte de réception est vide')+'</strong>'+(quoteRequests.length?'Essayez un autre filtre ou un autre terme de recherche.':'Les nouvelles demandes de devis apparaîtront ici.')+'</div>';
+    $('#quotes-list').querySelectorAll('[data-detail]').forEach(button => button.addEventListener('click', async () => {
         const quote = quoteRequests.find(item => Number(item.id) === Number(button.dataset.detail));
         if (!quote) return;
 
@@ -446,8 +550,13 @@ td strong{color:#34303e;font-size:12px}
 
         renderQuoteDetail(quote);
       }));
-    } catch (error) { notice(error.message); }
   }
+  $('#quote-search').addEventListener('input', renderQuoteList);
+  document.querySelectorAll('[data-quote-filter]').forEach(button => button.addEventListener('click', () => {
+    activeQuoteFilter = button.dataset.quoteFilter;
+    document.querySelectorAll('[data-quote-filter]').forEach(item => item.classList.toggle('active', item === button));
+    renderQuoteList();
+  }));
   $('#refresh-quotes').addEventListener('click', loadQuotes);
   $('#close-quote-detail').addEventListener('click', () => $('#quote-detail-panel').classList.add('hidden'));
   document.querySelectorAll('[data-tab]').forEach(button => button.addEventListener('click', async () => {
