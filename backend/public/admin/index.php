@@ -33,12 +33,98 @@ require_once dirname(__DIR__, 2) . '/src/bootstrap.php';
 @media(max-width:1100px){.app-shell{grid-template-columns:190px minmax(0,1fr)}.content{padding:23px 20px}.topbar{padding:0 20px}.kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.sidebar{padding-inline:10px}}
 @media(max-width:760px){.app-shell{grid-template-columns:1fr}.sidebar{min-height:0;padding:12px;gap:12px}.side-brand{padding:5px 8px 12px}.side-label,.side-bottom{display:none}.side-nav{display:flex;overflow:auto}.side-nav button,.side-nav a{white-space:nowrap;width:auto;padding:10px}.workspace{min-width:0}.topbar{height:54px;padding:0 14px}.content{padding:18px 12px 40px}.page-heading{align-items:flex-start}.page-heading h1{font-size:25px}.page-heading .button{padding:9px 10px}.kpi-grid{gap:9px}.kpi{min-height:105px;padding:13px}.kpi-value{font-size:25px}.panel{padding:17px 13px;margin-top:14px}.row,.detail-grid{grid-template-columns:1fr}.detail-wide{grid-column:auto}.cover-tools{grid-template-columns:1fr}.cover-preview-wrap{max-width:240px}.tabs{overflow:auto}.tabs button{white-space:nowrap;padding:11px 12px}.table-wrap{margin-inline:-2px}#quotes-panel .actions>.button{width:auto}.quote-status{min-width:140px}.topbar-actions{gap:7px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+
+/* MIARADI admin refresh — soft lavender SaaS workspace */
+:root{--red:#922D20;--red-dark:#762218;--paper:#f7f6fb;--ink:#252331;--muted:#858292;--line:#eceaf2;--nav:#fff;--nav-muted:#8d8a9c;--white:#fff;--lavender:#eeeaff;--lavender-strong:#7568d8;--sans:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+body{background:var(--paper);color:var(--ink);font-size:13px}
+.app-shell{grid-template-columns:250px minmax(0,1fr);background:var(--paper)}
+.sidebar{background:#fff;color:var(--ink);padding:24px 16px 18px;gap:30px;border-right:1px solid #eeedf3;box-shadow:5px 0 24px #30205a04}
+.side-brand{display:flex;align-items:center;gap:11px;padding:0 9px 23px;border-bottom:1px solid #efedf4;letter-spacing:0;font-size:initial}
+.side-logo{width:43px;height:43px;object-fit:contain;border-radius:12px;background:#fbf4f0;padding:4px}
+.side-brand-copy{display:grid;gap:2px}
+.side-brand-copy strong{font-size:16px;letter-spacing:.07em;font-weight:850;color:#2d2935}
+.side-brand-copy small{font-size:9px;font-weight:800;letter-spacing:.17em;color:#9a948f}
+.side-label{padding:0 12px;color:#a29eaf;font-size:9px;letter-spacing:.16em;margin-bottom:10px}
+.side-nav{gap:7px}
+.side-nav button,.side-nav a{gap:12px;padding:12px 13px;border-radius:11px;color:#777487;font-size:12px;font-weight:650;transition:background .18s,color .18s,transform .18s}
+.side-nav button:hover,.side-nav a:hover{background:#f7f5fc;color:var(--red);transform:translateX(2px)}
+.side-nav button.active{background:#f2edff;color:#6658c8;box-shadow:inset 3px 0 #7667d8}
+.nav-icon{width:18px;display:inline-grid;place-items:center;font-size:17px}
+.side-bottom{padding:13px 10px;color:#aaa5b4;font-size:10px;line-height:1.8}
+.workspace{min-width:0}
+.topbar{height:70px;padding:0 34px;background:rgba(255,255,255,.9);border-bottom:1px solid #eeedf3;backdrop-filter:blur(16px)}
+.topbar-left{gap:16px}.topbar-menu{width:36px;height:36px;display:grid;place-items:center;border:1px solid #eeebf3;border-radius:11px;background:#fff;color:#777286}
+.topbar-menu svg,.topbar-actions svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.topbar-menu:hover{background:#f6f2ff;color:#6e60d2}
+.crumb{font-size:11px;color:#9a96a5}.crumb-divider{padding:0 7px;color:#d2cedb}.crumb strong{color:#4c4858;font-weight:750}
+.topbar-actions{gap:12px}.topbar-status{display:flex;align-items:center;gap:7px;color:#898596;font-size:10px}.topbar-status span{width:7px;height:7px;border-radius:50%;background:#47b881;box-shadow:0 0 0 3px #47b88120}
+.topbar-icon{width:37px;height:37px;border:1px solid #eeebf3;color:#8b8698;background:#fff}
+.avatar{width:36px;height:36px;background:#f6e9e4;color:var(--red);font-size:12px}
+#logout{display:flex;align-items:center;gap:7px;border-radius:10px;padding:9px 12px;font-size:11px}
+.content{max-width:1700px;padding:34px 36px 64px}
+.page-heading{align-items:center;margin-bottom:25px}
+.eyebrow{font-size:9px;letter-spacing:.18em;color:#8d4c41}
+.page-heading h1{font-size:30px;font-weight:800;letter-spacing:-.045em;margin:6px 0 8px;color:#282532}
+.page-heading p{font-size:12px;color:#898596}
+.button{border-radius:10px;padding:10px 15px;font-size:11px;font-weight:750;box-shadow:0 5px 12px #922d2012}
+.button:hover{box-shadow:0 8px 18px #922d201c}
+.button.secondary{background:#fff;color:#686476;border-color:#e9e6ef;box-shadow:none}
+.button.secondary:hover{background:#f8f6fc;border-color:#d7d1e7;color:var(--red)}
+.kpi-grid{gap:16px;margin-bottom:25px}
+.kpi{min-height:132px;display:flex;flex-direction:column;justify-content:center;padding:20px 21px 19px 76px;position:relative;background:#fff!important;color:var(--ink)!important;border:1px solid #eeecf3;border-radius:16px;box-shadow:0 5px 22px #2c234009}
+.kpi:before{content:"";position:absolute;left:20px;top:23px;width:42px;height:42px;border-radius:13px;background:#f1edff}
+.kpi:nth-child(2):before{background:#e8f4ff}.kpi:nth-child(3):before{background:#fff3df}.kpi:nth-child(4):before{background:#e6f7ee}
+.kpi-mark{left:31px;right:auto;top:34px;font-size:17px;color:#7567d6;opacity:1;z-index:1}
+.kpi:nth-child(2) .kpi-mark{color:#4396d6}.kpi:nth-child(3) .kpi-mark{color:#d89b27}.kpi:nth-child(4) .kpi-mark{color:#35a873}
+.kpi-label{font-size:11px;font-weight:650;color:#898596;opacity:1}
+.kpi-value{font-size:29px;font-weight:850;letter-spacing:-.05em;color:#2c2938;margin:8px 0 4px}
+.kpi-note{font-size:10px;color:#9a96a5;opacity:1}
+.panel{margin-top:21px;padding:24px;background:#fff;border:1px solid #eeecf3;border-radius:16px;box-shadow:0 5px 22px #2c234008}
+.panel h2{font-size:18px;font-weight:800;color:#302c3a;margin-bottom:8px}
+.panel h3{font-size:15px;font-weight:800;color:#302c3a}
+.field input,.field select,.field textarea{border-radius:10px;background:#fbfaff;border-color:#e6e2ee;padding:12px 13px}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:#a69be9;box-shadow:0 0 0 3px #7568d81a}
+.tabs{gap:7px;margin-bottom:19px;border-bottom:1px solid #eeecf3}
+.tabs button{border-radius:9px 9px 0 0;padding:12px 16px;font-size:11px}
+.tabs button:hover{background:#f7f5fc}.tabs button.active{border-bottom-color:#7568d8;color:#6b5dcd;background:#f5f2ff}
+.table-wrap{border:1px solid #eeecf3;border-radius:12px;margin-top:16px}
+table{background:#fff;min-width:760px}
+th{background:#faf9fd;color:#9691a2;font-size:9px;letter-spacing:.12em;border-bottom-color:#eeecf3}
+th,td{padding:14px 13px;border-bottom-color:#f0eef5}
+tbody tr:hover td{background:#fbfaff}
+td strong{color:#34303e;font-size:12px}
+.status{border-radius:7px;padding:5px 9px;font-size:10px}
+.status-new{background:#fff4df;color:#a36a09}.status-progress{background:#eeeaff;color:#6858c9}.status-replied{background:#e7f7ee;color:#258458}.status-closed{background:#f0eef4;color:#736e7c}.status-spam{background:#fdeceb;color:#a52a24}
+.notice{border-radius:9px}
+.quote-status{border-radius:8px}
+.detail-item{background:#fbfaff;border-radius:10px;border-color:#eeecf3}
+.cover-preview{border-radius:12px;border-color:#eeecf3}
+.upload-button{border-radius:9px}
+.crm-layout{grid-template-columns:minmax(320px,.92fr) minmax(360px,1.08fr);gap:18px;margin-top:20px}
+.crm-list-panel{padding:17px;border:1px solid #eeecf3;border-radius:14px;background:#fff}
+.crm-list-heading{margin-bottom:13px}.crm-list-heading strong{font-size:12px;color:#34303e}
+.crm-table{border:0;min-width:0}.crm-table th{padding:11px 9px}.crm-table td{padding:13px 9px;font-size:11px}
+.crm-table td:first-child strong{font-size:12px}
+.crm-table .quote-message{color:#898596;font-size:10px;line-height:1.55}
+.crm-table .button{border-radius:8px}
+#quote-detail-panel{border-radius:14px;padding:20px;box-shadow:none}
+#quote-detail-panel .detail-item{border-radius:10px}
+#quote-reply-form{border-color:#eeecf3!important}
+#quote-send-reply{min-width:150px}
+#notice:empty{display:none}
+#circuits-panel>.actions h2{margin:0}
+#new-circuit{white-space:nowrap}
+@media(max-width:1100px){.app-shell{grid-template-columns:215px minmax(0,1fr)}.content{padding:25px 22px}.topbar{padding:0 22px}.kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi{min-height:118px}}
+@media(max-width:760px){.app-shell{grid-template-columns:1fr}.sidebar{position:fixed;z-index:20;inset:0 auto 0 0;width:min(285px,85vw);min-height:100dvh;transform:translateX(-105%);transition:transform .22s ease;box-shadow:20px 0 60px #211b3820;padding:20px 15px}.sidebar.is-open{transform:translateX(0)}.topbar{height:60px;padding:0 13px}.topbar-status{display:none}.content{padding:22px 13px 40px}.page-heading h1{font-size:26px}.kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.kpi{min-height:112px;padding:16px 12px 15px 58px;border-radius:13px}.kpi:before{left:12px;top:19px;width:34px;height:34px;border-radius:10px}.kpi-mark{left:22px;top:27px;font-size:14px}.kpi-value{font-size:24px}.kpi-label{font-size:10px}.kpi-note{font-size:9px}.panel{padding:18px 13px;margin-top:15px;border-radius:13px}.crm-layout{grid-template-columns:1fr}.crm-list-panel{padding:12px}#quote-detail-panel{max-height:none}.topbar-actions{gap:8px}.avatar{width:32px;height:32px}#logout{padding:8px}.side-nav{flex-direction:column;overflow:visible}.side-nav button,.side-nav a{width:100%}}
+@media(max-width:420px){.kpi-grid{grid-template-columns:1fr}.kpi{min-height:100px}.page-heading{gap:10px}.topbar-actions{gap:6px}.crumb{font-size:10px}.button{padding:9px 11px}}
+@media(prefers-reduced-motion:reduce){.sidebar{transition:none}}
+
 </style>
 </head>
 <body>
 <div class="app-shell">
-  <aside class="sidebar"><div class="side-brand">◉ MIARADI <span>ADMIN</span></div><div><div class="side-label">Espace de gestion</div><nav class="side-nav"><button class="active" data-tab="circuits"><span class="nav-icon">▦</span> Catalogue des circuits</button><button data-tab="quotes"><span class="nav-icon">✉</span> Demandes de devis</button><a href="gallery.php"><span class="nav-icon">▧</span> Galerie médias ↗</a></nav></div><div class="side-bottom">MIARADI-TRAVEL<br>Administration sécurisée</div></aside>
-  <div class="workspace"><header class="topbar"><div class="topbar-left"><span class="nav-icon">☰</span><span class="crumb">Accueil&nbsp; / &nbsp;<strong id="breadcrumb-current">Tableau de bord</strong></span></div><div class="topbar-actions"><span class="topbar-icon" aria-hidden="true">♧</span><span class="topbar-icon" aria-hidden="true">☼</span><span class="avatar">M</span><button class="button secondary hidden" id="logout">Déconnexion</button></div></header><div class="content"><div class="page-heading"><div><div class="eyebrow">Vue d’ensemble</div><h1>Tableau de bord</h1><p class="muted">Suivez le catalogue et les demandes de voyage MIARADI.</p></div></div>
+  <aside class="sidebar" id="admin-sidebar"><div class="side-brand"><img src="../../../assets/miaradi-logo.png" alt="" class="side-logo"><span class="side-brand-copy"><strong>MIARADI</strong><small>ESPACE ADMIN</small></span></div><div><div class="side-label">Espace de gestion</div><nav class="side-nav"><button class="active" data-tab="circuits"><span class="nav-icon">▦</span> Catalogue des circuits</button><button data-tab="quotes"><span class="nav-icon">✉</span> Demandes de devis</button><a href="gallery.php"><span class="nav-icon">▧</span> Galerie médias ↗</a></nav></div><div class="side-bottom">MIARADI-TRAVEL<br>Administration sécurisée</div></aside>
+  <div class="workspace"><header class="topbar"><div class="topbar-left"><button class="topbar-menu" id="sidebar-toggle" type="button" aria-label="Afficher ou masquer le menu" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><span class="crumb">Espace de travail <span class="crumb-divider">/</span> <strong id="breadcrumb-current">Tableau de bord</strong></span></div><div class="topbar-actions"><span class="topbar-status"><span></span> Administration sécurisée</span><span class="avatar" title="Administrateur">M</span><button class="button secondary hidden" id="logout"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg> Déconnexion</button></div></header><div class="content"><div class="page-heading"><div><div class="eyebrow">Vue d’ensemble</div><h1>Tableau de bord</h1><p class="muted">Suivez le catalogue et les demandes de voyage MIARADI.</p></div></div>
   <main id="dashboard" class="hidden">
     <section class="kpi-grid" aria-label="Indicateurs du site"><article class="kpi"><span class="kpi-mark">▦</span><div class="kpi-label">Circuits au catalogue</div><div class="kpi-value" id="kpi-circuits">—</div><div class="kpi-note" id="kpi-circuits-note">Chargement des données</div></article><article class="kpi"><span class="kpi-mark">✉</span><div class="kpi-label">Demandes de devis</div><div class="kpi-value" id="kpi-quotes">—</div><div class="kpi-note">Demandes enregistrées en base</div></article><article class="kpi"><span class="kpi-mark">◷</span><div class="kpi-label">À traiter</div><div class="kpi-value" id="kpi-pending">—</div><div class="kpi-note">Nouvelles demandes et en cours</div></article><article class="kpi"><span class="kpi-mark">✓</span><div class="kpi-label">Clients contactés</div><div class="kpi-value" id="kpi-replied">—</div><div class="kpi-note">Réponses enregistrées</div></article></section>
     <nav class="tabs"><button class="active" data-tab="circuits">Catalogue des circuits</button><button data-tab="quotes">Demandes de devis</button></nav>
@@ -285,6 +371,15 @@ require_once dirname(__DIR__, 2) . '/src/bootstrap.php';
     const quotes = button.dataset.tab === 'quotes';
     $('#circuits-panel').classList.toggle('hidden',quotes); $('#quotes-panel').classList.toggle('hidden',!quotes); $('#editor-panel').classList.add('hidden'); if (!quotes) $('#quote-detail-panel').classList.add('hidden');
     if (quotes) await loadQuotes(); else await loadCircuits();
+  }));
+  const sidebarToggle = $('#sidebar-toggle');
+  sidebarToggle.addEventListener('click', () => {
+    const opened = $('#admin-sidebar').classList.toggle('is-open');
+    sidebarToggle.setAttribute('aria-expanded', String(opened));
+  });
+  document.querySelectorAll('.side-nav [data-tab]').forEach(button => button.addEventListener('click', () => {
+    $('#admin-sidebar').classList.remove('is-open');
+    sidebarToggle.setAttribute('aria-expanded', 'false');
   }));
   checkSession();
 })();
