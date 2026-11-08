@@ -3613,3 +3613,35 @@ body{background:#fbf8f7;color:var(--ink);font-family:var(--sans)}
     border-radius:26px !important;
   }
 }
+
+
+/* Hero sizing matched to the large, near-full-screen reference */
+.hero{
+  width:100% !important;
+  max-width:none !important;
+  height:calc(100vh - 110px) !important;
+  min-height:700px !important;
+  margin:0 auto !important;
+  border-radius:28px !important;
+}
+.hero-image{
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  object-position:center center !important;
+}
+.hero-slideshow{
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+}
+@media(max-width:760px){
+  .hero{
+    width:100% !important;
+    height:82vh !important;
+    min-height:620px !important;
+    margin:0 auto !important;
+    border-radius:22px !important;
+  }
+}
