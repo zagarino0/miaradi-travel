@@ -38,6 +38,38 @@ try {
     if ($method === 'DELETE') {
         $id = filter_var($_GET['id'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
         if (!$id) api_json(['error' => ['code' => 'invalid_id', 'message' => 'Option invalide.']], 422);
+        $lookup = $pdo->prepare('SELECT option_type, option_value, option_label FROM miaradi_filter_options WHERE id = :id');
+        $lookup->execute(['id' => $id]);
+        $option = $lookup->fetch(PDO::FETCH_ASSOC);
+        if (!$option) api_json(['error' => ['code' => 'not_found', 'message' => 'Option introuvable.']], 404);
+
+        $inUse = false;
+        if ($option['option_type'] === 'region' || $option['option_type'] === 'theme') {
+            $column = $option['option_type'] === 'region' ? 'region' : 'theme';
+            $usage = $pdo->prepare("SELECT COUNT(*) FROM miaradi_circuits WHERE {$column} = :label OR {$column} = :value");
+            $usage->execute(['label' => $option['option_label'], 'value' => $option['option_value']]);
+            $inUse = (int) $usage->fetchColumn() > 0;
+        } elseif ($option['option_type'] === 'duration') {
+            if ($option['option_value'] === 'custom') {
+                $usage = $pdo->query('SELECT COUNT(*) FROM miaradi_circuits WHERE duration_min IS NULL AND duration_max IS NULL');
+                $inUse = (int) $usage->fetchColumn() > 0;
+            } elseif (preg_match('/^(\\d{1,3})(?:-(\\d{1,3}))?$/', (string) $option['option_value'], $matches)) {
+                $min = (int) $matches[1];
+                $max = isset($matches[2]) && $matches[2] !== '' ? (int) $matches[2] : $min;
+                $usage = $pdo->prepare('SELECT COUNT(*) FROM miaradi_circuits WHERE duration_min = :min AND duration_max = :max');
+                $usage->execute(['min' => $min, 'max' => $max]);
+                $inUse = (int) $usage->fetchColumn() > 0;
+            }
+        }
+        if ($inUse) {
+            api_json([
+                'error' => [
+                    'code' => 'option_in_use',
+                    'message' => 'Cette option est utilisée par au moins un circuit. Modifiez ou réaffectez ces circuits avant de la supprimer.',
+                ],
+            ], 409);
+        }
+
         $stmt = $pdo->prepare('DELETE FROM miaradi_filter_options WHERE id = :id');
         $stmt->execute(['id' => $id]);
         if (!$stmt->rowCount()) api_json(['error' => ['code' => 'not_found', 'message' => 'Option introuvable.']], 404);
