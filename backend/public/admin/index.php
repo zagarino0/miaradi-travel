@@ -306,8 +306,8 @@ td strong{color:#34303e;font-size:12px}
       <div class="row"><label class="field">Slug (URL)<input name="slug" required maxlength="180" pattern="[a-z0-9]+(-[a-z0-9]+)*"></label><label class="field">Ordre d'affichage<input name="sort_order" type="number" value="0" required></label></div>
       <div class="row"><label class="field">Titre français<input name="title_fr" required maxlength="200"></label><label class="field">Titre anglais<input name="title_en" maxlength="200"></label></div>
       <div class="row"><label class="field">Résumé français<textarea name="summary_fr" required maxlength="10000"></textarea></label><label class="field">Résumé anglais<textarea name="summary_en" maxlength="10000"></textarea></label></div>
-      <div class="row"><label class="field">Région<input name="region" maxlength="80"></label><label class="field">Thème<input name="theme" maxlength="80"></label></div>
-      <div class="row"><label class="field">Durée minimale (jours)<input name="duration_min" type="number" min="1" max="365"></label><label class="field">Durée maximale (jours)<input name="duration_max" type="number" min="1" max="365"></label></div>
+      <div class="row"><label class="field">Région<select name="region" id="circuit-region"><option value="">Choisir une région</option></select><span class="hint">Options gérées dans les paramètres du catalogue.</span></label><label class="field">Thématique<select name="theme" id="circuit-theme"><option value="">Choisir une thématique</option></select><span class="hint">Options gérées dans les paramètres du catalogue.</span></label></div>
+      <div class="field"><label for="circuit-duration">Durée du circuit</label><select name="duration_option" id="circuit-duration"><option value="">Choisir une durée</option></select><span class="hint">Les durées sont gérées dans les paramètres du catalogue. « Sur mesure » permet de ne pas définir de plage fixe.</span></div>
       <div class="field"><label for="cover-file">Photo de couverture du circuit</label><div class="cover-tools"><div><div class="cover-actions"><label class="upload-button" for="cover-file">＋ Ajouter une photo de couverture</label><input id="cover-file" type="file" accept="image/jpeg,image/png,image/webp" hidden><span class="hint">JPG, PNG ou WebP · 10 Mo maximum</span></div><p class="hint" id="cover-status" role="status">Sélectionnez une photo pour remplacer la couverture actuelle.</p><label class="field">Chemin de l'image (avancé)<input name="image_path" maxlength="500" placeholder="assets/images/circuits/nom.jpg"></label></div><div class="cover-preview-wrap"><img id="cover-preview" class="cover-preview" alt="Aperçu de la couverture du circuit" hidden><span id="cover-empty" class="hint">Aucun aperçu disponible</span></div></div></div>
       <label class="field"><span><input name="is_published" type="checkbox"> Publier ce circuit</span></label>
       <div class="actions"><button class="button" type="submit">Enregistrer</button><button class="button secondary" type="button" id="cancel-editor">Annuler</button></div>
@@ -320,6 +320,9 @@ td strong{color:#34303e;font-size:12px}
   const $ = (s) => document.querySelector(s);
   let csrf = '';
   let circuits = [];
+  let circuitFilterOptions = {region:[], theme:[], duration:[]};
+  let circuitOptionsPromise = null;
+  let circuitOptionsLoaded = false;
   let selectedCover = null;
   let coverPreviewUrl = null;
   const coverFile = () => $('#cover-file');
@@ -385,11 +388,65 @@ td strong{color:#34303e;font-size:12px}
   }
   $('#circuit-search').addEventListener('input', renderCircuits);
   $('#circuit-filter').addEventListener('change', renderCircuits);
-  function editCircuit(id = null) {
-    const form = $('#circuit-form'); form.reset(); selectedCover = null; coverFile().value = ''; $('#cover-status').textContent = 'Sélectionnez une photo pour remplacer la couverture actuelle.';
+  function fillCircuitSelect(name, options, selected, placeholder) {
+    const select = document.querySelector('#circuit-' + name);
+    const values = [...options];
+    if (selected && !values.some(option => String(option.option_label) === String(selected))) {
+      values.push({option_label:String(selected), option_value:String(selected), legacy:true});
+    }
+    select.replaceChildren(new Option(placeholder, ''));
+    values.forEach(option => {
+      const opt = new Option(option.option_label + (option.legacy ? ' (valeur actuelle)' : ''), option.option_label);
+      opt.dataset.optionValue = option.option_value || option.option_label;
+      select.add(opt);
+    });
+    select.value = selected == null ? '' : String(selected);
+  }
+  function durationValue(min, max) {
+    if (min == null && max == null) return 'custom';
+    if (min != null && max != null) return Number(min) + '-' + Number(max);
+    return min != null ? String(min) : String(max);
+  }
+  function fillDurationSelect(selectedValue) {
+    const select = $('#circuit-duration');
+    const values = [...circuitFilterOptions.duration];
+    if (selectedValue && !values.some(option => String(option.option_value) === String(selectedValue))) {
+      values.push({option_label:selectedValue === 'custom' ? 'Sur mesure' : selectedValue.replace('-', '–') + ' jours', option_value:selectedValue, legacy:true});
+    }
+    select.replaceChildren(new Option('Choisir une durée', ''));
+    values.forEach(option => {
+      const opt = new Option(option.option_label + (option.legacy ? ' (valeur actuelle)' : ''), option.option_value);
+      opt.dataset.legacy = option.legacy ? 'true' : 'false';
+      select.add(opt);
+    });
+    select.value = selectedValue || '';
+  }
+  async function ensureCircuitFilterOptions() {
+    if (circuitOptionsLoaded) return;
+    if (!circuitOptionsPromise) {
+      circuitOptionsPromise = request('admin/filter-options.php').then(result => {
+        const active = (result.data || []).filter(option => option.is_active);
+        circuitFilterOptions = {
+          region: active.filter(option => option.option_type === 'region'),
+          theme: active.filter(option => option.option_type === 'theme'),
+          duration: active.filter(option => option.option_type === 'duration')
+        };
+        circuitOptionsLoaded = true;
+      }).finally(() => { circuitOptionsPromise = null; });
+    }
+    await circuitOptionsPromise;
+  }
+  async function editCircuit(id = null) {
+    const form = $('#circuit-form');
+    try { await ensureCircuitFilterOptions(); }
+    catch (error) { notice('Impossible de charger les paramètres du catalogue : ' + error.message); return; }
+    form.reset(); selectedCover = null; coverFile().value = ''; $('#cover-status').textContent = 'Sélectionnez une photo pour remplacer la couverture actuelle.';
     const c = circuits.find(item => item.id === id);
     $('#editor-title').textContent = c ? 'Modifier un circuit' : 'Ajouter un circuit';
-    for (const key of ['id','slug','title_fr','title_en','summary_fr','summary_en','region','theme','duration_min','duration_max','image_path','sort_order']) form.elements[key].value = c?.[key] ?? (key === 'sort_order' ? 0 : '');
+    for (const key of ['id','slug','title_fr','title_en','summary_fr','summary_en','image_path','sort_order']) form.elements[key].value = c?.[key] ?? (key === 'sort_order' ? 0 : '');
+    fillCircuitSelect('region', circuitFilterOptions.region, c?.region ?? '', 'Choisir une région');
+    fillCircuitSelect('theme', circuitFilterOptions.theme, c?.theme ?? '', 'Choisir une thématique');
+    fillDurationSelect(durationValue(c?.duration_min ?? null, c?.duration_max ?? null));
     form.elements.is_published.checked = Boolean(c?.is_published); showCoverPreview(c?.image_path || '');
     $('#editor-panel').classList.remove('hidden'); $('#editor-panel').scrollIntoView({behavior:'smooth',block:'start'});
   }
@@ -405,7 +462,14 @@ td strong{color:#34303e;font-size:12px}
     const value = (name) => f.elements[name].value.trim();
     const intOrNull = (name) => value(name) === '' ? null : Number(value(name));
     const id = value('id');
-    const payload = {slug:value('slug'),title_fr:value('title_fr'),title_en:value('title_en')||null,summary_fr:value('summary_fr'),summary_en:value('summary_en')||null,region:value('region')||null,theme:value('theme')||null,duration_min:intOrNull('duration_min'),duration_max:intOrNull('duration_max'),image_path:value('image_path')||null,is_published:f.elements.is_published.checked,sort_order:Number(value('sort_order')||0)};
+    const selectedDuration = value('duration_option');
+    let durationMin = null, durationMax = null;
+    if (selectedDuration && selectedDuration !== 'custom') {
+      const match = selectedDuration.match(/^(\d{1,3})(?:-(\d{1,3}))?$/);
+      if (!match) { notice('La durée sélectionnée est invalide.'); return; }
+      durationMin = Number(match[1]); durationMax = match[2] ? Number(match[2]) : Number(match[1]);
+    }
+    const payload = {slug:value('slug'),title_fr:value('title_fr'),title_en:value('title_en')||null,summary_fr:value('summary_fr'),summary_en:value('summary_en')||null,region:value('region')||null,theme:value('theme')||null,duration_min:durationMin,duration_max:durationMax,image_path:value('image_path')||null,is_published:f.elements.is_published.checked,sort_order:Number(value('sort_order')||0)};
     if (id) payload.id = Number(id);
     try {
       if (selectedCover) {
@@ -605,9 +669,10 @@ td strong{color:#34303e;font-size:12px}
     try {
       const result = await request('admin/filter-options.php');
       const options = result.data || [];
+      circuitOptionsLoaded = false; circuitOptionsPromise = null;
       tbody.innerHTML = options.map(option => '<tr><td>'+esc(filterOptionLabels[option.option_type] || option.option_type)+'</td><td><strong>'+esc(option.option_label)+'</strong></td><td><code>'+esc(option.option_value)+'</code></td><td>'+Number(option.sort_order)+'</td><td><button type="button" class="button filter-option-delete" data-delete-filter-option="'+Number(option.id)+'">Supprimer</button></td></tr>').join('') || '<tr><td colspan="5">Aucune option enregistrée pour le moment.</td></tr>';
       tbody.querySelectorAll('[data-delete-filter-option]').forEach(button => button.addEventListener('click', async () => {
-        if (!window.confirm('Supprimer cette option des filtres publics ?')) return;
+        if (!window.confirm('Supprimer cette option du catalogue ? Si elle est utilisée par un circuit, la suppression sera refusée.')) return;
         button.disabled = true;
         try {
           await request('admin/filter-options.php?id='+encodeURIComponent(button.dataset.deleteFilterOption), {method:'DELETE', mutate:true});
@@ -712,7 +777,8 @@ td strong{color:#34303e;font-size:12px}
       await request('admin/filter-options.php', {method:'POST', mutate:true, body:JSON.stringify(payload)});
       filterOptionForm.elements.option_label.value = '';
       filterOptionForm.elements.option_value.value = '';
-      filterOptionNotice('Option ajoutée. Elle sera proposée dans les filtres publics après actualisation.');
+      filterOptionNotice('Option ajoutée. Elle sera disponible dans les filtres publics et les formulaires de circuits.');
+      circuitOptionsLoaded = false; circuitOptionsPromise = null;
       await loadFilterOptions();
     } catch (error) {
       filterOptionNotice(error.message);
