@@ -39,7 +39,6 @@ require_once dirname(__DIR__, 2) . '/src/bootstrap.php';
 <div class="app-shell">
   <aside class="sidebar"><div class="side-brand">◉ MIARADI <span>ADMIN</span></div><div><div class="side-label">Espace de gestion</div><nav class="side-nav"><button class="active" data-tab="circuits"><span class="nav-icon">▦</span> Catalogue des circuits</button><button data-tab="quotes"><span class="nav-icon">✉</span> Demandes de devis</button><a href="gallery.php"><span class="nav-icon">▧</span> Galerie médias ↗</a></nav></div><div class="side-bottom">MIARADI-TRAVEL<br>Administration sécurisée</div></aside>
   <div class="workspace"><header class="topbar"><div class="topbar-left"><span class="nav-icon">☰</span><span class="crumb">Accueil&nbsp; / &nbsp;<strong id="breadcrumb-current">Tableau de bord</strong></span></div><div class="topbar-actions"><span class="topbar-icon" aria-hidden="true">♧</span><span class="topbar-icon" aria-hidden="true">☼</span><span class="avatar">M</span><button class="button secondary hidden" id="logout">Déconnexion</button></div></header><div class="content"><div class="page-heading"><div><div class="eyebrow">Vue d’ensemble</div><h1>Tableau de bord</h1><p class="muted">Suivez le catalogue et les demandes de voyage MIARADI.</p></div></div>
-  <section class="panel login" id="login-panel"><h2>Connexion administrateur</h2><p class="muted">Utilisez le compte administrateur déjà créé dans la base MIARADI.</p><form id="login-form"><label class="field">Adresse e-mail<input type="email" name="email" autocomplete="username" required maxlength="254"></label><label class="field">Mot de passe<input type="password" name="password" autocomplete="current-password" required maxlength="1024"></label><button class="button" type="submit">Se connecter</button><p class="notice" id="login-status" role="status"></p></form></section>
   <main id="dashboard" class="hidden">
     <section class="kpi-grid" aria-label="Indicateurs du site"><article class="kpi"><span class="kpi-mark">▦</span><div class="kpi-label">Circuits au catalogue</div><div class="kpi-value" id="kpi-circuits">—</div><div class="kpi-note" id="kpi-circuits-note">Chargement des données</div></article><article class="kpi"><span class="kpi-mark">✉</span><div class="kpi-label">Demandes de devis</div><div class="kpi-value" id="kpi-quotes">—</div><div class="kpi-note">Demandes enregistrées en base</div></article><article class="kpi"><span class="kpi-mark">◷</span><div class="kpi-label">À traiter</div><div class="kpi-value" id="kpi-pending">—</div><div class="kpi-note">Nouvelles demandes et en cours</div></article><article class="kpi"><span class="kpi-mark">✓</span><div class="kpi-label">Clients contactés</div><div class="kpi-value" id="kpi-replied">—</div><div class="kpi-note">Réponses enregistrées</div></article></section>
     <nav class="tabs"><button class="active" data-tab="circuits">Catalogue des circuits</button><button data-tab="quotes">Demandes de devis</button></nav>
@@ -95,24 +94,16 @@ require_once dirname(__DIR__, 2) . '/src/bootstrap.php';
   function esc(value) { return String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
   function showDashboard(session) {
     csrf = session.csrfToken || '';
-    $('#login-panel').classList.add('hidden'); $('#dashboard').classList.remove('hidden'); $('#logout').classList.remove('hidden');
+    $('#dashboard').classList.remove('hidden'); $('#logout').classList.remove('hidden');
     loadCircuits(); loadQuotes();
   }
   async function checkSession() {
-    try { const result = await request('admin/session.php'); if (result.data.authenticated) showDashboard(result.data); }
-    catch (_) { /* Show login form if the session endpoint is not reachable. */ }
+    try { const result = await request('admin/session.php'); if (result.data.authenticated) showDashboard(result.data); else location.replace('login.php'); }
+    catch (_) { location.replace('login.php'); }
   }
-  $('#login-form').addEventListener('submit', async (event) => {
-    event.preventDefault(); $('#login-status').textContent = 'Connexion…';
-    const form = new FormData(event.currentTarget);
-    try {
-      const result = await request('admin/session.php', {method:'POST', body:JSON.stringify({email:form.get('email'), password:form.get('password')})});
-      $('#login-status').textContent = ''; showDashboard(result.data);
-    } catch (error) { $('#login-status').textContent = error.message; }
-  });
   $('#logout').addEventListener('click', async () => {
     try { await request('admin/session.php', {method:'POST', mutate:true, body:JSON.stringify({action:'logout'})}); } catch (_) {}
-    location.reload();
+    location.replace('login.php');
   });
   async function loadCircuits() {
     try {
