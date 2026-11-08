@@ -2903,3 +2903,268 @@ body{background:#fbf8f7;color:var(--ink);font-family:var(--sans)}
 /* The circuit catalogue is quote-based: communicate request status without implying live availability. */
 .circuits .circuit-card .circuit-status{background:#fff0cf;color:#8b4a09}
 .circuits .circuit-card .circuit-status::before{content:"◷";background:transparent;color:#b36a0a;font-size:.85rem;width:auto;height:auto}
+
+
+/* MIARADI homepage — featured circuits aligned with the reference mockup */
+.circuits{
+  background:var(--paper);
+  color:#101d36;
+  padding-block:44px 64px;
+}
+.circuits .section-heading{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:24px;
+  margin-bottom:24px;
+}
+.circuits .section-kicker{
+  margin:0 0 6px;
+  color:var(--red);
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:.035em;
+}
+.circuits .section-heading h2{
+  color:#101d36;
+  font-family:"Plus Jakarta Sans",var(--sans);
+  font-size:clamp(2rem,3.1vw,2.8rem);
+  font-weight:800;
+  letter-spacing:-.055em;
+  line-height:1.1;
+}
+.circuits .all-circuits-link{
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:5px;
+  color:var(--red);
+  font-size:14px;
+  font-weight:700;
+  white-space:nowrap;
+}
+.circuits .all-circuits-link span{font-size:24px;line-height:1}
+.circuits .circuit-filters{display:none}
+.circuits .circuit-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:20px;
+  align-items:stretch;
+}
+.circuits .circuit-card{
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  overflow:hidden;
+  border:1px solid rgba(146,45,32,.08);
+  border-radius:22px;
+  background:#fff;
+  color:#101d36;
+  box-shadow:0 7px 20px rgba(42,28,22,.09);
+  transition:transform .22s ease,box-shadow .22s ease;
+}
+.circuits .circuit-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 13px 28px rgba(42,28,22,.13);
+}
+.circuits .circuit-image-link{
+  flex:none;
+  aspect-ratio:1.9/1;
+  min-height:0;
+  overflow:hidden;
+  border-radius:0;
+  background:#d9e6e8;
+}
+.circuits .circuit-image-link img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+}
+.circuits .image-index{
+  position:absolute;
+  top:12px;
+  bottom:auto;
+  left:12px;
+  max-width:calc(100% - 64px);
+  overflow:hidden;
+  padding:7px 12px;
+  border-radius:999px;
+  background:rgba(255,255,255,.96);
+  color:#101d36;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:0;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.circuits .image-arrow{
+  top:10px;
+  right:10px;
+  width:36px;
+  height:36px;
+  border:1px solid rgba(146,45,32,.14);
+  background:#fff;
+  color:var(--red);
+  font-size:18px;
+}
+.circuits .circuit-overlay{
+  position:static;
+  display:flex;
+  flex:1;
+  flex-direction:column;
+  gap:0;
+  padding:12px 15px 14px;
+  background:#fff;
+  color:#101d36;
+}
+.circuits .circuit-card h3{
+  margin:0 0 9px;
+  color:#101d36;
+  font-family:"Plus Jakarta Sans",var(--sans);
+  font-size:clamp(14px,1.05vw,17px);
+  font-weight:800;
+  letter-spacing:-.035em;
+  line-height:1.3;
+}
+.circuits .circuit-meta{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-start;
+  gap:7px 13px;
+  margin:0 0 9px;
+  color:#172642;
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:0;
+}
+.circuits .circuit-fact{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  min-width:0;
+}
+.circuits .circuit-fact::before{
+  display:inline-block;
+  color:#172642;
+  font-size:14px;
+  line-height:1;
+}
+.circuits .circuit-duration::before{content:"▦"}
+.circuits .circuit-region::before{content:"⌖"}
+.circuits .circuit-theme::before{content:"◇"}
+.circuits .circuit-status{
+  align-self:flex-start;
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  margin:0 0 9px;
+  padding:4px 9px;
+  border-radius:999px;
+  background:#fff0c9;
+  color:#a64b00;
+  font-size:11px;
+  font-weight:800;
+  line-height:1.2;
+}
+.circuits .circuit-status::before{content:"◷";font-size:12px}
+.circuits .circuit-card-actions{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:auto;
+}
+.circuits .circuit-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  min-height:39px;
+  max-width:calc(100% - 48px);
+  padding:9px 13px;
+  border:0;
+  border-radius:999px;
+  background:#fde9e7;
+  color:#922D20;
+  font-size:12px;
+  font-weight:800;
+  line-height:1.2;
+  white-space:nowrap;
+}
+.circuits .circuit-link:hover{background:#f8d8d4;color:#741f17}
+.circuits .quote-plane{font-size:15px}
+.circuits .gallery-trigger{
+  display:grid;
+  flex:none;
+  place-items:center;
+  width:41px;
+  height:41px;
+  margin:0;
+  padding:0;
+  border:1px solid rgba(146,45,32,.22);
+  border-radius:50%;
+  color:var(--red);
+  font-size:22px;
+  line-height:1;
+  text-decoration:none;
+}
+.circuits .gallery-trigger:hover{background:#fff0ed;border-color:var(--red)}
+.circuits .circuits-foot{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  margin-top:34px;
+  padding-top:22px;
+  border-top:1px solid rgba(146,45,32,.14);
+  color:#64748b;
+  font-size:12px;
+}
+.circuits .circuits-foot p{margin:0}
+.circuits .button-outline-light{
+  min-height:46px;
+  padding:11px 20px;
+  border:1px solid #dbe3ee;
+  border-radius:999px;
+  background:#fff;
+  color:#101d36;
+  font-size:13px;
+}
+.circuits .button-outline-light:hover{border-color:var(--red);color:var(--red)}
+.circuits .circuit-load-status{
+  grid-column:1/-1;
+  padding:25px;
+  border-radius:18px;
+  background:#fff;
+  color:#64748b;
+}
+.circuits .circuit-image-link.has-image-fallback{background:linear-gradient(135deg,#d7e9f5,#f4d7bd)}
+.circuits .circuit-image-link.has-image-fallback::after{
+  content:"MIARADI · MADAGASCAR";
+  position:absolute;
+  inset:auto 12px 12px;
+  color:#fff;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.12em;
+}
+@media(max-width:1050px){
+  .circuits .circuit-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+  .circuits .circuit-card h3{font-size:16px}
+}
+@media(max-width:600px){
+  .circuits{padding-block:36px 48px}
+  .circuits .section-heading{align-items:flex-start;flex-direction:column;gap:12px;margin-bottom:20px}
+  .circuits .section-heading h2{font-size:2rem}
+  .circuits .all-circuits-link{font-size:13px}
+  .circuits .circuit-grid{grid-template-columns:1fr;gap:16px}
+  .circuits .circuit-image-link{aspect-ratio:1.8/1}
+  .circuits .circuit-overlay{padding:13px}
+  .circuits .circuit-card h3{font-size:17px}
+  .circuits .circuit-meta{gap:8px 14px;font-size:12px}
+  .circuits .circuits-foot{align-items:flex-start;flex-direction:column}
+}
+@media(prefers-reduced-motion:reduce){
+  .circuits .circuit-card,.circuits .circuit-image-link img{transition:none}
+}
