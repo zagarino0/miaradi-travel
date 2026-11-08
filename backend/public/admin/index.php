@@ -253,8 +253,9 @@ td strong{color:#34303e;font-size:12px}
   function circuitImagePath(path) {
     const value = String(path || '').trim();
     if (!value) return '';
-    if (/^(https?:)?\\//i.test(value) || value.startsWith('data:')) return value;
-    return value.startsWith('assets/') ? '../../../' + value : (value.startsWith('../') ? value : '../../../' + value.replace(/^\\.\\//, ''));
+    if (value.startsWith('http://') || value.startsWith('https://') || value.startsWith('//') || value.startsWith('data:')) return value;
+    const relative = value.startsWith('./') ? value.slice(2) : value;
+    return relative.startsWith('assets/') ? '../../../' + relative : (relative.startsWith('../') ? relative : '../../../' + relative);
   }
   function renderCircuits() {
     const search = ($('#circuit-search')?.value || '').trim().toLocaleLowerCase('fr');
