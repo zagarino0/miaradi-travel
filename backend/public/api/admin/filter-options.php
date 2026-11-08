@@ -61,10 +61,12 @@ try {
     if ($type === 'duration' && !preg_match('/^\d{1,3}(?:-\d{1,3})?$/', (string) $value)) {
         api_json(['error' => ['code' => 'invalid_duration', 'message' => 'La durée doit être un nombre de jours ou une plage, par exemple 3-5.']], 422);
     }
-    if ($type === 'duration' && str_contains((string) $value, '-')) {
+    if ($type === 'duration' && $value === 'custom') {
+        // Option réservée aux circuits personnalisables sans durée fixe.
+    } elseif ($type === 'duration' && str_contains((string) $value, '-')) {
         [$min, $max] = array_map('intval', explode('-', (string) $value, 2));
         if ($min < 1 || $max < $min || $max > 365) api_json(['error' => ['code' => 'invalid_duration', 'message' => 'La plage doit être comprise entre 1 et 365 jours.']], 422);
-    } elseif ($type === 'duration' && ((int) $value < 1 || (int) $value > 365)) {
+    } elseif ($type === 'duration' && $value !== 'custom' && ((int) $value < 1 || (int) $value > 365)) {
         api_json(['error' => ['code' => 'invalid_duration', 'message' => 'La durée doit être comprise entre 1 et 365 jours.']], 422);
     }
     $stmt = $pdo->prepare('INSERT INTO miaradi_filter_options (option_type, option_value, option_label, sort_order) VALUES (:type, :value, :label, :sort)');
