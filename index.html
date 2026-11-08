@@ -11,35 +11,38 @@
 <header class="site-header" id="top"><div class="container header-inner">
 <a class="brand" href="#top" aria-label="MIARADI-TRAVEL, accueil"><img class="brand-logo" src="assets/miaradi-logo.png" alt="MIARADI — Tour Operator Madagascar"></a>
 <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Ouvrir le menu"><span></span><span></span></button>
-<nav class="primary-nav" id="primary-nav" aria-label="Navigation principale"><a href="#top" data-i18n="navHome">Accueil</a><a href="#circuits" data-i18n="navCircuits">Nos circuits</a><a href="a-propos.html" data-i18n="navAbout">À propos</a><button class="language-toggle" type="button" aria-label="Switch language">EN</button><a class="nav-cta" href="#contact" data-i18n="navQuote">Préparer mon voyage <span aria-hidden="true">↗</span></a></nav>
+<nav class="primary-nav" id="primary-nav" aria-label="Navigation principale"><a class="nav-current" href="#top" data-i18n="navHome">⌂ Accueil</a><a href="#circuits" data-i18n="navCircuits">▱ Circuits</a><a href="a-propos.html" data-i18n="navAbout">ⓘ À propos</a><a href="galerie.html">▧ Galerie</a><a href="a-propos.html#faq">ⓘ FAQ</a><a href="#contact">✉ Contact</a><button class="language-toggle" type="button" aria-label="Changer de langue">FR⌄</button><a class="nav-cta" href="#contact" data-i18n="navQuote">Demander un devis <span aria-hidden="true">↗</span></a></nav>
 </div></header><main id="main">
 <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-slideshow" aria-label="Paysage de Madagascar">
-        <img class="hero-image hero-slide is-active" src="https://commons.wikimedia.org/wiki/Special:FilePath/Beach_at_Nosy_Be.jpg?width=1800" alt="Panorama du lagon et du littoral de Nosy Be à Madagascar" fetchpriority="high" decoding="async">
-      </div>
-      <div class="hero-shade"></div>
-      <div class="container hero-content">
-        <p class="eyebrow eyebrow-light"><span class="eyebrow-line"></span><span data-i18n="heroEyebrow">VOYAGES AUTHENTIQUES · MADAGASCAR</span></p>
-        <h1 id="hero-title" data-i18n="heroTitle">Madagascar, <em>autrement.</em><br>Des voyages qui vous ressemblent.</h1>
-        <p class="hero-copy" data-i18n="heroCopy">Explorez une île de contrastes, de rencontres et de paysages extraordinaires. Nous imaginons avec vous un voyage à votre rythme, au plus près de l’essentiel.</p>
-        <div class="hero-actions">
-          <a class="button button-light" href="#contact"><span data-i18n="heroButton">Imaginons votre voyage</span><span aria-hidden="true">↗</span></a>
-          
-        </div>
-      </div>
-      <div class="hero-bottom container">
-        <span>15° 42' S — 46° 19' E</span>
-        <span data-i18n="heroCaption">MADAGASCAR, UNE ÎLE À PART</span>
-      </div>
-      <div class="hero-index" aria-hidden="true">01 <span></span> 03</div>
-      <div class="hero-destination-strip" aria-label="Destinations à découvrir">
-        <a class="hero-destination" href="#circuits" data-circuit="L'Ouest sauvage"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Walking_the_Avenue_of_the_Baobabs.jpg?width=900" alt="" loading="lazy"><span class="destination-name">Morondava</span><small>BAOBABS & COUCHERS DE SOLEIL</small></a>
-        <a class="hero-destination" href="#circuits" data-circuit="L'appel du lagon"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Beach_at_Nosy_Be.jpg?width=480" alt="" loading="lazy"><span class="destination-name">Nosy Be</span><small>LAGONS & ÎLES</small></a>
-        <a class="hero-destination" href="#circuits" data-circuit="La forêt d'Andasibe"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Indri_Andasibe.JPG?width=900" alt="" loading="lazy"><span class="destination-name">Andasibe</span><small>FORÊT & FAUNE</small></a>
-        <a class="hero-destination" href="#circuits" data-circuit="La Route nationale 7"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Isalo-madagascar.jpg?width=480" alt="" loading="lazy"><span class="destination-name">Isalo</span><small>GRANDS ESPACES</small></a>
-        <div class="hero-destination-prompt"><span>UNE ÎLE, MILLE HISTOIRES</span><a href="#circuits">Explorer les circuits ↗</a></div>
-      </div>
-    </section>
+  <div class="hero-slideshow" aria-label="Paysage de Madagascar">
+    <img class="hero-image hero-slide is-active" src="https://commons.wikimedia.org/wiki/Special:FilePath/Walking_the_Avenue_of_the_Baobabs.jpg?width=1800" alt="Baobabs majestueux et paysage emblématique de Madagascar" fetchpriority="high" decoding="async">
+  </div>
+  <div class="hero-shade"></div>
+  <div class="container hero-content">
+    <p class="hero-location"><span aria-hidden="true">⌖</span> Voyage à Madagascar</p>
+    <h1 id="hero-title">Imaginons votre voyage<br>à Madagascar</h1>
+    <p class="hero-copy">Des circuits authentiques, des rencontres uniques<br class="desktop-break"> et des paysages d’exception.</p>
+    <div class="hero-actions">
+      <a class="button button-primary hero-quote" href="#contact"><span aria-hidden="true">➤</span> Demander un devis</a>
+      <a class="button button-white" href="#circuits"><span aria-hidden="true">▷</span> Découvrir nos circuits</a>
+    </div>
+  </div>
+  <div class="hero-controls" aria-hidden="true"><span>‹</span><span>›</span><div class="hero-dots"><i></i><i></i><i></i></div></div>
+</section>
+<section class="finder-panel" aria-label="Recherche de circuits">
+  <form class="finder-inner container" id="homepage-finder">
+    <label class="finder-field"><span class="finder-icon">⌖</span><span><strong>Région</strong><select id="finder-region"><option value="all">Toutes les régions</option><option value="west">Ouest</option><option value="north">Nord & îles</option><option value="east">Est</option><option value="south">Sud</option><option value="highlands">Hautes Terres</option></select></span></label>
+    <label class="finder-field"><span class="finder-icon">▱</span><span><strong>Thématique</strong><select id="finder-theme"><option value="all">Toutes les thématiques</option><option value="nature">Nature</option><option value="coast">Côte & îles</option><option value="culture">Culture</option></select></span></label>
+    <label class="finder-field"><span class="finder-icon">▦</span><span><strong>Durée</strong><select id="finder-duration"><option value="all">Indifférente</option><option value="2-4">2–4 jours</option><option value="3-5">3–5 jours</option><option value="3-6">3–6 jours</option><option value="5-8">5–8 jours</option><option value="7-12">7–12 jours</option><option value="custom">Sur mesure</option></select></span></label>
+    <button class="button button-primary finder-submit" type="submit"><span aria-hidden="true">⌕</span> Rechercher un circuit</button>
+  </form>
+</section>
+<section class="trust-strip container" aria-label="Les engagements MIARADI">
+  <article class="trust-card"><span class="trust-icon">✈</span><div><strong>100% Madagascar</strong><p>Des expériences locales et authentiques</p></div></article>
+  <article class="trust-card"><span class="trust-icon">♧</span><div><strong>Tourisme responsable</strong><p>En collaboration avec les communautés</p></div></article>
+  <article class="trust-card"><span class="trust-icon">✧</span><div><strong>Accompagnement dédié</strong><p>De la préparation à votre retour</p></div></article>
+  <article class="trust-card"><span class="trust-icon">♡</span><div><strong>Voyage sur mesure</strong><p>Des circuits adaptés à vos envies</p></div></article>
+</section>
 <section class="intro section-pad about-mi" id="about" aria-labelledby="about-title">
       <div class="container about-opening">
         <div class="about-heading">
