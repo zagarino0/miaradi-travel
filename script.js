@@ -357,8 +357,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const slideCircuitLeft = () => {
     if (!circuitGrid || !circuitCarousel || circuitSlideBusy || reducedCircuitMotion.matches) return;
     const visible = visibleCircuitCards();
-    const desktop = window.matchMedia("(min-width: 1101px)").matches;
-    if (!desktop || visible.length <= 4) {
+    const visibleSlots = window.matchMedia("(min-width: 1101px)").matches
+      ? 4
+      : window.matchMedia("(min-width: 521px)").matches ? 2 : 1;
+    if (visible.length <= visibleSlots) {
       circuitGrid.style.transition = "none";
       circuitGrid.style.transform = "translateX(0)";
       return;
