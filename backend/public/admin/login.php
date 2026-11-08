@@ -16,7 +16,7 @@ if (!empty($_SESSION['admin_id']) && !empty($_SESSION['admin_email'])) {
 <style>
 :root{color-scheme:light;--red:#922D20;--red-dark:#762218;--paper:#FBF8F5;--ink:#28201d;--muted:#756861;--line:#d9d0ca;--sans:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
 *{box-sizing:border-box}html{min-height:100%;background:var(--paper)}body{margin:0;min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:36px 20px 76px;font:15px/1.5 var(--sans);color:var(--ink);position:relative;isolation:isolate;overflow-x:hidden}
-body:before{content:"";position:fixed;inset:0;z-index:-2;background:linear-gradient(180deg,rgba(251,248,245,.82) 0%,rgba(251,248,245,.52) 42%,rgba(251,248,245,.05) 100%),url("../../assets/images/circuits/majunga.jpg") center 56%/cover no-repeat;transform:scale(1.01)}
+body:before{content:"";position:fixed;inset:0;z-index:-2;background:linear-gradient(180deg,rgba(251,248,245,.82) 0%,rgba(251,248,245,.52) 42%,rgba(251,248,245,.05) 100%),url("../../../assets/images/circuits/majunga.jpg") center 56%/cover no-repeat;transform:scale(1.01)}
 body:after{content:"";position:fixed;z-index:-1;bottom:-1px;left:0;width:100%;height:100px;background:var(--red);clip-path:polygon(0 24%,8% 46%,17% 62%,27% 78%,39% 91%,51% 73%,62% 55%,72% 62%,82% 38%,91% 48%,100% 16%,100% 100%,0 100%)}
 .login-shell{width:min(100%,640px);display:flex;flex-direction:column;align-items:center;gap:27px;padding:0 0 18px}
 .brand{display:flex;flex-direction:column;align-items:center;text-align:center;color:var(--red);text-decoration:none}
@@ -50,8 +50,8 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #c98c
 </head>
 <body>
 <main class="login-shell">
-  <a class="brand" href="../../index.html" aria-label="MIARADI-TRAVEL — accueil">
-    <img src="../../assets/miaradi-logo.png" alt="Logo MIARADI-TRAVEL">
+  <a class="brand" href="../../../index.html" aria-label="MIARADI-TRAVEL — accueil">
+    <img src="../../../assets/miaradi-logo.png" alt="Logo MIARADI-TRAVEL">
     <span class="brand-name">MIARADI-TRAVEL</span>
     <span class="brand-sub">ADMINISTRATION</span>
   </a>
@@ -83,7 +83,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #c98c
       </button>
       <p class="status" id="login-status" role="status" aria-live="polite"></p>
     </form>
-    <p class="help"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="8" cy="16" r="3"/><path d="m10 14 8-8 3 3-8 8M17 7l2 2"/></svg><a href="../../index.html#contact">Mot de passe oublié ? Contactez MIARADI</a></p>
+    <p class="help"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="8" cy="16" r="3"/><path d="m10 14 8-8 3 3-8 8M17 7l2 2"/></svg><a href="../../../index.html#contact">Mot de passe oublié ? Contactez MIARADI</a></p>
   </section>
   <p class="security">Espace réservé aux administrateurs autorisés · Connexion sécurisée</p>
 </main>
