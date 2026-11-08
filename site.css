@@ -3818,3 +3818,6 @@ body{background:#fbf8f7;color:var(--ink);font-family:var(--sans)}
 @media(prefers-reduced-motion:reduce){
   #circuits .circuit-grid{will-change:auto;transition:none !important}
 }
+
+/* Preserve filtering while the carousel track uses flex layout */
+#circuits .circuit-grid > .circuit-card[hidden]{display:none !important}
