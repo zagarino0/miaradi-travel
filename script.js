@@ -343,6 +343,78 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   loadPublicCircuits();
 
+  // Défilement automatique des circuits : quatre cartes restent visibles sur desktop.
+  const circuitCarousel = circuitGrid?.parentElement;
+  let circuitSlideTimer = null;
+  let circuitSlideBusy = false;
+  const reducedCircuitMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const visibleCircuitCards = () => Array.from(cards()).filter((card) => !card.hidden);
+
+  const stopCircuitSliding = () => {
+    if (circuitSlideTimer !== null) window.clearInterval(circuitSlideTimer);
+    circuitSlideTimer = null;
+  };
+  const slideCircuitLeft = () => {
+    if (!circuitGrid || !circuitCarousel || circuitSlideBusy || reducedCircuitMotion.matches) return;
+    const visible = visibleCircuitCards();
+    const desktop = window.matchMedia("(min-width: 1101px)").matches;
+    if (!desktop || visible.length <= 4) {
+      circuitGrid.style.transition = "none";
+      circuitGrid.style.transform = "translateX(0)";
+      return;
+    }
+
+    const first = visible[0];
+    const style = window.getComputedStyle(circuitGrid);
+    const gap = parseFloat(style.columnGap || style.gap) || 0;
+    const distance = first.getBoundingClientRect().width + gap;
+    circuitSlideBusy = true;
+    circuitGrid.style.transition = "transform 700ms cubic-bezier(.22,.75,.25,1)";
+    circuitGrid.style.transform = "translateX(-" + distance + "px)";
+  };
+  const startCircuitSliding = () => {
+    stopCircuitSliding();
+    if (reducedCircuitMotion.matches) return;
+    circuitSlideTimer = window.setInterval(slideCircuitLeft, 4200);
+  };
+
+  circuitGrid?.addEventListener("transitionend", (event) => {
+    if (event.propertyName !== "transform" || !circuitSlideBusy) return;
+    const firstVisible = visibleCircuitCards()[0];
+    if (firstVisible) circuitGrid.append(firstVisible);
+    circuitGrid.style.transition = "none";
+    circuitGrid.style.transform = "translateX(0)";
+    // Force the reset to apply before the next animated slide.
+    void circuitGrid.offsetWidth;
+    circuitGrid.style.transition = "";
+    circuitSlideBusy = false;
+  });
+  circuitCarousel?.addEventListener("mouseenter", stopCircuitSliding);
+  circuitCarousel?.addEventListener("mouseleave", startCircuitSliding);
+  circuitCarousel?.addEventListener("focusin", stopCircuitSliding);
+  circuitCarousel?.addEventListener("focusout", startCircuitSliding);
+  window.addEventListener("resize", () => {
+    circuitGrid.style.transition = "none";
+    circuitGrid.style.transform = "translateX(0)";
+    circuitSlideBusy = false;
+  });
+  filters.forEach((button) => button.addEventListener("click", () => {
+    circuitGrid.style.transition = "none";
+    circuitGrid.style.transform = "translateX(0)";
+    circuitSlideBusy = false;
+  }));
+  regionFilter?.addEventListener("change", () => {
+    circuitGrid.style.transition = "none";
+    circuitGrid.style.transform = "translateX(0)";
+    circuitSlideBusy = false;
+  });
+  durationFilter?.addEventListener("change", () => {
+    circuitGrid.style.transition = "none";
+    circuitGrid.style.transform = "translateX(0)";
+    circuitSlideBusy = false;
+  });
+  startCircuitSliding();
+
 
   document.querySelectorAll("[data-circuit]").forEach((link) => {
     link.addEventListener("click", () => {
