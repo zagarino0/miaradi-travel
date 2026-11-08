@@ -20,10 +20,7 @@ body:before{content:"";position:fixed;inset:0;z-index:-2;background:linear-gradi
 body:after{content:"";position:fixed;z-index:-1;bottom:-1px;left:0;width:100%;height:100px;background:var(--red);clip-path:polygon(0 24%,8% 46%,17% 62%,27% 78%,39% 91%,51% 73%,62% 55%,72% 62%,82% 38%,91% 48%,100% 16%,100% 100%,0 100%)}
 .login-shell{width:min(100%,640px);display:flex;flex-direction:column;align-items:center;gap:27px;padding:0 0 18px}
 .brand{display:flex;flex-direction:column;align-items:center;text-align:center;color:var(--red);text-decoration:none}
-.brand img{display:block;width:92px;height:92px;object-fit:contain;margin-bottom:3px}
-.brand-name{font-family:Georgia,"Times New Roman",serif;font-size:clamp(28px,5vw,43px);font-weight:700;letter-spacing:.015em;line-height:1.08}
-.brand-sub{display:flex;align-items:center;gap:12px;margin-top:7px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(13px,2.5vw,21px);letter-spacing:.2em}
-.brand-sub:before,.brand-sub:after{content:"";width:32px;height:2px;background:var(--red)}
+.brand img{display:block;width:132px;height:112px;object-fit:contain;margin-bottom:0}
 .card{width:min(100%,640px);padding:35px 40px 32px;border:1px solid rgba(255,255,255,.78);border-radius:22px;background:rgba(255,255,255,.91);box-shadow:0 18px 55px rgba(64,38,24,.17);backdrop-filter:blur(9px)}
 h1{margin:0;text-align:center;font-size:clamp(25px,4vw,34px);line-height:1.2;letter-spacing:-.04em;color:#171412}
 .accent{width:66px;height:5px;border-radius:99px;background:var(--red);margin:17px auto 18px}
@@ -44,7 +41,7 @@ input:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(146,45,32,.12)}
 .help a{color:inherit;text-underline-offset:3px}.help svg{color:var(--red)}
 .security{margin:0;text-align:center;color:#74665d;font-size:11px}
 button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #c98c7e;outline-offset:3px}
-@media(max-width:520px){body{padding:24px 14px 75px}.login-shell{gap:20px}.brand img{width:70px;height:70px}.card{padding:27px 20px 24px;border-radius:17px}.intro{font-size:15px;margin-bottom:24px}input{height:54px}.submit{min-height:55px}.brand-sub{letter-spacing:.15em}.security{font-size:10px}}
+@media(max-width:520px){body{padding:24px 14px 75px}.login-shell{gap:20px}.brand img{width:108px;height:92px}.card{padding:27px 20px 24px;border-radius:17px}.intro{font-size:15px;margin-bottom:24px}input{height:54px}.submit{min-height:55px}.security{font-size:10px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important}}
 </style>
 </head>
@@ -52,8 +49,6 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #c98c
 <main class="login-shell">
   <a class="brand" href="../../../index.html" aria-label="MIARADI-TRAVEL — accueil">
     <img src="../../../assets/miaradi-logo.png" alt="Logo MIARADI-TRAVEL">
-    <span class="brand-name">MIARADI-TRAVEL</span>
-    <span class="brand-sub">ADMINISTRATION</span>
   </a>
   <section class="card" aria-labelledby="login-title">
     <h1 id="login-title">Connexion administrateur</h1>
