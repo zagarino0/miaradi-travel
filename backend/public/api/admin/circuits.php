@@ -82,6 +82,62 @@ try {
         api_json(['error' => ['code' => 'validation_error', 'message' => 'Publication or display order is invalid.']], 422);
     }
 
+    // Les régions et thématiques doivent provenir des options actives du catalogue.
+    // En modification, une ancienne valeur reste autorisée tant qu'elle n'est pas changée.
+    $existingCircuit = null;
+    if ($method === 'PATCH') {
+        $existingStmt = $pdo->prepare('SELECT region, theme, duration_min, duration_max FROM miaradi_circuits WHERE id = :id');
+        $existingStmt->execute(['id' => $id]);
+        $existingCircuit = $existingStmt->fetch(PDO::FETCH_ASSOC);
+        if (!$existingCircuit) api_json(['error' => ['code' => 'not_found', 'message' => 'Circuit not found.']], 404);
+    }
+
+    foreach (['region' => $region, 'theme' => $theme] as $optionType => $optionLabel) {
+        if ($optionLabel === null || $optionLabel === '') continue;
+        $optionStmt = $pdo->prepare(
+            'SELECT id FROM miaradi_filter_options
+             WHERE option_type = :type AND is_active = 1
+               AND (option_label = :label OR option_value = :value)
+             LIMIT 1'
+        );
+        $optionStmt->execute(['type' => $optionType, 'label' => $optionLabel, 'value' => $optionLabel]);
+        $isActiveOption = (bool) $optionStmt->fetchColumn();
+        $isUnchangedLegacyValue = $existingCircuit && (string) ($existingCircuit[$optionType] ?? '') === $optionLabel;
+        if (!$isActiveOption && !$isUnchangedLegacyValue) {
+            api_json([
+                'error' => [
+                    'code' => 'invalid_catalogue_option',
+                    'message' => ($optionType === 'region' ? 'La région' : 'La thématique') . ' sélectionnée n’existe pas dans les paramètres actifs du catalogue.',
+                ],
+            ], 422);
+        }
+    }
+
+    // La plage de durée doit correspondre à une option active (ex. 3-5 jours).
+    $durationValue = ($durationMin === null && $durationMax === null)
+        ? 'custom'
+        : (($durationMin !== null && $durationMax !== null && $durationMin === $durationMax)
+            ? (string) $durationMin
+            : (string) $durationMin . '-' . (string) $durationMax);
+    $durationStmt = $pdo->prepare(
+        "SELECT id FROM miaradi_filter_options
+         WHERE option_type = 'duration' AND is_active = 1 AND option_value = :value
+         LIMIT 1"
+    );
+    $durationStmt->execute(['value' => $durationValue]);
+    $isActiveDuration = (bool) $durationStmt->fetchColumn();
+    $isUnchangedLegacyDuration = $existingCircuit
+        && (($existingCircuit['duration_min'] === null ? null : (int) $existingCircuit['duration_min']) === $durationMin)
+        && (($existingCircuit['duration_max'] === null ? null : (int) $existingCircuit['duration_max']) === $durationMax);
+    if (!$isActiveDuration && !$isUnchangedLegacyDuration) {
+        api_json([
+            'error' => [
+                'code' => 'invalid_catalogue_duration',
+                'message' => 'Choisissez une durée configurée dans les paramètres du catalogue.',
+            ],
+        ], 422);
+    }
+
     $values = [
         'slug' => $slug, 'title_fr' => $titleFr, 'title_en' => $titleEn,
         'summary_fr' => $summaryFr, 'summary_en' => $summaryEn, 'region' => $region,
