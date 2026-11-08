@@ -1,6 +1,6 @@
 const translations = {
   fr: {
-    navHome: "Accueil", navAbout: "À propos", navCircuits: "Nos circuits", navContact: "Contact", navQuote: "Préparer mon voyage",
+    navHome: "Accueil", navAbout: "À propos", navCircuits: "Circuits", navContact: "Contact", navQuote: "Demander un devis",
     finderEyebrow: "VOTRE PROCHAINE AVENTURE", finderTitle: "Trouvez votre <em>voyage.</em>", finderRegion: "Région", finderDuration: "Durée du séjour", finderTheme: "Type de voyage", finderSubmit: "Trouver un circuit",
     heroEyebrow: "VOYAGES AUTHENTIQUES · MADAGASCAR",
     heroTitle: "Imaginons votre voyage<br>à Madagascar",
@@ -14,7 +14,7 @@ const translations = {
     introLink: "Parlons de votre voyage", value1Title: "À votre rythme", value1Copy: "Des itinéraires ajustés à vos envies et à votre temps.",
     value2Title: "Proche du terrain", value2Copy: "Des expériences ancrées dans les réalités locales.",
     value3Title: "Pensé pour vous", value3Copy: "Un échange direct pour créer votre circuit.",
-    circuitsEyebrow: "INSPIRATIONS DE VOYAGE", circuitsTitle: "L'île, en plusieurs<br><em>émotions.</em>",
+    circuitsEyebrow: "NOS CIRCUITS", circuitsTitle: "Nos circuits phares",
     circuitsCopy: "Un séjour côtier, une aventure dans les terres ou une rencontre culturelle : trouvons ensemble votre manière de découvrir Madagascar.",
     filterLabel: "CHOISIR UNE INSPIRATION", filterThemeLabel: "THÉMATIQUE", filterRegionLabel: "RÉGION", filterDurationLabel: "DURÉE", regionAll: "Toutes les régions", regionWest: "Ouest", regionNorth: "Nord & îles", regionEast: "Est", regionSouth: "Sud", regionHighlands: "Hautes Terres", durationAll: "Toutes les durées", durationCustom: "Sur mesure", priceLabel: "TARIF", priceQuote: "Sur devis", filterAll: "Tout voir", filterNature: "Nature", filterCoast: "Côte & îles", filterCulture: "Culture",
     tagNature: "NATURE & GRANDS ESPACES", tagCoast: "CÔTE & ÎLES", tagCulture: "CULTURE & RENCONTRES",
@@ -41,7 +41,7 @@ const translations = {
     formDemo: "Merci {name}. Votre formulaire fonctionne en mode maquette, mais l'envoi n'est pas activé. Contactez l'agence par e-mail dès que ses coordonnées seront configurées."
   },
   en: {
-    navHome: "Home", navAbout: "About", navCircuits: "Our circuits", navContact: "Contact", navQuote: "Plan my trip",
+    navHome: "Home", navAbout: "About", navCircuits: "Circuits", navContact: "Contact", navQuote: "Request a quote",
     finderEyebrow: "YOUR NEXT ADVENTURE", finderTitle: "Find your <em>journey.</em>", finderRegion: "Region", finderDuration: "Trip length", finderTheme: "Travel style", finderSubmit: "Find a journey",
     heroEyebrow: "AUTHENTIC JOURNEYS · MADAGASCAR",
     heroTitle: "Madagascar, <em>in a different light.</em><br>Journeys made for you.",
@@ -55,7 +55,7 @@ const translations = {
     introLink: "Let's talk about your trip", value1Title: "At your pace", value1Copy: "Itineraries shaped around your interests and time.",
     value2Title: "Locally connected", value2Copy: "Experiences rooted in local knowledge and life.",
     value3Title: "Made for you", value3Copy: "A direct conversation to shape your journey.",
-    circuitsEyebrow: "TRAVEL INSPIRATION", circuitsTitle: "One island,<br><em>many feelings.</em>",
+    circuitsEyebrow: "OUR CIRCUITS", circuitsTitle: "Featured circuits",
     circuitsCopy: "A coastal escape, an inland adventure or a cultural encounter: let's find your own way to experience Madagascar.",
     filterLabel: "CHOOSE YOUR INSPIRATION", filterThemeLabel: "THEME", filterRegionLabel: "REGION", filterDurationLabel: "DURATION", regionAll: "All regions", regionWest: "West", regionNorth: "North & islands", regionEast: "East", regionSouth: "South", regionHighlands: "Highlands", durationAll: "All durations", durationCustom: "Tailor-made", priceLabel: "PRICE", priceQuote: "Quote only", filterAll: "View all", filterNature: "Nature", filterCoast: "Coast & islands", filterCulture: "Culture",
     tagNature: "NATURE & OPEN SPACES", tagCoast: "COAST & ISLANDS", tagCulture: "CULTURE & ENCOUNTERS",
