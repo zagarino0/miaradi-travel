@@ -269,7 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
       };
       if (!circuit.image) imageLink.classList.add("has-image-fallback");
       imageLink.append(image);
-      const imageIndex = createCircuitElement("span", "image-index", String(index + 1).padStart(2, "0") + " / " + String(circuit.region || "MADAGASCAR").toUpperCase());
+      const imageIndex = createCircuitElement("span", "image-index", String(circuit.theme || (currentLanguage === "fr" ? "Découverte" : "Discovery")));
       const imageArrow = createCircuitElement("span", "image-arrow", "↗");
       imageArrow.setAttribute("aria-hidden", "true");
       imageLink.append(imageIndex, imageArrow);
@@ -278,7 +278,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const meta = createCircuitElement("div", "circuit-meta");
       const themeLabel = createCircuitElement("span", "", String(circuit.theme || (currentLanguage === "fr" ? "Voyage" : "Journey")).toUpperCase());
       const duration = createCircuitElement("span", "", durationLabel(circuit.duration));
-      meta.append(themeLabel, duration);
+      const region = createCircuitElement("span", "circuit-region", String(circuit.region || "Madagascar"));
+      meta.append(duration, region, themeLabel);
       const price = createCircuitElement("div", "circuit-price");
       price.append(createCircuitElement("span", "", currentLanguage === "fr" ? "TARIF" : "PRICE"));
       price.append(createCircuitElement("strong", "", currentLanguage === "fr" ? "Sur devis" : "Quote only"));
