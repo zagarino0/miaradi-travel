@@ -2861,3 +2861,41 @@ body{background:#fbf8f7;color:var(--ink);font-family:var(--sans)}
  .hero-actions{align-items:flex-start;flex-direction:column;gap:10px}
  .hero-controls{display:none}
 }
+
+
+/* MIARADI public circuit cards — aligned with the approved homepage mockup */
+.circuits.section-pad{background:var(--paper);color:#111c32;padding-top:30px;padding-bottom:64px}
+.circuits .section-heading{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:22px}
+.circuits .section-heading .section-kicker{color:var(--red);font:700 .82rem/1.3 var(--sans);letter-spacing:.04em;margin:0 0 6px}
+.circuits .section-heading h2{font-family:"Plus Jakarta Sans",var(--sans);font-size:clamp(2rem,3vw,2.8rem);line-height:1.12;letter-spacing:-.045em;color:#111c32;margin:0}
+.circuits .all-circuits-link{color:var(--red);font-weight:700;text-decoration:none;white-space:nowrap}
+.circuits .circuit-filters{display:none}
+.circuits .circuit-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;align-items:stretch}
+.circuits .circuit-card{display:flex;flex-direction:column;min-width:0;overflow:hidden;position:relative;background:#fff;border:1px solid rgba(146,45,32,.08);border-radius:22px;box-shadow:0 8px 22px rgba(40,24,18,.08);transform:none;min-height:0}
+.circuits .circuit-card:nth-child(4n + 2),.circuits .circuit-card:nth-child(4n + 3),.circuits .circuit-card.circuit-card-offset{margin-top:0;transform:none}
+.circuits .circuit-card::after{display:none}
+.circuits .circuit-card .circuit-image-link{display:block;position:relative;flex:0 0 auto;aspect-ratio:2.05/1;min-height:0;height:auto;overflow:hidden;border-radius:0;padding:0;background:#e8e3dd}
+.circuits .circuit-card .circuit-image-link img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .35s ease;opacity:1}
+.circuits .circuit-card:hover .circuit-image-link img{transform:scale(1.04)}
+.circuits .circuit-card .image-index{position:absolute;left:12px;top:12px;max-width:calc(100% - 64px);padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.96);color:#111c32;font-size:.72rem;font-weight:700;letter-spacing:0;text-transform:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.circuits .circuit-card .image-arrow{position:absolute;right:12px;top:12px;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#fff;color:var(--red);font-size:1.25rem;line-height:1;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.circuits .circuit-card .circuit-overlay{display:flex;position:static;inset:auto;flex:1;flex-direction:column;gap:10px;padding:13px 15px 15px;background:#fff;color:#111c32;opacity:1;transform:none;min-height:0}
+.circuits .circuit-card .circuit-overlay h3{order:0;margin:0;color:#111c32;font-family:"Plus Jakarta Sans",var(--sans);font-size:1rem;line-height:1.35;letter-spacing:-.025em;font-weight:800}
+.circuits .circuit-card .circuit-meta{order:1;display:flex;flex-wrap:wrap;align-items:center;gap:7px 13px;margin:0;padding:0;color:#17253b;font-size:.78rem;line-height:1.4}
+.circuits .circuit-card .circuit-fact{display:inline-flex;align-items:center;gap:5px;min-width:0}
+.circuits .circuit-card .circuit-duration::before{content:"▦";font-size:1rem;color:#17253b}
+.circuits .circuit-card .circuit-region::before{content:"⌖";font-size:1rem;color:#17253b}
+.circuits .circuit-card .circuit-theme::before{content:"♧";font-size:1rem;color:#17253b}
+.circuits .circuit-card .circuit-status{order:2;align-self:flex-start;display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:4px 9px;background:#e0f3e5;color:#18743b;font-size:.7rem;font-weight:700;line-height:1.2}
+.circuits .circuit-card .circuit-status::before{content:"✓";display:inline-grid;place-items:center;width:13px;height:13px;border-radius:50%;background:#21854a;color:white;font-size:.58rem}
+.circuits .circuit-card .circuit-card-actions{order:3;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding-top:1px}
+.circuits .circuit-card .circuit-link{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:9px 15px;border:0;border-radius:999px;background:#fce9e7;color:#922D20;font-size:.82rem;font-weight:700;line-height:1.2;text-decoration:none;white-space:nowrap;box-shadow:none}
+.circuits .circuit-card .circuit-link:hover{background:#f6d8d4;color:#7d241a}
+.circuits .circuit-card .quote-plane{font-size:1rem;line-height:1}
+.circuits .circuit-card .gallery-trigger{display:grid;place-items:center;flex:0 0 40px;width:40px;height:40px;margin:0;border:1px solid rgba(146,45,32,.2);border-radius:50%;background:#fff;color:var(--red);font-size:1.45rem;font-weight:500;line-height:1;text-decoration:none}
+.circuits .circuit-card .gallery-trigger:hover{background:var(--red);color:#fff}
+.circuits .circuits-foot{margin-top:32px;border-top:1px solid rgba(146,45,32,.15);padding-top:22px}
+.circuits .circuits-foot p{color:#65758a}
+@media(max-width:1050px){.circuits .circuit-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.circuits .circuit-card .circuit-image-link{aspect-ratio:2.15/1}}
+@media(max-width:620px){.circuits.section-pad{padding-top:24px;padding-bottom:42px}.circuits .section-heading{align-items:flex-start;flex-direction:column;gap:12px}.circuits .section-heading h2{font-size:2rem}.circuits .circuit-grid{grid-template-columns:1fr;gap:16px}.circuits .circuit-card .circuit-image-link{aspect-ratio:1.8/1}.circuits .circuit-card .circuit-overlay{padding:13px}.circuits .circuit-card .circuit-meta{gap:7px 12px}.circuits .circuit-card .circuit-link{font-size:.78rem;padding-inline:12px}}
+@media(prefers-reduced-motion:reduce){.circuits .circuit-card .circuit-image-link img{transition:none}}
