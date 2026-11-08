@@ -3168,3 +3168,45 @@ body{background:#fbf8f7;color:var(--ink);font-family:var(--sans)}
 @media(prefers-reduced-motion:reduce){
   .circuits .circuit-card,.circuits .circuit-image-link img{transition:none}
 }
+
+
+/* MIARADI featured-circuit acceptance checks: keep all requested card details visible */
+.circuits .circuit-card .circuit-meta,
+.circuits .circuit-card .circuit-status,
+.circuits .circuit-card .circuit-card-actions,
+.circuits .circuit-card .circuit-link,
+.circuits .circuit-card .gallery-trigger{
+  visibility:visible;
+  opacity:1;
+}
+.circuits .circuit-card .circuit-meta{
+  display:flex;
+  min-height:18px;
+}
+.circuits .circuit-card .circuit-status{
+  display:inline-flex;
+  width:max-content;
+  max-width:100%;
+}
+.circuits .circuit-card .circuit-card-actions{
+  display:flex;
+  width:100%;
+}
+.circuits .circuit-card .circuit-link{
+  flex:0 1 auto;
+}
+.circuits .circuit-card .gallery-trigger{
+  flex:0 0 41px;
+  align-items:center;
+  justify-content:center;
+}
+.circuits .circuit-card .circuit-image-link,
+.circuits .circuit-card .gallery-trigger{
+  cursor:pointer;
+}
+.circuits .circuit-card .circuit-link:focus-visible,
+.circuits .circuit-card .gallery-trigger:focus-visible,
+.circuits .circuit-card .circuit-image-link:focus-visible{
+  outline:3px solid rgba(146,45,32,.45);
+  outline-offset:3px;
+}
