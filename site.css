@@ -3551,3 +3551,35 @@ body{background:#fbf8f7;color:var(--ink);font-family:var(--sans)}
   #circuits .circuit-card .circuit-meta{font-size:12px !important}
   #circuits .circuit-card .circuit-link{font-size:12px !important}
 }
+
+
+/* Hero dimension refinement — wider, taller, and nearly edge-to-edge */
+.hero{
+  width:calc(100% - 32px) !important;
+  max-width:none !important;
+  height:420px !important;
+  min-height:420px !important;
+  margin:10px auto 0 !important;
+  border-radius:34px !important;
+}
+.hero-image{
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  object-position:center 53% !important;
+}
+.hero-slideshow{
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+}
+@media(max-width:760px){
+  .hero{
+    width:calc(100% - 24px) !important;
+    height:460px !important;
+    min-height:460px !important;
+    margin:8px auto 0 !important;
+    border-radius:25px !important;
+  }
+}
