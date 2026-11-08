@@ -509,7 +509,7 @@ td strong{color:#34303e;font-size:12px}
   }
   let activeQuoteFilter = 'all';
   function quoteInitials(name) {
-    return String(name || '?').trim().split(/\\s+/).filter(Boolean).slice(0,2).map(part => part[0]).join('').toLocaleUpperCase('fr') || '?';
+    return String(name || '?').trim().split(/\s+/).filter(Boolean).slice(0,2).map(part => part[0]).join('').toLocaleUpperCase('fr') || '?';
   }
   function renderQuoteList() {
     const query = ($('#quote-search')?.value || '').trim().toLocaleLowerCase('fr');
