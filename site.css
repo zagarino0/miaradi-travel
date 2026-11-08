@@ -2899,3 +2899,7 @@ body{background:#fbf8f7;color:var(--ink);font-family:var(--sans)}
 @media(max-width:1050px){.circuits .circuit-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.circuits .circuit-card .circuit-image-link{aspect-ratio:2.15/1}}
 @media(max-width:620px){.circuits.section-pad{padding-top:24px;padding-bottom:42px}.circuits .section-heading{align-items:flex-start;flex-direction:column;gap:12px}.circuits .section-heading h2{font-size:2rem}.circuits .circuit-grid{grid-template-columns:1fr;gap:16px}.circuits .circuit-card .circuit-image-link{aspect-ratio:1.8/1}.circuits .circuit-card .circuit-overlay{padding:13px}.circuits .circuit-card .circuit-meta{gap:7px 12px}.circuits .circuit-card .circuit-link{font-size:.78rem;padding-inline:12px}}
 @media(prefers-reduced-motion:reduce){.circuits .circuit-card .circuit-image-link img{transition:none}}
+
+/* The circuit catalogue is quote-based: communicate request status without implying live availability. */
+.circuits .circuit-card .circuit-status{background:#fff0cf;color:#8b4a09}
+.circuits .circuit-card .circuit-status::before{content:"◷";background:transparent;color:#b36a0a;font-size:.85rem;width:auto;height:auto}
