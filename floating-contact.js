@@ -4,7 +4,7 @@
   // Renseigner ici le numéro WhatsApp officiel de MIARADI-TRAVEL au format international,
   // chiffres uniquement (ex. indicatif pays + numéro, sans +, espaces ni tirets).
   // Aucun numéro n'est préconfiguré afin de ne pas inventer les coordonnées de l'agence.
-  const WHATSAPP_NUMBER = "";
+  const WHATSAPP_NUMBER = "261345740491";
   const MESSAGE = "Bonjour MIARADI-TRAVEL, je souhaite obtenir des informations sur vos voyages à Madagascar.";
 
   const styles = `
