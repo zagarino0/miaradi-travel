@@ -264,7 +264,8 @@ td strong{color:#34303e;font-size:12px}
         <span class="catalogue-count" id="catalogue-count">Chargement des circuits…</span>
       </div>
       <div class="circuit-grid" id="circuits-list" aria-live="polite"></div>
-      <section class="panel hidden filter-options-panel" id="filter-options-panel">
+    </section>
+    <section class="panel hidden filter-options-panel" id="filter-options-panel">
         <div class="catalogue-heading"><div><div class="eyebrow">Paramètres du site</div><h2>Options de recherche</h2><p>Ajoutez les régions, thématiques et durées qui seront proposées dans les filtres publics.</p></div><button class="button secondary" id="close-filter-options" type="button">Fermer</button></div>
         <form id="filter-option-form">
           <div class="row">
@@ -279,9 +280,8 @@ td strong{color:#34303e;font-size:12px}
           <p class="notice" id="filter-option-notice" role="status"></p>
         </form>
         <div class="table-wrap"><table><thead><tr><th>Catégorie</th><th>Libellé public</th><th>Valeur</th><th>Ordre</th><th>Action</th></tr></thead><tbody id="filter-options-list"><tr><td colspan="5">Chargement des options…</td></tr></tbody></table></div>
-      </section>
     </section>
-        <section class="panel hidden" id="quotes-panel">
+    <section class="panel hidden" id="quotes-panel">
       <div class="actions" style="justify-content:space-between;align-items:center">
         <div><div class="eyebrow">Service clientèle</div><h2>Boîte de réception</h2><p class="muted">Sélectionnez une demande pour consulter le voyage, répondre au client et suivre son statut.</p></div>
         <button class="button secondary" id="refresh-quotes" type="button">↻ Actualiser</button>
@@ -583,7 +583,7 @@ td strong{color:#34303e;font-size:12px}
     document.querySelector('.page-heading h1').textContent = button.dataset.tab === 'quotes' ? 'Demandes de devis' : 'Catalogue des circuits';
     document.querySelector('.page-heading .eyebrow').textContent = button.dataset.tab === 'quotes' ? 'Service clientèle' : 'Vue d’ensemble';
     const quotes = button.dataset.tab === 'quotes';
-    $('#circuits-panel').classList.toggle('hidden',quotes); $('#quotes-panel').classList.toggle('hidden',!quotes); $('#editor-panel').classList.add('hidden'); if (!quotes) $('#quote-detail-panel').classList.add('hidden');
+    $('#circuits-panel').classList.toggle('hidden',quotes); $('#quotes-panel').classList.toggle('hidden',!quotes); $('#filter-options-panel').classList.add('hidden'); $('#site-management-shortcut').classList.remove('active'); $('#editor-panel').classList.add('hidden'); if (!quotes) $('#quote-detail-panel').classList.add('hidden');
     if (quotes) await loadQuotes(); else await loadCircuits();
   }));
   const sidebarToggle = $('#sidebar-toggle');
@@ -624,12 +624,14 @@ td strong{color:#34303e;font-size:12px}
     }
   }
   async function openSiteManagement() {
-    // Ouvrir la section catalogue puis afficher directement les paramètres du site.
-    document.querySelectorAll('[data-tab]').forEach(button => button.classList.toggle('active', button.dataset.tab === 'circuits'));
+    // Les paramètres du site occupent un écran indépendant du catalogue des circuits.
+    document.querySelectorAll('[data-tab]').forEach(button => button.classList.remove('active'));
+    $('#site-management-shortcut').classList.add('active');
     $('#breadcrumb-current').textContent = 'Gestion du site';
     document.querySelector('.page-heading h1').textContent = 'Gestion du site';
     document.querySelector('.page-heading .eyebrow').textContent = 'Paramètres du site';
-    $('#circuits-panel').classList.remove('hidden');
+    document.querySelector('.page-heading p').textContent = 'Gérez séparément les régions, thématiques et durées proposées dans les filtres publics.';
+    $('#circuits-panel').classList.add('hidden');
     $('#quotes-panel').classList.add('hidden');
     $('#editor-panel').classList.add('hidden');
     $('#quote-detail-panel').classList.add('hidden');
@@ -643,7 +645,15 @@ td strong{color:#34303e;font-size:12px}
     $('#sidebar-toggle').setAttribute('aria-expanded', 'false');
     await openSiteManagement();
   });
-  $('#close-filter-options').addEventListener('click', () => filterOptionPanel.classList.add('hidden'));
+  $('#close-filter-options').addEventListener('click', () => {
+    filterOptionPanel.classList.add('hidden');
+    $('#site-management-shortcut').classList.remove('active');
+    document.querySelector('.page-heading h1').textContent = 'Catalogue des circuits';
+    document.querySelector('.page-heading .eyebrow').textContent = 'Vos destinations';
+    document.querySelector('.page-heading p').textContent = 'Organisez vos voyages, leurs visuels et leur visibilité sur le site MIARADI.';
+    $('#circuits-panel').classList.remove('hidden');
+    document.querySelectorAll('[data-tab="circuits"]').forEach(button => button.classList.add('active'));
+  });
   $('#reload-filter-options').addEventListener('click', loadFilterOptions);
   $('#filter-option-type').addEventListener('change', () => {
     const type = $('#filter-option-type').value;
