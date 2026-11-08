@@ -14,8 +14,11 @@
 <nav class="primary-nav" id="primary-nav" aria-label="Navigation principale"><a class="nav-current" href="#top" data-i18n="navHome">⌂ Accueil</a><a href="#circuits" data-i18n="navCircuits">▱ Circuits</a><a href="a-propos.html" data-i18n="navAbout">ⓘ À propos</a><a href="galerie.html">▧ Galerie</a><a href="a-propos.html#faq">ⓘ FAQ</a><a href="#contact">✉ Contact</a><button class="language-toggle" type="button" aria-label="Changer de langue">FR⌄</button><a class="nav-cta" href="#contact" data-i18n="navQuote">Demander un devis <span aria-hidden="true">↗</span></a></nav>
 </div></header><main id="main">
 <section class="hero" aria-labelledby="hero-title">
-  <div class="hero-slideshow" aria-label="Paysage de Madagascar">
-    <img class="hero-image hero-slide is-active" src="https://commons.wikimedia.org/wiki/Special:FilePath/Walking_the_Avenue_of_the_Baobabs.jpg?width=1800" alt="Baobabs majestueux et paysage emblématique de Madagascar" fetchpriority="high" decoding="async">
+  <div class="hero-slideshow" aria-label="Panoramas de Madagascar">
+    <img class="hero-image hero-slide is-active" src="https://commons.wikimedia.org/wiki/Special:FilePath/Walking_the_Avenue_of_the_Baobabs.jpg?width=2200" alt="Panorama de l’Allée des Baobabs à Madagascar" fetchpriority="high" decoding="async">
+    <img class="hero-image hero-slide" src="https://commons.wikimedia.org/wiki/Special:FilePath/Tsingy_de_Bemaraha.jpg?width=2200" alt="Formations rocheuses du parc national des Tsingy de Bemaraha" loading="lazy" decoding="async">
+    <img class="hero-image hero-slide" src="https://commons.wikimedia.org/wiki/Special:FilePath/Andasibe_Mantadia_National_Park.jpg?width=2200" alt="Forêt tropicale luxuriante de Madagascar" loading="lazy" decoding="async">
+    <img class="hero-image hero-slide" src="https://commons.wikimedia.org/wiki/Special:FilePath/Nosy_Be_Madagascar.jpg?width=2200" alt="Lagons turquoise et littoral de Nosy Be" loading="lazy" decoding="async">
   </div>
   <div class="hero-shade"></div>
   <div class="container hero-content">
@@ -27,7 +30,15 @@
       <a class="button button-white" href="#circuits"><span aria-hidden="true">▷</span> Découvrir nos circuits</a>
     </div>
   </div>
-  <div class="hero-controls" aria-hidden="true"><span>‹</span><span>›</span><div class="hero-dots"><i></i><i></i><i></i></div></div>
+  <div class="hero-controls" aria-label="Navigation du panorama">
+    <div class="hero-arrows"><button class="hero-arrow hero-prev" type="button" aria-label="Photo précédente">‹</button><button class="hero-arrow hero-next" type="button" aria-label="Photo suivante">›</button></div>
+    <div class="hero-dots" role="group" aria-label="Choisir un panorama">
+      <button class="hero-dot is-active" type="button" aria-label="Panorama 1" aria-pressed="true"></button>
+      <button class="hero-dot" type="button" aria-label="Panorama 2" aria-pressed="false"></button>
+      <button class="hero-dot" type="button" aria-label="Panorama 3" aria-pressed="false"></button>
+      <button class="hero-dot" type="button" aria-label="Panorama 4" aria-pressed="false"></button>
+    </div>
+  </div>
 </section>
 <section class="finder-panel" aria-label="Recherche de circuits">
   <form class="finder-inner container" id="homepage-finder">
