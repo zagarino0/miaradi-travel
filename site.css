@@ -3645,3 +3645,23 @@ body{background:#fbf8f7;color:var(--ink);font-family:var(--sans)}
     border-radius:22px !important;
   }
 }
+
+
+/* Hero flush styling: remove border and rounded corners */
+.hero{
+  border:0 !important;
+  border-radius:0 !important;
+  outline:0 !important;
+  box-shadow:none !important;
+}
+.hero-image{
+  border:0 !important;
+  border-radius:0 !important;
+}
+.hero-slideshow{
+  border:0 !important;
+  border-radius:0 !important;
+}
+@media(max-width:760px){
+  .hero{border-radius:0 !important}
+}
