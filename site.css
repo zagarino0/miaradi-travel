@@ -3583,3 +3583,33 @@ body{background:#fbf8f7;color:var(--ink);font-family:var(--sans)}
     border-radius:25px !important;
   }
 }
+
+
+/* Hero enlargement v2: give the Madagascar panorama more visual space */
+.hero{
+  width:calc(100% - 20px) !important;
+  height:520px !important;
+  min-height:520px !important;
+  margin:10px auto 0 !important;
+  border-radius:36px !important;
+}
+.hero-image{
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  object-position:center 52% !important;
+}
+.hero-slideshow{
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+}
+@media(max-width:760px){
+  .hero{
+    width:calc(100% - 16px) !important;
+    height:500px !important;
+    min-height:500px !important;
+    margin:8px auto 0 !important;
+    border-radius:26px !important;
+  }
+}
