@@ -16,7 +16,7 @@ if (!in_array($lang,['fr','en'],true)) {
     exit;
 }
 try {
-    $sql="SELECT g.id,g.circuit_id,c.slug AS circuit_slug,c.title_fr AS circuit_title_fr,c.title_en AS circuit_title_en,g.media_type,g.source_type,g.title_fr,g.title_en,g.description_fr,g.description_en,g.alt_text,g.file_path,g.external_url,g.thumbnail_path,g.sort_order,g.updated_at FROM miaradi_gallery_items g LEFT JOIN miaradi_circuits c ON c.id=g.circuit_id WHERE g.is_published=1";
+    $sql="SELECT g.id,g.circuit_id,c.slug AS circuit_slug,c.title_fr AS circuit_title_fr,c.title_en AS circuit_title_en,g.region,g.media_type,g.source_type,g.title_fr,g.title_en,g.description_fr,g.description_en,g.alt_text,g.file_path,g.external_url,g.thumbnail_path,g.sort_order,g.updated_at FROM miaradi_gallery_items g LEFT JOIN miaradi_circuits c ON c.id=g.circuit_id WHERE g.is_published=1";
     $params=[];
     $circuitIdRaw=$_GET['circuit_id'] ?? null;
     if ($circuitIdRaw !== null && $circuitIdRaw !== '') {
@@ -24,14 +24,20 @@ try {
         if (!$circuitId) { http_response_code(400); echo json_encode(['error'=>['code'=>'invalid_circuit_id','message'=>'circuit_id must be a positive integer.']]); exit; }
         $sql.=' AND g.circuit_id=:circuit_id'; $params['circuit_id']=$circuitId;
     }
-    $sql.=' ORDER BY g.sort_order ASC,g.id DESC';
+    $regionRaw = trim((string)($_GET['region'] ?? ''));
+    if ($regionRaw !== '') {
+        if (mb_strlen($regionRaw) > 80) { http_response_code(400); echo json_encode(['error'=>['code'=>'invalid_region','message'=>'region is too long.']]); exit; }
+        $sql .= ' AND g.region = :region';
+        $params['region'] = $regionRaw;
+    }
+    $sql.=' AND g.media_type = \'image\' ORDER BY g.sort_order ASC,g.id DESC';
     $stmt=database_connection()->prepare($sql);
     $stmt->execute($params);
     $items=array_map(static function(array $r) use ($lang): array {
         return [
             'id'=>(int)$r['id'],
             'circuit'=> $r['circuit_id'] === null ? null : ['id'=>(int)$r['circuit_id'],'slug'=>$r['circuit_slug'],'title'=>($lang==='en' && !empty($r['circuit_title_en']))?$r['circuit_title_en']:$r['circuit_title_fr']],
-            'type'=>$r['media_type'],
+            'region'=>$r['region'] ?? null,\n            'type'=>$r['media_type'],
             'source'=>$r['source_type'],
             'title'=>($lang==='en' && !empty($r['title_en']))?$r['title_en']:$r['title_fr'],
             'description'=>($lang==='en' && !empty($r['description_en']))?$r['description_en']:$r['description_fr'],
