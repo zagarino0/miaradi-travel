@@ -37,7 +37,8 @@ try {
         return [
             'id'=>(int)$r['id'],
             'circuit'=> $r['circuit_id'] === null ? null : ['id'=>(int)$r['circuit_id'],'slug'=>$r['circuit_slug'],'title'=>($lang==='en' && !empty($r['circuit_title_en']))?$r['circuit_title_en']:$r['circuit_title_fr']],
-            'region'=>$r['region'] ?? null,\n            'type'=>$r['media_type'],
+            'region'=>$r['region'] ?? null,
+            'type'=>$r['media_type'],
             'source'=>$r['source_type'],
             'title'=>($lang==='en' && !empty($r['title_en']))?$r['title_en']:$r['title_fr'],
             'description'=>($lang==='en' && !empty($r['description_en']))?$r['description_en']:$r['description_fr'],
