@@ -1078,5 +1078,36 @@ document.addEventListener("DOMContentLoaded", () => {
     startSlideshow();
   }
 
+  async function loadPartnerMedia() {
+    const images = Array.from(document.querySelectorAll("[data-partner-image]"));
+    if (!images.length) return;
+    try {
+      const endpoint = new URL("backend/public/api/partners.php?lang=" + (currentLanguage === "en" ? "en" : "fr"), document.baseURI);
+      const response = await fetch(endpoint, { headers: { Accept: "application/json" }, cache: "no-store" });
+      if (!response.ok) return;
+      const payload = await response.json();
+      const mediaBySlot = new Map((payload.data || []).map((item) => [item.slot, item]));
+      images.forEach((image) => {
+        const item = mediaBySlot.get(image.dataset.partnerImage);
+        if (!item) return;
+        if (item.image) {
+          image.src = item.image;
+          image.dataset.adminManaged = "true";
+        }
+        if (item.alt) image.alt = item.alt;
+        const slot = image.dataset.partnerImage;
+        const title = document.querySelector('[data-partner-title="' + slot + '"]');
+        const descriptions = document.querySelectorAll('[data-partner-description="' + slot + '"]');
+        if (title && item.title) title.textContent = item.title;
+        descriptions.forEach((element) => {
+          if (item.description) element.textContent = item.description;
+        });
+      });
+    } catch (error) {
+      // Le site reste utilisable avec les images de secours si l'API PHP est indisponible.
+    }
+  }
+
   setLanguage("fr");
+  loadPartnerMedia();
 });
