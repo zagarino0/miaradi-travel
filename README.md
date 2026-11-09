@@ -74,3 +74,14 @@ Palette actuelle : rouge `#922D20`, ivoire `#FBF8F5`, tons sombres et neutres. T
 - Formats autorisés : JPG, PNG, WebP ; 8 Mo maximum par image.
 
 Appliquer la migration `005_partner_media.sql` dans la base MIARADI avant d'utiliser l'écran d'administration. GitHub Pages ne peut pas exécuter les endpoints PHP : cette fonction nécessite l'hébergement PHP/MySQL ou un environnement local XAMPP.
+
+## Galerie régionale panoramique
+
+La section d'accueil « Madagascar en images » est alimentée par les médias publiés dans la galerie admin. Pour l'activer :
+
+1. Appliquer les migrations dans l'ordre : `001_gallery.sql`, `002_gallery_circuit.sql`, puis `006_gallery_region.sql` (la migration `005_partner_media.sql` reste indépendante pour la section des rencontres).
+2. Dans l'administration, ouvrir **Galerie médias**, puis ajouter ou modifier une photo.
+3. Choisir une **région** parmi les valeurs actives de **Paramètres du catalogue**, définir l'ordre d'affichage et cocher **Publier sur le site**.
+4. Répéter pour plusieurs photos d'une même région afin d'activer le slider automatique (intervalle de 6,5 secondes). Les flèches permettent également de naviguer manuellement.
+
+L'API publique `backend/public/api/gallery.php` conserve le fonctionnement de la galerie complète et accepte également `?region=<option_value>` pour filtrer une région. Les panoramas de la page d'accueil affichent jusqu'à quatre régions disposant d'images publiées. Les médias non publiés et les vidéos ne sont pas utilisés dans les panoramas.
