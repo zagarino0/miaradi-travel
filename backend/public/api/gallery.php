@@ -30,7 +30,7 @@ try {
         $sql .= ' AND g.region = :region';
         $params['region'] = $regionRaw;
     }
-    $sql.=' AND g.media_type = \'image\' ORDER BY g.sort_order ASC,g.id DESC';
+    $sql.=' ORDER BY g.sort_order ASC,g.id DESC';
     $stmt=database_connection()->prepare($sql);
     $stmt->execute($params);
     $items=array_map(static function(array $r) use ($lang): array {
