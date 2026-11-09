@@ -1108,6 +1108,72 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  async function loadRegionalGallery() {
+    const grid = document.getElementById("regional-gallery-grid");
+    if (!grid) return;
+    try {
+      const lang = currentLanguage === "en" ? "en" : "fr";
+      const response = await fetch("backend/public/api/gallery.php?lang=" + lang, {
+        headers: { Accept: "application/json" }, cache: "no-store"
+      });
+      if (!response.ok) throw new Error("Gallery API unavailable");
+      const payload = await response.json();
+      const media = (payload.data || []).filter(item => item.type === "image" && item.region && item.url);
+      const grouped = new Map();
+      media.forEach(item => {
+        const key = String(item.region).trim();
+        if (!key) return;
+        if (!grouped.has(key)) grouped.set(key, []);
+        grouped.get(key).push(item);
+      });
+      const regions = Array.from(grouped.entries()).filter(([, photos]) => photos.length).slice(0, 4);
+      if (!regions.length) {
+        grid.innerHTML = '<p class="regional-gallery-empty">' +
+          (lang === "en" ? "Regional photos will appear here as soon as published images are assigned to a region in the media library." :
+          "Les panoramas régionaux apparaîtront dès que des photos publiées auront été associées à une région dans la galerie média.") +
+          '</p>';
+        return;
+      }
+      grid.innerHTML = regions.map(([region, photos], index) => {
+        const label = region.replace(/[-_]+/g, " ").replace(/\b\p{L}/gu, ch => ch.toLocaleUpperCase());
+        return '<article class="circuit-gallery-item regional-gallery-card' + (index === 0 ? ' circuit-gallery-item-large' : '') + '" data-region-card="' + encodeURIComponent(region) + '">' +
+          '<img class="regional-gallery-image" src="' + photos[0].url.replace(/&/g, "&amp;").replace(/"/g, "&quot;") + '" alt="' + String(photos[0].alt || photos[0].title || label).replace(/[&<>"]/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch])) + '" loading="lazy" decoding="async">' +
+          '<span class="regional-gallery-shade"></span>' +
+          '<span class="circuit-gallery-caption"><small>' + String(index + 1).padStart(2, "0") + ' · ' + label + '</small><strong class="regional-gallery-title">' + (photos[0].title || label) + '</strong></span>' +
+          (photos.length > 1 ? '<span class="regional-gallery-controls"><button type="button" data-gallery-prev aria-label="' + (lang === "en" ? "Previous photo" : "Photo précédente") + '">‹</button><span data-gallery-count>01 / ' + String(photos.length).padStart(2, "0") + '</span><button type="button" data-gallery-next aria-label="' + (lang === "en" ? "Next photo" : "Photo suivante") + '">›</button></span>' : '') +
+          '</article>';
+      }).join("");
+      const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      regions.forEach(([region, photos]) => {
+        if (photos.length < 2) return;
+        const card = grid.querySelector('[data-region-card="' + encodeURIComponent(region) + '"]');
+        if (!card) return;
+        const img = card.querySelector(".regional-gallery-image");
+        const title = card.querySelector(".regional-gallery-title");
+        const counter = card.querySelector("[data-gallery-count]");
+        let index = 0;
+        const show = next => {
+          index = (next + photos.length) % photos.length;
+          const photo = photos[index];
+          img.classList.add("is-changing");
+          window.setTimeout(() => {
+            img.src = photo.url;
+            img.alt = photo.alt || photo.title || region;
+            title.textContent = photo.title || region;
+            counter.textContent = String(index + 1).padStart(2, "0") + " / " + String(photos.length).padStart(2, "0");
+            img.classList.remove("is-changing");
+          }, 220);
+        };
+        card.querySelector("[data-gallery-prev]")?.addEventListener("click", event => { event.preventDefault(); event.stopPropagation(); show(index - 1); });
+        card.querySelector("[data-gallery-next]")?.addEventListener("click", event => { event.preventDefault(); event.stopPropagation(); show(index + 1); });
+        if (!reducedMotion) window.setInterval(() => { if (!document.hidden) show(index + 1); }, 6500);
+      });
+    } catch (_) {
+      grid.innerHTML = '<p class="regional-gallery-empty">La galerie régionale sera disponible lorsque l’API des médias sera accessible.</p>';
+    }
+  }
+
   setLanguage("fr");
   loadPartnerMedia();
+  loadRegionalGallery();
 });
