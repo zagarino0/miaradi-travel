@@ -64,3 +64,13 @@ Palette actuelle : rouge `#922D20`, ivoire `#FBF8F5`, tons sombres et neutres. T
 **Attention :** `database/schema.sql` est un schéma de référence, pas une migration de production. `CREATE TABLE IF NOT EXISTS` ne modifie pas les tables déjà existantes. Ne pas l'importer aveuglément dans OVH. Les tables WordPress `mod141_*` ne sont pas concernées.
 
 **Sécurité :** ne jamais commiter un fichier `.env` réel, des identifiants de base de données, un dump de production ou un mot de passe administrateur. Le backend est un socle de développement et doit être complété et testé avant toute utilisation en production.
+
+
+## Photos de la section « Réseau local »
+
+- Administration : `backend/public/admin/network.php` (accessible après connexion admin).
+- API publique : `backend/public/api/partners.php`.
+- Migration SQL : `backend/migrations/005_partner_media.sql`.
+- Formats autorisés : JPG, PNG, WebP ; 8 Mo maximum par image.
+
+Appliquer la migration `005_partner_media.sql` dans la base MIARADI avant d'utiliser l'écran d'administration. GitHub Pages ne peut pas exécuter les endpoints PHP : cette fonction nécessite l'hébergement PHP/MySQL ou un environnement local XAMPP.
