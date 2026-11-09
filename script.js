@@ -1111,6 +1111,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function loadRegionalGallery() {
     const grid = document.getElementById("regional-gallery-grid");
     if (!grid) return;
+    const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
     try {
       const lang = currentLanguage === "en" ? "en" : "fr";
       const response = await fetch("backend/public/api/gallery.php?lang=" + lang, {
@@ -1139,7 +1140,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return '<article class="circuit-gallery-item regional-gallery-card' + (index === 0 ? ' circuit-gallery-item-large' : '') + '" data-region-card="' + encodeURIComponent(region) + '">' +
           '<img class="regional-gallery-image" src="' + photos[0].url.replace(/&/g, "&amp;").replace(/"/g, "&quot;") + '" alt="' + String(photos[0].alt || photos[0].title || label).replace(/[&<>"]/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch])) + '" loading="lazy" decoding="async">' +
           '<span class="regional-gallery-shade"></span>' +
-          '<span class="circuit-gallery-caption"><small>' + String(index + 1).padStart(2, "0") + ' · ' + label + '</small><strong class="regional-gallery-title">' + (photos[0].title || label) + '</strong></span>' +
+          '<span class="circuit-gallery-caption"><small>' + String(index + 1).padStart(2, "0") + ' · ' + escapeHtml(label) + '</small><strong class="regional-gallery-title">' + escapeHtml(photos[0].title || label) + '</strong></span>' +
           (photos.length > 1 ? '<span class="regional-gallery-controls"><button type="button" data-gallery-prev aria-label="' + (lang === "en" ? "Previous photo" : "Photo précédente") + '">‹</button><span data-gallery-count>01 / ' + String(photos.length).padStart(2, "0") + '</span><button type="button" data-gallery-next aria-label="' + (lang === "en" ? "Next photo" : "Photo suivante") + '">›</button></span>' : '') +
           '</article>';
       }).join("");
