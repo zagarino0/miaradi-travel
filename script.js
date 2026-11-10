@@ -961,7 +961,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const selectedInterests = data.getAll("interest").map((value) => String(value).trim()).filter(Boolean);
     const projectMessage = String(data.get("message") || "").trim();
     const messageWithInterests = selectedInterests.length
-      ? `${projectMessage}\\n\\nCentres d’intérêt : ${selectedInterests.join(", ")}.`
+      ? `${projectMessage}\n\nCentres d’intérêt : ${selectedInterests.join(", ")}.`
       : projectMessage;
     const payload = {
       fullName: String(data.get("name") || "").trim(),
