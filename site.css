@@ -4226,3 +4226,17 @@ html,body{
 img,video,iframe,svg{
   max-width:100%;
 }
+
+/* Hide the visible page scrollbar while keeping normal scrolling enabled. */
+html,
+body{
+  scrollbar-width:none!important;
+  -ms-overflow-style:none!important;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar{
+  display:none!important;
+  width:0!important;
+  height:0!important;
+  background:transparent!important;
+}
