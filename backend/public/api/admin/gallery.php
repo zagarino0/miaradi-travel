@@ -43,7 +43,7 @@ if ($method === 'GET') {
     try {
         $pdo = database_connection();
         $rows = $pdo->query('SELECT g.*, c.slug AS circuit_slug, c.title_fr AS circuit_title_fr FROM miaradi_gallery_items g LEFT JOIN miaradi_circuits c ON c.id = g.circuit_id ORDER BY g.sort_order ASC, g.id DESC')->fetchAll();
-        foreach ($rows as &$row) { $row['id']=(int)$row['id']; $row['circuit_id']=$row['circuit_id'] === null ? null : (int)$row['circuit_id']; $row['is_published']=(bool)$row['is_published']; $row['sort_order']=(int)$row['sort_order']; }
+        foreach ($rows as &$row) { $row['id']=(int)$row['id']; $row['circuit_id']=$row['circuit_id'] === null ? null : (int)$row['circuit_id']; $row['is_published']=(bool)$row['is_published']; $row['is_hero']=(bool)$row['is_hero']; $row['sort_order']=(int)$row['sort_order']; }
         unset($row);
         $circuits = $pdo->query('SELECT id, slug, title_fr, title_en, is_published FROM miaradi_circuits ORDER BY sort_order ASC, id ASC')->fetchAll();
         foreach ($circuits as &$circuit) { $circuit['id']=(int)$circuit['id']; $circuit['is_published']=(bool)$circuit['is_published']; }
