@@ -4038,7 +4038,19 @@ html, body {
 
 
 /* Unified homepage composition: signature circuit + MIARADI philosophy */
-.about-mi{padding-top:clamp(36px,5vw,64px)}
+.about-mi{
+  position:relative;
+  isolation:isolate;
+  padding-top:clamp(36px,5vw,64px);
+  background:
+    linear-gradient(90deg,rgba(251,248,245,.96) 0%,rgba(251,248,245,.91) 44%,rgba(251,248,245,.78) 100%),
+    url("https://commons.wikimedia.org/wiki/Special:FilePath/Walking_the_Avenue_of_the_Baobabs.jpg?width=2200") center 52%/cover no-repeat;
+}
+.about-mi .about-opening,
+.about-mi .nord-circuit-feature{position:relative;z-index:1}
+@media(max-width:700px){
+  .about-mi{background-position:center;background-image:linear-gradient(rgba(251,248,245,.91),rgba(251,248,245,.88)),url("https://commons.wikimedia.org/wiki/Special:FilePath/Walking_the_Avenue_of_the_Baobabs.jpg?width=1400")}
+}
 .about-mi .nord-circuit-feature{margin-top:0;margin-bottom:clamp(44px,6vw,76px);width:100%;box-sizing:border-box}
 .about-mi .about-opening{padding-top:0}
 @media(max-width:700px){.about-mi .nord-circuit-feature{margin-bottom:38px}}
