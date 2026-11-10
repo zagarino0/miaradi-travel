@@ -1,6 +1,6 @@
 const translations = {
   fr: {
-    navHome: "Accueil", navAbout: "À propos", navCircuits: "Circuits", navContact: "Contact", navQuote: "Demander un devis",
+    navHome: "Accueil", navAbout: "Esprit MIARADI", navCircuits: "Circuits", navContact: "Contact", navQuote: "Demander un devis",
     finderEyebrow: "VOTRE PROCHAINE AVENTURE", finderTitle: "Trouvez votre <em>voyage.</em>", finderRegion: "Région", finderDuration: "Durée du séjour", finderTheme: "Type de voyage", finderSubmit: "Trouver un circuit",
     heroEyebrow: "VOYAGES AUTHENTIQUES · MADAGASCAR",
     heroTitle: "Imaginons votre voyage<br>à Madagascar",
@@ -41,7 +41,7 @@ const translations = {
     formDemo: "Merci {name}. Votre formulaire fonctionne en mode maquette, mais l'envoi n'est pas activé. Contactez l'agence par e-mail dès que ses coordonnées seront configurées."
   },
   en: {
-    navHome: "Home", navAbout: "About", navCircuits: "Circuits", navContact: "Contact", navQuote: "Request a quote",
+    navHome: "Home", navAbout: "MIARADI Spirit", navCircuits: "Circuits", navContact: "Contact", navQuote: "Request a quote",
     finderEyebrow: "YOUR NEXT ADVENTURE", finderTitle: "Find your <em>journey.</em>", finderRegion: "Region", finderDuration: "Trip length", finderTheme: "Travel style", finderSubmit: "Find a journey",
     heroEyebrow: "AUTHENTIC JOURNEYS · MADAGASCAR",
     heroTitle: "Madagascar, <em>in a different light.</em><br>Journeys made for you.",
