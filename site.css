@@ -4159,7 +4159,7 @@ section.contact.section-pad.combined-trip-contact#contact{
   background-color:#FBF8F5!important;
   background-image:
     linear-gradient(90deg,rgba(251,248,245,.82) 0%,rgba(251,248,245,.76) 48%,rgba(251,248,245,.68) 100%),
-    url("https://commons.wikimedia.org/wiki/Special:FilePath/Walking_the_Avenue_of_the_Baobabs.jpg?width=2200")!important;
+    url("https://res.cloudinary.com/dlhhugvi8/image/upload/v1744199959/traveleasy.it/images/nosy_be_madagascar_816b3c0c21.jpg")!important;
   background-position:center,center 52%!important;
   background-size:cover!important;
   background-repeat:no-repeat!important;
@@ -4178,7 +4178,7 @@ section.contact.section-pad.combined-trip-contact#contact .combined-trip-form{
   section.contact.section-pad.combined-trip-contact#contact{
     background-image:
       linear-gradient(rgba(251,248,245,.84),rgba(251,248,245,.78)),
-      url("https://commons.wikimedia.org/wiki/Special:FilePath/Walking_the_Avenue_of_the_Baobabs.jpg?width=1400")!important;
+      url("https://res.cloudinary.com/dlhhugvi8/image/upload/v1744199959/traveleasy.it/images/nosy_be_madagascar_816b3c0c21.jpg")!important;
     background-position:center,center!important;
   }
 }
