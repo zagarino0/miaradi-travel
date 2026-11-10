@@ -4214,3 +4214,15 @@ section.contact.section-pad.combined-trip-contact#contact .combined-trip-form sm
 section.contact.section-pad.combined-trip-contact#contact .combined-trip-form .eyebrow{
   color:#7f241b!important;
 }
+
+/* Prevent horizontal overflow that creates an unwanted horizontal scrollbar. */
+html,body{
+  max-width:100%;
+  overflow-x:clip;
+}
+@supports not (overflow:clip){
+  html,body{overflow-x:hidden}
+}
+img,video,iframe,svg{
+  max-width:100%;
+}
