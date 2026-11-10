@@ -4182,3 +4182,35 @@ section.contact.section-pad.combined-trip-contact#contact .combined-trip-form{
     background-position:center,center!important;
   }
 }
+
+/* Accessibility/contrast fix: darken text over the Madagascar background. */
+section.contact.section-pad.combined-trip-contact#contact .combined-trip-intro,
+section.contact.section-pad.combined-trip-contact#contact .combined-trip-intro h2,
+section.contact.section-pad.combined-trip-contact#contact .combined-trip-steps-title,
+section.contact.section-pad.combined-trip-contact#contact .combined-trip-intro strong{
+  color:#171d2b!important;
+}
+section.contact.section-pad.combined-trip-contact#contact .combined-trip-intro>p,
+section.contact.section-pad.combined-trip-contact#contact .combined-trip-intro .step-item p,
+section.contact.section-pad.combined-trip-contact#contact .combined-trip-intro .contact-step p,
+section.contact.section-pad.combined-trip-contact#contact .combined-trip-intro li{
+  color:#39352f!important;
+}
+section.contact.section-pad.combined-trip-contact#contact .combined-trip-intro .eyebrow,
+section.contact.section-pad.combined-trip-contact#contact .combined-trip-intro .section-kicker{
+  color:#7f241b!important;
+}
+section.contact.section-pad.combined-trip-contact#contact .combined-trip-form,
+section.contact.section-pad.combined-trip-contact#contact .combined-trip-form h3,
+section.contact.section-pad.combined-trip-contact#contact .combined-trip-form label,
+section.contact.section-pad.combined-trip-contact#contact .combined-trip-form strong{
+  color:#171d2b!important;
+}
+section.contact.section-pad.combined-trip-contact#contact .combined-trip-form p,
+section.contact.section-pad.combined-trip-contact#contact .combined-trip-form .personalization-note,
+section.contact.section-pad.combined-trip-contact#contact .combined-trip-form small{
+  color:#49423c!important;
+}
+section.contact.section-pad.combined-trip-contact#contact .combined-trip-form .eyebrow{
+  color:#7f241b!important;
+}
