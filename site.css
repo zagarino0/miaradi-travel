@@ -4073,7 +4073,7 @@ section.intro.section-pad.about-mi#about{
   isolation:isolate;
   background-color:#fbf8f5!important;
   background-image:
-    linear-gradient(90deg,rgba(251,248,245,.72) 0%,rgba(251,248,245,.64) 48%,rgba(251,248,245,.56) 100%),
+    linear-gradient(90deg,rgba(251,248,245,.88) 0%,rgba(251,248,245,.84) 48%,rgba(251,248,245,.78) 100%),
     url("https://commons.wikimedia.org/wiki/Special:FilePath/Walking_the_Avenue_of_the_Baobabs.jpg?width=2200")!important;
   background-position:center,center 52%!important;
   background-size:cover!important;
@@ -4083,10 +4083,18 @@ section.intro.section-pad.about-mi#about>.container{
   position:relative;
   z-index:1;
 }
+section.intro.section-pad.about-mi#about .about-opening,
+section.intro.section-pad.about-mi#about .nord-circuit-feature{
+  text-shadow:0 1px 1px rgba(251,248,245,.45);
+}
+section.intro.section-pad.about-mi#about .nord-circuit-feature{
+  border-left-color:rgba(146,45,32,.24);
+}
+
 @media(max-width:700px){
   section.intro.section-pad.about-mi#about{
     background-image:
-      linear-gradient(rgba(251,248,245,.78),rgba(251,248,245,.72)),
+      linear-gradient(rgba(251,248,245,.90),rgba(251,248,245,.86)),
       url("https://commons.wikimedia.org/wiki/Special:FilePath/Walking_the_Avenue_of_the_Baobabs.jpg?width=1400")!important;
   }
 }
