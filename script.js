@@ -1009,8 +1009,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       showQuoteStatus(
         currentLanguage === "fr"
-          ? `Merci ${payload.fullName}, votre demande a bien été enregistrée (référence ${result.data?.id ?? "—"}).`
-          : `Thank you ${payload.fullName}, your request has been received (reference ${result.data?.id ?? "—"}).`
+          ? "Merci pour votre confiance ! Votre demande de voyage a bien été enregistrée."
+          : "Thank you for your trust! Your travel request has been successfully recorded."
       );
       form.reset();
       await loadQuoteCircuits();
