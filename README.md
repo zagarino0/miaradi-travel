@@ -85,3 +85,10 @@ La section d'accueil « Madagascar en images » est alimentée par les médias p
 4. Répéter pour plusieurs photos d'une même région afin d'activer le slider automatique (intervalle de 6,5 secondes). Les flèches permettent également de naviguer manuellement.
 
 L'API publique `backend/public/api/gallery.php` conserve le fonctionnement de la galerie complète et accepte également `?region=<option_value>` pour filtrer une région. Les panoramas de la page d'accueil affichent jusqu'à quatre régions disposant d'images publiées. Les médias non publiés et les vidéos ne sont pas utilisés dans les panoramas.
+
+
+## Images du hero de la page d’accueil
+
+Les photos de fond du hero peuvent être gérées depuis **Administration → Galerie médias**. Modifiez une photo, cochez **« Utiliser comme image de fond du hero »**, puis enregistrez. Seules les photos publiées et sélectionnées sont utilisées ; plusieurs photos sélectionnées alimentent le diaporama d’accueil. Si aucune photo n’est sélectionnée, les images par défaut restent affichées.
+
+Avant la première utilisation, appliquez une seule fois `backend/migrations/007_gallery_hero.sql` sur la même base MariaDB que le site. Cette migration ajoute la colonne `is_hero` à `miaradi_gallery_items`. Ne la réexécutez pas si la colonne existe déjà.
