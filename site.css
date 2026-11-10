@@ -4098,3 +4098,30 @@ section.intro.section-pad.about-mi#about .nord-circuit-feature{
       url("https://commons.wikimedia.org/wiki/Special:FilePath/Walking_the_Avenue_of_the_Baobabs.jpg?width=1400")!important;
   }
 }
+
+
+/* Keep the consent checkbox inline with its privacy text in the quote form. */
+#quote-form .form-consent,
+form#quote-form label.form-consent,
+.form-consent{
+  display:flex!important;
+  flex-direction:row!important;
+  align-items:flex-start!important;
+  justify-content:flex-start!important;
+  gap:10px!important;
+  text-align:left!important;
+  width:100%;
+}
+.form-consent input[type="checkbox"]{
+  display:block!important;
+  flex:0 0 16px!important;
+  width:16px!important;
+  height:16px!important;
+  margin:3px 0 0!important;
+  padding:0!important;
+}
+.form-consent span{
+  display:block!important;
+  flex:1 1 auto!important;
+  min-width:0;
+}
