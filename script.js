@@ -131,7 +131,6 @@ function initHeroSlideshow() {
 
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("year").textContent = String(new Date().getFullYear());
-  initHeroSlideshow();
 
   const menuToggle = document.querySelector(".menu-toggle");
   const nav = document.querySelector(".primary-nav");
@@ -1043,16 +1042,19 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-  // Hero panorama slideshow: automatic rotation, arrow and dot navigation.
+  // Hero panorama: published photos selected by the administrator in the media library.
   const hero = document.querySelector(".hero");
   if (hero) {
-    const slides = Array.from(hero.querySelectorAll(".hero-slide"));
-    const dots = Array.from(hero.querySelectorAll(".hero-dot"));
+    const slideshow = hero.querySelector(".hero-slideshow");
+    const dotsContainer = hero.querySelector(".hero-dots");
     const previous = hero.querySelector(".hero-prev");
     const next = hero.querySelector(".hero-next");
+    let slides = Array.from(hero.querySelectorAll(".hero-slide"));
+    let dots = Array.from(hero.querySelectorAll(".hero-dot"));
     let activeSlide = 0;
     let slideshowTimer;
     const showSlide = (index) => {
+      if (!slides.length) return;
       activeSlide = (index + slides.length) % slides.length;
       slides.forEach((slide, i) => {
         slide.classList.toggle("is-active", i === activeSlide);
@@ -1065,17 +1067,45 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     const startSlideshow = () => {
       window.clearInterval(slideshowTimer);
-      slideshowTimer = window.setInterval(() => showSlide(activeSlide + 1), 6500);
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && slides.length > 1) {
+        slideshowTimer = window.setInterval(() => showSlide(activeSlide + 1), 6500);
+      }
+    };
+    const renderDots = () => {
+      if (!dotsContainer) return;
+      dotsContainer.innerHTML = slides.map((_, i) => '<button class="hero-dot' + (i === 0 ? ' is-active' : '') + '" type="button" aria-label="' + (currentLanguage === "en" ? 'Panorama ' : 'Panorama ') + (i + 1) + '" aria-pressed="' + (i === 0 ? 'true' : 'false') + '"></button>').join("");
+      dots = Array.from(dotsContainer.querySelectorAll(".hero-dot"));
+      dots.forEach((dot, i) => dot.addEventListener("click", () => { showSlide(i); startSlideshow(); }));
+    };
+    const loadAdminHeroImages = async () => {
+      try {
+        const response = await fetch("backend/public/api/gallery.php?lang=" + (currentLanguage === "en" ? "en" : "fr"), { headers: { Accept: "application/json" }, cache: "no-store" });
+        if (!response.ok) return;
+        const payload = await response.json();
+        const chosen = (payload.data || []).filter(item => item.type === "image" && item.isHero && item.url);
+        if (!chosen.length || !slideshow) return;
+        slideshow.innerHTML = chosen.map((item, i) => {
+          const safeUrl = String(item.url).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+          const safeAlt = String(item.alt || item.title || "Madagascar").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+          return '<img class="hero-image hero-slide' + (i === 0 ? ' is-active' : '') + '" src="' + safeUrl + '" alt="' + safeAlt + '" ' + (i === 0 ? 'fetchpriority="high"' : 'loading="lazy"') + ' decoding="async" aria-hidden="' + (i === 0 ? 'false' : 'true') + '">';
+        }).join("");
+        slides = Array.from(slideshow.querySelectorAll(".hero-slide"));
+        renderDots();
+        showSlide(0);
+        startSlideshow();
+      } catch (error) {
+        console.warn("[miaradi] Could not load admin-selected hero images; using defaults.", error);
+      }
     };
     previous?.addEventListener("click", () => { showSlide(activeSlide - 1); startSlideshow(); });
     next?.addEventListener("click", () => { showSlide(activeSlide + 1); startSlideshow(); });
-    dots.forEach((dot, i) => dot.addEventListener("click", () => { showSlide(i); startSlideshow(); }));
     hero.addEventListener("mouseenter", () => window.clearInterval(slideshowTimer));
     hero.addEventListener("mouseleave", startSlideshow);
     hero.addEventListener("focusin", () => window.clearInterval(slideshowTimer));
     hero.addEventListener("focusout", startSlideshow);
     showSlide(0);
     startSlideshow();
+    loadAdminHeroImages();
   }
 
   async function loadPartnerMedia() {
