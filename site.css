@@ -4042,3 +4042,14 @@ html, body {
 .about-mi .nord-circuit-feature{margin-top:0;margin-bottom:clamp(44px,6vw,76px);width:100%;box-sizing:border-box}
 .about-mi .about-opening{padding-top:0}
 @media(max-width:700px){.about-mi .nord-circuit-feature{margin-bottom:38px}}
+
+
+/* Signature trip integrated into the "Voyager autrement" intro column */
+.about-lead .nord-circuit-feature{display:block;margin:0 0 22px;padding:0;background:transparent;color:inherit;border-radius:0}
+.about-lead .nord-circuit-feature .section-kicker{font-size:.7rem;letter-spacing:.12em;color:#922D20;font-weight:600;margin:0 0 12px}
+.about-lead .nord-circuit-feature h3{font:clamp(1.65rem,2.5vw,2.35rem)/1.15 Georgia,serif;color:#211e1b;margin:0 0 14px;letter-spacing:-.025em}
+.about-lead .nord-circuit-feature h3 em{color:#DDA58F;font-weight:400}
+.about-lead .nord-circuit-feature p:not(.section-kicker){font-size:1rem;line-height:1.7;color:#62574f;margin:0 0 18px;max-width:640px}
+.about-lead .nord-circuit-feature .button{display:inline-flex;align-items:center;gap:10px;padding:0;border:0;border-bottom:1px solid #922D20;border-radius:0;background:transparent;color:#922D20;box-shadow:none;text-decoration:none;font-weight:600}
+.about-lead .nord-circuit-feature .button:hover{background:transparent;color:#6f2118}
+@media(max-width:700px){.about-lead .nord-circuit-feature h3{font-size:1.8rem}}
