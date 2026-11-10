@@ -105,6 +105,7 @@ try {
     if ($circuitIdRaw !== null && $circuitIdRaw !== '' && !$circuitId) api_json(['error'=>['code'=>'validation_error','message'=>'The selected circuit is invalid.']],422);
     if ($circuitId !== null) { $checkCircuit=$pdo->prepare('SELECT id FROM miaradi_circuits WHERE id=:id'); $checkCircuit->execute(['id'=>$circuitId]); if (!$checkCircuit->fetch()) api_json(['error'=>['code'=>'circuit_not_found','message'=>'The selected circuit does not exist.']],422); }
     $published = filter_var($input['is_published'] ?? false, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+    $isHero = $type === 'image' && filter_var($input['is_hero'] ?? false, FILTER_VALIDATE_BOOLEAN);
     $sortOrder = filter_var($input['sort_order'] ?? '0', FILTER_VALIDATE_INT);
     if ($published === null || $sortOrder === false || $sortOrder < -100000 || $sortOrder > 100000) api_json(['error'=>['code'=>'validation_error','message'=>'Publication or display order is invalid.']],422);
 
@@ -141,15 +142,15 @@ try {
     }
 
     if ($method==='POST') {
-        $stmt=$pdo->prepare('INSERT INTO miaradi_gallery_items (circuit_id,region,media_type,source_type,title_fr,title_en,description_fr,description_en,alt_text,file_path,external_url,thumbnail_path,is_published,sort_order) VALUES (:circuit_id,:region,:media_type,:source_type,:title_fr,:title_en,:description_fr,:description_en,:alt_text,:file_path,:external_url,:thumbnail_path,:published,:sort_order)');
+        $stmt=$pdo->prepare('INSERT INTO miaradi_gallery_items (circuit_id,region,media_type,source_type,title_fr,title_en,description_fr,description_en,alt_text,file_path,external_url,thumbnail_path,is_published,is_hero,sort_order) VALUES (:circuit_id,:region,:media_type,:source_type,:title_fr,:title_en,:description_fr,:description_en,:alt_text,:file_path,:external_url,:thumbnail_path,:published,:is_hero,:sort_order)');
     } else {
-        $stmt=$pdo->prepare('UPDATE miaradi_gallery_items SET circuit_id=:circuit_id,region=:region,media_type=:media_type,source_type=:source_type,title_fr=:title_fr,title_en=:title_en,description_fr=:description_fr,description_en=:description_en,alt_text=:alt_text,file_path=COALESCE(:file_path,file_path),external_url=:external_url,thumbnail_path=:thumbnail_path,is_published=:published,sort_order=:sort_order WHERE id=:id');
+        $stmt=$pdo->prepare('UPDATE miaradi_gallery_items SET circuit_id=:circuit_id,region=:region,media_type=:media_type,source_type=:source_type,title_fr=:title_fr,title_en=:title_en,description_fr=:description_fr,description_en=:description_en,alt_text=:alt_text,file_path=COALESCE(:file_path,file_path),external_url=:external_url,thumbnail_path=:thumbnail_path,is_published=:published,is_hero=:is_hero,sort_order=:sort_order WHERE id=:id');
     }
-    $values=['circuit_id'=>$circuitId,'region'=>$region,'media_type'=>$type,'source_type'=>$source,'title_fr'=>$titleFr,'title_en'=>$titleEn,'description_fr'=>$descriptionFr,'description_en'=>$descriptionEn,'alt_text'=>$altText,'file_path'=>$filePath,'external_url'=>$externalUrl,'thumbnail_path'=>$thumbnail,'published'=>$published?1:0,'sort_order'=>$sortOrder];
+    $values=['circuit_id'=>$circuitId,'region'=>$region,'media_type'=>$type,'source_type'=>$source,'title_fr'=>$titleFr,'title_en'=>$titleEn,'description_fr'=>$descriptionFr,'description_en'=>$descriptionEn,'alt_text'=>$altText,'file_path'=>$filePath,'external_url'=>$externalUrl,'thumbnail_path'=>$thumbnail,'published'=>$published?1:0,'is_hero'=>$isHero?1:0,'sort_order'=>$sortOrder];
     if ($method==='PATCH') $values['id']=$id;
     $stmt->execute($values);
     $savedId=$method==='POST'?(int)$pdo->lastInsertId():(int)$id;
-    api_json(['data'=>['id'=>$savedId,'media_type'=>$type,'source_type'=>$source,'is_published'=>$published]]);
+    api_json(['data'=>['id'=>$savedId,'media_type'=>$type,'source_type'=>$source,'is_published'=>$published,'is_hero'=>$isHero]]);
 } catch (Throwable $e) {
     error_log('[miaradi-api] Gallery mutation failed: '.$e->getMessage());
     api_json(['error'=>['code'=>'gallery_save_failed','message'=>'The media item could not be saved. Check the server upload configuration.']],503);
