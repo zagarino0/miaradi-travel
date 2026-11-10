@@ -4151,3 +4151,34 @@ form#quote-form label.form-consent,
 .combined-trip-form .form-submit{justify-content:center;gap:12px;min-height:52px}
 @media(max-width:900px){.combined-trip-layout{grid-template-columns:1fr}.combined-trip-intro h2{max-width:760px}.combined-trip-form{width:100%;max-width:760px}.combined-trip-steps-title{margin-top:26px}}
 @media(max-width:520px){.combined-trip-form{padding:20px}.combined-trip-form .travel-interest-list{grid-template-columns:1fr}.combined-trip-form .form-row{grid-template-columns:1fr;gap:14px}.combined-trip-intro h2{font-size:clamp(2.5rem,11vw,3.5rem)}}
+
+/* MIARADI quote section: immersive Madagascar background with readable content. */
+section.contact.section-pad.combined-trip-contact#contact{
+  position:relative;
+  isolation:isolate;
+  background-color:#FBF8F5!important;
+  background-image:
+    linear-gradient(90deg,rgba(251,248,245,.82) 0%,rgba(251,248,245,.76) 48%,rgba(251,248,245,.68) 100%),
+    url("https://commons.wikimedia.org/wiki/Special:FilePath/Walking_the_Avenue_of_the_Baobabs.jpg?width=2200")!important;
+  background-position:center,center 52%!important;
+  background-size:cover!important;
+  background-repeat:no-repeat!important;
+}
+section.contact.section-pad.combined-trip-contact#contact>.container{
+  position:relative;
+  z-index:1;
+}
+section.contact.section-pad.combined-trip-contact#contact .combined-trip-form{
+  background:rgba(255,255,255,.97);
+  border:1px solid rgba(255,255,255,.82);
+  box-shadow:0 22px 60px rgba(33,29,26,.16);
+  backdrop-filter:blur(5px);
+}
+@media(max-width:700px){
+  section.contact.section-pad.combined-trip-contact#contact{
+    background-image:
+      linear-gradient(rgba(251,248,245,.84),rgba(251,248,245,.78)),
+      url("https://commons.wikimedia.org/wiki/Special:FilePath/Walking_the_Avenue_of_the_Baobabs.jpg?width=1400")!important;
+    background-position:center,center!important;
+  }
+}
