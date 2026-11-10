@@ -958,13 +958,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const data = new FormData(form);
     const rawCircuit = String(data.get("circuit") || "");
+    const selectedInterests = data.getAll("interest").map((value) => String(value).trim()).filter(Boolean);
+    const projectMessage = String(data.get("message") || "").trim();
+    const messageWithInterests = selectedInterests.length
+      ? `${projectMessage}\\n\\nCentres d’intérêt : ${selectedInterests.join(", ")}.`
+      : projectMessage;
     const payload = {
       fullName: String(data.get("name") || "").trim(),
       email: String(data.get("email") || "").trim(),
       departureDate: String(data.get("date") || "") || null,
       travelerCount: Number(data.get("people") || 2),
       circuitId: rawCircuit ? Number(rawCircuit) : null,
-      message: String(data.get("message") || "").trim(),
+      message: messageWithInterests,
       language: currentLanguage === "en" ? "en" : "fr",
       privacyConsent: data.get("privacyConsent") === "on"
     };
