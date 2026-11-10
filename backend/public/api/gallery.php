@@ -16,7 +16,7 @@ if (!in_array($lang,['fr','en'],true)) {
     exit;
 }
 try {
-    $sql="SELECT g.id,g.circuit_id,c.slug AS circuit_slug,c.title_fr AS circuit_title_fr,c.title_en AS circuit_title_en,g.region,g.media_type,g.source_type,g.title_fr,g.title_en,g.description_fr,g.description_en,g.alt_text,g.file_path,g.external_url,g.thumbnail_path,g.sort_order,g.updated_at FROM miaradi_gallery_items g LEFT JOIN miaradi_circuits c ON c.id=g.circuit_id WHERE g.is_published=1";
+    $sql="SELECT g.id,g.circuit_id,c.slug AS circuit_slug,c.title_fr AS circuit_title_fr,c.title_en AS circuit_title_en,g.region,g.is_hero,g.media_type,g.source_type,g.title_fr,g.title_en,g.description_fr,g.description_en,g.alt_text,g.file_path,g.external_url,g.thumbnail_path,g.sort_order,g.updated_at FROM miaradi_gallery_items g LEFT JOIN miaradi_circuits c ON c.id=g.circuit_id WHERE g.is_published=1";
     $params=[];
     $circuitIdRaw=$_GET['circuit_id'] ?? null;
     if ($circuitIdRaw !== null && $circuitIdRaw !== '') {
@@ -38,6 +38,7 @@ try {
             'id'=>(int)$r['id'],
             'circuit'=> $r['circuit_id'] === null ? null : ['id'=>(int)$r['circuit_id'],'slug'=>$r['circuit_slug'],'title'=>($lang==='en' && !empty($r['circuit_title_en']))?$r['circuit_title_en']:$r['circuit_title_fr']],
             'region'=>$r['region'] ?? null,
+            'isHero'=>(bool)($r['is_hero'] ?? false),
             'type'=>$r['media_type'],
             'source'=>$r['source_type'],
             'title'=>($lang==='en' && !empty($r['title_en']))?$r['title_en']:$r['title_fr'],
