@@ -4125,3 +4125,29 @@ form#quote-form label.form-consent,
   flex:1 1 auto!important;
   min-width:0;
 }
+
+
+/* Combined inspiration and quote request section */
+.combined-trip-contact{background:var(--paper)}
+.combined-trip-layout{grid-template-columns:minmax(0,.88fr) minmax(420px,1.12fr);align-items:start;gap:clamp(34px,5vw,76px)}
+.combined-trip-intro h2{max-width:620px;font-size:clamp(2.7rem,4.5vw,4.5rem)}
+.combined-trip-intro h2 em{color:var(--red)}
+.combined-trip-steps-title{margin:34px 0 12px;font-size:1.05rem}
+.combined-trip-form{gap:14px;border-radius:18px;box-shadow:0 16px 44px rgba(33,29,26,.055)}
+.combined-trip-form-heading .eyebrow{margin-bottom:10px}
+.combined-trip-form-heading h3{margin:0 0 8px;font:400 clamp(1.7rem,2.5vw,2.25rem)/1.2 var(--serif);letter-spacing:-.02em}
+.combined-trip-form-heading>p:not(.eyebrow){margin:0;color:var(--muted);font-size:13px;line-height:1.7}
+.combined-trip-form .travel-interest-list{margin:4px 0 0}
+.combined-trip-form .travel-interest-list label{display:flex;align-items:center;gap:9px;padding:12px 10px;border:1px solid var(--line);background:var(--paper);cursor:pointer;font-size:12px;font-weight:500}
+.combined-trip-form .travel-interest-list input{width:auto;margin:0;accent-color:var(--red)}
+.combined-trip-form .travel-interest-list label span{color:var(--red)}
+.combined-trip-form .personalization-note{margin:0;color:var(--muted);font-size:11px;font-weight:400}
+.combined-trip-form-divider{height:1px;margin:5px 0;background:var(--line)}
+.combined-trip-form .quote-form-heading h3{font-size:1.8rem}
+.combined-trip-form .form-consent{display:grid;grid-template-columns:18px minmax(0,1fr);align-items:start;gap:10px;font-size:11px;line-height:1.6;font-weight:500}
+.combined-trip-form .form-consent input{width:17px;height:17px;margin:2px 0 0;accent-color:var(--red)}
+.combined-trip-form .form-consent span{display:block}
+.combined-trip-form .form-consent a{text-decoration:underline;text-underline-offset:2px}
+.combined-trip-form .form-submit{justify-content:center;gap:12px;min-height:52px}
+@media(max-width:900px){.combined-trip-layout{grid-template-columns:1fr}.combined-trip-intro h2{max-width:760px}.combined-trip-form{width:100%;max-width:760px}.combined-trip-steps-title{margin-top:26px}}
+@media(max-width:520px){.combined-trip-form{padding:20px}.combined-trip-form .travel-interest-list{grid-template-columns:1fr}.combined-trip-form .form-row{grid-template-columns:1fr;gap:14px}.combined-trip-intro h2{font-size:clamp(2.5rem,11vw,3.5rem)}}
