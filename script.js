@@ -35,7 +35,7 @@ const translations = {
     contactNote: "Chaque demande est étudiée individuellement. Aucun tarif n'est affiché : nous préparons un devis personnalisé selon votre projet.",
     fieldName: "Nom complet *", fieldEmail: "Adresse e-mail *", fieldDate: "Date de départ souhaitée", fieldPeople: "Nombre de voyageurs",
     fieldCircuit: "Circuit qui vous intéresse", optionCustom: "Je souhaite un voyage sur mesure", fieldMessage: "Parlez-nous de votre projet *",
-    formSubmit: "Préparer ma demande", formDisclaimer: "Maquette de démonstration : l'envoi réel sera activé après configuration du service de messagerie.",
+    formSubmit: "Préparer ma demande",
     footerStatement: "Madagascar, plus proche. Le monde, autrement.", footerRights: "Tous droits réservés", backTop: "Retour en haut ↑",
     namePlaceholder: "Votre nom", emailPlaceholder: "vous@exemple.com", messagePlaceholder: "Vos envies, la durée du séjour, les lieux rêvés…",
     formDemo: "Merci {name}. Votre formulaire fonctionne en mode maquette, mais l'envoi n'est pas activé. Contactez l'agence par e-mail dès que ses coordonnées seront configurées."
