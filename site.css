@@ -4065,3 +4065,28 @@ html, body {
 .about-lead .nord-circuit-feature .button{display:inline-flex;align-items:center;gap:10px;padding:0;border:0;border-bottom:1px solid #922D20;border-radius:0;background:transparent;color:#922D20;box-shadow:none;text-decoration:none;font-weight:600}
 .about-lead .nord-circuit-feature .button:hover{background:transparent;color:#6f2118}
 @media(max-width:700px){.about-lead .nord-circuit-feature h3{font-size:1.8rem}}
+
+
+/* Final override: keep the MIARADI spirit section photo visible over legacy intro backgrounds. */
+section.intro.section-pad.about-mi#about{
+  position:relative;
+  isolation:isolate;
+  background-color:#fbf8f5!important;
+  background-image:
+    linear-gradient(90deg,rgba(251,248,245,.92) 0%,rgba(251,248,245,.86) 48%,rgba(251,248,245,.76) 100%),
+    url("https://commons.wikimedia.org/wiki/Special:FilePath/Walking_the_Avenue_of_the_Baobabs.jpg?width=2200")!important;
+  background-position:center,center 52%!important;
+  background-size:cover!important;
+  background-repeat:no-repeat!important;
+}
+section.intro.section-pad.about-mi#about>.container{
+  position:relative;
+  z-index:1;
+}
+@media(max-width:700px){
+  section.intro.section-pad.about-mi#about{
+    background-image:
+      linear-gradient(rgba(251,248,245,.91),rgba(251,248,245,.87)),
+      url("https://commons.wikimedia.org/wiki/Special:FilePath/Walking_the_Avenue_of_the_Baobabs.jpg?width=1400")!important;
+  }
+}
