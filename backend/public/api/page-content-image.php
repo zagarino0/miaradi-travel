@@ -7,7 +7,7 @@ api_require_admin();
 api_method('POST');
 api_require_csrf();
 $slot = (string)($_POST['slot'] ?? '');
-if (!in_array($slot, ['logo', 'hero1', 'hero2', 'hero3', 'hero4', 'partnerFeature', 'partnerGuide', 'partnerLodging', 'partnerCrafts', 'feature', 'guide', 'lodging', 'crafts'], true)) {
+if (!in_array($slot, ['logo', 'hero1', 'hero2', 'hero3', 'hero4', 'introFeatureImage', 'partnerFeature', 'partnerGuide', 'partnerLodging', 'partnerCrafts', 'feature', 'guide', 'lodging', 'crafts'], true)) {
     api_json(['error' => ['code' => 'invalid_image_slot', 'message' => 'Emplacement d’image invalide.']], 422);
 }
 $file = $_FILES['image'] ?? null;
