@@ -248,6 +248,7 @@
   const $=selector=>root.querySelector(selector);
   const setText=(selector,value)=>{const el=$(selector);if(el&&typeof value==='string')el.textContent=value;};
   const setLabel=(selector,value)=>{const el=$(selector);if(!el||typeof value!=='string')return;[...el.childNodes].filter(n=>n.nodeType===Node.TEXT_NODE).forEach(n=>n.remove());el.insertBefore(document.createTextNode(value+' '),el.firstChild);};
+  const setLabelAfterChildren=(selector,value)=>{const el=$(selector);if(!el||typeof value!=='string')return;[...el.childNodes].filter(n=>n.nodeType===Node.TEXT_NODE).forEach(n=>n.remove());el.append(document.createTextNode(value));};
   const setSplit=(selector,main,accent)=>{const el=$(selector);if(!el)return;el.replaceChildren(document.createTextNode(main+' '));const em=document.createElement('em');em.textContent=accent;el.append(em);};
   const setImage=(selector,url,alt)=>{const el=$(selector);if(!el)return;if(typeof url==='string'&&url)el.src=url;if(typeof alt==='string')el.alt=alt;};
   const apply=d=>{
@@ -261,7 +262,7 @@
     finderLabels.forEach(([s,k])=>setText(s,d[k]));
     [['#finder-region option[value="all"]','finderRegionAll'],['#finder-theme option[value="all"]','finderThemeAll'],['#finder-duration option[value="all"]','finderDurationAll']].forEach(([s,k])=>setText(s,d[k]));
     setLabel('#homepage-finder .finder-submit',d.finderSubmit);
-    document.querySelectorAll('.trust-card').forEach((card,i)=>{const n=i+1;setText('','');const title=card.querySelector('strong'),copy=card.querySelector('p');if(title)title.textContent=d['trust'+n+'Title']||title.textContent;if(copy)copy.textContent=d['trust'+n+'Text']||copy.textContent;});
+    document.querySelectorAll('.trust-card').forEach((card,i)=>{const n=i+1;const title=card.querySelector('strong'),copy=card.querySelector('p');if(title)title.textContent=d['trust'+n+'Title']||title.textContent;if(copy)copy.textContent=d['trust'+n+'Text']||copy.textContent;});
     setText('.circuits .section-heading .section-kicker',d.circuitsEyebrow);
     setText('.circuits .section-heading h2',d.circuitsTitle);
     setLabel('.all-circuits-link',d.circuitsAll);
@@ -273,13 +274,13 @@
     setText('#region-filter option[value="all"]',d.finderRegionAll);
     setText('#duration-filter option[value="all"]',d.finderDurationAll);
     setText('#duration-filter option[value="custom"]',d.durationCustom||'Sur mesure');
-    setText('.about-heading .eyebrow',d.introEyebrow);
+    setText('.about-heading .eyebrow [data-i18n="introEyebrow"]',d.introEyebrow);
     setSplit('#about-title',d.introTitle,d.introTitleAccent);
     setText('.nord-circuit-feature .section-kicker',d.introFeatureEyebrow);
     setText('.nord-circuit-feature h3',d.introFeatureTitle);
     setText('.nord-circuit-feature > div > p:not(.section-kicker)',d.introFeatureText);
     setLabel('.nord-circuit-feature .button',d.introFeatureCta);
-    setText('.partners-copy .eyebrow',d.partnersEyebrow);
+    setLabelAfterChildren('.partners-copy .eyebrow',d.partnersEyebrow);
     setSplit('#partners-title',d.partnersTitle,d.partnersAccent);
     const partnerParagraphs=document.querySelectorAll('.partners-copy > p:not(.eyebrow)');
     if(partnerParagraphs[0])partnerParagraphs[0].textContent=d.partnersParagraph1||partnerParagraphs[0].textContent;
@@ -288,10 +289,10 @@
     setText('[data-partner-description="feature"]',d.partnersCaption);
     [['guide','guideTitle'],['lodging','lodgingTitle'],['crafts','craftsTitle']].forEach(([slot,key])=>setText('[data-partner-title="'+slot+'"]',d[key]));
     [['guide','guideText'],['lodging','lodgingText'],['crafts','craftsText']].forEach(([slot,key])=>setText('[data-partner-description="'+slot+'"]',d[key]));
-    setText('.circuit-gallery-heading .eyebrow',d.galleryEyebrow);
+    setLabelAfterChildren('.circuit-gallery-heading .eyebrow',d.galleryEyebrow);
     setSplit('#circuit-gallery-title',d.galleryTitle,d.galleryAccent);
     setText('.circuit-gallery-heading > p',d.galleryText);
-    setText('.contact-intro > .eyebrow',d.contactEyebrow);
+    setLabelAfterChildren('.contact-intro > .eyebrow',d.contactEyebrow);
     setSplit('#journey-together-title',d.contactTitle,d.contactAccent);
     setText('.contact-intro > p:not(.eyebrow)',d.contactText);
     setText('.combined-trip-steps-title',d.stepsTitle);
@@ -309,7 +310,7 @@
     ['fieldName','fieldEmail','fieldDate','fieldPeople','fieldCircuit','fieldMessage'].forEach(k=>{const el=$('[data-i18n="'+k+'"]');if(el)el.textContent=d[k]||el.textContent;});
     [['input[name="name"]','fieldNamePlaceholder'],['input[name="email"]','fieldEmailPlaceholder'],['textarea[name="message"]','fieldMessagePlaceholder']].forEach(([s,k])=>{const el=$(s);if(el)el.placeholder=d[k]||el.placeholder;});
     const privacy=$('.form-consent span');if(privacy){const link=privacy.querySelector('a');if(link){[...privacy.childNodes].filter(n=>n.nodeType===Node.TEXT_NODE).forEach(n=>n.remove());privacy.insertBefore(document.createTextNode((d.privacyText||'')+' '),link);}}
-    setLabel('.form-submit',d.quoteSubmit);
+    setText('.form-submit [data-i18n="formSubmit"]',d.quoteSubmit);
     setText('.footer-brand-block > p',d.footerBrandText);
     setText('.footer-link-group:nth-child(2) h2',d.footerExploreTitle);
     const footerLinks=[['.footer-link-group:nth-child(2) a:nth-of-type(1)','footerAbout'],['.footer-link-group:nth-child(2) a:nth-of-type(2)','footerCircuits'],['.footer-link-group:nth-child(2) a:nth-of-type(3)','footerTravelBook'],['.footer-link-group:nth-child(2) a:nth-of-type(4)','footerContact'],['.footer-link-group:nth-child(3) h2','footerPrepareTitle'],['.footer-link-group:nth-child(3) a:nth-of-type(1)','footerCustomTrip'],['.footer-link-group:nth-child(3) a:nth-of-type(2)','footerQuote'],['.footer-link-group:nth-child(3) a:nth-of-type(3)','footerFaq'],['.footer-link-group:nth-child(3) a:nth-of-type(4)','footerLanguage'],['.footer-bottom > span:nth-child(2)','footerLegal'],['.footer-bottom > a[href="#top"]','footerBackTop']];
