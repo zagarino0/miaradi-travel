@@ -264,6 +264,7 @@
     setSplit('.nord-circuit-feature h3',d.introFeatureTitle,d.introFeatureAccent);
     setText('.nord-circuit-feature > div > p:not(.section-kicker)',d.introFeatureText);
     setLabel('.nord-circuit-feature .button',d.introFeatureCta);
+    const aboutSection=$('.about-mi');if(aboutSection&&d.introFeatureImage){const imageUrl=String(d.introFeatureImage).replace(/[\\"\n\r]/g,'');aboutSection.style.backgroundImage='linear-gradient(90deg,rgba(251,248,245,.96) 0%,rgba(251,248,245,.91) 44%,rgba(251,248,245,.78) 100%),url("'+imageUrl+'")';}
     setLabelAfterChildren('.partners-copy .eyebrow',d.partnersEyebrow);
     setSplit('#partners-title',d.partnersTitle,d.partnersAccent);
     const partnerParagraphs=document.querySelectorAll('.partners-copy > p:not(.eyebrow)');
