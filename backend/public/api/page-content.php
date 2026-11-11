@@ -6,18 +6,18 @@ header('Cache-Control: no-store');
 
 $method = strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'));
 $defaults = {
-  'eyebrow' : "UNE AVENTURE HUMAINE",
-  'title' : "Derrière chaque voyage, des rencontres.",
-  'paragraph1' : "Notre connaissance de Madagascar s’enrichit des liens tissés avec les acteurs locaux : guides, hébergeurs, artisans, transporteurs et initiatives de terrain.",
-  'paragraph2' : "Ces collaborations contribuent à créer des expériences plus humaines, adaptées aux réalités locales et attentives aux personnes qui accueillent les voyageurs.",
-  'linkText' : "Découvrir notre réseau local",
-  'caption' : "Découvrir Madagascar avec celles et ceux qui le connaissent.",
-  'guideTitle' : "Guides locaux",
-  'guideText' : "Partager les richesses du territoire.",
-  'lodgingTitle' : "Hébergements",
-  'lodgingText' : "Des étapes choisies avec soin.",
-  'craftsTitle' : "Artisans & savoir-faire",
-  'craftsText' : "Découvrir les traditions vivantes."
+  'eyebrow' => "UNE AVENTURE HUMAINE",
+  'title' => "Derrière chaque voyage, des rencontres.",
+  'paragraph1' => "Notre connaissance de Madagascar s’enrichit des liens tissés avec les acteurs locaux : guides, hébergeurs, artisans, transporteurs et initiatives de terrain.",
+  'paragraph2' => "Ces collaborations contribuent à créer des expériences plus humaines, adaptées aux réalités locales et attentives aux personnes qui accueillent les voyageurs.",
+  'linkText' => "Découvrir notre réseau local",
+  'caption' => "Découvrir Madagascar avec celles et ceux qui le connaissent.",
+  'guideTitle' => "Guides locaux",
+  'guideText' => "Partager les richesses du territoire.",
+  'lodgingTitle' => "Hébergements",
+  'lodgingText' => "Des étapes choisies avec soin.",
+  'craftsTitle' => "Artisans & savoir-faire",
+  'craftsText' => "Découvrir les traditions vivantes."
 };
 if ($method === 'GET') {
     try {
