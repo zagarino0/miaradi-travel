@@ -5,7 +5,7 @@ header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
 
 $method = strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'));
-$defaults = {
+$defaults = [
   'eyebrow' => "UNE AVENTURE HUMAINE",
   'title' => "Derrière chaque voyage, des rencontres.",
   'paragraph1' => "Notre connaissance de Madagascar s’enrichit des liens tissés avec les acteurs locaux : guides, hébergeurs, artisans, transporteurs et initiatives de terrain.",
@@ -18,7 +18,7 @@ $defaults = {
   'lodgingText' => "Des étapes choisies avec soin.",
   'craftsTitle' => "Artisans & savoir-faire",
   'craftsText' => "Découvrir les traditions vivantes."
-};
+];
 if ($method === 'GET') {
     try {
         $stmt = database_connection()->prepare("SELECT content_json FROM miaradi_page_content WHERE content_key = 'homepage_local_partners' LIMIT 1");
