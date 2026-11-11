@@ -4241,23 +4241,23 @@ body::-webkit-scrollbar{
   background:transparent!important;
 }
 
-/* Discreet but visible shortcut to the protected admin login in the public footer. */
-.site-footer .footer-bottom .admin-secret-link{
+/* Discreet admin shortcut placed in the header beside the language selector. */
+.site-header .primary-nav .admin-secret-link{
   display:inline-flex;
   flex:0 0 30px;
   align-items:center;
   justify-content:center;
   width:30px;
   height:30px;
-  margin-left:4px;
-  border:1px solid rgba(251,248,245,.28);
+  margin-inline:2px 4px;
+  border:1px solid rgba(146,45,32,.28);
   border-radius:50%;
-  color:#FBF8F5;
+  color:var(--red,#922D20);
   opacity:.82;
   text-decoration:none;
   transition:opacity .2s ease,color .2s ease,background-color .2s ease,border-color .2s ease;
 }
-.site-footer .footer-bottom .admin-secret-link svg{
+.site-header .primary-nav .admin-secret-link svg{
   display:block;
   width:16px;
   height:16px;
@@ -4267,16 +4267,13 @@ body::-webkit-scrollbar{
   stroke-linecap:round;
   stroke-linejoin:round;
 }
-.site-footer .footer-bottom .admin-secret-link:hover,
-.site-footer .footer-bottom .admin-secret-link:focus-visible{
+.site-header .primary-nav .admin-secret-link:hover,
+.site-header .primary-nav .admin-secret-link:focus-visible{
   color:#fff;
   background:#922D20;
   border-color:#922D20;
   opacity:1;
 }
-@media(max-width:700px){
-  .site-footer .footer-bottom{
-    flex-wrap:wrap;
-    align-items:center;
-  }
+@media(max-width:900px){
+  .site-header .primary-nav .admin-secret-link{margin:4px 0}
 }
