@@ -112,23 +112,6 @@ function setLanguage(language) {
     : "MIARADI-TRAVEL — Discover Madagascar differently";
 }
 
-function initHeroSlideshow() {
-  const slides = Array.from(document.querySelectorAll(".hero-slide"));
-  if (slides.length < 2) return;
-
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduceMotion) return;
-
-  let activeIndex = slides.findIndex((slide) => slide.classList.contains("is-active"));
-  if (activeIndex < 0) activeIndex = 0;
-
-  window.setInterval(() => {
-    slides[activeIndex].classList.remove("is-active");
-    activeIndex = (activeIndex + 1) % slides.length;
-    slides[activeIndex].classList.add("is-active");
-  }, 5000);
-}
-
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("year").textContent = String(new Date().getFullYear());
 
