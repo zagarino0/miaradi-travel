@@ -4277,3 +4277,38 @@ body::-webkit-scrollbar{
 @media(max-width:900px){
   .site-header .primary-nav .admin-secret-link{margin:4px 0}
 }
+
+/* Footer admin login entry placed directly below the MIARADI logo. */
+.site-footer .footer-brand-block .admin-secret-footer{
+  display:inline-flex;
+  width:max-content;
+  align-items:center;
+  gap:8px;
+  margin:12px 0 8px;
+  padding:8px 12px;
+  border:1px solid rgba(146,45,32,.28);
+  border-radius:999px;
+  color:#922D20;
+  font-size:12px;
+  font-weight:600;
+  line-height:1;
+  text-decoration:none;
+  transition:background-color .2s ease,color .2s ease,border-color .2s ease;
+}
+.site-footer .footer-brand-block .admin-secret-footer svg{
+  display:block;
+  width:14px;
+  height:14px;
+  flex:0 0 14px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.site-footer .footer-brand-block .admin-secret-footer:hover,
+.site-footer .footer-brand-block .admin-secret-footer:focus-visible{
+  background:#922D20;
+  border-color:#922D20;
+  color:#FBF8F5;
+}
