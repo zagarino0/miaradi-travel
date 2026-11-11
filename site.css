@@ -4377,3 +4377,18 @@ body::-webkit-scrollbar{
   border-color:#922D20;
   opacity:1!important;
 }
+
+
+/* Circuit signature — fleuve Sofia on the About page */
+.sofia-signature-section{position:relative;isolation:isolate;min-height:440px;display:flex;align-items:center;overflow:hidden;background:#26231f;color:#FBF8F5;padding:clamp(54px,8vw,100px) 0}
+.sofia-signature-image,.sofia-signature-overlay{position:absolute;inset:0;width:100%;height:100%}
+.sofia-signature-image{z-index:-2;object-fit:cover;object-position:center 48%}
+.sofia-signature-overlay{z-index:-1;background:linear-gradient(90deg,rgba(18,25,37,.82),rgba(18,25,37,.52) 56%,rgba(18,25,37,.24))}
+.sofia-signature-inner{width:100%;display:flex;justify-content:flex-start}
+.sofia-signature-card{max-width:720px;padding:clamp(24px,4vw,46px);border:1px solid rgba(251,248,245,.24);border-radius:14px;background:rgba(22,28,40,.56);backdrop-filter:blur(3px)}
+.sofia-signature-card h2{font:clamp(2rem,4.4vw,3.6rem)/1.12 Georgia,serif;color:#FBF8F5;margin:12px 0 18px}
+.sofia-signature-card h2 em{color:#e7b8a6;font-weight:400}
+.sofia-signature-card>p:not(.section-kicker){max-width:620px;color:#f3ede8;line-height:1.75;margin:0 0 24px}
+.sofia-signature-card .section-kicker{color:#f0b29f;font-size:.72rem;font-weight:800;letter-spacing:.15em}
+.sofia-signature-card .button{display:inline-flex;gap:12px;align-items:center}
+@media(max-width:700px){.sofia-signature-section{min-height:400px;padding:42px 0}.sofia-signature-overlay{background:linear-gradient(90deg,rgba(18,25,37,.82),rgba(18,25,37,.62))}.sofia-signature-card{padding:24px}.sofia-signature-card h2{font-size:clamp(1.9rem,9vw,2.7rem)}}
