@@ -4425,3 +4425,16 @@ body::-webkit-scrollbar{
 .journey-days details[open] .journey-day-image{animation:journey-image-in .45s ease both}
 @keyframes journey-image-in{from{opacity:.5;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){.journey-day-image img{transition:none}.journey-days details[open] .journey-day-image{animation:none}}
+
+
+/* Editorial layout: itinerary text and illustration side by side, alternating each day */
+.journey-days details .journey-day-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:clamp(24px,4vw,56px);padding:clamp(20px,3.2vw,42px) 0 32px;}
+.journey-days details .journey-day-image{grid-column:2;grid-row:1;margin:0;min-width:0;overflow:hidden;}
+.journey-days details .journey-day-image img{width:100%;height:clamp(230px,28vw,390px);object-fit:cover;display:block;}
+.journey-days details .journey-day-layout>div{grid-column:1;grid-row:1;min-width:0;line-height:1.8;color:var(--muted);}
+.journey-days details .journey-day-layout>div p:first-child{margin-top:0;}
+.journey-days details .journey-day-layout>div p:last-child{margin-bottom:0;}
+.journey-days details:nth-of-type(even) .journey-day-image{grid-column:1;}
+.journey-days details:nth-of-type(even) .journey-day-layout>div{grid-column:2;}
+.journey-days details:nth-of-type(even) .journey-day-image img{transform-origin:center;}
+@media(max-width:700px){.journey-days details .journey-day-layout{grid-template-columns:minmax(0,1fr);gap:18px;padding:18px 0 26px;}.journey-days details .journey-day-image,.journey-days details:nth-of-type(even) .journey-day-image{grid-column:1;grid-row:1;}.journey-days details .journey-day-layout>div,.journey-days details:nth-of-type(even) .journey-day-layout>div{grid-column:1;grid-row:2;}.journey-days details .journey-day-image img{height:clamp(210px,60vw,320px);}}
