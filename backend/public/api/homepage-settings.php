@@ -61,31 +61,47 @@ if ($method === 'GET') {
         api_json(['data' => $defaults, 'warning' => 'migration_required']);
     }
 }
-api_require_admin(); api_method('PUT'); api_require_csrf(); $input = api_read_json();
+api_require_admin();
+api_method('PUT');
+api_require_csrf();
+$input = api_read_json();
 $imageKeys = ["logo","hero1","hero2","hero3","hero4","introFeatureImage","partnerFeature","partnerGuide","partnerLodging","partnerCrafts"];
+
 try {
-    // Une sauvegarde partielle ne doit jamais effacer les champs qui n’ont pas été envoyés.
+    // Fusionner les champs reçus avec les valeurs enregistrées : les autres champs restent inchangés.
     $stmt = database_connection()->prepare("SELECT content_json FROM miaradi_page_content WHERE content_key = 'homepage_full' LIMIT 1");
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     $saved = $row ? json_decode((string)$row['content_json'], true) : [];
-    if (!is_array($saved)) $saved = [];
+    if (!is_array($saved)) {
+        $saved = [];
+    }
     $data = array_merge($defaults, $saved);
 
     foreach ($input as $key => $rawValue) {
-        if (!array_key_exists($key, $defaults)) continue;
+        if (!array_key_exists($key, $defaults)) {
+            continue;
+        }
         $max = str_ends_with($key, 'Alt') ? 250 : (in_array($key, $imageKeys, true) ? 1000 : 2000);
         $value = is_string($rawValue) ? trim($rawValue) : (string)$defaults[$key];
-        if (mb_strlen($value, 'UTF-8') > $max) api_json(['error'=>['code'=>'field_too_long','message'=>'Un champ dépasse la longueur autorisée : '.$key]], 422);
-        if (in_array($key, $imageKeys, true) && $value !== '' && !preg_match('~^(https?://|assets/|backend/public/uploads/)~i', $value)) api_json(['error'=>['code'=>'invalid_image_path','message'=>'Chemin d’image invalide : '.$key]], 422);
+
+        if (mb_strlen($value, 'UTF-8') > $max) {
+            api_json(['error' => ['code' => 'field_too_long', 'message' => 'Un champ dépasse la longueur autorisée : '.$key]], 422);
+        }
+        if (in_array($key, $imageKeys, true) && $value !== '' && !preg_match('~^(https?://|assets/|backend/public/uploads/)~i', $value)) {
+            api_json(['error' => ['code' => 'invalid_image_path', 'message' => 'Chemin d’image invalide : '.$key]], 422);
+        }
         $data[$key] = $value;
     }
-    if (!$input) api_json(['error'=>['code'=>'empty_update','message'=>'Aucune modification à enregistrer.']], 422);
-}
+
+    if (!$input) {
+        api_json(['error' => ['code' => 'empty_update', 'message' => 'Aucune modification à enregistrer.']], 422);
+    }
+
     $stmt = database_connection()->prepare("INSERT INTO miaradi_page_content (content_key, content_json) VALUES ('homepage_full', :content) ON DUPLICATE KEY UPDATE content_json = VALUES(content_json)");
     $stmt->execute(['content' => json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR)]);
-    api_json(['data'=>$data,'message'=>'Modifications enregistrées.']);
+    api_json(['data' => $data, 'message' => 'Modifications enregistrées.']);
 } catch (Throwable $e) {
     error_log('[miaradi-api] Homepage settings save failed: '.$e->getMessage());
-    api_json(['error'=>['code'=>'homepage_save_failed','message'=>'Impossible d’enregistrer le contenu. Vérifiez la connexion à la base de données.']], 503);
+    api_json(['error' => ['code' => 'homepage_save_failed', 'message' => 'Impossible d’enregistrer le contenu. Vérifiez la connexion à la base de données.']], 503);
 }
