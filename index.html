@@ -237,6 +237,15 @@
     finderLabels.forEach(([s,k])=>setText(s,d[k]));
     [['#finder-region option[value="all"]','finderRegionAll'],['#finder-theme option[value="all"]','finderThemeAll'],['#finder-duration option[value="all"]','finderDurationAll']].forEach(([s,k])=>setText(s,d[k]));
     setLabel('#homepage-finder .finder-submit',d.finderSubmit);
+
+    [['#finder-region option[value="west"]','finderRegionWest'],['#finder-region option[value="north"]','finderRegionNorth'],['#finder-region option[value="east"]','finderRegionEast'],['#finder-region option[value="south"]','finderRegionSouth'],['#finder-region option[value="highlands"]','finderRegionHighlands'],['#finder-theme option[value="nature"]','finderThemeNature'],['#finder-theme option[value="coast"]','finderThemeCoast'],['#finder-theme option[value="culture"]','finderThemeCulture'],['#finder-duration option[value="2-4"]','duration2to4'],['#finder-duration option[value="3-5"]','duration3to5'],['#finder-duration option[value="3-6"]','duration3to6'],['#finder-duration option[value="5-8"]','duration5to8'],['#finder-duration option[value="7-12"]','duration7to12'],['#finder-duration option[value="custom"]','durationCustom']].forEach(([s,k])=>setText(s,d[k]));
+    [['#region-filter option[value="west"]','finderRegionWest'],['#region-filter option[value="north"]','finderRegionNorth'],['#region-filter option[value="east"]','finderRegionEast'],['#region-filter option[value="south"]','finderRegionSouth'],['#region-filter option[value="highlands"]','finderRegionHighlands'],['#duration-filter option[value="2-4"]','duration2to4'],['#duration-filter option[value="3-5"]','duration3to5'],['#duration-filter option[value="3-6"]','duration3to6'],['#duration-filter option[value="5-8"]','duration5to8'],['#duration-filter option[value="7-12"]','duration7to12']].forEach(([s,k])=>setText(s,d[k]));
+    document.querySelectorAll('#quote-form select[name="people"] option').forEach((option,i)=>{const value=d['people'+(i+1)];if(value)option.textContent=value;});
+    setText('#circuit-select option[value=""]',d.circuitCustomOption);
+    const privacyLink=$('.form-consent a');if(privacyLink&&d.privacyLinkLabel)privacyLink.textContent=d.privacyLinkLabel;
+    const metaDescription=$('meta[name="description"]');if(metaDescription&&d.metaDescription)metaDescription.content=d.metaDescription;
+    if(d.metaTitle)document.title=d.metaTitle;
+
     document.querySelectorAll('.trust-card').forEach((card,i)=>{const n=i+1;const title=card.querySelector('strong'),copy=card.querySelector('p');if(title)title.textContent=d['trust'+n+'Title']||title.textContent;if(copy)copy.textContent=d['trust'+n+'Text']||copy.textContent;});
     setText('.circuits .section-heading .section-kicker',d.circuitsEyebrow);
     setText('.circuits .section-heading h2',d.circuitsTitle);
