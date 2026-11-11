@@ -4344,3 +4344,36 @@ body::-webkit-scrollbar{
   color:#922D20;
   opacity:1;
 }
+
+/* Make the admin shortcut visible beside the existing copyright text. */
+.site-footer .footer-bottom span .copyright-admin-access{
+  display:inline-flex!important;
+  align-items:center;
+  justify-content:center;
+  width:20px;
+  height:20px;
+  margin-left:8px;
+  vertical-align:middle;
+  border:1px solid rgba(201,189,181,.55);
+  border-radius:50%;
+  color:#f0ddd3!important;
+  opacity:.9!important;
+  text-decoration:none;
+}
+.site-footer .footer-bottom span .copyright-admin-access svg{
+  display:block;
+  width:11px;
+  height:11px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.9;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.site-footer .footer-bottom span .copyright-admin-access:hover,
+.site-footer .footer-bottom span .copyright-admin-access:focus-visible{
+  color:#fff!important;
+  background:#922D20;
+  border-color:#922D20;
+  opacity:1!important;
+}
