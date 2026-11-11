@@ -229,14 +229,14 @@
   const apply=d=>{
     const nav=[['.primary-nav a[href="#circuits"]','navCircuits'],['.primary-nav a[href^="a-propos.html#about-story"]','navAbout'],['.primary-nav a[href="galerie.html"]','navGallery'],['.primary-nav a[href="#contact"]','navContact'],['.primary-nav .nav-cta','navQuote']];
     nav.forEach(([s,k])=>setLabel(s,d[k]));
-    setLabel('.hero-location',d.heroLocation);
+    setLabelAfterChildren('.hero-location',d.heroLocation);
     const heroTitle=$('#hero-title');if(heroTitle){heroTitle.replaceChildren(document.createTextNode(d.heroTitle||''),document.createElement('br'),document.createTextNode(d.heroTitleLine2||''));}
     setText('.hero-copy',d.heroCopy);
-    setLabel('.hero-quote',d.heroQuote);setLabel('.hero-actions .button-white',d.heroCircuits);
+    setLabelAfterChildren('.hero-quote',d.heroQuote);setLabelAfterChildren('.hero-actions .button-white',d.heroCircuits);
     const finderLabels=[['#homepage-finder .finder-field:nth-child(1) strong','finderRegion'],['#homepage-finder .finder-field:nth-child(2) strong','finderTheme'],['#homepage-finder .finder-field:nth-child(3) strong','finderDuration']];
     finderLabels.forEach(([s,k])=>setText(s,d[k]));
     [['#finder-region option[value="all"]','finderRegionAll'],['#finder-theme option[value="all"]','finderThemeAll'],['#finder-duration option[value="all"]','finderDurationAll']].forEach(([s,k])=>setText(s,d[k]));
-    setLabel('#homepage-finder .finder-submit',d.finderSubmit);
+    setLabelAfterChildren('#homepage-finder .finder-submit',d.finderSubmit);
 
     [['#finder-region option[value="west"]','finderRegionWest'],['#finder-region option[value="north"]','finderRegionNorth'],['#finder-region option[value="east"]','finderRegionEast'],['#finder-region option[value="south"]','finderRegionSouth'],['#finder-region option[value="highlands"]','finderRegionHighlands'],['#finder-theme option[value="nature"]','finderThemeNature'],['#finder-theme option[value="coast"]','finderThemeCoast'],['#finder-theme option[value="culture"]','finderThemeCulture'],['#finder-duration option[value="2-4"]','duration2to4'],['#finder-duration option[value="3-5"]','duration3to5'],['#finder-duration option[value="3-6"]','duration3to6'],['#finder-duration option[value="5-8"]','duration5to8'],['#finder-duration option[value="7-12"]','duration7to12'],['#finder-duration option[value="custom"]','durationCustom']].forEach(([s,k])=>setText(s,d[k]));
     [['#region-filter option[value="west"]','finderRegionWest'],['#region-filter option[value="north"]','finderRegionNorth'],['#region-filter option[value="east"]','finderRegionEast'],['#region-filter option[value="south"]','finderRegionSouth'],['#region-filter option[value="highlands"]','finderRegionHighlands'],['#duration-filter option[value="2-4"]','duration2to4'],['#duration-filter option[value="3-5"]','duration3to5'],['#duration-filter option[value="3-6"]','duration3to6'],['#duration-filter option[value="5-8"]','duration5to8'],['#duration-filter option[value="7-12"]','duration7to12']].forEach(([s,k])=>setText(s,d[k]));
