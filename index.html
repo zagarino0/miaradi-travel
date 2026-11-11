@@ -97,8 +97,27 @@
           <h2 id="about-title" data-i18n="introTitle">Voyager<br><em>autrement.</em></h2>
         </div>
         <div class="about-lead">
-                <div class="nord-circuit-feature"><div><p class="section-kicker">NOUVEAU VOYAGE SIGNATURE</p><h3>Nord – Nord-Ouest : <em>au fil du fleuve Sofia</em></h3><p>19 jours entre les paysages du Boeny, les rencontres riveraines, les Tsingy du Nord et les îles de Nosy Be.</p></div><a class="button button-outline-light" href="circuit-nord-nord-ouest.html">Découvrir le circuit <span aria-hidden="true">↗</span></a></div>
-                <div class="nord-circuit-feature"><div><p class="section-kicker">GRAND VOYAGE · 25 JOURS</p><h3>Madagascar <em>du Sud au Nord</em></h3><p>De la RN7 aux îles du Nord, entre grands espaces, traditions, fleuve Sofia et plages tropicales.</p></div><a class="button button-outline-light" href="circuit-madagascar-sud-nord.html">Découvrir le circuit <span aria-hidden="true">↗</span></a></div>
+          <div class="circuit-feature-slider" aria-label="Circuits à découvrir">
+            <div class="circuit-feature-track">
+              <article class="nord-circuit-feature circuit-feature-slide is-active" aria-hidden="false">
+                <div><p class="section-kicker">NOUVEAU VOYAGE SIGNATURE</p><h3>Nord – Nord-Ouest : <em>au fil du fleuve Sofia</em></h3><p>19 jours entre les paysages du Boeny, les rencontres riveraines, les Tsingy du Nord et les îles de Nosy Be.</p></div>
+                <a class="button button-outline-light" href="circuit-nord-nord-ouest.html">Découvrir le circuit <span aria-hidden="true">↗</span></a>
+              </article>
+              <article class="nord-circuit-feature circuit-feature-slide" aria-hidden="true">
+                <div><p class="section-kicker">GRAND VOYAGE · 25 JOURS</p><h3>Madagascar <em>du Sud au Nord</em></h3><p>De la RN7 aux îles du Nord, entre grands espaces, traditions, fleuve Sofia et plages tropicales.</p></div>
+                <a class="button button-outline-light" href="circuit-madagascar-sud-nord.html">Découvrir le circuit <span aria-hidden="true">↗</span></a>
+              </article>
+            </div>
+            <div class="circuit-feature-controls">
+              <button type="button" class="circuit-feature-arrow" data-circuit-prev aria-label="Circuit précédent">←</button>
+              <div class="circuit-feature-dots" aria-label="Choisir un circuit">
+                <button type="button" class="is-active" data-circuit-slide="0" aria-label="Afficher le circuit du fleuve Sofia" aria-pressed="true"></button>
+                <button type="button" data-circuit-slide="1" aria-label="Afficher Madagascar du Sud au Nord" aria-pressed="false"></button>
+              </div>
+              <span class="circuit-feature-counter" aria-live="polite">01 / 02</span>
+              <button type="button" class="circuit-feature-arrow" data-circuit-next aria-label="Circuit suivant">→</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -310,5 +329,15 @@
 })();
 </script>
 
+
+<script>
+(()=>{
+ const slider=document.querySelector('.circuit-feature-slider');if(!slider)return;
+ const slides=[...slider.querySelectorAll('.circuit-feature-slide')],dots=[...slider.querySelectorAll('[data-circuit-slide]')],counter=slider.querySelector('.circuit-feature-counter');let current=0,timer;
+ const show=(index)=>{current=(index+slides.length)%slides.length;slides.forEach((slide,i)=>{slide.classList.toggle('is-active',i===current);slide.setAttribute('aria-hidden',String(i!==current));});dots.forEach((dot,i)=>{dot.classList.toggle('is-active',i===current);dot.setAttribute('aria-pressed',String(i===current));});if(counter)counter.textContent=String(current+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');};
+ const stop=()=>window.clearInterval(timer);const start=()=>{stop();if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)timer=window.setInterval(()=>show(current+1),7000);};
+ slider.querySelector('[data-circuit-prev]')?.addEventListener('click',()=>{show(current-1);start();});slider.querySelector('[data-circuit-next]')?.addEventListener('click',()=>{show(current+1);start();});dots.forEach((dot)=>dot.addEventListener('click',()=>{show(Number(dot.dataset.circuitSlide));start();}));slider.addEventListener('mouseenter',stop);slider.addEventListener('mouseleave',start);slider.addEventListener('focusin',stop);slider.addEventListener('focusout',start);show(0);start();
+})();
+</script>
 </body>
 </html>
