@@ -1210,6 +1210,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   setLanguage("fr");
-  loadPartnerMedia();
+  if (typeof window.applyEditableHomepageContent === 'function') window.applyEditableHomepageContent();
   loadRegionalGallery();
 });
