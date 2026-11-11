@@ -4354,10 +4354,10 @@ body::-webkit-scrollbar{
   height:20px;
   margin-left:8px;
   vertical-align:middle;
-  border:1px solid rgba(201,189,181,.55);
+  border:1px solid rgba(201,189,181,.30);
   border-radius:50%;
-  color:#f0ddd3!important;
-  opacity:.9!important;
+  color:rgba(240,221,211,.72)!important;
+  opacity:.62!important;
   text-decoration:none;
 }
 .site-footer .footer-bottom span .copyright-admin-access svg{
