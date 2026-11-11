@@ -4415,3 +4415,13 @@ body::-webkit-scrollbar{
 .circuit-feature-counter{font-size:11px;letter-spacing:.12em;color:var(--muted);min-width:42px}
 @media(max-width:700px){.circuit-feature-track{min-height:300px}.about-lead .circuit-feature-slide{padding:0;transform-origin:top left}.circuit-feature-controls{margin-top:12px}}
 @media(prefers-reduced-motion:reduce){.about-lead .circuit-feature-slide{transition:none;transform:none}}
+
+
+/* Images illustratives dans chaque journée du circuit Madagascar Sud-Nord */
+.journey-day-image{margin:0 0 22px;overflow:hidden;position:relative;background:var(--soft);}
+.journey-day-image img{display:block;width:100%;height:clamp(210px,32vw,390px);object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1);}
+.journey-day-image:hover img{transform:scale(1.025)}
+.journey-day-image figcaption{padding:9px 0 0;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.journey-days details[open] .journey-day-image{animation:journey-image-in .45s ease both}
+@keyframes journey-image-in{from{opacity:.5;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.journey-day-image img{transition:none}.journey-days details[open] .journey-day-image{animation:none}}
