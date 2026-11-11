@@ -29,6 +29,18 @@
       <div class="hero-shade"></div>
       <div class="container hero-content"><p class="eyebrow eyebrow-light" data-about-key="heroEyebrow">NOTRE HISTOIRE · NOTRE PHILOSOPHIE</p><h1 id="about-page-title"><span data-about-key="heroTitle">Voyageons ensemble,</span><br><em data-about-key="heroAccent">partageons l’essentiel.</em></h1><p class="hero-copy" data-about-key="heroText">Rencontrer Madagascar autrement, avec celles et ceux qui le font vivre.</p><div class="hero-actions"><a class="button button-light" href="index.html#contact"><span data-about-key="heroButton">Imaginons votre voyage</span> <span aria-hidden="true">↗</span></a></div></div>
     </section>
+    <section class="sofia-signature-section" aria-labelledby="sofia-signature-title">
+      <img class="sofia-signature-image" data-about-image="sofiaImage" data-about-alt="sofiaImageAlt" src="https://commons.wikimedia.org/wiki/Special:FilePath/Soa_Sofia_River_Madagascar.jpg?width=1800" alt="Paysage du fleuve Sofia dans le nord-ouest de Madagascar" loading="lazy">
+      <div class="sofia-signature-overlay" aria-hidden="true"></div>
+      <div class="container sofia-signature-inner">
+        <div class="sofia-signature-card">
+          <p class="section-kicker" data-about-key="sofiaEyebrow">NOUVEAU VOYAGE SIGNATURE</p>
+          <h2 id="sofia-signature-title"><span data-about-key="sofiaTitle">Nord – Nord-Ouest :</span> <em data-about-key="sofiaAccent">au fil du fleuve Sofia</em></h2>
+          <p data-about-key="sofiaText">19 jours entre les paysages du Boeny, les rencontres riveraines, les Tsingy du Nord et les îles de Nosy Be.</p>
+          <a class="button button-outline-light" data-about-href="sofiaLink" href="circuit-nord-nord-ouest.html"><span data-about-key="sofiaButton">Découvrir le circuit</span> <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
     <section class="intro section-pad about-mi" id="about-story" aria-labelledby="about-title">
       <div class="container about-opening">
         <div class="about-heading">
@@ -185,6 +197,6 @@
   </main>
   <footer class="site-footer"><div class="container footer-main"><a class="brand brand-footer" href="index.html"><img class="brand-logo brand-logo-footer" src="assets/miaradi-logo.png" alt="Miaradi — Tour Operator Madagascar"></a><p data-about-key="footerTagline">MIARADI — Voyageons ensemble, partageons l’essentiel.</p><nav aria-label="Navigation de pied de page"><a href="index.html#top" data-about-key="footerHome">Accueil</a><a href="index.html#circuits" data-about-key="footerCircuits">Nos circuits</a><a href="index.html#contact" data-about-key="footerContact">Contact</a><a href="#faq" data-about-key="footerFaq">FAQ</a></nav></div><div class="container footer-bottom"><span>© <span id="year"></span> MIARADI-TRAVEL</span><a href="#top" data-about-key="footerBackTop">Retour en haut ↑</a></div></footer>
 <script>
-(async()=>{try{const response=await fetch('backend/public/api/about-settings.php',{headers:{Accept:'application/json'},cache:'no-store'});if(!response.ok)return;const payload=await response.json();const data=payload.data||{};document.querySelectorAll('[data-about-key]').forEach(node=>{const key=node.dataset.aboutKey;if(typeof data[key]==='string')node.textContent=data[key];});document.querySelectorAll('[data-about-image]').forEach(img=>{const key=img.dataset.aboutImage;const altKey=img.dataset.aboutAlt;if(typeof data[key]==='string'&&data[key])img.src=data[key];if(typeof data[altKey]==='string')img.alt=data[altKey];});document.querySelectorAll('[data-about-meta]').forEach(node=>{const key=node.dataset.aboutMeta;if(typeof data[key]==='string'){if(node.tagName==='META')node.content=data[key];else node.textContent=data[key];}});}catch(error){console.warn('Le contenu À propos n’a pas pu être actualisé.',error);}})();
+(async()=>{try{const response=await fetch('backend/public/api/about-settings.php',{headers:{Accept:'application/json'},cache:'no-store'});if(!response.ok)return;const payload=await response.json();const data=payload.data||{};document.querySelectorAll('[data-about-key]').forEach(node=>{const key=node.dataset.aboutKey;if(typeof data[key]==='string')node.textContent=data[key];});document.querySelectorAll('[data-about-image]').forEach(img=>{const key=img.dataset.aboutImage;const altKey=img.dataset.aboutAlt;if(typeof data[key]==='string'&&data[key])img.src=data[key];if(typeof data[altKey]==='string')img.alt=data[altKey];});document.querySelectorAll('[data-about-href]').forEach(node=>{const key=node.dataset.aboutHref;if(typeof data[key]==='string'&&data[key])node.href=data[key];});document.querySelectorAll('[data-about-meta]').forEach(node=>{const key=node.dataset.aboutMeta;if(typeof data[key]==='string'){if(node.tagName==='META')node.content=data[key];else node.textContent=data[key];}});}catch(error){console.warn('Le contenu À propos n’a pas pu être actualisé.',error);}})();
 </script>
 </body></html>
