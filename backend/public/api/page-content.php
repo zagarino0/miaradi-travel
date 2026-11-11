@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require_once dirname(__DIR__, 3) . '/src/http.php';
+require_once dirname(__DIR__, 2) . '/src/http.php';
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
 
