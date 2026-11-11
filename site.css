@@ -4469,3 +4469,11 @@ body::-webkit-scrollbar{
 .circuit-editorial-page .journey-day-gallery figcaption{padding:9px 0 0;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 @media(max-width:700px){.circuit-editorial-page .journey-days details[open] .journey-day-layout{grid-template-columns:minmax(0,1fr);gap:18px;padding:18px 0 26px}.circuit-editorial-page .journey-days details .journey-day-image,.circuit-editorial-page .journey-days details:nth-of-type(even) .journey-day-image{grid-column:1;grid-row:1}.circuit-editorial-page .journey-days details .journey-day-layout>div:not(.journey-gallery-viewport),.circuit-editorial-page .journey-days details:nth-of-type(even) .journey-day-layout>div:not(.journey-gallery-viewport){grid-column:1;grid-row:2}.circuit-editorial-page .journey-gallery-viewport{aspect-ratio:1.25}.circuit-editorial-page .journey-gallery-arrow{width:34px;height:34px;top:calc((100% - 34px)/2)}}
 @media(prefers-reduced-motion:reduce){.circuit-editorial-page .journey-gallery-viewport img{transition:none}}
+
+
+/* Afficher les cinq photos de chaque journée dans une galerie horizontale navigable */
+.journey-gallery-viewport.journey-gallery-strip{position:relative;display:flex;gap:10px;overflow-x:auto;overflow-y:hidden;width:100%;aspect-ratio:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#922D20 #eadfd8;padding-bottom:8px;}
+.journey-gallery-viewport.journey-gallery-strip img{position:relative;inset:auto;flex:0 0 calc(50% - 5px);width:calc(50% - 5px);height:auto;aspect-ratio:4/3;object-fit:cover;opacity:1;visibility:visible;transform:none;scroll-snap-align:start;}
+.journey-gallery-viewport.journey-gallery-strip img.is-active{opacity:1;visibility:visible;transform:none;}
+.journey-day-gallery .journey-gallery-arrow{top:calc((100% - 42px)/2);}
+@media(max-width:700px){.journey-gallery-viewport.journey-gallery-strip img{flex-basis:85%;width:85%;}.journey-day-gallery .journey-gallery-arrow{top:calc((100% - 42px)/2);}}
