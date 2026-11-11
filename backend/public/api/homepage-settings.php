@@ -11,7 +11,51 @@ if ($method === 'GET') {
         $stmt->execute(); $row = $stmt->fetch();
         $saved = $row ? json_decode((string)$row['content_json'], true) : [];
         if (!is_array($saved)) $saved = [];
-        api_json(['data' => array_merge($defaults, $saved)]);
+        $data = array_merge($defaults, $saved);
+        // Keep any content already managed by the previous homepage editor.
+        if (!$row) {
+            try {
+                $legacyStmt = database_connection()->query("SELECT content_json FROM miaradi_page_content WHERE content_key = 'homepage_local_partners' LIMIT 1");
+                $legacyRow = $legacyStmt->fetch();
+                $legacy = $legacyRow ? json_decode((string)$legacyRow['content_json'], true) : [];
+                if (is_array($legacy)) {
+                    foreach (['eyebrow'=>'partnersEyebrow','paragraph1'=>'partnersParagraph1','paragraph2'=>'partnersParagraph2','linkText'=>'partnersLink','caption'=>'partnersCaption','guideTitle'=>'guideTitle','guideText'=>'guideText','lodgingTitle'=>'lodgingTitle','lodgingText'=>'lodgingText','craftsTitle'=>'craftsTitle','craftsText'=>'craftsText','featureAlt'=>'partnerFeatureAlt','guideAlt'=>'partnerGuideAlt','lodgingAlt'=>'partnerLodgingAlt','craftsAlt'=>'partnerCraftsAlt'] as $from=>$to) {
+                        if (isset($legacy[$from]) && is_string($legacy[$from]) && $legacy[$from] !== '') $data[$to] = $legacy[$from];
+                    }
+                    if (!empty($legacy['title']) && is_string($legacy['title'])) {
+                        $parts = preg_split('/,\\s*/u', $legacy['title'], 2);
+                        $data['partnersTitle'] = trim((string)($parts[0] ?? $legacy['title']));
+                        if (isset($parts[1])) $data['partnersAccent'] = trim($parts[1]);
+                    }
+                    foreach (['featureImage'=>'partnerFeature','guideImage'=>'partnerGuide','lodgingImage'=>'partnerLodging','craftsImage'=>'partnerCrafts'] as $from=>$to) {
+                        if (!empty($legacy[$from]) && is_string($legacy[$from])) $data[$to] = $legacy[$from];
+                    }
+                }
+            } catch (Throwable $legacyError) {
+                error_log('[miaradi-api] Legacy homepage content migration skipped: '.$legacyError->getMessage());
+            }
+            // Preserve existing images and card copy from the legacy partner-media manager.
+            try {
+                $rows = database_connection()->query('SELECT slot_key,title_fr,description_fr,alt_text,image_path FROM miaradi_partner_media ORDER BY sort_order ASC')->fetchAll();
+                foreach ($rows as $media) {
+                    $slot = (string)$media['slot_key'];
+                    $map = ['feature'=>['partnerFeature','partnersCaption','partnerFeatureAlt'],'guide'=>['partnerGuide','guideTitle','guideAlt'],'lodging'=>['partnerLodging','lodgingTitle','partnerLodgingAlt'],'crafts'=>['partnerCrafts','craftsTitle','partnerCraftsAlt']];
+                    if (!isset($map[$slot])) continue;
+                    [$imageKey,$titleKey,$altKey] = $map[$slot];
+                    if (!empty($media['image_path'])) $data[$imageKey] = 'backend/public/'.ltrim((string)$media['image_path'], '/');
+                    if (!empty($media['alt_text'])) $data[$altKey] = (string)$media['alt_text'];
+                    if ($slot !== 'feature' && !empty($media['title_fr'])) $data[$titleKey] = (string)$media['title_fr'];
+                    if ($slot === 'feature' && !empty($media['description_fr'])) $data['partnersCaption'] = (string)$media['description_fr'];
+                    if ($slot !== 'feature') {
+                        $textKey = $slot === 'guide' ? 'guideText' : ($slot === 'lodging' ? 'lodgingText' : 'craftsText');
+                        if (isset($media['description_fr']) && $media['description_fr'] !== null) $data[$textKey] = (string)$media['description_fr'];
+                    }
+                }
+            } catch (Throwable $mediaError) {
+                error_log('[miaradi-api] Legacy partner media migration skipped: '.$mediaError->getMessage());
+            }
+        }
+        api_json(['data' => $data]);
     } catch (Throwable $e) {
         error_log('[miaradi-api] Homepage settings read failed: '.$e->getMessage());
         api_json(['data' => $defaults, 'warning' => 'migration_required']);
