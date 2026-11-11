@@ -139,6 +139,8 @@
     if(paragraphs[0] && d.paragraph1) paragraphs[0].textContent=d.paragraph1;
     if(paragraphs[1] && d.paragraph2) paragraphs[1].textContent=d.paragraph2;
     const link=root.querySelector('.partners-copy .underlined-link');if(link && d.linkText)link.childNodes[0].textContent=d.linkText+' ';
+    for(const [slot,key] of [['feature','featureImage'],['guide','guideImage'],['lodging','lodgingImage'],['crafts','craftsImage']]){const img=root.querySelector('[data-partner-image="'+slot+'"]');if(img&&typeof d[key]==='string'&&d[key])img.src=d[key];}
+    for(const [slot,key] of [['feature','featureAlt'],['guide','guideAlt'],['lodging','lodgingAlt'],['crafts','craftsAlt']]){const img=root.querySelector('[data-partner-image="'+slot+'"]');if(img&&typeof d[key]==='string'&&d[key])img.alt=d[key];}
     setText('[data-partner-description="feature"]',d.caption);
     setText('[data-partner-title="guide"]',d.guideTitle);setText('[data-partner-description="guide"]',d.guideText);
     setText('[data-partner-title="lodging"]',d.lodgingTitle);setText('[data-partner-description="lodging"]',d.lodgingText);
