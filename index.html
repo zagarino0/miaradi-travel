@@ -241,5 +241,87 @@
 })();
 </script>
 
+
+<script>
+(async function loadEditableHomepageContent(){
+  const root=document;
+  const $=selector=>root.querySelector(selector);
+  const setText=(selector,value)=>{const el=$(selector);if(el&&typeof value==='string')el.textContent=value;};
+  const setLabel=(selector,value)=>{const el=$(selector);if(!el||typeof value!=='string')return;[...el.childNodes].filter(n=>n.nodeType===Node.TEXT_NODE).forEach(n=>n.remove());el.insertBefore(document.createTextNode(value+' '),el.firstChild);};
+  const setSplit=(selector,main,accent)=>{const el=$(selector);if(!el)return;el.replaceChildren(document.createTextNode(main+' '));const em=document.createElement('em');em.textContent=accent;el.append(em);};
+  const setImage=(selector,url,alt)=>{const el=$(selector);if(!el)return;if(typeof url==='string'&&url)el.src=url;if(typeof alt==='string')el.alt=alt;};
+  const apply=d=>{
+    const nav=[['.primary-nav a[href="#circuits"]','navCircuits'],['.primary-nav a[href^="a-propos.html#about-story"]','navAbout'],['.primary-nav a[href="galerie.html"]','navGallery'],['.primary-nav a[href="#contact"]','navContact'],['.primary-nav .nav-cta','navQuote']];
+    nav.forEach(([s,k])=>setLabel(s,d[k]));
+    setLabel('.hero-location',d.heroLocation);
+    const heroTitle=$('#hero-title');if(heroTitle){heroTitle.replaceChildren(document.createTextNode(d.heroTitle||''),document.createElement('br'),document.createTextNode(d.heroTitleLine2||''));}
+    setText('.hero-copy',d.heroCopy);
+    setLabel('.hero-quote',d.heroQuote);setLabel('.hero-actions .button-white',d.heroCircuits);
+    const finderLabels=[['#homepage-finder .finder-field:nth-child(1) strong','finderRegion'],['#homepage-finder .finder-field:nth-child(2) strong','finderTheme'],['#homepage-finder .finder-field:nth-child(3) strong','finderDuration']];
+    finderLabels.forEach(([s,k])=>setText(s,d[k]));
+    [['#finder-region option[value="all"]','finderRegionAll'],['#finder-theme option[value="all"]','finderThemeAll'],['#finder-duration option[value="all"]','finderDurationAll']].forEach(([s,k])=>setText(s,d[k]));
+    setLabel('#homepage-finder .finder-submit',d.finderSubmit);
+    document.querySelectorAll('.trust-card').forEach((card,i)=>{const n=i+1;setText('','');const title=card.querySelector('strong'),copy=card.querySelector('p');if(title)title.textContent=d['trust'+n+'Title']||title.textContent;if(copy)copy.textContent=d['trust'+n+'Text']||copy.textContent;});
+    setText('.circuits .section-heading .section-kicker',d.circuitsEyebrow);
+    setText('.circuits .section-heading h2',d.circuitsTitle);
+    setLabel('.all-circuits-link',d.circuitsAll);
+    setText('.filter-theme .filter-label',d.filterThemeLabel);
+    [['[data-filter="all"]','filterAll'],['[data-filter="nature"]','filterNature'],['[data-filter="coast"]','filterCoast'],['[data-filter="culture"]','filterCulture']].forEach(([s,k])=>setText(s,d[k]));
+    setText('label[for="region-filter"] .filter-label',d.filterRegionLabel);
+    setText('.filter-select-wrap:has(#region-filter) .filter-label',d.filterRegionLabel);
+    setText('.filter-select-wrap:has(#duration-filter) .filter-label',d.filterDurationLabel);
+    setText('#region-filter option[value="all"]',d.finderRegionAll);
+    setText('#duration-filter option[value="all"]',d.finderDurationAll);
+    setText('#duration-filter option[value="custom"]',d.durationCustom||'Sur mesure');
+    setText('.about-heading .eyebrow',d.introEyebrow);
+    setSplit('#about-title',d.introTitle,d.introTitleAccent);
+    setText('.nord-circuit-feature .section-kicker',d.introFeatureEyebrow);
+    setText('.nord-circuit-feature h3',d.introFeatureTitle);
+    setText('.nord-circuit-feature > div > p:not(.section-kicker)',d.introFeatureText);
+    setLabel('.nord-circuit-feature .button',d.introFeatureCta);
+    setText('.partners-copy .eyebrow',d.partnersEyebrow);
+    setSplit('#partners-title',d.partnersTitle,d.partnersAccent);
+    const partnerParagraphs=document.querySelectorAll('.partners-copy > p:not(.eyebrow)');
+    if(partnerParagraphs[0])partnerParagraphs[0].textContent=d.partnersParagraph1||partnerParagraphs[0].textContent;
+    if(partnerParagraphs[1])partnerParagraphs[1].textContent=d.partnersParagraph2||partnerParagraphs[1].textContent;
+    setLabel('.partners-copy .underlined-link',d.partnersLink);
+    setText('[data-partner-description="feature"]',d.partnersCaption);
+    [['guide','guideTitle'],['lodging','lodgingTitle'],['crafts','craftsTitle']].forEach(([slot,key])=>setText('[data-partner-title="'+slot+'"]',d[key]));
+    [['guide','guideText'],['lodging','lodgingText'],['crafts','craftsText']].forEach(([slot,key])=>setText('[data-partner-description="'+slot+'"]',d[key]));
+    setText('.circuit-gallery-heading .eyebrow',d.galleryEyebrow);
+    setSplit('#circuit-gallery-title',d.galleryTitle,d.galleryAccent);
+    setText('.circuit-gallery-heading > p',d.galleryText);
+    setText('.contact-intro > .eyebrow',d.contactEyebrow);
+    setSplit('#journey-together-title',d.contactTitle,d.contactAccent);
+    setText('.contact-intro > p:not(.eyebrow)',d.contactText);
+    setText('.combined-trip-steps-title',d.stepsTitle);
+    [['step1Title',0],['step2Title',1],['step3Title',2]].forEach(([k,i])=>{const el=document.querySelectorAll('.planning-list li strong')[i];if(el)el.textContent=d[k]||el.textContent;});
+    [['step1Text',0],['step2Text',1],['step3Text',2]].forEach(([k,i])=>{const el=document.querySelectorAll('.planning-list li span')[i];if(el)el.textContent=d[k]||el.textContent;});
+    setText('.combined-trip-form-heading:not(.quote-form-heading) .eyebrow',d.quoteEyebrow);
+    setText('.combined-trip-form-heading:not(.quote-form-heading) h3',d.quoteTitle);
+    setText('.combined-trip-form-heading:not(.quote-form-heading) > p:not(.eyebrow)',d.quoteIntro);
+    const interests=document.querySelectorAll('.travel-interest-list label');
+    [['interestNature',0],['interestBeach',1],['interestCulture',2],['interestDiscovery',3]].forEach(([k,i])=>{const el=interests[i];if(el){[...el.childNodes].filter(n=>n.nodeType===Node.TEXT_NODE&&n.textContent.trim()).forEach(n=>n.remove());el.append(document.createTextNode(' '+d[k]));}});
+    setText('.personalization-note',d.interestNote);
+    setText('.quote-form-heading .eyebrow',d.quoteStepEyebrow);
+    setText('.quote-form-heading h3',d.quoteStepTitle);
+    setText('.quote-form-heading > p:not(.eyebrow)',d.quoteStepText);
+    ['fieldName','fieldEmail','fieldDate','fieldPeople','fieldCircuit','fieldMessage'].forEach(k=>{const el=$('[data-i18n="'+k+'"]');if(el)el.textContent=d[k]||el.textContent;});
+    [['input[name="name"]','fieldNamePlaceholder'],['input[name="email"]','fieldEmailPlaceholder'],['textarea[name="message"]','fieldMessagePlaceholder']].forEach(([s,k])=>{const el=$(s);if(el)el.placeholder=d[k]||el.placeholder;});
+    const privacy=$('.form-consent span');if(privacy){const link=privacy.querySelector('a');if(link){[...privacy.childNodes].filter(n=>n.nodeType===Node.TEXT_NODE).forEach(n=>n.remove());privacy.insertBefore(document.createTextNode((d.privacyText||'')+' '),link);}}
+    setLabel('.form-submit',d.quoteSubmit);
+    setText('.footer-brand-block > p',d.footerBrandText);
+    setText('.footer-link-group:nth-child(2) h2',d.footerExploreTitle);
+    const footerLinks=[['.footer-link-group:nth-child(2) a:nth-of-type(1)','footerAbout'],['.footer-link-group:nth-child(2) a:nth-of-type(2)','footerCircuits'],['.footer-link-group:nth-child(2) a:nth-of-type(3)','footerTravelBook'],['.footer-link-group:nth-child(2) a:nth-of-type(4)','footerContact'],['.footer-link-group:nth-child(3) h2','footerPrepareTitle'],['.footer-link-group:nth-child(3) a:nth-of-type(1)','footerCustomTrip'],['.footer-link-group:nth-child(3) a:nth-of-type(2)','footerQuote'],['.footer-link-group:nth-child(3) a:nth-of-type(3)','footerFaq'],['.footer-link-group:nth-child(3) a:nth-of-type(4)','footerLanguage'],['.footer-bottom > span:nth-child(2)','footerLegal'],['.footer-bottom > a[href="#top"]','footerBackTop']];
+    footerLinks.forEach(([s,k])=>setLabel(s,d[k]));
+    setImage('.site-header .brand-logo',d.logo,d.logoAlt);
+    setImage('.brand-footer .brand-logo',d.logo,d.logoAlt);
+    [['.hero-slide:nth-child(1)','hero1'],['.hero-slide:nth-child(2)','hero2'],['.hero-slide:nth-child(3)','hero3'],['.hero-slide:nth-child(4)','hero4']].forEach(([s,k])=>setImage(s,d[k],d[k+'Alt']));
+    [['feature','partnerFeature'],['guide','partnerGuide'],['lodging','partnerLodging'],['crafts','partnerCrafts']].forEach(([slot,k])=>setImage('[data-partner-image="'+slot+'"]',d[k],d[k+'Alt']));
+  };
+  try{const response=await fetch('backend/public/api/homepage-settings.php',{headers:{Accept:'application/json'},cache:'no-store'});if(!response.ok)return;const payload=await response.json();apply(payload.data||{});window.addEventListener('click',event=>{if(event.target.closest('.language-toggle'))window.setTimeout(()=>apply(payload.data||{}),0);});}catch(error){console.warn('Contenu de la page d’accueil indisponible',error);}
+})();
+</script>
+
 </body>
 </html>
