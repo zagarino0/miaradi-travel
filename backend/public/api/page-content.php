@@ -17,7 +17,15 @@ $defaults = [
   'lodgingTitle' => "Hébergements",
   'lodgingText' => "Des étapes choisies avec soin.",
   'craftsTitle' => "Artisans & savoir-faire",
-  'craftsText' => "Découvrir les traditions vivantes."
+  'craftsText' => "Découvrir les traditions vivantes.",
+  'featureImage' => "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=1400&q=85",
+  'guideImage' => "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=85",
+  'lodgingImage' => "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&w=900&q=85",
+  'craftsImage' => "https://images.unsplash.com/photo-1452860606245-08befc0ff44b?auto=format&fit=crop&w=900&q=85",
+  'featureAlt' => "Paysage naturel de Madagascar",
+  'guideAlt' => "Guide local à Madagascar",
+  'lodgingAlt' => "Hébergement au cœur de la nature malgache",
+  'craftsAlt' => "Artisanat malgache traditionnel"
 ];
 if ($method === 'GET') {
     try {
@@ -36,7 +44,7 @@ api_require_admin();
 api_method('PUT');
 api_require_csrf();
 $input = api_read_json();
-$limits = ['eyebrow'=>100,'title'=>240,'paragraph1'=>1200,'paragraph2'=>1200,'linkText'=>160,'caption'=>300,'guideTitle'=>120,'guideText'=>500,'lodgingTitle'=>120,'lodgingText'=>500,'craftsTitle'=>120,'craftsText'=>500];
+$limits = ['eyebrow'=>100,'title'=>240,'paragraph1'=>1200,'paragraph2'=>1200,'linkText'=>160,'caption'=>300,'guideTitle'=>120,'guideText'=>500,'lodgingTitle'=>120,'lodgingText'=>500,'craftsTitle'=>120,'craftsText'=>500,'featureImage'=>1000,'guideImage'=>1000,'lodgingImage'=>1000,'craftsImage'=>1000,'featureAlt'=>250,'guideAlt'=>250,'lodgingAlt'=>250,'craftsAlt'=>250];
 $data = [];
 foreach ($limits as $key => $max) {
     $value = api_clean_text($input[$key] ?? null, $max, true);
