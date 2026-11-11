@@ -7,7 +7,7 @@ api_require_admin();
 api_method('POST');
 api_require_csrf();
 $slot = (string)($_POST['slot'] ?? '');
-if (!in_array($slot, ['feature', 'guide', 'lodging', 'crafts'], true)) {
+if (!in_array($slot, ['logo', 'hero1', 'hero2', 'hero3', 'hero4', 'partnerFeature', 'partnerGuide', 'partnerLodging', 'partnerCrafts', 'feature', 'guide', 'lodging', 'crafts'], true)) {
     api_json(['error' => ['code' => 'invalid_image_slot', 'message' => 'Emplacement d’image invalide.']], 422);
 }
 $file = $_FILES['image'] ?? null;
@@ -23,7 +23,7 @@ $extensions = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'web
 if (!isset($extensions[$mime]) || !is_uploaded_file($tmp)) {
     api_json(['error' => ['code' => 'unsupported_image_type', 'message' => 'Formats acceptés : JPG, PNG et WebP.']], 422);
 }
-$directory = dirname(__DIR__) . '/uploads/homepage-partners';
+$directory = dirname(__DIR__) . '/uploads/homepage-media';
 if (!is_dir($directory) && !mkdir($directory, 0755, true) && !is_dir($directory)) {
     api_json(['error' => ['code' => 'upload_directory_unavailable', 'message' => 'Le dossier de téléversement est indisponible.']], 500);
 }
@@ -31,4 +31,4 @@ $name = $slot . '-' . bin2hex(random_bytes(12)) . '.' . $extensions[$mime];
 if (!move_uploaded_file($tmp, $directory . '/' . $name)) {
     api_json(['error' => ['code' => 'image_save_failed', 'message' => 'Impossible d’enregistrer cette image.']], 500);
 }
-api_json(['data' => ['slot' => $slot, 'path' => 'backend/public/uploads/homepage-partners/' . $name]]);
+api_json(['data' => ['slot' => $slot, 'path' => 'backend/public/uploads/homepage-media/' . $name]]);
