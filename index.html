@@ -132,7 +132,7 @@
     const payload = await response.json();
     const d = payload.data || {};
     const setText = (selector, value) => { const el=root.querySelector(selector); if(el && typeof value==='string') el.textContent=value; };
-    setText('.partners-copy .eyebrow', d.eyebrow);
+    const eyebrow=root.querySelector('.partners-copy .eyebrow'); if(eyebrow && d.eyebrow){const line=eyebrow.querySelector('.eyebrow-line');eyebrow.replaceChildren();if(line)eyebrow.append(line);eyebrow.append(document.createTextNode(d.eyebrow));}
     const title=root.querySelector('#partners-title');
     if(title && d.title){const parts=d.title.split(',');title.replaceChildren(document.createTextNode(parts.shift().trim()+ (parts.length ? ',' : '')));if(parts.length){title.append(document.createElement('br'));const em=document.createElement('em');em.textContent=parts.join(',').trim();title.append(em);}}
     const paragraphs=root.querySelectorAll('.partners-copy > p:not(.eyebrow)');
