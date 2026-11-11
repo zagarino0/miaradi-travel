@@ -4241,30 +4241,42 @@ body::-webkit-scrollbar{
   background:transparent!important;
 }
 
-/* Discreet shortcut to the protected admin login from the public homepage footer. */
+/* Discreet but visible shortcut to the protected admin login in the public footer. */
 .site-footer .footer-bottom .admin-secret-link{
   display:inline-flex;
+  flex:0 0 30px;
   align-items:center;
   justify-content:center;
-  width:24px;
-  height:24px;
-  margin-left:8px;
-  color:rgba(36,33,31,.42);
-  opacity:.42;
+  width:30px;
+  height:30px;
+  margin-left:4px;
+  border:1px solid rgba(251,248,245,.28);
+  border-radius:50%;
+  color:#FBF8F5;
+  opacity:.82;
   text-decoration:none;
-  transition:opacity .2s ease,color .2s ease;
+  transition:opacity .2s ease,color .2s ease,background-color .2s ease,border-color .2s ease;
 }
 .site-footer .footer-bottom .admin-secret-link svg{
-  width:15px;
-  height:15px;
+  display:block;
+  width:16px;
+  height:16px;
   fill:none;
   stroke:currentColor;
-  stroke-width:1.7;
+  stroke-width:1.8;
   stroke-linecap:round;
   stroke-linejoin:round;
 }
 .site-footer .footer-bottom .admin-secret-link:hover,
 .site-footer .footer-bottom .admin-secret-link:focus-visible{
-  color:#922D20;
+  color:#fff;
+  background:#922D20;
+  border-color:#922D20;
   opacity:1;
+}
+@media(max-width:700px){
+  .site-footer .footer-bottom{
+    flex-wrap:wrap;
+    align-items:center;
+  }
 }
