@@ -4912,3 +4912,34 @@ body::-webkit-scrollbar{
     letter-spacing:-.025em;
   }
 }
+
+/* Circuit Nord–Nord-Ouest : galeries plus larges et images plus grandes */
+.circuit-editorial-page .journey-days details[open] .journey-day-layout{
+  grid-template-columns:minmax(0,0.8fr) minmax(0,1.2fr);
+  gap:clamp(28px,4vw,64px);
+}
+.circuit-editorial-page .journey-days details:nth-of-type(even) .journey-day-layout{
+  grid-template-columns:minmax(0,1.2fr) minmax(0,0.8fr);
+}
+.circuit-editorial-page .journey-gallery-viewport.journey-gallery-strip{
+  width:100%;
+  min-width:0;
+}
+.circuit-editorial-page .journey-gallery-viewport.journey-gallery-strip img{
+  flex:0 0 78%;
+  width:78%;
+  aspect-ratio:4/3;
+  min-height:340px;
+}
+@media(max-width:700px){
+  .circuit-editorial-page .journey-days details[open] .journey-day-layout,
+  .circuit-editorial-page .journey-days details:nth-of-type(even) .journey-day-layout{
+    grid-template-columns:minmax(0,1fr);
+  }
+  .circuit-editorial-page .journey-gallery-viewport.journey-gallery-strip img{
+    flex-basis:92%;
+    width:92%;
+    min-height:0;
+    aspect-ratio:4/3;
+  }
+}
