@@ -78,7 +78,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #c98c
       </button>
       <p class="status" id="login-status" role="status" aria-live="polite"></p>
     </form>
-    <p class="help"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="8" cy="16" r="3"/><path d="m10 14 8-8 3 3-8 8M17 7l2 2"/></svg><a href="../../../index.html#contact">Mot de passe oublié ? Contactez MIARADI</a></p>
+    <p class="help"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="8" cy="16" r="3"/><path d="m10 14 8-8 3 3-8 8M17 7l2 2"/></svg><a href="forgot-password.php">Mot de passe oublié ?</a></p>
   </section>
   <p class="security">Espace réservé aux administrateurs autorisés · Connexion sécurisée</p>
 </main>
