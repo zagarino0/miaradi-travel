@@ -1185,3 +1185,17 @@ document.addEventListener("DOMContentLoaded", () => {
   if (typeof window.applyEditableHomepageContent === 'function') window.applyEditableHomepageContent();
   loadRegionalGallery();
 });
+
+
+// Footer: reliable smooth return to the top on every page.
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll('.site-footer a[href="#top"], .site-footer a[href="#"]').forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+      if (window.location.hash) {
+        history.replaceState(null, "", window.location.pathname + window.location.search);
+      }
+    });
+  });
+});
