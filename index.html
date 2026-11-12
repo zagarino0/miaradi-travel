@@ -5,7 +5,7 @@
 <meta name="description" content="Découvrez Madagascar avec MIARADI-TRAVEL : voyages sur mesure, rencontres locales et circuits authentiques. Demandez votre devis personnalisé.">
 <meta name="theme-color" content="#FBF8F5"><title>MIARADI-TRAVEL — Madagascar, autrement</title>
 <link rel="preconnect" href="https://commons.wikimedia.org"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="site.css"><script src="script.js" defer></script><script src="floating-contact.js" defer></script><script src="footer-partners.js" defer></script>
+<link rel="stylesheet" href="site.css"><script src="script.js" defer></script><script src="circuit-pages.js" defer></script><script src="floating-contact.js" defer></script><script src="footer-partners.js" defer></script>
 <link rel="icon" type="image/png" href="assets/miaradi-logo.png"></head><body>
 <a class="skip-link" href="#main">Aller au contenu</a>
 <header class="site-header" id="top"><div class="container header-inner">
@@ -333,10 +333,12 @@
 <script>
 (()=>{
  const slider=document.querySelector('.circuit-feature-slider');if(!slider)return;
- const slides=[...slider.querySelectorAll('.circuit-feature-slide')],dots=[...slider.querySelectorAll('[data-circuit-slide]')],counter=slider.querySelector('.circuit-feature-counter');let current=0,timer;
- const show=(index)=>{current=(index+slides.length)%slides.length;slides.forEach((slide,i)=>{slide.classList.toggle('is-active',i===current);slide.setAttribute('aria-hidden',String(i!==current));});dots.forEach((dot,i)=>{dot.classList.toggle('is-active',i===current);dot.setAttribute('aria-pressed',String(i===current));});if(counter)counter.textContent=String(current+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');};
+ const getSlides=()=>[...slider.querySelectorAll('.circuit-feature-slide')],getDots=()=>[...slider.querySelectorAll('[data-circuit-slide]')],counter=slider.querySelector('.circuit-feature-counter');let current=0,timer;
+ const show=(index)=>{const slides=getSlides(),dots=getDots();if(!slides.length)return;current=(index+slides.length)%slides.length;slides.forEach((slide,i)=>{slide.classList.toggle('is-active',i===current);slide.setAttribute('aria-hidden',String(i!==current));});dots.forEach((dot,i)=>{dot.classList.toggle('is-active',i===current);dot.setAttribute('aria-pressed',String(i===current));});if(counter)counter.textContent=String(current+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');};
  const stop=()=>window.clearInterval(timer);const start=()=>{stop();if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)timer=window.setInterval(()=>show(current+1),7000);};
- slider.querySelector('[data-circuit-prev]')?.addEventListener('click',()=>{show(current-1);start();});slider.querySelector('[data-circuit-next]')?.addEventListener('click',()=>{show(current+1);start();});dots.forEach((dot)=>dot.addEventListener('click',()=>{show(Number(dot.dataset.circuitSlide));start();}));slider.addEventListener('mouseenter',stop);slider.addEventListener('mouseleave',start);slider.addEventListener('focusin',stop);slider.addEventListener('focusout',start);show(0);start();
+ slider.querySelector('[data-circuit-prev]')?.addEventListener('click',()=>{show(current-1);start();});slider.querySelector('[data-circuit-next]')?.addEventListener('click',()=>{show(current+1);start();});
+ slider.addEventListener('click',event=>{const dot=event.target.closest('[data-circuit-slide]');if(dot&&slider.contains(dot)){show(Number(dot.dataset.circuitSlide));start();}});
+ slider.addEventListener('mouseenter',stop);slider.addEventListener('mouseleave',start);slider.addEventListener('focusin',stop);slider.addEventListener('focusout',start);document.addEventListener('miaradi:circuit-pages-loaded',()=>show(current));show(0);start();
 })();
 </script>
 </body>
