@@ -249,7 +249,12 @@ td strong{color:#34303e;font-size:12px}
 <div class="app-shell">
   <aside class="sidebar" id="admin-sidebar"><div class="side-brand"><img src="../../../assets/miaradi-logo.png" alt="" class="side-logo"><span class="side-brand-copy"><strong>MIARADI</strong><small>ESPACE ADMIN</small></span></div><div><div class="side-label">Espace de gestion</div><nav class="side-nav"><button class="active" data-tab="circuits"><span class="nav-icon">▦</span> Catalogue des circuits</button><a href="circuit-pages.php"><span class="nav-icon">▤</span> Pages détaillées des circuits</a><button data-tab="quotes"><span class="nav-icon">✉</span> Demandes de devis</button></nav></div><div><div class="side-label">Paramètres du site</div><nav class="side-nav"><button type="button" id="site-management-shortcut"><span class="nav-icon">⚙</span> Paramètres du catalogue</button><a href="network.php"><span class="nav-icon">▧</span> Images du réseau local ↗</a><a href="gallery.php"><span class="nav-icon">▧</span> Galerie médias ↗</a><a href="content.php"><span class="nav-icon">✎</span> Contenu de la page d’accueil</a><a href="about-content.php"><span class="nav-icon">✎</span> Contenu de la page À propos</a><a href="footer-partners.php"><span class="nav-icon">♧</span> Partenaires du pied de page</a><a href="privacy-policy.php"><span class="nav-icon">▤</span> Politique de confidentialité</a></nav></div><div class="side-bottom">MIARADI-TRAVEL<br>Administration sécurisée</div></aside>
   <div class="workspace"><header class="topbar"><div class="topbar-left"><button class="topbar-menu" id="sidebar-toggle" type="button" aria-label="Afficher ou masquer le menu" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><span class="crumb">Espace de travail <span class="crumb-divider">/</span> <strong id="breadcrumb-current">Tableau de bord</strong></span></div><div class="topbar-actions"><span class="topbar-status"><span></span> Administration sécurisée</span><span class="avatar" title="Administrateur">M</span><button class="button secondary hidden" id="logout"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg> Déconnexion</button></div></header><div class="content"><div class="page-heading"><div><div class="eyebrow">Vue d’ensemble</div><h1>Tableau de bord</h1><p class="muted">Suivez le catalogue et les demandes de voyage MIARADI.</p></div></div>
-  <main id="dashboard" class="hidden">
+  <section id="admin-startup-status" role="status" style="margin:28px 30px;padding:18px 20px;background:#fff;border:1px solid var(--line);border-radius:7px;color:var(--muted)">
+  <strong style="display:block;color:var(--ink);margin-bottom:5px">Ouverture de l’espace administrateur…</strong>
+  <span id="admin-startup-message">Vérification de la session sécurisée et connexion à l’API.</span>
+  <button id="admin-startup-retry" class="button secondary" type="button" style="display:none;margin-top:12px">Réessayer</button>
+</section>
+<main id="dashboard" class="hidden">
     <section class="kpi-grid" aria-label="Indicateurs du site"><article class="kpi"><span class="kpi-mark">▦</span><div class="kpi-label">Circuits au catalogue</div><div class="kpi-value" id="kpi-circuits">—</div><div class="kpi-note" id="kpi-circuits-note">Chargement des données</div></article><article class="kpi"><span class="kpi-mark">✉</span><div class="kpi-label">Demandes de devis</div><div class="kpi-value" id="kpi-quotes">—</div><div class="kpi-note">Demandes enregistrées en base</div></article><article class="kpi"><span class="kpi-mark">◷</span><div class="kpi-label">À traiter</div><div class="kpi-value" id="kpi-pending">—</div><div class="kpi-note">Nouvelles demandes et en cours</div></article><article class="kpi"><span class="kpi-mark">✓</span><div class="kpi-label">Clients contactés</div><div class="kpi-value" id="kpi-replied">—</div><div class="kpi-note">Réponses enregistrées</div></article></section>
     <nav class="tabs"><button class="active" data-tab="circuits">Catalogue des circuits</button><button data-tab="quotes">Demandes de devis</button></nav>
     <p class="notice" id="notice" role="status"></p>
@@ -341,13 +346,30 @@ td strong{color:#34303e;font-size:12px}
   function esc(value) { return String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
   function showDashboard(session) {
     csrf = session.csrfToken || '';
+    $('#admin-startup-status').classList.add('hidden');
     $('#dashboard').classList.remove('hidden'); $('#logout').classList.remove('hidden');
     loadCircuits(); loadQuotes();
   }
   async function checkSession() {
-    try { const result = await request('admin/session.php'); if (result.data.authenticated) showDashboard(result.data); else location.replace('login.php'); }
-    catch (_) { location.replace('login.php'); }
+    const status = $('#admin-startup-status');
+    const message = $('#admin-startup-message');
+    const retry = $('#admin-startup-retry');
+    retry.style.display = 'none';
+    message.textContent = 'Vérification de la session sécurisée et connexion à l’API…';
+    try {
+      const result = await request('admin/session.php');
+      if (result?.data?.authenticated) {
+        showDashboard(result.data);
+        return;
+      }
+      location.replace('login.php');
+    } catch (error) {
+      status.classList.remove('hidden');
+      message.textContent = 'Impossible de charger l’administration. Vérifiez que XAMPP (Apache/MySQL) fonctionne, que la migration de sécurité est appliquée et que l’API répond. Détail : ' + (error?.message || 'erreur inconnue');
+      retry.style.display = 'inline-flex';
+    }
   }
+  $('#admin-startup-retry').addEventListener('click', checkSession);
   $('#logout').addEventListener('click', async () => {
     try { await request('admin/session.php', {method:'POST', mutate:true, body:JSON.stringify({action:'logout'})}); } catch (_) {}
     location.replace('login.php');
