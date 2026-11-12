@@ -5203,3 +5203,96 @@ body::-webkit-scrollbar{
   }
   .circuit-editorial-page .journey-gallery-arrow{transition:none;}
 }
+
+/* Finition de la page circuit : cohérence des étapes, lecture et galeries */
+.circuit-editorial-page .journey-days{
+  width:min(100% - 64px,1600px);
+  margin-inline:auto;
+}
+.circuit-editorial-page .journey-days details{
+  border-top:1px solid rgba(35,29,25,.17);
+  background:transparent;
+  transition:background .25s ease;
+}
+.circuit-editorial-page .journey-days details:last-child{
+  border-bottom:1px solid rgba(35,29,25,.17);
+}
+.circuit-editorial-page .journey-days details:not([open]):hover,
+.circuit-editorial-page .journey-days details:not([open]):focus-within{
+  background:rgba(146,45,32,.045);
+}
+.circuit-editorial-page .journey-days details[open]{
+  background:rgba(146,45,32,.025);
+}
+.circuit-editorial-page .journey-days summary{
+  cursor:pointer;
+  list-style:none;
+  min-height:82px;
+  transition:color .2s ease,background .2s ease;
+}
+.circuit-editorial-page .journey-days summary::-webkit-details-marker{display:none}
+.circuit-editorial-page .journey-days summary>span{
+  color:#922D20;
+  font-family:"DM Mono",monospace;
+  font-size:.82rem;
+  letter-spacing:.06em;
+}
+.circuit-editorial-page .journey-days summary>strong{
+  font-weight:550;
+  letter-spacing:-.018em;
+}
+.circuit-editorial-page .journey-days summary>small{
+  color:#77716c;
+  font-size:.88rem;
+}
+.circuit-editorial-page .journey-days details[open] summary>strong{
+  color:#922D20;
+}
+.circuit-editorial-page .journey-days summary::after{
+  content:"+";
+  grid-column:4;
+  grid-row:1;
+  justify-self:end;
+  color:#922D20;
+  font-size:1.45rem;
+  font-weight:400;
+  line-height:1;
+}
+.circuit-editorial-page .journey-days details[open] summary::after{
+  content:"−";
+}
+.circuit-editorial-page .journey-day-layout>div p{
+  max-width:58ch;
+  margin:0 0 12px;
+}
+.circuit-editorial-page .journey-day-layout>div p:last-child{margin-bottom:0}
+.circuit-editorial-page .journey-day-layout>div b{color:#29221e;font-weight:650}
+.circuit-editorial-page .journey-day-gallery .journey-gallery-viewport{
+  isolation:isolate;
+}
+.circuit-editorial-page .journey-day-gallery .journey-gallery-viewport img{
+  pointer-events:none;
+}
+.circuit-editorial-page .journey-day-gallery .journey-gallery-viewport img:not(.is-active){
+  z-index:0;
+}
+.circuit-editorial-page .journey-day-gallery .journey-gallery-viewport img.is-active{
+  z-index:1;
+}
+.circuit-editorial-page .journey-gallery-arrow,
+.circuit-editorial-page .journey-gallery-count{
+  position:absolute;
+}
+@media(max-width:760px){
+  .circuit-editorial-page .journey-days{width:calc(100% - 36px)}
+  .circuit-editorial-page .journey-days summary{
+    min-height:78px;
+  }
+  .circuit-editorial-page .journey-days summary::after{
+    grid-column:3;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .circuit-editorial-page .journey-days details,
+  .circuit-editorial-page .journey-days summary{transition:none}
+}
