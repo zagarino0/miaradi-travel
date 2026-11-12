@@ -4840,3 +4840,26 @@ body::-webkit-scrollbar{
 
 /* Masquer le sélecteur de langue dans la navigation du site */
 .site-header .language-toggle{display:none!important}
+
+
+/* Page Esprit MIARADI : signature sans panneau superposé, puis autres circuits */
+.sofia-signature-card{max-width:760px;padding:clamp(24px,4vw,46px) 0;border:0;border-radius:0;background:transparent;backdrop-filter:none;box-shadow:none}
+.sofia-signature-overlay{background:linear-gradient(90deg,rgba(18,25,37,.76),rgba(18,25,37,.34) 58%,rgba(18,25,37,.08))}
+.about-other-circuits{background:var(--paper)}
+.about-other-circuits-heading{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:34px}
+.about-other-circuits-heading h2{font-size:clamp(2.5rem,5vw,4.6rem)}
+.about-other-circuits-heading h2 em{color:var(--red);font-family:var(--serif);font-weight:400}
+.about-other-circuits-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.about-circuit-card{position:relative;isolation:isolate;min-height:360px;display:flex;align-items:end;overflow:hidden;background:#28231f;color:var(--paper)}
+.about-circuit-card>img{position:absolute;z-index:-2;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.about-circuit-card:hover>img{transform:scale(1.035)}
+.about-circuit-card:after{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(0deg,rgba(15,18,24,.9),rgba(15,18,24,.35) 58%,rgba(15,18,24,.08))}
+.about-circuit-card-content{width:100%;padding:clamp(24px,4vw,38px)}
+.about-circuit-card-content .section-kicker{color:#efb6a4;font-size:.68rem;font-weight:800;letter-spacing:.14em}
+.about-circuit-card-content h3{max-width:600px;margin:12px 0;font:clamp(1.8rem,3vw,2.8rem)/1.12 var(--serif);font-weight:400}
+.about-circuit-card-content h3 em{color:#e7b8a6}
+.about-circuit-card-content>p:not(.section-kicker){max-width:520px;color:rgba(251,248,245,.88);font-size:13px;line-height:1.8}
+.about-circuit-card .underlined-link{color:#f4c8b8;border-color:#d49a87}
+.about-circuit-card-catalogue{background:linear-gradient(135deg,#29231f,#514035)}
+.about-circuit-card-catalogue:before{content:"";position:absolute;z-index:-1;inset:0;background:radial-gradient(ellipse at 85% 10%,rgba(231,184,166,.18),transparent 45%)}
+@media(max-width:700px){.sofia-signature-card{padding:18px 0}.about-other-circuits-heading{align-items:flex-start;flex-direction:column}.about-other-circuits-grid{grid-template-columns:1fr}.about-circuit-card{min-height:330px}.about-circuit-card-content{padding:24px}}
