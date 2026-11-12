@@ -34,6 +34,7 @@ Le frontend statique ne nécessite pas d'outil de build. Ce serveur Python ne pe
 - `backend/src/bootstrap.php` : socle PDO et en-têtes HTTP communs.
 - `backend/public/api/health.php` : contrôle de connectivité API/base de données.
 - `backend/public/admin/circuit-pages.php` : éditeur des pages détaillées des circuits (programme jour par jour, galeries, brouillon/publication).
+- `backend/public/api/admin/circuit-page-image.php` : import sécurisé des images de couverture et des étapes (JPG, PNG, WebP, 8 Mo maximum).
 - `backend/public/circuit-detail.php?slug=<slug>` : modèle public des pages détaillées publiées.
 - `backend/public/api/admin/circuit-pages.php` : API d’administration des pages détaillées.
 - `backend/migrations/010_circuit_pages.sql` : table de stockage des pages détaillées.
@@ -101,3 +102,10 @@ Avant la première utilisation, appliquez une seule fois `backend/migrations/007
 ### Affichage des pages détaillées dans les sections signature
 
 Les pages de circuits créées dans l’administration sont automatiquement ajoutées aux deux sliders « L’esprit MIARADI » de `index.html` et `a-propos.html`, dès lors que le circuit et sa page sont publiés. Le site les charge depuis `backend/public/api/circuit-pages.php`; les liens ouvrent `backend/public/circuit-detail.php?slug=<slug>`. Le fichier `circuit-pages.js` alimente les sliders sans remplacer les circuits signature existants, et conserve leurs commandes et leur rotation automatique.
+
+
+### Import d’images dans les pages détaillées
+
+Dans **Administration → Pages détaillées des circuits**, les boutons **Importer une image** permettent d’envoyer une image de couverture ou une photo de journée. Formats acceptés : JPG, PNG et WebP, 8 Mo maximum. Les fichiers sont stockés dans `backend/public/uploads/circuit-pages/` et l’éditeur renseigne automatiquement leur chemin.
+
+Si l’écran affiche une erreur concernant `010_circuit_pages.sql`, ouvrez phpMyAdmin, sélectionnez la même base de données que celle indiquée par `DB_NAME` dans `backend/miaradi-local-config.php` (ou l’environnement PHP), puis importez `backend/migrations/010_circuit_pages.sql` une seule fois. Rechargez ensuite l’éditeur. Ne créez pas une seconde base pour cette migration.
