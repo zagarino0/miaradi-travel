@@ -63,8 +63,8 @@ try {
         if ((int)$file['error']!==UPLOAD_ERR_OK) api_json(['error'=>['code'=>'upload_failed','message'=>'Le téléversement du logo a échoué.']],422);
         if ((int)$file['size']<1 || (int)$file['size']>5*1024*1024) api_json(['error'=>['code'=>'invalid_size','message'=>'Le logo doit peser 5 Mo maximum.']],422);
         $tmp=(string)$file['tmp_name'];$finfo=new finfo(FILEINFO_MIME_TYPE);$mime=$finfo->file($tmp);
-        $types=['image/jpeg'=>'jpg','image/png'=>'png','image/webp'=>'webp','image/svg+xml'=>'svg'];
-        if (!is_string($mime)||!isset($types[$mime])) api_json(['error'=>['code'=>'invalid_logo','message'=>'Formats acceptés : PNG, JPG, WebP ou SVG.']],422);
+        $types=['image/jpeg'=>'jpg','image/png'=>'png','image/webp'=>'webp'];
+        if (!is_string($mime)||!isset($types[$mime])) api_json(['error'=>['code'=>'invalid_logo','message'=>'Formats acceptés : PNG, JPG et WebP.']],422);
         if ($mime!=='image/svg+xml' && @getimagesize($tmp)===false) api_json(['error'=>['code'=>'invalid_logo','message'=>'Le fichier image est invalide.']],422);
         if (!is_dir($uploadDir)&&!mkdir($uploadDir,0755,true)&&!is_dir($uploadDir)) throw new RuntimeException('Cannot create footer partner upload directory');
         $filename='partner-'.bin2hex(random_bytes(12)).'.'.$types[$mime];
