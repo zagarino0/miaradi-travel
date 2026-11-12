@@ -96,3 +96,8 @@ L'API publique `backend/public/api/gallery.php` conserve le fonctionnement de la
 Les photos de fond du hero peuvent être gérées depuis **Administration → Galerie médias**. Modifiez une photo, cochez **« Utiliser comme image de fond du hero »**, puis enregistrez. Seules les photos publiées et sélectionnées sont utilisées ; plusieurs photos sélectionnées alimentent le diaporama d’accueil. Si aucune photo n’est sélectionnée, les images par défaut restent affichées.
 
 Avant la première utilisation, appliquez une seule fois `backend/migrations/007_gallery_hero.sql` sur la même base MariaDB que le site. Cette migration ajoute la colonne `is_hero` à `miaradi_gallery_items`. Ne la réexécutez pas si la colonne existe déjà.
+
+
+### Affichage des pages détaillées dans les sections signature
+
+Les pages de circuits créées dans l’administration sont automatiquement ajoutées aux deux sliders « L’esprit MIARADI » de `index.html` et `a-propos.html`, dès lors que le circuit et sa page sont publiés. Le site les charge depuis `backend/public/api/circuit-pages.php`; les liens ouvrent `backend/public/circuit-detail.php?slug=<slug>`. Le fichier `circuit-pages.js` alimente les sliders sans remplacer les circuits signature existants, et conserve leurs commandes et leur rotation automatique.
