@@ -94,19 +94,22 @@ function api_enforce_rate_limit(
     foreach ($identifiers as $identifier) {
         $identifier = trim((string) $identifier);
         if ($identifier !== '') {
-            $buckets[] = hash('sha256', $scope . "\\0" . $identifier);
+            $buckets[] = hash('sha256', $scope . "\0" . $identifier);
         }
     }
     $buckets = array_values(array_unique($buckets));
     sort($buckets, SORT_STRING);
     if ($buckets === []) {
-        $buckets[] = hash('sha256', $scope . "\\0unknown");
+        $buckets[] = hash('sha256', $scope . "\0unknown");
     }
 
     $windowSeconds = max(1, min(86400, $windowSeconds));
     $blockSeconds = max(1, min(86400, $blockSeconds));
     $pdo->beginTransaction();
     try {
+        // Bound storage growth without making cleanup a separate scheduled job.
+        $pdo->exec('DELETE FROM miaradi_api_rate_limits WHERE updated_at < DATE_SUB(UTC_TIMESTAMP(), INTERVAL 2 DAY) LIMIT 100');
+
         foreach ($buckets as $bucket) {
             $insert = $pdo->prepare(
                 'INSERT IGNORE INTO miaradi_api_rate_limits (bucket_key, scope, hits, window_started_at)
