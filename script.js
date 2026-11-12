@@ -1202,16 +1202,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // Slider des circuits sur la page Esprit MIARADI.
+// Les listes sont relues à chaque interaction afin d'inclure aussi les pages créées dans l'administration.
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("[data-circuit-slider]").forEach((slider) => {
-    const slides = Array.from(slider.querySelectorAll("[data-slide]"));
-    const dots = Array.from(slider.querySelectorAll("[data-slide-to]"));
+    const getSlides = () => Array.from(slider.querySelectorAll("[data-slide]"));
+    const getDots = () => Array.from(slider.querySelectorAll("[data-slide-to]"));
     const previous = slider.querySelector("[data-slide-prev]");
     const next = slider.querySelector("[data-slide-next]");
-    if (slides.length < 2) return;
     let active = 0;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const show = (target) => {
+      const slides = getSlides();
+      const dots = getDots();
+      if (!slides.length) return;
       active = (target + slides.length) % slides.length;
       slides.forEach((slide, index) => {
         const selected = index === active;
@@ -1227,11 +1230,18 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     previous?.addEventListener("click", () => show(active - 1));
     next?.addEventListener("click", () => show(active + 1));
-    dots.forEach((dot, index) => dot.addEventListener("click", () => show(index)));
+    slider.addEventListener("click", (event) => {
+      const dot = event.target.closest("[data-slide-to]");
+      if (dot && slider.contains(dot)) show(Number(dot.dataset.slideTo));
+    });
+    document.addEventListener("miaradi:circuit-pages-loaded", () => show(active));
     if (!reducedMotion) {
       let timer = window.setInterval(() => { if (!document.hidden) show(active + 1); }, 6500);
+      const restart = () => { window.clearInterval(timer); timer = window.setInterval(() => { if (!document.hidden) show(active + 1); }, 6500); };
       slider.addEventListener("mouseenter", () => window.clearInterval(timer));
-      slider.addEventListener("mouseleave", () => { window.clearInterval(timer); timer = window.setInterval(() => { if (!document.hidden) show(active + 1); }, 6500); });
+      slider.addEventListener("mouseleave", restart);
+      slider.addEventListener("focusin", () => window.clearInterval(timer));
+      slider.addEventListener("focusout", restart);
     }
   });
 });
