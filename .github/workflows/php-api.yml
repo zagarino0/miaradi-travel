@@ -7,7 +7,7 @@ on:
       - "database/schema.sql"
       - ".github/workflows/php-api.yml"
   push:
-    branches: [main]
+    branches: [main, feat/quote-admin-api]
     paths:
       - "backend/**"
       - "database/schema.sql"
