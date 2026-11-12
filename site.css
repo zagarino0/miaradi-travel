@@ -4819,3 +4819,20 @@ body::-webkit-scrollbar{
 .site-footer .footer-partner[href]{transition:opacity .18s ease}
 .site-footer .footer-partner[href]:hover{opacity:.78}
 @media(max-width:640px){.site-footer .footer-partners{width:calc(100% - 28px);padding:20px 0}.site-footer .footer-partners-list{gap:16px}.site-footer .footer-partner{min-width:75px;max-width:130px;padding:2px 7px}.site-footer .footer-partner img{max-width:112px;max-height:38px}}
+
+
+/* Nom du partenaire affiché sous son logo dans le footer */
+.site-footer .footer-partner{
+  flex-direction:column;
+  gap:7px;
+  text-align:center;
+}
+.site-footer .footer-partner-name{
+  display:block;
+  color:#fbf8f5;
+  font-size:12px;
+  line-height:1.4;
+  font-weight:600;
+  overflow-wrap:anywhere;
+}
+.site-footer .footer-partner img{flex:0 0 auto}
