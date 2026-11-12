@@ -38,6 +38,10 @@ try {
         $admin = $find->fetch();
 
         if ($admin) {
+            // Only the newest reset link remains valid for this administrator.
+            $invalidate = $pdo->prepare('UPDATE miaradi_admin_password_resets SET used_at = UTC_TIMESTAMP() WHERE admin_id = :admin_id AND used_at IS NULL');
+            $invalidate->execute(['admin_id' => (int) $admin['id']]);
+
             $token = bin2hex(random_bytes(32));
             $tokenHash = hash('sha256', $token);
             $insert = $pdo->prepare(
