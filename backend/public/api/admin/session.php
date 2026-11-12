@@ -12,6 +12,7 @@ if ($method === 'GET') {
     if (empty($_SESSION['admin_id']) || empty($_SESSION['admin_email'])) {
         api_json(['data' => ['authenticated' => false]]);
     }
+    api_require_admin();
     if (empty($_SESSION['csrf_token'])) {
         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     }
