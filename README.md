@@ -33,6 +33,10 @@ Le frontend statique ne nécessite pas d'outil de build. Ce serveur Python ne pe
 - `assets/miaradi-logo.png` : logo.
 - `backend/src/bootstrap.php` : socle PDO et en-têtes HTTP communs.
 - `backend/public/api/health.php` : contrôle de connectivité API/base de données.
+- `backend/public/admin/circuit-pages.php` : éditeur des pages détaillées des circuits (programme jour par jour, galeries, brouillon/publication).
+- `backend/public/circuit-detail.php?slug=<slug>` : modèle public des pages détaillées publiées.
+- `backend/public/api/admin/circuit-pages.php` : API d’administration des pages détaillées.
+- `backend/migrations/010_circuit_pages.sql` : table de stockage des pages détaillées.
 - `backend/.env.example` : exemple de variables d'environnement, sans identifiants réels.
 - `database/schema.sql` : schéma de référence aligné sur les structures SQL fournies pour les trois tables MIARADI existantes.
 - `docs/AUDIT-TECHNIQUE.md` : audit initial de la maquette.
