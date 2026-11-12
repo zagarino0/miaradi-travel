@@ -9,7 +9,20 @@ header('Cache-Control: no-store');
 $method = strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'));
 
 if ($method === 'GET') {
-    if (empty($_SESSION['admin_id']) || empty($_SESSION['admin_email'])) {
+    // Older sessions may contain admin_id/admin_email but lack auth_version.
+    // Treat those partial sessions as expired instead of returning a 401 that
+    // prevents the admin UI from redirecting cleanly to the login page.
+    if (
+        empty($_SESSION['admin_id'])
+        || empty($_SESSION['admin_email'])
+        || !isset($_SESSION['admin_auth_version'])
+    ) {
+        unset(
+            $_SESSION['admin_id'],
+            $_SESSION['admin_email'],
+            $_SESSION['admin_auth_version'],
+            $_SESSION['csrf_token']
+        );
         api_json(['data' => ['authenticated' => false]]);
     }
     api_require_admin();
