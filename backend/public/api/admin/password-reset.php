@@ -42,8 +42,8 @@ try {
             $tokenHash = hash('sha256', $token);
             $insert = $pdo->prepare(
                 'INSERT INTO miaradi_admin_password_resets
-                    (admin_id, email_hash, token_hash, request_ip_hash, expires_at)
-                 VALUES (:admin_id, :email_hash, :token_hash, :ip_hash, DATE_ADD(UTC_TIMESTAMP(), INTERVAL 30 MINUTE))'
+                    (admin_id, email_hash, token_hash, request_ip_hash, expires_at, created_at)
+                 VALUES (:admin_id, :email_hash, :token_hash, :ip_hash, DATE_ADD(UTC_TIMESTAMP(), INTERVAL 30 MINUTE), UTC_TIMESTAMP())'
             );
             $insert->execute([
                 'admin_id' => (int) $admin['id'],
