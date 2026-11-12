@@ -4888,23 +4888,26 @@ body::-webkit-scrollbar{
 @media(max-width:640px){.signature-circuit-slider,.signature-slide.is-active{min-height:610px}.signature-slide-content{width:calc(100% - 34px);padding:70px 0 90px}.signature-slide-content h2{font-size:clamp(2.5rem,12vw,4rem)}.signature-slider-controls{bottom:20px}.signature-slider-controls>button{width:38px;height:38px}}
 @media(prefers-reduced-motion:reduce){.signature-slide{transition:none}}
 
-/* Esprit MIARADI — keep each title colour on its own line */
+/* Esprit MIARADI — center the signature title and keep each colour on its own line */
 .signature-slide-content h2{
-  width:min(1400px,calc(100vw - 48px));
+  width:100%;
   max-width:none;
+  margin-inline:auto;
+  text-align:center;
   font-size:clamp(1.25rem,5vw,5.7rem);
 }
 .signature-slide-content h2 span,
 .signature-slide-content h2 em{
   display:block;
   white-space:nowrap;
+  text-align:center;
 }
 .signature-slide-content h2 em{
   margin-top:.02em;
 }
 @media(max-width:640px){
   .signature-slide-content h2{
-    width:calc(100vw - 28px);
+    width:100%;
     font-size:clamp(1.15rem,5.2vw,2rem);
     letter-spacing:-.025em;
   }
