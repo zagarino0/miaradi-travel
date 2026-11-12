@@ -40,10 +40,33 @@ function api_method(string ...$allowed): void
 
 function api_require_admin(): array
 {
-    if (empty($_SESSION['admin_id']) || empty($_SESSION['admin_email'])) {
+    if (
+        empty($_SESSION['admin_id'])
+        || empty($_SESSION['admin_email'])
+        || !isset($_SESSION['admin_auth_version'])
+    ) {
         api_json(['error' => ['code' => 'unauthorized', 'message' => 'Authentication is required.']], 401);
     }
-    return ['id' => (int) $_SESSION['admin_id'], 'email' => (string) $_SESSION['admin_email']];
+
+    $statement = database_connection()->prepare(
+        'SELECT email, auth_version, is_active FROM miaradi_admin_users WHERE id = :id LIMIT 1'
+    );
+    $statement->execute(['id' => (int) $_SESSION['admin_id']]);
+    $admin = $statement->fetch();
+
+    if (
+        !$admin
+        || (int) $admin['is_active'] !== 1
+        || (int) $admin['auth_version'] !== (int) $_SESSION['admin_auth_version']
+    ) {
+        $_SESSION = [];
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_destroy();
+        }
+        api_json(['error' => ['code' => 'session_revoked', 'message' => 'Your session has expired. Please sign in again.']], 401);
+    }
+
+    return ['id' => (int) $_SESSION['admin_id'], 'email' => (string) $admin['email']];
 }
 
 function api_require_csrf(): void
