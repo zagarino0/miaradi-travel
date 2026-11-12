@@ -106,7 +106,7 @@ try {
             api_json(['error' => ['code' => 'invalid_token', 'message' => 'Ce lien est invalide ou a expiré. Demandez un nouveau lien.']], 422);
         }
 
-        $update = $pdo->prepare('UPDATE miaradi_admin_users SET password_hash = :password_hash WHERE id = :id');
+        $update = $pdo->prepare('UPDATE miaradi_admin_users SET password_hash = :password_hash, auth_version = auth_version + 1 WHERE id = :id');
         $update->execute([
             'password_hash' => password_hash($password, PASSWORD_DEFAULT),
             'id' => (int) $reset['admin_id'],
