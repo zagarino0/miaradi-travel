@@ -4943,3 +4943,113 @@ body::-webkit-scrollbar{
     aspect-ratio:4/3;
   }
 }
+
+/* Nord–Nord-Ouest — composition éditoriale plus fluide et équilibrée */
+.circuit-editorial-page .journey-hero{
+  min-height:min(820px,calc(100svh - 88px));
+  align-items:center;
+  isolation:isolate;
+  background:#29221e;
+}
+.circuit-editorial-page .journey-hero-image{
+  background-position:center 54%;
+  animation:journey-hero-drift 24s ease-in-out infinite alternate;
+  will-change:transform;
+}
+.circuit-editorial-page .journey-hero:after{
+  background:
+    linear-gradient(90deg,rgba(24,19,16,.70) 0%,rgba(24,19,16,.48) 36%,rgba(24,19,16,.10) 78%,rgba(24,19,16,.16) 100%),
+    linear-gradient(0deg,rgba(24,19,16,.42),transparent 45%,rgba(24,19,16,.12));
+}
+.circuit-editorial-page .journey-hero-content{
+  width:min(100% - 64px,1380px);
+  max-width:1380px;
+  box-sizing:border-box;
+  padding-top:clamp(78px,10vh,124px);
+  padding-bottom:clamp(72px,9vh,108px);
+}
+.circuit-editorial-page .journey-hero .eyebrow{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  margin:0 0 28px;
+  color:#f0cbbb;
+  font-size:.72rem;
+  letter-spacing:.15em;
+}
+.circuit-editorial-page .journey-hero h1{
+  max-width:1100px;
+  margin:0 0 25px;
+  font-size:clamp(3.6rem,6.2vw,6.4rem);
+  line-height:1.015;
+  letter-spacing:-.055em;
+  text-wrap:balance;
+}
+.circuit-editorial-page .journey-hero h1 em{
+  display:inline-block;
+  margin-top:.04em;
+  color:#eab7a4;
+  font-style:italic;
+}
+.circuit-editorial-page .journey-subtitle{
+  max-width:620px;
+  margin:0 0 27px;
+  color:rgba(255,255,255,.91);
+  font-size:clamp(1.05rem,1.45vw,1.28rem);
+  line-height:1.75;
+}
+.circuit-editorial-page .journey-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin:0 0 30px;
+}
+.circuit-editorial-page .journey-meta span{
+  padding:10px 15px;
+  border:1px solid rgba(255,255,255,.42);
+  border-radius:999px;
+  background:rgba(30,24,21,.16);
+  color:#fffaf7;
+  font-size:.82rem;
+  letter-spacing:.01em;
+  backdrop-filter:blur(8px);
+}
+.circuit-editorial-page .journey-hero .button{
+  min-height:52px;
+  padding:15px 25px;
+  border-radius:999px;
+  box-shadow:0 10px 28px rgba(50,20,13,.18);
+  transition:transform .25s ease,box-shadow .25s ease,background .25s ease;
+}
+.circuit-editorial-page .journey-hero .button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 15px 34px rgba(50,20,13,.24);
+}
+@keyframes journey-hero-drift{
+  from{transform:scale(1.015) translate3d(0,0,0)}
+  to{transform:scale(1.075) translate3d(-.6%,.4%,0)}
+}
+@media(max-width:900px){
+  .circuit-editorial-page .journey-hero{min-height:720px;min-height:min(780px,calc(100svh - 78px))}
+  .circuit-editorial-page .journey-hero-content{width:calc(100% - 48px);padding-top:86px;padding-bottom:78px}
+  .circuit-editorial-page .journey-hero h1{max-width:850px;font-size:clamp(3.3rem,8.2vw,5.6rem)}
+}
+@media(max-width:600px){
+  .circuit-editorial-page .journey-hero{min-height:760px;min-height:calc(100svh - 76px);align-items:flex-end}
+  .circuit-editorial-page .journey-hero-image{background-position:58% center}
+  .circuit-editorial-page .journey-hero:after{
+    background:linear-gradient(0deg,rgba(24,19,16,.82) 0%,rgba(24,19,16,.54) 55%,rgba(24,19,16,.20) 100%);
+  }
+  .circuit-editorial-page .journey-hero-content{width:calc(100% - 36px);padding-top:96px;padding-bottom:48px}
+  .circuit-editorial-page .journey-hero .eyebrow{font-size:.62rem;letter-spacing:.11em;margin-bottom:20px}
+  .circuit-editorial-page .journey-hero h1{font-size:clamp(3rem,12vw,4.3rem);line-height:1.02;margin-bottom:20px;letter-spacing:-.06em}
+  .circuit-editorial-page .journey-hero h1 em{display:block}
+  .circuit-editorial-page .journey-subtitle{font-size:1rem;line-height:1.65;margin-bottom:22px}
+  .circuit-editorial-page .journey-meta{gap:7px;margin-bottom:24px}
+  .circuit-editorial-page .journey-meta span{font-size:.74rem;padding:9px 12px}
+  .circuit-editorial-page .journey-hero .button{width:fit-content;max-width:100%;padding:14px 19px}
+}
+@media(prefers-reduced-motion:reduce){
+  .circuit-editorial-page .journey-hero-image{animation:none}
+  .circuit-editorial-page .journey-hero .button{transition:none}
+}
