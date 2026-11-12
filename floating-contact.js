@@ -80,6 +80,23 @@
       <span>Contactez-nous</span>
     `;
     document.body.append(button);
+
+    // When the footer bottom row enters the viewport, lift the WhatsApp button above it.
+    const repositionForFooter = () => {
+      const footerBottom = document.querySelector(".site-footer .footer-bottom, footer .footer-bottom, .footer-bottom");
+      if (!footerBottom) return;
+      const rect = footerBottom.getBoundingClientRect();
+      const visible = rect.top < window.innerHeight && rect.bottom > 0;
+      if (visible) {
+        const lift = Math.max(22, window.innerHeight - rect.top + 14);
+        button.style.bottom = "calc(" + lift + "px + env(safe-area-inset-bottom))";
+      } else {
+        button.style.bottom = "max(22px, env(safe-area-inset-bottom))";
+      }
+    };
+    window.addEventListener("scroll", repositionForFooter, { passive: true });
+    window.addEventListener("resize", repositionForFooter);
+    repositionForFooter();
   };
 
   if (document.readyState === "loading") {
