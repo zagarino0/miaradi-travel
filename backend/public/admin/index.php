@@ -520,7 +520,14 @@ td strong{color:#34303e;font-size:12px}
         selectedCover = null; coverFile().value = ''; $('#cover-status').textContent = 'Photo envoyée. Enregistrement du circuit…';
       }
       await request('admin/circuits.php', {method:id?'PATCH':'POST', mutate:true, body:JSON.stringify(payload)});
-      $('#editor-panel').classList.add('hidden'); notice('Circuit enregistré.'); await loadCircuits();
+      $('#editor-panel').classList.add('hidden');
+      // Always reveal the saved item, including drafts that are hidden by the "Publiés" filter.
+      $('#circuit-filter').value = 'all';
+      $('#circuit-search').value = '';
+      notice(payload.is_published
+        ? 'Circuit publié et enregistré.'
+        : 'Circuit enregistré en brouillon. Pour le rendre visible sur le site, modifiez-le et cochez « Publier ce circuit ».');
+      await loadCircuits();
     } catch (error) { notice(error.message); }
   });
   const quoteStatusLabels = {new:'Nouvelle demande',in_progress:'En cours de traitement',replied:'Client contacté',closed:'Clôturée',spam:'Indésirable'};
