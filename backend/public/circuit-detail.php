@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require_once __DIR__ . '/src/bootstrap.php';
+require_once dirname(__DIR__) . '/src/bootstrap.php';
 function page_escape(mixed $v): string { return htmlspecialchars((string)$v, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); }
 function page_image_src(mixed $value): string { $path=trim((string)$value); if ($path==='' || preg_match('~^(https?://|//|/)~i',$path)) return $path; if (str_starts_with($path,'assets/')) return '../../'.$path; return $path; }
 $slug = trim((string)($_GET['slug'] ?? ''));
