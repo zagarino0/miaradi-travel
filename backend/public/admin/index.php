@@ -335,10 +335,28 @@ td strong{color:#34303e;font-size:12px}
   function showCoverPreview(path) { const img = $('#cover-preview'); if (coverPreviewUrl) { URL.revokeObjectURL(coverPreviewUrl); coverPreviewUrl = null; } const src = path ? (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('/') ? path : siteRoot() + '/' + path) : ''; if (!src) { img.hidden = true; img.removeAttribute('src'); $('#cover-empty').hidden = false; return; } img.src = src; img.hidden = false; $('#cover-empty').hidden = true; img.onerror = () => { img.hidden = true; $('#cover-empty').hidden = false; $('#cover-empty').textContent = 'Aperçu indisponible pour ce chemin.'; }; img.onload = () => { $('#cover-empty').hidden = true; }; }
   coverFile().addEventListener('change', () => { selectedCover = coverFile().files?.[0] || null; if (coverPreviewUrl) URL.revokeObjectURL(coverPreviewUrl); if (selectedCover) { if (selectedCover.size > 10 * 1024 * 1024) { selectedCover = null; coverFile().value = ''; $('#cover-status').textContent = 'Fichier trop volumineux : 10 Mo maximum.'; return; } coverPreviewUrl = URL.createObjectURL(selectedCover); $('#cover-preview').src = coverPreviewUrl; $('#cover-preview').hidden = false; $('#cover-empty').hidden = true; $('#cover-status').textContent = selectedCover.name + ' — prêt à être envoyé à l’enregistrement.'; } else { $('#cover-status').textContent = 'Aucune nouvelle photo sélectionnée.'; showCoverPreview($('#circuit-form').elements.image_path.value); } });
   const api = (path) => '../api/' + path;
-  async function request(path, options = {}) {
+  async function request(path, options = {}, retrying = false) {
     const headers = {'Accept':'application/json', ...(options.body && !(options.body instanceof FormData) ? {'Content-Type':'application/json'} : {}), ...(options.mutate ? {'X-CSRF-Token':csrf} : {})};
     const response = await fetch(api(path), {credentials:'same-origin', ...options, headers});
     const payload = await response.json().catch(() => ({}));
+
+    // A PHP session can expire or be rotated while the admin tab stays open.
+    // Re-check it once before showing an authentication error for a secondary API.
+    if (response.status === 401 && !retrying && path !== 'admin/session.php') {
+      const sessionResponse = await fetch(api('admin/session.php'), {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {'Accept':'application/json', 'Cache-Control':'no-store'}
+      });
+      const sessionPayload = await sessionResponse.json().catch(() => ({}));
+      if (sessionResponse.ok && sessionPayload?.data?.authenticated) {
+        csrf = sessionPayload.data.csrfToken || csrf;
+        return request(path, options, true);
+      }
+      location.replace('login.php');
+      throw new Error('Votre session administrateur a expiré. Veuillez vous reconnecter.');
+    }
+
     if (!response.ok) throw new Error(payload.error?.message || 'Une erreur est survenue.');
     return payload;
   }
