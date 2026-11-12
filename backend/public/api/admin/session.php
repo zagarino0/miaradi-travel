@@ -47,13 +47,27 @@ if ($method === 'POST') {
 
     $email = strtolower(trim((string) ($input['email'] ?? '')));
     $password = $input['password'] ?? null;
+
+    try {
+        api_enforce_rate_limit(
+            database_connection(),
+            'admin-login',
+            [(string) ($_SERVER['REMOTE_ADDR'] ?? 'unknown'), $email],
+            10,
+            900,
+            900
+        );
+    } catch (Throwable $exception) {
+        error_log('[miaradi-api] Admin login rate-limit check failed: ' . $exception->getMessage());
+        api_json(['error' => ['code' => 'authentication_unavailable', 'message' => 'Authentication is temporarily unavailable.']], 503);
+    }
     if (!filter_var($email, FILTER_VALIDATE_EMAIL) || !is_string($password) || strlen($password) < 1 || strlen($password) > 1024) {
         api_json(['error' => ['code' => 'invalid_credentials', 'message' => 'Email or password is incorrect.']], 401);
     }
 
     try {
         $statement = database_connection()->prepare(
-            'SELECT id, email, password_hash, is_active FROM miaradi_admin_users WHERE email = :email LIMIT 1'
+            'SELECT id, email, password_hash, is_active, auth_version FROM miaradi_admin_users WHERE email = :email LIMIT 1'
         );
         $statement->execute(['email' => $email]);
         $admin = $statement->fetch();
@@ -67,6 +81,7 @@ if ($method === 'POST') {
         session_regenerate_id(true);
         $_SESSION['admin_id'] = (int) $admin['id'];
         $_SESSION['admin_email'] = (string) $admin['email'];
+        $_SESSION['admin_auth_version'] = (int) $admin['auth_version'];
         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 
         $update = database_connection()->prepare('UPDATE miaradi_admin_users SET last_login_at = UTC_TIMESTAMP() WHERE id = :id');
