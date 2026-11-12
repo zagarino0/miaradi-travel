@@ -39,6 +39,15 @@ if ($circuitId !== null && (!is_int($circuitId) || $circuitId < 1)) {
 
 try {
     $pdo = database_connection();
+    api_enforce_rate_limit(
+        $pdo,
+        'quote-submit',
+        [(string) ($_SERVER['REMOTE_ADDR'] ?? 'unknown'), $email],
+        5,
+        3600,
+        3600
+    );
+
     if ($circuitId !== null) {
         $check = $pdo->prepare('SELECT id FROM miaradi_circuits WHERE id = :id AND is_published = 1 LIMIT 1');
         $check->execute(['id' => $circuitId]);
