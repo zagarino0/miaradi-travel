@@ -1199,3 +1199,39 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+
+// Slider des circuits sur la page Esprit MIARADI.
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("[data-circuit-slider]").forEach((slider) => {
+    const slides = Array.from(slider.querySelectorAll("[data-slide]"));
+    const dots = Array.from(slider.querySelectorAll("[data-slide-to]"));
+    const previous = slider.querySelector("[data-slide-prev]");
+    const next = slider.querySelector("[data-slide-next]");
+    if (slides.length < 2) return;
+    let active = 0;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const show = (target) => {
+      active = (target + slides.length) % slides.length;
+      slides.forEach((slide, index) => {
+        const selected = index === active;
+        slide.classList.toggle("is-active", selected);
+        slide.setAttribute("aria-hidden", selected ? "false" : "true");
+      });
+      dots.forEach((dot, index) => {
+        const selected = index === active;
+        dot.classList.toggle("is-active", selected);
+        if (selected) dot.setAttribute("aria-current", "true");
+        else dot.removeAttribute("aria-current");
+      });
+    };
+    previous?.addEventListener("click", () => show(active - 1));
+    next?.addEventListener("click", () => show(active + 1));
+    dots.forEach((dot, index) => dot.addEventListener("click", () => show(index)));
+    if (!reducedMotion) {
+      let timer = window.setInterval(() => { if (!document.hidden) show(active + 1); }, 6500);
+      slider.addEventListener("mouseenter", () => window.clearInterval(timer));
+      slider.addEventListener("mouseleave", () => { window.clearInterval(timer); timer = window.setInterval(() => { if (!document.hidden) show(active + 1); }, 6500); });
+    }
+  });
+});
