@@ -4836,3 +4836,7 @@ body::-webkit-scrollbar{
   overflow-wrap:anywhere;
 }
 .site-footer .footer-partner img{flex:0 0 auto}
+
+
+/* Masquer le sélecteur de langue dans la navigation du site */
+.site-header .language-toggle{display:none!important}
