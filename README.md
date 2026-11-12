@@ -109,3 +109,18 @@ Les pages de circuits créées dans l’administration sont automatiquement ajou
 Dans **Administration → Pages détaillées des circuits**, les boutons **Importer une image** permettent d’envoyer une image de couverture ou une photo de journée. Formats acceptés : JPG, PNG et WebP, 8 Mo maximum. Les fichiers sont stockés dans `backend/public/uploads/circuit-pages/` et l’éditeur renseigne automatiquement leur chemin.
 
 Si l’écran affiche une erreur concernant `010_circuit_pages.sql`, ouvrez phpMyAdmin, sélectionnez la même base de données que celle indiquée par `DB_NAME` dans `backend/miaradi-local-config.php` (ou l’environnement PHP), puis importez `backend/migrations/010_circuit_pages.sql` une seule fois. Rechargez ensuite l’éditeur. Ne créez pas une seconde base pour cette migration.
+
+
+## Réinitialisation du mot de passe administrateur
+
+La page de connexion propose maintenant **« Mot de passe oublié ? »**. Le parcours utilise un jeton aléatoire à usage unique, dont seule l'empreinte est stockée en base, valable 30 minutes. La réponse publique ne révèle pas si l'adresse e-mail correspond à un compte administrateur actif. Les demandes sont limitées et un nouveau mot de passe doit contenir au moins 12 caractères.
+
+Avant de tester cette fonction en local ou sur OVH :
+
+1. Sauvegarder la base, puis importer une seule fois `backend/migrations/012_admin_password_reset.sql` dans la base MIARADI utilisée par `DB_NAME`. La table `miaradi_admin_users` doit déjà exister.
+2. Configurer `APP_URL` dans l'environnement PHP ou `backend/miaradi-local-config.php`. Il doit représenter la racine publique du site, par exemple `http://localhost/miaradi-travel` avec XAMPP.
+3. Configurer `MAIL_FROM` avec une adresse expéditrice autorisée par l'hébergeur et vérifier que PHP `mail()` peut réellement envoyer des messages. En production, utiliser le relais SMTP recommandé par OVH ou le fournisseur de messagerie si `mail()` n'est pas disponible.
+4. Ouvrir `backend/public/admin/login.php`, cliquer sur **Mot de passe oublié ?**, puis tester avec l'adresse e-mail réelle du compte administrateur.
+5. Vérifier aussi les cas d'adresse inconnue, de lien expiré, de jeton déjà utilisé et de mot de passe trop court.
+
+Les liens de réinitialisation ne sont jamais affichés dans la réponse HTTP et ne sont pas journalisés. Si l'envoi e-mail échoue, l'API conserve volontairement une réponse générique ; consulter le journal PHP côté serveur et la configuration du service de messagerie. Cette fonction n'a pas été testée sur le serveur XAMPP/OVH de l'utilisateur depuis GitHub.
