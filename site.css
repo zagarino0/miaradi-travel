@@ -5296,3 +5296,82 @@ body::-webkit-scrollbar{
   .circuit-editorial-page .journey-days details,
   .circuit-editorial-page .journey-days summary{transition:none}
 }
+
+/* Grand tour Madagascar Sud–Nord : alignement éditorial et accordéon */
+.circuit-editorial-page .journey-days details[open] .journey-day-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1.12fr) minmax(280px,.88fr);
+  align-items:center;
+  gap:clamp(28px,5vw,76px);
+  padding:clamp(24px,3.5vw,48px) 0 clamp(32px,4vw,56px);
+}
+.circuit-editorial-page .journey-days details .journey-day-layout>figure.journey-day-gallery{
+  grid-column:1;
+  grid-row:1;
+  width:100%;
+  min-width:0;
+  margin:0;
+}
+.circuit-editorial-page .journey-days details .journey-day-layout>div:not(.journey-gallery-viewport){
+  grid-column:2 !important;
+  grid-row:1 !important;
+  min-width:0;
+  align-self:center;
+  max-width:540px;
+  color:var(--muted);
+  font-size:clamp(1rem,1.15vw,1.1rem);
+  line-height:1.9;
+}
+.circuit-editorial-page .journey-gallery-viewport.journey-gallery-strip{
+  display:block;
+  position:relative;
+  width:100%;
+  aspect-ratio:16/10;
+  min-height:0;
+  overflow:hidden;
+  padding:0;
+  scroll-snap-type:none;
+  background:#e9ddd6;
+}
+.circuit-editorial-page .journey-gallery-viewport.journey-gallery-strip img{
+  position:absolute;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  min-height:0;
+  object-fit:cover;
+  opacity:0;
+  visibility:hidden;
+  transform:scale(1.025);
+  transition:opacity .7s ease,transform 2s ease,visibility .7s;
+}
+.circuit-editorial-page .journey-gallery-viewport.journey-gallery-strip img.is-active{
+  opacity:1;
+  visibility:visible;
+  transform:scale(1);
+}
+@media(max-width:760px){
+  .circuit-editorial-page .journey-days details[open] .journey-day-layout{
+    grid-template-columns:minmax(0,1fr);
+    gap:18px;
+    padding:18px 0 28px;
+  }
+  .circuit-editorial-page .journey-days details .journey-day-layout>figure.journey-day-gallery{
+    grid-column:1;
+    grid-row:1;
+  }
+  .circuit-editorial-page .journey-days details .journey-day-layout>div:not(.journey-gallery-viewport){
+    grid-column:1 !important;
+    grid-row:2 !important;
+    max-width:none;
+  }
+  .circuit-editorial-page .journey-gallery-viewport.journey-gallery-strip{aspect-ratio:4/3;}
+}
+@media(prefers-reduced-motion:reduce){
+  .circuit-editorial-page .journey-gallery-viewport.journey-gallery-strip img,
+  .circuit-editorial-page .journey-gallery-viewport.journey-gallery-strip img.is-active{
+    transition:none;
+    transform:none;
+  }
+}
