@@ -41,9 +41,16 @@ if ($method === 'GET') {
         foreach ($circuits as &$c) $c['id'] = (int)$c['id'];
         unset($c);
         circuit_pages_json(['data'=>$rows,'circuits'=>$circuits]);
+    } catch (PDOException $e) {
+        error_log('[miaradi-api] Circuit pages list failed: '.$e->getMessage());
+        $driverCode = (string)($e->errorInfo[1] ?? '');
+        if ($driverCode === '1146' || str_contains(strtolower($e->getMessage()), 'miaradi_circuit_pages')) {
+            circuit_pages_json(['error'=>['code'=>'circuit_pages_migration_missing','message'=>'La table des pages détaillées est absente de cette base. Importez backend/migrations/010_circuit_pages.sql dans phpMyAdmin, sur la même base que le site, puis rechargez cette page.']],503);
+        }
+        circuit_pages_json(['error'=>['code'=>'circuit_pages_database_error','message'=>'La base répond, mais la lecture des pages détaillées a échoué. Vérifiez les tables miaradi_circuits et miaradi_circuit_pages ainsi que les logs PHP.']],503);
     } catch (Throwable $e) {
         error_log('[miaradi-api] Circuit pages list failed: '.$e->getMessage());
-        circuit_pages_json(['error'=>['code'=>'circuit_pages_unavailable','message'=>'Impossible de charger les pages détaillées. Vérifiez que la migration 010_circuit_pages.sql est appliquée.']],503);
+        circuit_pages_json(['error'=>['code'=>'circuit_pages_unavailable','message'=>'Impossible de se connecter à la base ou de charger les pages détaillées. Vérifiez backend/miaradi-local-config.php (DB_HOST, DB_NAME, DB_USER, DB_PASSWORD), puis les logs PHP.']],503);
     }
 }
 if (!in_array($method,['POST','PATCH','DELETE'],true)) {
