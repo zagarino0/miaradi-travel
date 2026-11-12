@@ -30,6 +30,10 @@
         logo.loading = 'lazy';
         logo.decoding = 'async';
         item.appendChild(logo);
+        const name = document.createElement('span');
+        name.className = 'footer-partner-name';
+        name.textContent = partner.name || '';
+        item.appendChild(name);
         list.appendChild(item);
       });
       section.appendChild(list);
