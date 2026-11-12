@@ -4477,3 +4477,71 @@ body::-webkit-scrollbar{
 .journey-gallery-viewport.journey-gallery-strip img.is-active{opacity:1;visibility:visible;transform:none;}
 .journey-day-gallery .journey-gallery-arrow{top:calc((100% - 42px)/2);}
 @media(max-width:700px){.journey-gallery-viewport.journey-gallery-strip img{flex-basis:85%;width:85%;}.journey-day-gallery .journey-gallery-arrow{top:calc((100% - 42px)/2);}}
+
+
+/* Footer credit balance — compact single-line attribution */
+.site-footer .footer-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:nowrap;
+  gap:clamp(12px,2vw,28px);
+  min-height:72px;
+  padding-block:14px;
+}
+.site-footer .footer-bottom .footer-credit{
+  display:inline-flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:8px;
+  flex:0 0 auto;
+  width:auto;
+  min-width:0;
+  margin:0;
+}
+.site-footer .footer-bottom .footer-developer-label{
+  display:inline-block;
+  white-space:nowrap;
+  font-size:10px;
+  line-height:1.2;
+}
+.site-footer .footer-bottom a.footer-developer{
+  display:inline-flex!important;
+  align-items:center;
+  justify-content:center;
+  width:86px!important;
+  min-width:86px!important;
+  max-width:86px!important;
+  height:28px!important;
+  flex:0 0 86px!important;
+  padding:0!important;
+  margin:0!important;
+  overflow:hidden;
+}
+.site-footer .footer-bottom a.footer-developer img{
+  display:block!important;
+  width:86px!important;
+  min-width:86px!important;
+  max-width:86px!important;
+  height:auto!important;
+  max-height:28px!important;
+  object-fit:contain!important;
+}
+.site-footer .footer-bottom .footer-legal{white-space:nowrap}
+@media(max-width:900px){
+  .site-footer .footer-bottom{
+    flex-wrap:wrap;
+    justify-content:space-between;
+    gap:14px 20px;
+  }
+  .site-footer .footer-bottom .footer-credit{order:2}
+  .site-footer .footer-bottom .footer-legal{white-space:normal}
+}
+@media(max-width:560px){
+  .site-footer .footer-bottom{justify-content:flex-start;gap:12px 18px}
+  .site-footer .footer-bottom .footer-credit{order:0}
+  .site-footer .footer-bottom a.footer-developer,
+  .site-footer .footer-bottom a.footer-developer img{
+    width:76px!important;min-width:76px!important;max-width:76px!important;max-height:25px!important;
+  }
+}
