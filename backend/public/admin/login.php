@@ -2,10 +2,43 @@
 declare(strict_types=1);
 require_once dirname(__DIR__, 2) . '/src/bootstrap.php';
 
-if (!empty($_SESSION['admin_id']) && !empty($_SESSION['admin_email'])) {
-    header('Location: index.php', true, 302);
-    exit;
+// Ne rediriger vers le tableau de bord que si la session correspond encore
+// à un compte actif et à sa version d'authentification en base. Une ancienne
+// session partielle ne doit pas créer de boucle login.php <-> index.php.
+if (
+    !empty($_SESSION['admin_id'])
+    && !empty($_SESSION['admin_email'])
+    && isset($_SESSION['admin_auth_version'])
+) {
+    try {
+        $statement = database_connection()->prepare(
+            'SELECT email, auth_version, is_active FROM miaradi_admin_users WHERE id = :id LIMIT 1'
+        );
+        $statement->execute(['id' => (int) $_SESSION['admin_id']]);
+        $admin = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if (
+            $admin
+            && (int) $admin['is_active'] === 1
+            && (int) $admin['auth_version'] === (int) $_SESSION['admin_auth_version']
+            && strtolower((string) $admin['email']) === strtolower((string) $_SESSION['admin_email'])
+        ) {
+            header('Location: index.php', true, 302);
+            exit;
+        }
+    } catch (Throwable $exception) {
+        error_log('[miaradi-admin] Login session validation failed: ' . $exception->getMessage());
+    }
 }
+
+// Nettoyer les restes de session incomplets ou révoqués afin de permettre
+// une nouvelle connexion propre, sans conserver de privilèges partiels.
+unset(
+    $_SESSION['admin_id'],
+    $_SESSION['admin_email'],
+    $_SESSION['admin_auth_version'],
+    $_SESSION['csrf_token']
+);
 ?><!doctype html>
 <html lang="fr">
 <head>
