@@ -1,0 +1,5 @@
+# Redirections historiques vers les pages de circuits générées depuis la base de données.
+RewriteEngine On
+
+RewriteRule ^circuit-madagascar-sud-nord\.html$ backend/public/circuit-detail.php?slug=madagascar-sud-nord [R=301,L,QSD]
+RewriteRule ^circuit-nord-nord-ouest\.html$ backend/public/circuit-detail.php?slug=nord-nord-ouest [R=301,L,QSD]
