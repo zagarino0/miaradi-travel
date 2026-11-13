@@ -49,7 +49,7 @@ function api_require_admin(): array
     }
 
     $statement = database_connection()->prepare(
-        'SELECT email, auth_version, is_active FROM miaradi_admin_users WHERE id = :id LIMIT 1'
+        'SELECT email, auth_version, is_active, role FROM miaradi_admin_users WHERE id = :id LIMIT 1'
     );
     $statement->execute(['id' => (int) $_SESSION['admin_id']]);
     $admin = $statement->fetch();
@@ -66,7 +66,8 @@ function api_require_admin(): array
         api_json(['error' => ['code' => 'session_revoked', 'message' => 'Your session has expired. Please sign in again.']], 401);
     }
 
-    return ['id' => (int) $_SESSION['admin_id'], 'email' => (string) $admin['email']];
+    $_SESSION['admin_role'] = (string) ($admin['role'] ?? 'super_admin');
+    return ['id' => (int) $_SESSION['admin_id'], 'email' => (string) $admin['email'], 'role' => (string) ($admin['role'] ?? 'super_admin')];
 }
 
 function api_require_csrf(): void
@@ -197,4 +198,14 @@ function api_clean_text(mixed $value, int $maxLength, bool $required = false): ?
         api_json(['error' => ['code' => 'validation_error', 'message' => 'A text field exceeds the allowed length.']], 422);
     }
     return $value === '' ? null : $value;
+}
+
+/** Require one of the explicitly allowed administrator roles. */
+function api_require_role(string ...$roles): array
+{
+    $admin = api_require_admin();
+    if (!in_array($admin['role'] ?? 'super_admin', $roles, true)) {
+        api_json(['error' => ['code' => 'forbidden', 'message' => 'Vous n’avez pas les autorisations nécessaires.']], 403);
+    }
+    return $admin;
 }
