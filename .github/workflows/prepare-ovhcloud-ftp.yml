@@ -1,0 +1,66 @@
+name: Prepare OVHcloud FTP package
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_ref:
+        description: "Branche ou tag à préparer (ex. feat/quote-admin-api)"
+        required: true
+        default: "feat/quote-admin-api"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    name: Build a safe production package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout selected source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source_ref }}
+          persist-credentials: false
+
+      - name: Prepare deployment directory
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist/miaradi-travel
+          rsync -a ./ dist/miaradi-travel/ \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='docs/' \
+            --exclude='database/' \
+            --exclude='tests/' \
+            --exclude='node_modules/' \
+            --exclude='vendor/' \
+            --exclude='.env' \
+            --exclude='.env.*' \
+            --exclude='miaradi-local-config.php' \
+            --exclude='config/local.php' \
+            --exclude='backend/migrations/' \
+            --exclude='backend/public/uploads/' \
+            --exclude='storage/' \
+            --exclude='uploads/' \
+            --exclude='*.log'
+
+          if find dist/miaradi-travel -type f \\( -name '.env' -o -name 'miaradi-local-config.php' -o -path '*/config/local.php' \\) | grep -q .; then
+            echo "::error::Local secret/configuration file detected in deployment package."
+            exit 1
+          fi
+
+          printf 'Source ref: %s\nCommit: %s\nGenerated: %s\n' \
+            "${{ inputs.source_ref }}" "${GITHUB_SHA}" "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" \
+            > dist/DEPLOYMENT-MANIFEST.txt
+          cd dist
+          zip -qr miaradi-travel-ovhcloud.zip miaradi-travel DEPLOYMENT-MANIFEST.txt
+
+      - name: Upload package for manual review and FTP
+        uses: actions/upload-artifact@v4
+        with:
+          name: miaradi-travel-ovhcloud
+          path: dist/miaradi-travel-ovhcloud.zip
+          if-no-files-found: error
+          retention-days: 7
