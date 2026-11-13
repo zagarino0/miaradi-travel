@@ -39,18 +39,18 @@ if (!in_array($language, ['fr', 'en'], true)) {
 try {
     $statement = database_connection()->prepare(
         'SELECT
-            id,
-            slug,
-            title_fr,
-            title_en,
-            summary_fr,
-            summary_en,
-            region,
-            theme,
-            duration_min,
-            duration_max,
+            c.id,
+            c.slug,
+            c.title_fr,
+            c.title_en,
+            c.summary_fr,
+            c.summary_en,
+            c.region,
+            c.theme,
+            c.duration_min,
+            c.duration_max,
             COALESCE(NULLIF(cp.hero_image, ''), c.image_path) AS image_path,
-            updated_at
+            c.updated_at
          FROM miaradi_circuits AS c
          LEFT JOIN miaradi_circuit_pages AS cp
            ON cp.circuit_id = c.id AND cp.is_published = 1
