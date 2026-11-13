@@ -49,16 +49,12 @@ try {
             theme,
             duration_min,
             duration_max,
-            image_path,
+            COALESCE(NULLIF(cp.hero_image, ''), c.image_path) AS image_path,
             updated_at
          FROM miaradi_circuits AS c
+         LEFT JOIN miaradi_circuit_pages AS cp
+           ON cp.circuit_id = c.id AND cp.is_published = 1
          WHERE c.is_published = 1
-           AND NOT EXISTS (
-               SELECT 1
-               FROM miaradi_circuit_pages AS cp
-               WHERE cp.circuit_id = c.id
-                 AND cp.is_published = 1
-           )
          ORDER BY c.sort_order ASC, c.id ASC'
     );
     $statement->execute();
