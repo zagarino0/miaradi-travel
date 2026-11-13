@@ -6,7 +6,11 @@ require_once dirname(__DIR__, 3) . '/src/http.php';
 $method = strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET'));
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
-api_require_role('super_admin', 'manager');
+if ($method === 'GET') {
+    api_require_role('super_admin', 'manager', 'editor');
+} else {
+    api_require_role('super_admin', 'manager');
+}
 
 if ($method === 'GET') {
     try {
