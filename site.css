@@ -5405,3 +5405,53 @@ body::-webkit-scrollbar{
 .journey-days summary {
   cursor: default !important;
 }
+
+
+/* Final itinerary layout: start with photo left, then alternate photo/text each day. */
+.circuit-editorial-page .journey-days details .journey-day-layout {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  align-items: center !important;
+  gap: clamp(24px, 5vw, 76px) !important;
+}
+.circuit-editorial-page .journey-days details:nth-of-type(odd) .journey-day-image {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+}
+.circuit-editorial-page .journey-days details:nth-of-type(odd) .journey-day-layout > div {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+}
+.circuit-editorial-page .journey-days details:nth-of-type(even) .journey-day-image {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+}
+.circuit-editorial-page .journey-days details:nth-of-type(even) .journey-day-layout > div {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+}
+.circuit-editorial-page .journey-days details .journey-day-image {
+  width: 100% !important;
+  max-width: none !important;
+}
+.circuit-editorial-page .journey-days details .journey-day-layout > div {
+  max-width: 520px;
+  font-size: clamp(1rem, 1.25vw, 1.18rem);
+}
+@media (max-width: 700px) {
+  .circuit-editorial-page .journey-days details .journey-day-layout {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 18px !important;
+  }
+  .circuit-editorial-page .journey-days details:nth-of-type(odd) .journey-day-image,
+  .circuit-editorial-page .journey-days details:nth-of-type(even) .journey-day-image {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+  }
+  .circuit-editorial-page .journey-days details:nth-of-type(odd) .journey-day-layout > div,
+  .circuit-editorial-page .journey-days details:nth-of-type(even) .journey-day-layout > div {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    max-width: none;
+  }
+}
