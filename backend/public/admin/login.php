@@ -71,7 +71,7 @@ input:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(146,45,32,.12)}
 .submit:hover{background:var(--red-dark);transform:translateY(-1px)}.submit:disabled{opacity:.65;cursor:wait;transform:none}
 .status{min-height:22px;margin:12px 0 0;text-align:center;color:var(--red);font-size:13px;font-weight:600}
 .help{display:flex;align-items:center;justify-content:center;gap:9px;margin:20px 0 0;color:#5d4940;font-size:14px;text-align:center}
-.help a{color:inherit;text-underline-offset:3px}.help svg{color:var(--red)}
+.help a{color:inherit;text-underline-offset:3px}.help svg{color:var(--red)}\n.setup-link{display:block;margin:13px 0 0;text-align:center;font-size:13px;color:var(--red);text-underline-offset:3px}
 .security{margin:0;text-align:center;color:#74665d;font-size:11px}
 button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #c98c7e;outline-offset:3px}
 @media(max-width:520px){body{padding:24px 14px 75px}.login-shell{gap:20px}.brand img{width:108px;height:92px}.card{padding:27px 20px 24px;border-radius:17px}.intro{font-size:15px;margin-bottom:24px}input{height:54px}.submit{min-height:55px}.security{font-size:10px}}
