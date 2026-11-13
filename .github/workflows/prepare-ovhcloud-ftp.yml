@@ -31,6 +31,7 @@ jobs:
           rsync -a ./ dist/miaradi-travel/ \
             --exclude='.git/' \
             --exclude='.github/' \
+            --exclude='dist/' \
             --exclude='docs/' \
             --exclude='database/' \
             --exclude='tests/' \
@@ -46,7 +47,7 @@ jobs:
             --exclude='uploads/' \
             --exclude='*.log'
 
-          if find dist/miaradi-travel -type f \\( -name '.env' -o -name 'miaradi-local-config.php' -o -path '*/config/local.php' \\) | grep -q .; then
+          if find dist/miaradi-travel -type f \( -name '.env' -o -name 'miaradi-local-config.php' -o -path '*/config/local.php' \) | grep -q .; then
             echo "::error::Local secret/configuration file detected in deployment package."
             exit 1
           fi
