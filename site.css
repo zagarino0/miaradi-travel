@@ -5392,3 +5392,16 @@ body::-webkit-scrollbar{
     grid-template-columns: 36px minmax(0, 1fr) !important;
   }
 }
+
+
+/* Itinerary editorial mode: all days visible, no accordion indicators. */
+.circuit-editorial-page .journey-days summary::after,
+.journey-days summary::after,
+.journey-days details[open] summary::after {
+  content: none !important;
+  display: none !important;
+}
+.circuit-editorial-page .journey-days summary,
+.journey-days summary {
+  cursor: default !important;
+}
