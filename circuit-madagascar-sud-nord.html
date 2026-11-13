@@ -96,12 +96,20 @@
     document.addEventListener('visibilitychange',()=>document.hidden?stop():start());
     render();start();
   });
+  // Récit de voyage continu : toutes les étapes restent visibles.
   const days=[...document.querySelectorAll('.journey-days details')];
-  days.forEach((day,i)=>{
-    day.open=i===0;
-    day.addEventListener('toggle',()=>{
-      if(day.open)days.forEach(other=>{if(other!==day)other.open=false;});
-    });
+  days.forEach((day)=>{
+    day.open=true;
+    const summary=day.querySelector('summary');
+    if(summary){
+      summary.style.cursor='default';
+      summary.setAttribute('aria-label', summary.textContent.trim());
+      summary.addEventListener('click',(event)=>event.preventDefault());
+      summary.addEventListener('keydown',(event)=>{
+        if(event.key==='Enter'||event.key===' '){event.preventDefault();}
+      });
+    }
+    day.addEventListener('toggle',()=>{if(!day.open)day.open=true;});
   });
 })();
 </script>
