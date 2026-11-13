@@ -6,7 +6,7 @@ require_once dirname(__DIR__, 3) . '/src/http.php';
 api_method('POST');
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
-$admin = api_require_admin();
+$admin = api_require_role('super_admin', 'manager');
 api_require_csrf();
 
 $input = api_read_json();
