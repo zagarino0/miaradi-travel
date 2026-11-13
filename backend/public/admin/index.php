@@ -783,7 +783,7 @@ td strong{color:#34303e;font-size:12px}
     const valueInput = $('#filter-option-value');
     const sortInput = filterOptionForm.elements.sort_order;
     let optionValue = valueInput.value.trim().toLocaleLowerCase('fr')
-      .normalize('NFD').replace(/[\\u0300-\\u036f]/g, '')
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
       .replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '');
 
     if (!label) {
@@ -794,9 +794,9 @@ td strong{color:#34303e;font-size:12px}
 
     // Une plage numérique correspond à une durée, pas à un identifiant de région/thème.
     // Dans ce cas, générer un identifiant stable à partir du libellé (ex. Ouest -> ouest).
-    if (type !== 'duration' && /^\\d{1,3}(?:-\\d{1,3})?$/.test(optionValue)) {
+    if (type !== 'duration' && /^\d{1,3}(?:-\d{1,3})?$/.test(optionValue)) {
       optionValue = label.toLocaleLowerCase('fr').normalize('NFD')
-        .replace(/[\\u0300-\\u036f]/g, '').replace(/[^a-z0-9-]+/g, '-')
+        .replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9-]+/g, '-')
         .replace(/^-+|-+$/g, '');
       valueInput.value = optionValue;
     }
