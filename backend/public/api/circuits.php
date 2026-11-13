@@ -51,9 +51,15 @@ try {
             duration_max,
             image_path,
             updated_at
-         FROM miaradi_circuits
-         WHERE is_published = 1
-         ORDER BY sort_order ASC, id ASC'
+         FROM miaradi_circuits AS c
+         WHERE c.is_published = 1
+           AND NOT EXISTS (
+               SELECT 1
+               FROM miaradi_circuit_pages AS cp
+               WHERE cp.circuit_id = c.id
+                 AND cp.is_published = 1
+           )
+         ORDER BY c.sort_order ASC, c.id ASC'
     );
     $statement->execute();
 
