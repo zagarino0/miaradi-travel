@@ -355,30 +355,68 @@
 
       activeCircuit = requestedMatch || chooseCircuit(circuits);
 
-      const mediaPayload = await getJson(API_BASE + "gallery.php?circuit_id=" + encodeURIComponent(activeCircuit.id) + "&lang=" + encodeURIComponent(LANGUAGE));
-      allMedia = Array.isArray(mediaPayload.data) ? mediaPayload.data : [];
+      // Les circuits détaillés utilisent leur galerie dédiée : couverture puis photos
+      // de chaque étape, renvoyées par l'API des pages de circuits.
+      let detailedPage = null;
+      try {
+        const pagesPayload = await getJson(API_BASE + "circuit-pages.php?lang=" + encodeURIComponent(LANGUAGE));
+        const pages = Array.isArray(pagesPayload.data) ? pagesPayload.data : [];
+        detailedPage = pages.find((page) =>
+          String(page.id) === String(activeCircuit.id) ||
+          normalize(page.slug) === normalize(activeCircuit.slug) ||
+          normalize(page.title_fr) === normalize(activeCircuit.title)
+        ) || null;
+      } catch (_) {
+        detailedPage = null;
+      }
 
-      // La couverture du catalogue/page détaillée fait partie de la galerie du circuit.
-      // On la place en première position et on évite de dupliquer la même URL.
-      const coverUrl = text(activeCircuit.image).trim();
-      if (coverUrl && !allMedia.some((item) => text(item.url).trim() === coverUrl)) {
-        allMedia.unshift({
-          id: "circuit-cover-" + String(activeCircuit.id),
-          circuit: { id: activeCircuit.id, slug: activeCircuit.slug, title: activeCircuit.title },
-          type: "image",
-          source: "circuit-cover",
-          title: activeCircuit.title,
-          description: activeCircuit.summary || "Couverture du circuit",
-          alt: activeCircuit.title,
-          url: coverUrl,
-          thumbnail: coverUrl,
-          isHero: true
-        });
-      } else if (coverUrl) {
-        const coverIndex = allMedia.findIndex((item) => text(item.url).trim() === coverUrl);
-        if (coverIndex > 0) {
-          const [coverItem] = allMedia.splice(coverIndex, 1);
-          allMedia.unshift(coverItem);
+      if (detailedPage && Array.isArray(detailedPage.gallery) && detailedPage.gallery.some((photo) => photo && photo.url)) {
+        const seen = new Set();
+        allMedia = detailedPage.gallery
+          .filter((photo) => photo && photo.url)
+          .map((photo, index) => {
+            const url = text(photo.url).trim();
+            const key = rootUrl(url) || url;
+            if (!url || seen.has(key)) return null;
+            seen.add(key);
+            return {
+              id: "itinerary-photo-" + String(activeCircuit.id) + "-" + index,
+              circuit: { id: activeCircuit.id, slug: activeCircuit.slug, title: activeCircuit.title },
+              type: "image",
+              source: index === 0 ? "circuit-cover" : "itinerary",
+              title: text(photo.title, text(photo.alt, activeCircuit.title)),
+              description: index === 0 ? (activeCircuit.summary || "Couverture du circuit") : (photo.alt || activeCircuit.summary || "Photo de l'itinéraire"),
+              alt: text(photo.alt, activeCircuit.title),
+              url,
+              thumbnail: url,
+              isHero: index === 0
+            };
+          })
+          .filter(Boolean);
+      } else {
+        // Les circuits sans page détaillée conservent leur galerie média actuelle.
+        const mediaPayload = await getJson(API_BASE + "gallery.php?circuit_id=" + encodeURIComponent(activeCircuit.id) + "&lang=" + encodeURIComponent(LANGUAGE));
+        allMedia = Array.isArray(mediaPayload.data) ? mediaPayload.data : [];
+        const coverUrl = text(activeCircuit.image).trim();
+        if (coverUrl && !allMedia.some((item) => (rootUrl(item.url) || text(item.url).trim()) === (rootUrl(coverUrl) || coverUrl))) {
+          allMedia.unshift({
+            id: "circuit-cover-" + String(activeCircuit.id),
+            circuit: { id: activeCircuit.id, slug: activeCircuit.slug, title: activeCircuit.title },
+            type: "image",
+            source: "circuit-cover",
+            title: activeCircuit.title,
+            description: activeCircuit.summary || "Couverture du circuit",
+            alt: activeCircuit.title,
+            url: coverUrl,
+            thumbnail: coverUrl,
+            isHero: true
+          });
+        } else if (coverUrl) {
+          const coverIndex = allMedia.findIndex((item) => (rootUrl(item.url) || text(item.url).trim()) === (rootUrl(coverUrl) || coverUrl));
+          if (coverIndex > 0) {
+            const [coverItem] = allMedia.splice(coverIndex, 1);
+            allMedia.unshift(coverItem);
+          }
         }
       }
       setCircuitHeader(activeCircuit, allMedia);
