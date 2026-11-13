@@ -38,7 +38,7 @@ if (!in_array($language, ['fr', 'en'], true)) {
 
 try {
     $statement = database_connection()->prepare(
-        'SELECT
+        "SELECT
             c.id,
             c.slug,
             c.title_fr,
@@ -55,7 +55,7 @@ try {
          LEFT JOIN miaradi_circuit_pages AS cp
            ON cp.circuit_id = c.id AND cp.is_published = 1
          WHERE c.is_published = 1
-         ORDER BY c.sort_order ASC, c.id ASC'
+         ORDER BY c.sort_order ASC, c.id ASC"
     );
     $statement->execute();
 
