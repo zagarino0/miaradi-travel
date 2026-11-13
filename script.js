@@ -863,34 +863,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const quoteStatus = document.getElementById("form-status");
   const circuitSelect = document.getElementById("circuit-select");
   const requestedCircuit = new URLSearchParams(window.location.search).get("circuit");
-  if (requestedCircuit && circuitSelect) {
-    const applyRequestedCircuit = () => {
-      let matchingOption = Array.from(circuitSelect.options).find((option) =>
-        option.value === requestedCircuit ||
-        option.textContent.trim() === requestedCircuit ||
-        option.dataset.slug === requestedCircuit
-      );
-      if (!matchingOption) {
-        matchingOption = new Option(requestedCircuit + " — à confirmer", "");
-        matchingOption.dataset.requestedCircuit = requestedCircuit;
-        circuitSelect.add(matchingOption);
-      }
-      circuitSelect.value = matchingOption.value;
-      const messageField = document.querySelector('#quote-form textarea[name="message"]');
-      if (messageField && !messageField.value.trim()) {
-        messageField.value = "Je souhaite recevoir un devis pour le circuit : " + requestedCircuit + ".";
-      }
-      circuitSelect.dispatchEvent(new Event("change", { bubbles: true }));
-      return true;
-    };
-    if (!applyRequestedCircuit()) {
-      const observer = new MutationObserver(() => {
-        if (applyRequestedCircuit()) observer.disconnect();
-      });
-      observer.observe(circuitSelect, { childList: true, subtree: true });
-      window.setTimeout(() => observer.disconnect(), 8000);
-    }
-  }
   const quoteApiBase = document.documentElement.dataset.apiBase || "backend/public/api";
 
   const showQuoteStatus = (message, isError = false) => {
@@ -920,7 +892,25 @@ document.addEventListener("DOMContentLoaded", () => {
         option.dataset.slug = circuit.slug;
         circuitSelect.add(option);
       });
-      if ([...circuitSelect.options].some((option) => option.value === selected)) {
+      if (requestedCircuit) {
+        const matchingOption = Array.from(circuitSelect.options).find((option) =>
+          option.value === requestedCircuit ||
+          option.dataset.slug === requestedCircuit ||
+          option.textContent.trim() === requestedCircuit
+        );
+        if (matchingOption) {
+          circuitSelect.value = matchingOption.value;
+          const messageField = document.querySelector('#quote-form textarea[name="message"]');
+          if (messageField && !messageField.value.trim()) {
+            messageField.value = (currentLanguage === "fr"
+              ? "Je souhaite recevoir un devis pour le circuit : "
+              : "I would like a quote for the circuit: ") + matchingOption.textContent.trim() + ".";
+          }
+          circuitSelect.dispatchEvent(new Event("change", { bubbles: true }));
+        } else if ([...circuitSelect.options].some((option) => option.value === selected)) {
+          circuitSelect.value = selected;
+        }
+      } else if ([...circuitSelect.options].some((option) => option.value === selected)) {
         circuitSelect.value = selected;
       }
     } catch (error) {
