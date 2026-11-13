@@ -1,7 +1,9 @@
 /* Published detailed circuit pages are shared by both MIARADI signature sliders. */
 (() => {
   const apiUrl = "backend/public/api/circuit-pages.php";
-  const detailUrl = (slug) => "backend/public/circuit-detail.php?slug=" + encodeURIComponent(slug);
+  const detailUrl = (slug) => slug === "madagascar-sud-nord"
+    ? "circuit-madagascar-sud-nord.html"
+    : "backend/public/circuit-detail.php?slug=" + encodeURIComponent(slug);
   const imageUrl = (value) => {
     const path = String(value || "").trim();
     if (!path) return "";
@@ -99,10 +101,24 @@
       const response = await fetch(apiUrl, { headers: { Accept: "application/json" }, cache: "no-store" });
       if (!response.ok) return;
       const payload = await response.json();
-      if (!Array.isArray(payload.data) || !payload.data.length) return;
-      addHomeSlides(payload.data);
-      addAboutSlides(payload.data);
-      document.dispatchEvent(new CustomEvent("miaradi:circuit-pages-loaded", { detail: { count: payload.data.length } }));
+      const pages = Array.isArray(payload.data) ? [...payload.data] : [];
+      // Ce grand tour possède déjà sa page éditoriale HTML, mais pas encore de fiche
+      // dans miaradi_circuit_pages. On l’ajoute au carrousel sans prétendre qu’il est
+      // administrable dans la liste des pages détaillées.
+      if (!pages.some((page) => page.slug === "madagascar-sud-nord")) {
+        pages.push({
+          slug: "madagascar-sud-nord",
+          title_fr: "Madagascar du Sud au Nord",
+          title_en: "Madagascar from South to North",
+          summary_fr: "25 jours entre la RN7, les paysages du Boeny, le fleuve Sofia et les îles du Nord.",
+          summary_en: "25 days across the RN7, Boeny landscapes, the Sofia River and the northern islands.",
+          hero_image: "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=2200&q=85"
+        });
+      }
+      if (!pages.length) return;
+      addHomeSlides(pages);
+      addAboutSlides(pages);
+      document.dispatchEvent(new CustomEvent("miaradi:circuit-pages-loaded", { detail: { count: pages.length } }));
     } catch (error) {
       console.warn("Les pages détaillées des circuits ne sont pas disponibles.", error);
     }
