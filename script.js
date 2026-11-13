@@ -875,6 +875,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const quoteStatus = document.getElementById("form-status");
   const circuitSelect = document.getElementById("circuit-select");
   const requestedCircuit = new URLSearchParams(window.location.search).get("circuit");
+  let requestedCircuitApplied = false;
   const quoteApiBase = document.documentElement.dataset.apiBase || "backend/public/api";
 
   const showQuoteStatus = (message, isError = false) => {
@@ -904,13 +905,14 @@ document.addEventListener("DOMContentLoaded", () => {
         option.dataset.slug = circuit.slug;
         circuitSelect.add(option);
       });
-      if (requestedCircuit) {
+      if (requestedCircuit && !requestedCircuitApplied) {
         const matchingOption = Array.from(circuitSelect.options).find((option) =>
           option.value === requestedCircuit ||
           option.dataset.slug === requestedCircuit ||
           option.textContent.trim() === requestedCircuit
         );
         if (matchingOption) {
+          requestedCircuitApplied = true;
           circuitSelect.value = matchingOption.value;
           const messageField = document.querySelector('#quote-form textarea[name="message"]');
           if (messageField && !messageField.value.trim()) {
