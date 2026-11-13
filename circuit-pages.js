@@ -1,9 +1,7 @@
 /* Published detailed circuit pages are shared by both MIARADI signature sliders. */
 (() => {
   const apiUrl = "backend/public/api/circuit-pages.php";
-  const detailUrl = (slug) => slug === "madagascar-sud-nord"
-    ? "circuit-madagascar-sud-nord.html"
-    : "backend/public/circuit-detail.php?slug=" + encodeURIComponent(slug);
+  const detailUrl = (slug) => "backend/public/circuit-detail.php?slug=" + encodeURIComponent(slug);
   const imageUrl = (value) => {
     const path = String(value || "").trim();
     if (!path) return "";
@@ -102,19 +100,8 @@
       if (!response.ok) return;
       const payload = await response.json();
       const pages = Array.isArray(payload.data) ? [...payload.data] : [];
-      // Ce grand tour possède déjà sa page éditoriale HTML, mais pas encore de fiche
-      // dans miaradi_circuit_pages. On l’ajoute au carrousel sans prétendre qu’il est
-      // administrable dans la liste des pages détaillées.
-      if (!pages.some((page) => page.slug === "madagascar-sud-nord")) {
-        pages.push({
-          slug: "madagascar-sud-nord",
-          title_fr: "Madagascar du Sud au Nord",
-          title_en: "Madagascar from South to North",
-          summary_fr: "25 jours entre la RN7, les paysages du Boeny, le fleuve Sofia et les îles du Nord.",
-          summary_en: "25 days across the RN7, Boeny landscapes, the Sofia River and the northern islands.",
-          hero_image: "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=2200&q=85"
-        });
-      }
+      // Le catalogue et les pages détaillées viennent exclusivement de la base.
+      // Les anciens fichiers HTML redirigent vers ce rendu dynamique.
       if (!pages.length) return;
       addHomeSlides(pages);
       addAboutSlides(pages);
