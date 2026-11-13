@@ -31,7 +31,7 @@ if ($method === 'GET') {
     }
     api_json(['data' => [
         'authenticated' => true,
-        'admin' => ['id' => (int) $_SESSION['admin_id'], 'email' => (string) $_SESSION['admin_email']],
+        'admin' => ['id' => (int) $_SESSION['admin_id'], 'email' => (string) $_SESSION['admin_email'], 'role' => (string) ($_SESSION['admin_role'] ?? 'super_admin')],
         'csrfToken' => $_SESSION['csrf_token'],
     ]]);
 }
@@ -81,7 +81,7 @@ if ($method === 'POST') {
 
     try {
         $statement = database_connection()->prepare(
-            'SELECT id, email, password_hash, is_active, auth_version FROM miaradi_admin_users WHERE email = :email LIMIT 1'
+            'SELECT id, email, password_hash, is_active, auth_version, role FROM miaradi_admin_users WHERE email = :email LIMIT 1'
         );
         $statement->execute(['email' => $email]);
         $admin = $statement->fetch();
@@ -96,6 +96,7 @@ if ($method === 'POST') {
         $_SESSION['admin_id'] = (int) $admin['id'];
         $_SESSION['admin_email'] = (string) $admin['email'];
         $_SESSION['admin_auth_version'] = (int) $admin['auth_version'];
+        $_SESSION['admin_role'] = (string) ($admin['role'] ?? 'super_admin');
         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 
         $update = database_connection()->prepare('UPDATE miaradi_admin_users SET last_login_at = UTC_TIMESTAMP() WHERE id = :id');
