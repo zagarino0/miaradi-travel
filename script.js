@@ -828,7 +828,19 @@ document.addEventListener("DOMContentLoaded", () => {
     quote.querySelector("span").textContent = labels.quote;
     quote.onclick = () => {
       const select = document.getElementById("circuit-select");
-      if (select) select.value = key;
+      const matchingOption = select && Array.from(select.options).find((option) =>
+        option.dataset.slug === key || option.textContent.trim() === key
+      );
+      if (select && matchingOption) {
+        select.value = matchingOption.value;
+        select.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+      const messageField = document.querySelector('#quote-form textarea[name="message"]');
+      if (messageField && !messageField.value.trim()) {
+        messageField.value = (currentLanguage === "fr"
+          ? "Je souhaite recevoir un devis pour le circuit : "
+          : "I would like a quote for the circuit: ") + key + ".";
+      }
       detailDialog.close();
       document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
     };
