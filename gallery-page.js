@@ -357,6 +357,30 @@
 
       const mediaPayload = await getJson(API_BASE + "gallery.php?circuit_id=" + encodeURIComponent(activeCircuit.id) + "&lang=" + encodeURIComponent(LANGUAGE));
       allMedia = Array.isArray(mediaPayload.data) ? mediaPayload.data : [];
+
+      // La couverture du catalogue/page détaillée fait partie de la galerie du circuit.
+      // On la place en première position et on évite de dupliquer la même URL.
+      const coverUrl = text(activeCircuit.image).trim();
+      if (coverUrl && !allMedia.some((item) => text(item.url).trim() === coverUrl)) {
+        allMedia.unshift({
+          id: "circuit-cover-" + String(activeCircuit.id),
+          circuit: { id: activeCircuit.id, slug: activeCircuit.slug, title: activeCircuit.title },
+          type: "image",
+          source: "circuit-cover",
+          title: activeCircuit.title,
+          description: activeCircuit.summary || "Couverture du circuit",
+          alt: activeCircuit.title,
+          url: coverUrl,
+          thumbnail: coverUrl,
+          isHero: true
+        });
+      } else if (coverUrl) {
+        const coverIndex = allMedia.findIndex((item) => text(item.url).trim() === coverUrl);
+        if (coverIndex > 0) {
+          const [coverItem] = allMedia.splice(coverIndex, 1);
+          allMedia.unshift(coverItem);
+        }
+      }
       setCircuitHeader(activeCircuit, allMedia);
       renderThumbnails();
       showMedia(0);
