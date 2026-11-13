@@ -5578,3 +5578,40 @@ body::-webkit-scrollbar{
     grid-row: 2 !important;
   }
 }
+
+
+/* Hotfix: keep the day content full-width; only the photo/text wrapper is a grid. */
+.journey-itinerary .journey-days details {
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+.journey-itinerary .journey-days details > summary {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+.journey-itinerary .journey-days details > .journey-day-layout {
+  width: calc(100% - 72px) !important;
+  min-width: 0 !important;
+  margin-left: 72px !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+}
+.journey-itinerary .journey-days details > .journey-day-layout > figure.journey-day-image {
+  min-width: 0 !important;
+  width: 100% !important;
+}
+.journey-itinerary .journey-days details > .journey-day-layout > div {
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  overflow-wrap: break-word;
+  word-break: normal !important;
+}
+@media (max-width: 700px) {
+  .journey-itinerary .journey-days details > .journey-day-layout {
+    width: calc(100% - 52px) !important;
+    margin-left: 52px !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
