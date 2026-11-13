@@ -5375,3 +5375,20 @@ body::-webkit-scrollbar{
     transform:none;
   }
 }
+
+
+/* MIARADI itinerary: remove decorative expand symbols from all detailed circuit pages. */
+.circuit-editorial-page .journey-days summary::after,
+.journey-days summary::after,
+.journey-days details[open] summary::after {
+  content: none !important;
+  display: none !important;
+}
+.circuit-editorial-page .journey-days summary {
+  grid-template-columns: 54px minmax(0, 1.3fr) minmax(180px, .8fr) !important;
+}
+@media (max-width: 760px) {
+  .circuit-editorial-page .journey-days summary {
+    grid-template-columns: 36px minmax(0, 1fr) !important;
+  }
+}
