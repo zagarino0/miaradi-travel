@@ -5,7 +5,7 @@ require_once dirname(__DIR__, 3) . '/src/http.php';
 
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
-api_require_admin();
+api_require_role('super_admin', 'manager', 'editor');
 
 function circuit_pages_json(array $payload, int $status = 200): never {
     http_response_code($status);
