@@ -55,7 +55,8 @@ $('#new-circuit-title').addEventListener('change',()=>{if(!$('#new-circuit-slug'
 $('#create-circuit-submit').addEventListener('click',async()=>{
  const title=$('#new-circuit-title').value.trim(),slug=slugify($('#new-circuit-slug').value),summary=$('#new-circuit-summary').value.trim(),duration=$('#new-circuit-duration').value;
  const notice=$('#create-circuit-notice'),button=$('#create-circuit-submit');notice.textContent='';
- if(!title||!slug||!summary){notice.textContent='Renseignez le titre, le slug et le résumé du circuit.';return;}\n  if(!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)){notice.textContent='Le slug doit contenir uniquement des minuscules, chiffres et tirets simples.';return;}
+ if(!title||!slug||!summary){notice.textContent='Renseignez le titre, le slug et le résumé du circuit.';return;}
+  if(!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)){notice.textContent='Le slug doit contenir uniquement des minuscules, chiffres et tirets simples.';return;}
  if(!duration){notice.textContent='Configurez au moins une durée dans les paramètres du catalogue.';return;}
  let durationMin=null,durationMax=null;
  if(duration!=='custom'){const parts=duration.split('-').map(Number);durationMin=parts[0];durationMax=parts[1]||parts[0];}
@@ -67,7 +68,7 @@ $('#create-circuit-submit').addEventListener('click',async()=>{
  }catch(error){notice.textContent=error.message;}finally{button.disabled=false;}
 });
 function openPage(p){if(!p)return;showEditor();selected=p;$('#page-id').value=p.id;fillCircuitSelect(p.circuit_id);$('#hero-image').value=p.hero_image||'';$('#hero-preview').src=p.hero_image?(p.hero_image.startsWith('uploads/')?'../'+p.hero_image:p.hero_image):'';$('#hero-preview').classList.toggle('hidden',!p.hero_image);$('#hero-fr').value=p.hero_title_fr||'';$('#hero-en').value=p.hero_title_en||'';$('#intro-fr').value=p.intro_fr||'';$('#intro-en').value=p.intro_en||'';$('#published').checked=!!p.is_published;$('#days').innerHTML='';(p.days||[]).forEach(addDay);$('#delete').classList.remove('hidden');$('#save').textContent='Enregistrer les modifications';$('#preview').classList.toggle('hidden',!p.is_published);if(p.is_published)$('#preview').href='../circuit-detail.php?slug='+encodeURIComponent(p.slug);note('');renderList();}
-async function load(){try{const s=await request('admin/session.php');if(!s.data?.authenticated){location.replace('login.php');return;}csrf=s.data.csrfToken||'';const data=await request('admin/circuit-pages.php');pages=data.data||[];circuits=data.circuits||[];fillCircuitSelect();}catch(e){note(e.message);}}
+async function load(){const list=$('#pages-list');list.innerHTML='<div class="empty">Chargement…</div>';try{const s=await request('admin/session.php');if(!s.data?.authenticated){location.replace('login.php');return;}csrf=s.data.csrfToken||'';const data=await request('admin/circuit-pages.php');pages=data.data||[];circuits=data.circuits||[];fillCircuitSelect();renderList();note('');}catch(e){list.innerHTML='<div class="empty">Impossible de charger les pages : '+esc(e.message)+' <button type="button" class="btn secondary" id="retry-load-pages">Réessayer</button></div>';$('#retry-load-pages')?.addEventListener('click',load);note(e.message);}}
 $('#hero-import').addEventListener('click',()=>$('#hero-file').click());
 $('#hero-file').addEventListener('change',()=>{const file=$('#hero-file').files?.[0];uploadImage(file,$('#hero-import'),path=>{$('#hero-image').value=path;$('#hero-preview').src='../'+path;$('#hero-preview').classList.remove('hidden');});});
 $('#hero-image').addEventListener('change',()=>{const path=$('#hero-image').value.trim();$('#hero-preview').src=path?(path.startsWith('uploads/')?'../'+path:path):'';$('#hero-preview').classList.toggle('hidden',!path);});
