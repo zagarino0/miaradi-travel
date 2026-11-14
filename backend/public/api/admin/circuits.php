@@ -16,13 +16,14 @@ if ($method === 'GET') {
     try {
         $rows = database_connection()->query(
             'SELECT id, slug, title_fr, title_en, summary_fr, summary_en, region, theme,
-                    duration_min, duration_max, image_path, is_published, sort_order, created_at, updated_at
+                    duration_min, duration_max, duration_nights, image_path, is_published, sort_order, created_at, updated_at
              FROM miaradi_circuits ORDER BY sort_order ASC, id ASC'
         )->fetchAll();
         foreach ($rows as &$row) {
             $row['id'] = (int) $row['id'];
             $row['duration_min'] = $row['duration_min'] === null ? null : (int) $row['duration_min'];
             $row['duration_max'] = $row['duration_max'] === null ? null : (int) $row['duration_max'];
+            $row['duration_nights'] = $row['duration_nights'] === null ? null : (int) $row['duration_nights'];
             $row['is_published'] = (bool) $row['is_published'];
             $row['sort_order'] = (int) $row['sort_order'];
         }
@@ -71,6 +72,7 @@ try {
     $image = api_clean_text($input['image_path'] ?? null, 500);
     $durationMin = $input['duration_min'] ?? null;
     $durationMax = $input['duration_max'] ?? null;
+    $durationNights = $input['duration_nights'] ?? null;
     $published = $input['is_published'] ?? false;
     $sortOrder = $input['sort_order'] ?? 0;
 
@@ -78,6 +80,12 @@ try {
         if ($value !== null && (!is_int($value) || $value < 1 || $value > 365)) {
             api_json(['error' => ['code' => 'validation_error', 'message' => $field . ' must be between 1 and 365.']], 422);
         }
+    }
+    if ($durationNights !== null && (!is_int($durationNights) || $durationNights < 0 || $durationNights > 363)) {
+        api_json(['error' => ['code' => 'validation_error', 'message' => 'duration_nights must be between 0 and 363.']], 422);
+    }
+    if ($durationMin !== null && $durationNights !== null && $durationNights > $durationMin) {
+        api_json(['error' => ['code' => 'validation_error', 'message' => 'Number of nights cannot exceed number of days.']], 422);
     }
     if ($durationMin !== null && $durationMax !== null && $durationMin > $durationMax) {
         api_json(['error' => ['code' => 'validation_error', 'message' => 'Minimum duration cannot exceed maximum duration.']], 422);
@@ -117,43 +125,20 @@ try {
         }
     }
 
-    // La plage de durée doit correspondre à une option active (ex. 3-5 jours).
-    $durationValue = ($durationMin === null && $durationMax === null)
-        ? 'custom'
-        : (($durationMin !== null && $durationMax !== null && $durationMin === $durationMax)
-            ? (string) $durationMin
-            : (string) $durationMin . '-' . (string) $durationMax);
-    $durationStmt = $pdo->prepare(
-        "SELECT id FROM miaradi_filter_options
-         WHERE option_type = 'duration' AND is_active = 1 AND option_value = :value
-         LIMIT 1"
-    );
-    $durationStmt->execute(['value' => $durationValue]);
-    $isActiveDuration = (bool) $durationStmt->fetchColumn();
-    $isUnchangedLegacyDuration = $existingCircuit
-        && (($existingCircuit['duration_min'] === null ? null : (int) $existingCircuit['duration_min']) === $durationMin)
-        && (($existingCircuit['duration_max'] === null ? null : (int) $existingCircuit['duration_max']) === $durationMax);
-    if (!$isActiveDuration && !$isUnchangedLegacyDuration) {
-        api_json([
-            'error' => [
-                'code' => 'invalid_catalogue_duration',
-                'message' => 'Choisissez une durée configurée dans les paramètres du catalogue.',
-            ],
-        ], 422);
-    }
+    // Les durées personnalisées sont autorisées pour les circuits existants : jours et nuits sont saisis librement.
 
     $values = [
         'slug' => $slug, 'title_fr' => $titleFr, 'title_en' => $titleEn,
         'summary_fr' => $summaryFr, 'summary_en' => $summaryEn, 'region' => $region,
-        'theme' => $theme, 'duration_min' => $durationMin, 'duration_max' => $durationMax,
+        'theme' => $theme, 'duration_min' => $durationMin, 'duration_max' => $durationMax, 'duration_nights' => $durationNights,
         'image_path' => $image, 'is_published' => $published ? 1 : 0, 'sort_order' => $sortOrder,
     ];
 
     if ($method === 'POST') {
         $stmt = $pdo->prepare(
             'INSERT INTO miaradi_circuits
-             (slug, title_fr, title_en, summary_fr, summary_en, region, theme, duration_min, duration_max, image_path, is_published, sort_order)
-             VALUES (:slug, :title_fr, :title_en, :summary_fr, :summary_en, :region, :theme, :duration_min, :duration_max, :image_path, :is_published, :sort_order)'
+             (slug, title_fr, title_en, summary_fr, summary_en, region, theme, duration_min, duration_max, duration_nights, image_path, is_published, sort_order)
+             VALUES (:slug, :title_fr, :title_en, :summary_fr, :summary_en, :region, :theme, :duration_min, :duration_max, :duration_nights, :image_path, :is_published, :sort_order)'
         );
         $stmt->execute($values);
         api_json(['data' => ['id' => (int) $pdo->lastInsertId()]], 201);
@@ -163,7 +148,7 @@ try {
     $stmt = $pdo->prepare(
         'UPDATE miaradi_circuits SET slug=:slug, title_fr=:title_fr, title_en=:title_en,
          summary_fr=:summary_fr, summary_en=:summary_en, region=:region, theme=:theme,
-         duration_min=:duration_min, duration_max=:duration_max, image_path=:image_path,
+         duration_min=:duration_min, duration_max=:duration_max, duration_nights=:duration_nights, image_path=:image_path,
          is_published=:is_published, sort_order=:sort_order WHERE id=:id'
     );
     $stmt->execute($values);
