@@ -97,9 +97,9 @@ try {
         // Option réservée aux circuits personnalisables sans durée fixe.
     } elseif ($type === 'duration' && str_contains((string) $value, '-')) {
         [$min, $max] = array_map('intval', explode('-', (string) $value, 2));
-        if ($min < 1 || $max < $min || $max > 365) api_json(['error' => ['code' => 'invalid_duration', 'message' => 'La plage doit être comprise entre 1 et 365 jours.']], 422);
-    } elseif ($type === 'duration' && $value !== 'custom' && ((int) $value < 1 || (int) $value > 365)) {
-        api_json(['error' => ['code' => 'invalid_duration', 'message' => 'La durée doit être comprise entre 1 et 365 jours.']], 422);
+        if ($min < 1 || $max < $min || $max > 364) api_json(['error' => ['code' => 'invalid_duration', 'message' => 'La plage doit être comprise entre 1 et 364 jours.']], 422);
+    } elseif ($type === 'duration' && $value !== 'custom' && ((int) $value < 1 || (int) $value > 364)) {
+        api_json(['error' => ['code' => 'invalid_duration', 'message' => 'La durée doit être comprise entre 1 et 364 jours.']], 422);
     }
     $stmt = $pdo->prepare('INSERT INTO miaradi_filter_options (option_type, option_value, option_label, sort_order) VALUES (:type, :value, :label, :sort)');
     $stmt->execute(['type' => $type, 'value' => $value, 'label' => $label, 'sort' => $order]);
