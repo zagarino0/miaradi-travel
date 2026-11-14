@@ -15,7 +15,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'GET') {
 
 try {
     $sql = 'SELECT c.id, c.slug, c.title_fr, c.title_en, c.summary_fr, c.summary_en, c.region,
-                   c.duration_min, c.duration_max, p.hero_title_fr, p.hero_title_en,
+                   c.duration_min, c.duration_max, c.duration_nights, p.hero_title_fr, p.hero_title_en,
                    p.intro_fr, p.intro_en, p.hero_image, p.itinerary_json, p.updated_at
             FROM miaradi_circuit_pages p
             INNER JOIN miaradi_circuits c ON c.id = p.circuit_id
@@ -67,6 +67,7 @@ try {
             'region' => (string)($row['region'] ?? ''),
             'duration_min' => isset($row['duration_min']) ? (int)$row['duration_min'] : null,
             'duration_max' => isset($row['duration_max']) ? (int)$row['duration_max'] : null,
+            'duration_nights' => isset($row['duration_nights']) ? (int)$row['duration_nights'] : null,
             'hero_image' => $heroImage,
             'gallery' => $gallery,
             'updated_at' => (string)($row['updated_at'] ?? ''),
