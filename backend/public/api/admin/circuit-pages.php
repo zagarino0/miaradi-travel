@@ -107,14 +107,37 @@ try {
         $cleanDays[]=['title'=>$title,'subtitle'=>$subtitle,'description'=>$description??'','overnight'=>$overnight??'','images'=>$cleanImages];
     }
     if ($method==='POST') {
-        $st=$pdo->prepare('INSERT INTO miaradi_circuit_pages (circuit_id,hero_title_fr,hero_title_en,intro_fr,intro_en,hero_image,itinerary_json,is_published) VALUES (?,?,?,?,?,?,?,?)');
-        $st->execute([$circuitId,$heroFr,$heroEn,$introFr,$introEn,$heroImage,json_encode($cleanDays,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES),$published?1:0]);
-        circuit_pages_json(['data'=>['id'=>(int)$pdo->lastInsertId(),'saved'=>true]],201);
+        $pdo->beginTransaction();
+        try {
+            $st=$pdo->prepare('INSERT INTO miaradi_circuit_pages (circuit_id,hero_title_fr,hero_title_en,intro_fr,intro_en,hero_image,itinerary_json,is_published) VALUES (?,?,?,?,?,?,?,?)');
+            $st->execute([$circuitId,$heroFr,$heroEn,$introFr,$introEn,$heroImage,json_encode($cleanDays,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES),$published?1:0]);
+            $newId=(int)$pdo->lastInsertId();
+            if ($published) {
+                $publishCircuit=$pdo->prepare('UPDATE miaradi_circuits SET is_published=1 WHERE id=?');
+                $publishCircuit->execute([$circuitId]);
+            }
+            $pdo->commit();
+        } catch (Throwable $e) {
+            if ($pdo->inTransaction()) $pdo->rollBack();
+            throw $e;
+        }
+        circuit_pages_json(['data'=>['id'=>$newId,'saved'=>true]],201);
     }
     $exists=$pdo->prepare('SELECT id FROM miaradi_circuit_pages WHERE id=?');$exists->execute([$id]);
     if (!$exists->fetchColumn()) circuit_pages_json(['error'=>['code'=>'not_found','message'=>'Page introuvable.']],404);
-    $st=$pdo->prepare('UPDATE miaradi_circuit_pages SET circuit_id=?,hero_title_fr=?,hero_title_en=?,intro_fr=?,intro_en=?,hero_image=?,itinerary_json=?,is_published=? WHERE id=?');
-    $st->execute([$circuitId,$heroFr,$heroEn,$introFr,$introEn,$heroImage,json_encode($cleanDays,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES),$published?1:0,$id]);
+    $pdo->beginTransaction();
+    try {
+        $st=$pdo->prepare('UPDATE miaradi_circuit_pages SET circuit_id=?,hero_title_fr=?,hero_title_en=?,intro_fr=?,intro_en=?,hero_image=?,itinerary_json=?,is_published=? WHERE id=?');
+        $st->execute([$circuitId,$heroFr,$heroEn,$introFr,$introEn,$heroImage,json_encode($cleanDays,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES),$published?1:0,$id]);
+        if ($published) {
+            $publishCircuit=$pdo->prepare('UPDATE miaradi_circuits SET is_published=1 WHERE id=?');
+            $publishCircuit->execute([$circuitId]);
+        }
+        $pdo->commit();
+    } catch (Throwable $e) {
+        if ($pdo->inTransaction()) $pdo->rollBack();
+        throw $e;
+    }
     circuit_pages_json(['data'=>['id'=>(int)$id,'saved'=>true]]);
 } catch (PDOException $e) {
     if ($e->getCode()==='23000') circuit_pages_json(['error'=>['code'=>'page_exists','message'=>'Une page détaillée existe déjà pour ce circuit. Modifiez la page existante.']],409);
