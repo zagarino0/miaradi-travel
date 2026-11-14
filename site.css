@@ -1159,7 +1159,9 @@
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
   grid-auto-rows: clamp(150px, 17vw, 245px);
-  gap: clamp(10px, 1.2vw, 18px);
+  /* Espacement plus généreux entre les cartes pour éviter l'effet collé. */
+  column-gap: clamp(16px, 1.6vw, 26px);
+  row-gap: clamp(18px, 1.8vw, 28px);
   align-items: stretch;
 }
 
