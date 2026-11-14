@@ -242,7 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (value !== undefined) element.textContent = value;
     return element;
   };
-  const renderPublicCircuitCards = (items) => {
+  const renderPublicCircuitCards = (items, detailedSlugs = new Set()) => {
     if (!circuitGrid) return;
     circuitGrid.replaceChildren();
     if (!items.length) {
@@ -303,6 +303,17 @@ document.addEventListener("DOMContentLoaded", () => {
         createCircuitElement("span", "quote-plane", "➤"),
         createCircuitElement("span", "", currentLanguage === "fr" ? "Demander un devis" : "Request a quote")
       );
+      if (circuit.slug && detailedSlugs.has(circuit.slug)) {
+        const discoverLink = createCircuitElement("a", "button button-dark circuit-discover-link");
+        discoverLink.href = "backend/public/circuit-detail.php?slug=" + encodeURIComponent(circuit.slug);
+        discoverLink.append(
+          createCircuitElement("span", "", currentLanguage === "fr" ? "Découvrir le circuit" : "Discover this journey"),
+          createCircuitElement("span", "", " ↗")
+        );
+        discoverLink.setAttribute("aria-label", (currentLanguage === "fr" ? "Découvrir le circuit : " : "Discover this journey: ") + circuit.title);
+        actions.append(discoverLink);
+      }
+
       const galleryLink = createCircuitElement("a", "gallery-trigger", "→");
       galleryLink.href = galleryUrl;
       galleryLink.setAttribute("aria-label", (currentLanguage === "fr" ? "Ouvrir la galerie du circuit : " : "Open journey gallery: ") + circuit.title);
@@ -375,7 +386,30 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!response.ok || !Array.isArray(payload.data)) {
         throw new Error(payload.error?.message || "Circuit catalogue unavailable.");
       }
-      renderPublicCircuitCards(payload.data);
+
+      // Seules les pages détaillées réellement publiées reçoivent un lien « Découvrir ».
+      // La correspondance se fait par slug, jamais par l'ordre des cartes ou leur titre.
+      let detailedSlugs = new Set();
+      try {
+        const pagesResponse = await fetch("backend/public/api/circuit-pages.php", {
+          headers: { Accept: "application/json" },
+          credentials: "same-origin",
+          cache: "no-store"
+        });
+        if (pagesResponse.ok) {
+          const pagesPayload = await pagesResponse.json();
+          if (Array.isArray(pagesPayload.data)) {
+            detailedSlugs = new Set(
+              pagesPayload.data
+                .map((page) => String(page.slug || "").trim())
+                .filter(Boolean)
+            );
+          }
+        }
+      } catch (pagesError) {
+        console.warn("[MIARADI] Les liens des pages détaillées ne sont pas disponibles :", pagesError);
+      }
+      renderPublicCircuitCards(payload.data, detailedSlugs);
     } catch (error) {
       console.error("[MIARADI] Impossible de charger les circuits publiés :", error);
       circuitGrid.replaceChildren(createCircuitElement("p", "circuit-load-status",
