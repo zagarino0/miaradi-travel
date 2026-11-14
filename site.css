@@ -5735,23 +5735,30 @@ body::-webkit-scrollbar{
   }
 }
 
-/* Galerie régionale : séparation visible même si d'autres règles de grille sont chargées après. */
-.circuit-photo-gallery .regional-gallery-grid {
+/* Correctif prioritaire : espacement forcé sur le conteneur réellement utilisé par galerie.html. */
+#regional-gallery-grid,
+.circuit-photo-gallery #regional-gallery-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   column-gap: 28px !important;
-  row-gap: 34px !important;
-  gap: 34px 28px !important;
+  row-gap: 38px !important;
+  gap: 38px 28px !important;
   align-items: start !important;
-  padding-bottom: 34px !important;
+  padding-bottom: 38px !important;
 }
-.circuit-photo-gallery .regional-gallery-grid > .regional-gallery-card {
-  margin: 0 0 2px !important;
+#regional-gallery-grid > .regional-gallery-card {
+  margin: 0 0 4px !important;
   align-self: start !important;
+  grid-row: auto !important;
 }
-@media (max-width: 760px) {
-  .circuit-photo-gallery .regional-gallery-grid {
+@media (max-width: 700px) {
+  #regional-gallery-grid,
+  .circuit-photo-gallery #regional-gallery-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
     column-gap: 16px !important;
-    row-gap: 22px !important;
-    gap: 22px 16px !important;
-    padding-bottom: 22px !important;
+    row-gap: 24px !important;
+    gap: 24px 16px !important;
+    padding-bottom: 24px !important;
   }
+}
 }
