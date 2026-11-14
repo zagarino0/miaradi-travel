@@ -304,7 +304,7 @@ document.addEventListener("DOMContentLoaded", () => {
         createCircuitElement("span", "", currentLanguage === "fr" ? "Demander un devis" : "Request a quote")
       );
       if (circuit.slug && detailedSlugs.has(circuit.slug)) {
-        const discoverLink = createCircuitElement("a", "button button-dark circuit-discover-link");
+        const discoverLink = createCircuitElement("a", "circuit-link circuit-discover-link");
         discoverLink.href = "backend/public/circuit-detail.php?slug=" + encodeURIComponent(circuit.slug);
         discoverLink.append(
           createCircuitElement("span", "", currentLanguage === "fr" ? "Découvrir le circuit" : "Discover this journey"),
