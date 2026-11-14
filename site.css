@@ -4001,7 +4001,7 @@ html, body {
 
 /* Regional media gallery — four equal cards arranged in a diagonal rhythm */
 .circuit-photo-gallery{position:relative;z-index:2;display:flow-root;padding-bottom:clamp(55px,7vw,90px);margin-bottom:0}
-.regional-gallery-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 28px;align-items:stretch}
+.regional-gallery-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(22px,2vw,32px)!important;row-gap:clamp(30px,3vw,44px)!important;gap:clamp(30px,3vw,44px) clamp(22px,2vw,32px)!important;align-items:stretch;padding-bottom:clamp(18px,2vw,28px)}
 .regional-gallery-card,.regional-gallery-card:nth-child(n){position:relative;grid-column:auto;width:100%;height:clamp(230px,25vw,320px);min-height:0;aspect-ratio:1.65/1;isolation:isolate;border-radius:14px;overflow:hidden}
 .regional-gallery-card:nth-child(1){grid-column:1;grid-row:1;height:clamp(230px,25vw,320px);aspect-ratio:1.65/1}
 .regional-gallery-card:nth-child(2){grid-column:2;grid-row:1}
