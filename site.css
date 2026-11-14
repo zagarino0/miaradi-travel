@@ -5735,15 +5735,23 @@ body::-webkit-scrollbar{
   }
 }
 
-/* Galerie régionale : espacer clairement les cartes, horizontalement et verticalement. */
+/* Galerie régionale : séparation visible même si d'autres règles de grille sont chargées après. */
 .circuit-photo-gallery .regional-gallery-grid {
-  column-gap: 24px !important;
-  row-gap: 24px !important;
-  align-items: start;
+  column-gap: 28px !important;
+  row-gap: 34px !important;
+  gap: 34px 28px !important;
+  align-items: start !important;
+  padding-bottom: 34px !important;
+}
+.circuit-photo-gallery .regional-gallery-grid > .regional-gallery-card {
+  margin: 0 0 2px !important;
+  align-self: start !important;
 }
 @media (max-width: 760px) {
   .circuit-photo-gallery .regional-gallery-grid {
     column-gap: 16px !important;
-    row-gap: 18px !important;
+    row-gap: 22px !important;
+    gap: 22px 16px !important;
+    padding-bottom: 22px !important;
   }
 }
