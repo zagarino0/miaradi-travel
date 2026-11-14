@@ -5814,3 +5814,93 @@ body::-webkit-scrollbar{
     padding-bottom: 24px !important;
   }
 }
+
+
+/* MIARADI — actions des cartes circuits : compacité, alignement et contraste */
+#circuits .circuit-card .circuit-card-actions {
+  display: flex !important;
+  flex-flow: row nowrap !important;
+  align-items: center !important;
+  justify-content: stretch !important;
+  gap: 8px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  margin-top: auto !important;
+}
+
+#circuits .circuit-card .circuit-card-actions .circuit-discover-link,
+#circuits .circuit-card .circuit-card-actions .button-quote {
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  flex: 1 1 0 !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
+  width: 0 !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  min-height: 38px !important;
+  margin: 0 !important;
+  padding: 8px 7px !important;
+  border: 1px solid transparent !important;
+  border-radius: 999px !important;
+  font-size: clamp(10px, .72vw, 12px) !important;
+  font-weight: 700 !important;
+  line-height: 1.15 !important;
+  letter-spacing: 0 !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+}
+
+#circuits .circuit-card .circuit-card-actions .circuit-discover-link {
+  background: #fff4f0 !important;
+  border-color: #e9c8be !important;
+  color: #922d20 !important;
+}
+
+#circuits .circuit-card .circuit-card-actions .button-quote {
+  background: #922d20 !important;
+  border-color: #922d20 !important;
+  color: #fff !important;
+}
+
+#circuits .circuit-card .circuit-card-actions .circuit-discover-link > span,
+#circuits .circuit-card .circuit-card-actions .button-quote > span {
+  flex: 0 1 auto !important;
+  min-width: 0 !important;
+  color: inherit !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+#circuits .circuit-card .circuit-card-actions .quote-plane {
+  flex: 0 0 auto !important;
+  overflow: visible !important;
+}
+
+#circuits .circuit-card .circuit-card-actions .circuit-discover-link:hover {
+  background: #f4ded7 !important;
+}
+
+#circuits .circuit-card .circuit-card-actions .button-quote:hover {
+  background: #741f16 !important;
+  border-color: #741f16 !important;
+}
+
+@media (max-width: 520px) {
+  #circuits .circuit-card .circuit-card-actions {
+    gap: 6px !important;
+  }
+
+  #circuits .circuit-card .circuit-card-actions .circuit-discover-link,
+  #circuits .circuit-card .circuit-card-actions .button-quote {
+    min-height: 36px !important;
+    padding: 7px 5px !important;
+    font-size: 10px !important;
+  }
+}
