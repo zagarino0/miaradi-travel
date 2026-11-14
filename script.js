@@ -209,9 +209,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const durationLabel = (duration) => {
     const min = Number(duration?.min);
     const max = Number(duration?.max);
-    if (min > 0 && max > 0) return min + "–" + max + (currentLanguage === "fr" ? " jours" : " days");
-    if (min > 0) return (currentLanguage === "fr" ? "À partir de " : "From ") + min + (currentLanguage === "fr" ? " jours" : " days");
-    return currentLanguage === "fr" ? "Sur mesure" : "Tailor-made";
+    const hasNights = duration?.nights !== null
+      && duration?.nights !== undefined
+      && duration?.nights !== "";
+    const nights = hasNights ? Number(duration.nights) : null;
+    let daysLabel = "";
+
+    if (min > 0 && max > 0) {
+      daysLabel = min === max
+        ? min + (currentLanguage === "fr" ? " jours" : " days")
+        : min + "–" + max + (currentLanguage === "fr" ? " jours" : " days");
+    } else if (min > 0) {
+      daysLabel = (currentLanguage === "fr" ? "À partir de " : "From ")
+        + min + (currentLanguage === "fr" ? " jours" : " days");
+    } else {
+      daysLabel = currentLanguage === "fr" ? "Sur mesure" : "Tailor-made";
+    }
+
+    if (nights !== null && Number.isFinite(nights) && nights >= 0) {
+      daysLabel += " · " + nights + (currentLanguage === "fr" ? " nuits" : " nights");
+    }
+    return daysLabel;
   };
   const durationFilterValue = (duration) => {
     const min = Number(duration?.min);
