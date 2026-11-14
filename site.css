@@ -5734,3 +5734,16 @@ body::-webkit-scrollbar{
     grid-template-columns: minmax(0, 1fr) !important;
   }
 }
+
+/* Galerie régionale : espacer clairement les cartes, horizontalement et verticalement. */
+.circuit-photo-gallery .regional-gallery-grid {
+  column-gap: 24px !important;
+  row-gap: 24px !important;
+  align-items: start;
+}
+@media (max-width: 760px) {
+  .circuit-photo-gallery .regional-gallery-grid {
+    column-gap: 16px !important;
+    row-gap: 18px !important;
+  }
+}
