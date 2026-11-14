@@ -5739,6 +5739,9 @@ body::-webkit-scrollbar{
 #regional-gallery-grid,
 .circuit-photo-gallery #regional-gallery-grid {
   display: grid !important;
+  /* La grille de base du site fixe des pistes trop petites (245px max).
+     Les cartes font jusqu'à 320px : les rangées se chevauchaient donc. */
+  grid-auto-rows: clamp(230px, 25vw, 320px) !important;
   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   column-gap: 28px !important;
   row-gap: 38px !important;
@@ -5754,6 +5757,7 @@ body::-webkit-scrollbar{
 @media (max-width: 700px) {
   #regional-gallery-grid,
   .circuit-photo-gallery #regional-gallery-grid {
+    grid-auto-rows: clamp(220px, 58vw, 300px) !important;
     grid-template-columns: minmax(0, 1fr) !important;
     column-gap: 16px !important;
     row-gap: 24px !important;
