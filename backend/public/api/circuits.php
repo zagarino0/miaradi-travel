@@ -49,6 +49,7 @@ try {
             c.theme,
             c.duration_min,
             c.duration_max,
+            c.duration_nights,
             COALESCE(NULLIF(cp.hero_image, ''), c.image_path) AS image_path,
             c.updated_at
          FROM miaradi_circuits AS c
@@ -78,6 +79,7 @@ try {
                 'duration' => [
                     'min' => $row['duration_min'] === null ? null : (int) $row['duration_min'],
                     'max' => $row['duration_max'] === null ? null : (int) $row['duration_max'],
+                    'nights' => $row['duration_nights'] === null ? null : (int) $row['duration_nights'],
                 ],
                 'image' => $row['image_path'],
                 'updatedAt' => $row['updated_at'],
