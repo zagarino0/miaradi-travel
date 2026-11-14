@@ -5904,3 +5904,29 @@ body::-webkit-scrollbar{
     font-size: 10px !important;
   }
 }
+
+
+/* MIARADI — rapprocher les icônes de leur libellé dans les boutons des cartes. */
+#circuits .circuit-card .circuit-card-actions .circuit-discover-link,
+#circuits .circuit-card .circuit-card-actions .button-quote {
+  justify-content: center !important;
+  gap: 4px !important;
+}
+
+#circuits .circuit-card .circuit-card-actions .circuit-discover-link > span,
+#circuits .circuit-card .circuit-card-actions .button-quote > span {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  max-width: none !important;
+  margin: 0 !important;
+  text-indent: 0 !important;
+}
+
+#circuits .circuit-card .circuit-card-actions .circuit-discover-link > span:last-child {
+  margin-left: 1px !important;
+}
+
+#circuits .circuit-card .circuit-card-actions .button-quote .quote-plane {
+  flex: 0 0 auto !important;
+  margin: 0 1px 0 0 !important;
+}
