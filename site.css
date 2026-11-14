@@ -5723,6 +5723,39 @@ body::-webkit-scrollbar{
   max-width: 100% !important;
   white-space: normal !important;
 }
+
+/* Les deux actions d'une carte circuit restent alignées sur une seule ligne. */
+#circuits .circuit-card .circuit-card-actions {
+  display: flex !important;
+  flex-flow: row nowrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 10px !important;
+}
+#circuits .circuit-card .circuit-card-actions .circuit-discover-link {
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  width: max-content !important;
+  max-width: none !important;
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+}
+#circuits .circuit-card .circuit-card-actions .circuit-discover-link > span,
+#circuits .circuit-card .circuit-card-actions .circuit-link > span {
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+}
+#circuits .circuit-card .circuit-card-actions .button-quote {
+  flex: 1 1 auto !important;
+  min-width: max-content !important;
+  max-width: none !important;
+  white-space: nowrap !important;
+}
+#circuits .circuit-card .circuit-card-actions .button-quote > span:last-child {
+  white-space: nowrap !important;
+}
 @media (max-width: 760px) {
   #circuits .circuit-grid > .circuit-card .circuit-meta {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
