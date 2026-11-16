@@ -27,6 +27,8 @@
   let activeIndex = 0;
   let frame = null;
   let autoplayTimer = null;
+  let isManuallyPaused = false;
+  const toggleButton = $("gallery-page-toggle");
   const AUTOPLAY_DELAY = 3000;
 
   const text = (value, backup = "") => String(value == null || value === "" ? backup : value);
@@ -193,7 +195,7 @@
 
   function scheduleAutoAdvance() {
     stopAutoAdvance();
-    if (allMedia.length < 2 || document.hidden ||
+    if (isManuallyPaused || allMedia.length < 2 || document.hidden ||
         window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
         stage.matches(":hover") || stage.contains(document.activeElement)) return;
 
@@ -493,6 +495,17 @@
   if (typeof ResizeObserver !== "undefined" && suggestionsGrid) {
     new ResizeObserver(updateSuggestionsControls).observe(suggestionsGrid);
   }
+
+  toggleButton?.addEventListener("click", () => {
+    isManuallyPaused = !isManuallyPaused;
+    if (toggleButton) {
+      toggleButton.textContent = isManuallyPaused ? "▶ Reprendre" : "Ⅱ Pause";
+      toggleButton.setAttribute("aria-pressed", String(isManuallyPaused));
+      toggleButton.setAttribute("aria-label", isManuallyPaused ? "Reprendre le diaporama" : "Mettre le diaporama en pause");
+    }
+    if (isManuallyPaused) stopAutoAdvance();
+    else scheduleAutoAdvance();
+  });
 
   prevButton.addEventListener("click", () => showMedia(activeIndex - 1));
   nextButton.addEventListener("click", () => showMedia(activeIndex + 1));
