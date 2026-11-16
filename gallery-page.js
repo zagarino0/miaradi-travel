@@ -26,6 +26,8 @@
   let allMedia = [];
   let activeIndex = 0;
   let frame = null;
+  let autoplayTimer = null;
+  const AUTOPLAY_DELAY = 3000;
 
   const text = (value, backup = "") => String(value == null || value === "" ? backup : value);
   const normalize = (value) => text(value).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
@@ -179,6 +181,29 @@
 
     prevButton.disabled = allMedia.length < 2;
     nextButton.disabled = allMedia.length < 2;
+    scheduleAutoAdvance();
+  }
+
+  function stopAutoAdvance() {
+    if (autoplayTimer !== null) {
+      window.clearTimeout(autoplayTimer);
+      autoplayTimer = null;
+    }
+  }
+
+  function scheduleAutoAdvance() {
+    stopAutoAdvance();
+    if (allMedia.length < 2 || document.hidden ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+        stage.matches(":hover") || stage.contains(document.activeElement)) return;
+
+    // Les vidéos restent sous le contrôle du visiteur : seul le diaporama photo avance seul.
+    if (isVideo(allMedia[activeIndex])) return;
+
+    autoplayTimer = window.setTimeout(() => {
+      autoplayTimer = null;
+      showMedia(activeIndex + 1);
+    }, AUTOPLAY_DELAY);
   }
 
   function renderThumbnails() {
@@ -421,6 +446,24 @@
           }
         }
       }
+
+      // Fusionner aussi les médias publiés dans la galerie d’administration.
+      // L’ordre reste : couverture, photos d’itinéraire, puis médias complémentaires.
+      try {
+        const mediaPayload = await getJson(API_BASE + "gallery.php?circuit_id=" + encodeURIComponent(activeCircuit.id) + "&lang=" + encodeURIComponent(LANGUAGE));
+        const galleryMedia = Array.isArray(mediaPayload.data) ? mediaPayload.data : [];
+        const seenUrls = new Set(allMedia.map((item) => rootUrl(item.url) || text(item.url).trim()).filter(Boolean));
+        galleryMedia.forEach((item) => {
+          const url = text(item.url).trim();
+          const key = rootUrl(url) || url;
+          if (!url || seenUrls.has(key)) return;
+          seenUrls.add(key);
+          allMedia.push(item);
+        });
+      } catch (_) {
+        // La galerie d’itinéraire reste utilisable si les médias complémentaires sont indisponibles.
+      }
+
       setCircuitHeader(activeCircuit, allMedia);
       renderThumbnails();
       showMedia(0);
@@ -488,6 +531,14 @@
 
   prevButton.addEventListener("click", () => showMedia(activeIndex - 1));
   nextButton.addEventListener("click", () => showMedia(activeIndex + 1));
+
+  // Pause pendant l’interaction et reprise douce lorsque le visiteur quitte la zone.
+  stage.addEventListener("mouseenter", stopAutoAdvance);
+  stage.addEventListener("mouseleave", scheduleAutoAdvance);
+  stage.addEventListener("focusin", stopAutoAdvance);
+  stage.addEventListener("focusout", () => window.setTimeout(scheduleAutoAdvance, 0));
+  document.addEventListener("visibilitychange", scheduleAutoAdvance);
+  window.matchMedia("(prefers-reduced-motion: reduce)").addEventListener?.("change", scheduleAutoAdvance);
   document.addEventListener("keydown", (event) => {
     if (event.altKey || event.ctrlKey || event.metaKey || /INPUT|TEXTAREA|SELECT/.test(event.target.tagName)) return;
     if (event.key === "ArrowLeft") showMedia(activeIndex - 1);
