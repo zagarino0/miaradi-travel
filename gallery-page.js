@@ -27,6 +27,8 @@
   let activeIndex = 0;
   let frame = null;
   let autoplayTimer = null;
+  let isManuallyPaused = false;
+  const toggleButton = $("gallery-page-toggle");
   const AUTOPLAY_DELAY = 3000;
 
   const text = (value, backup = "") => String(value == null || value === "" ? backup : value);
@@ -170,7 +172,7 @@
     renderMediaContent(item);
 
     title.textContent = text(item.title, isVideo(item) ? "Vidéo du circuit" : "Photo du circuit");
-    description.textContent = text(item.description, activeCircuit.summary || "Découvrez ce paysage de Madagascar.");
+    description.textContent = [item.circuit && item.circuit.title, text(item.description, activeCircuit && activeCircuit.summary || "Découvrez ce paysage de Madagascar.")].filter(Boolean).join(" · ");
     updateCounter();
 
     thumbs.querySelectorAll("[data-index]").forEach((button) => {
@@ -193,7 +195,7 @@
 
   function scheduleAutoAdvance() {
     stopAutoAdvance();
-    if (allMedia.length < 2 || document.hidden ||
+    if (isManuallyPaused || allMedia.length < 2 || document.hidden ||
         window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
         stage.matches(":hover") || stage.contains(document.activeElement)) return;
 
@@ -355,137 +357,102 @@
       circuits = Array.isArray(circuitPayload.data) ? circuitPayload.data : [];
       if (!circuits.length) throw new Error("Aucun circuit publié n’est disponible pour le moment.");
 
-      const requestedMatch = requestedCircuit
-        ? circuits.find((circuit) => circuitMatches(circuit, requestedCircuit))
-        : null;
+      $("gallery-page-title").textContent = "Laissez-vous inspirer";
+      $("gallery-page-description").textContent = "Une sélection de photographies de Madagascar, des paysages côtiers aux hauts plateaux, réunies dans un diaporama.";
+      $("gallery-region").textContent = "MADAGASCAR EN IMAGES";
+      $("gallery-region-short").textContent = "Tous les circuits";
+      document.title = "Madagascar en images — MIARADI-TRAVEL";
 
-      if (requestedCircuit && !requestedMatch) {
-        const notice = $("gallery-page-load-status");
-        if (notice) {
-          notice.hidden = false;
-          notice.textContent = "Ce circuit n’est pas publié dans le catalogue. Choisissez l’un des circuits disponibles ci-dessous.";
-        }
-        $("gallery-page-title").textContent = "Circuit indisponible";
-        $("gallery-page-description").textContent = "La galerie est reliée au catalogue publié. Le circuit demandé doit être publié et posséder une entrée correspondante dans l’administration.";
-        $("gallery-region").textContent = "MIARADI-TRAVEL";
-        $("gallery-region-short").textContent = "Catalogue des circuits";
-        $("gallery-media-count").textContent = "0 média";
-        $("gallery-page-thumbs-count").textContent = "00 MÉDIAS";
-        title.textContent = "Choisissez un circuit publié";
-        description.textContent = "Les médias seront chargés automatiquement depuis la base de données.";
-        showUnavailable("Aucune galerie pour ce circuit");
-        prevButton.disabled = true;
-        nextButton.disabled = true;
-        renderSuggestions(circuits.slice(0, 3), new Map());
-        return;
-      }
-
-      activeCircuit = requestedMatch || chooseCircuit(circuits);
-
-      // Les circuits détaillés utilisent leur galerie dédiée : couverture puis photos
-      // de chaque étape, renvoyées par l'API des pages de circuits.
-      let detailedPage = null;
+      let pages = [];
       try {
         const pagesPayload = await getJson(API_BASE + "circuit-pages.php?lang=" + encodeURIComponent(LANGUAGE));
-        const pages = Array.isArray(pagesPayload.data) ? pagesPayload.data : [];
-        detailedPage = pages.find((page) =>
-          String(page.id) === String(activeCircuit.id) ||
-          normalize(page.slug) === normalize(activeCircuit.slug) ||
-          normalize(page.title_fr) === normalize(activeCircuit.title)
-        ) || null;
+        pages = Array.isArray(pagesPayload.data) ? pagesPayload.data : [];
       } catch (_) {
-        detailedPage = null;
+        // Les photos de la galerie restent disponibles même si les pages d'itinéraire ne répondent pas.
       }
 
-      if (detailedPage && Array.isArray(detailedPage.gallery) && detailedPage.gallery.some((photo) => photo && photo.url)) {
-        const seen = new Set();
-        allMedia = detailedPage.gallery
-          .filter((photo) => photo && photo.url)
-          .map((photo, index) => {
-            const url = text(photo.url).trim();
-            const key = rootUrl(url) || url;
-            if (!url || seen.has(key)) return null;
-            seen.add(key);
-            return {
-              id: "itinerary-photo-" + String(activeCircuit.id) + "-" + index,
-              circuit: { id: activeCircuit.id, slug: activeCircuit.slug, title: activeCircuit.title },
-              type: "image",
-              source: index === 0 ? "circuit-cover" : "itinerary",
-              title: text(photo.title, text(photo.alt, activeCircuit.title)),
-              description: index === 0 ? (activeCircuit.summary || "Couverture du circuit") : (photo.alt || activeCircuit.summary || "Photo de l'itinéraire"),
-              alt: text(photo.alt, activeCircuit.title),
-              url,
-              thumbnail: url,
-              isHero: index === 0
-            };
-          })
-          .filter(Boolean);
-      } else {
-        // Les circuits sans page détaillée conservent leur galerie média actuelle.
-        const mediaPayload = await getJson(API_BASE + "gallery.php?circuit_id=" + encodeURIComponent(activeCircuit.id) + "&lang=" + encodeURIComponent(LANGUAGE));
-        allMedia = Array.isArray(mediaPayload.data) ? mediaPayload.data : [];
-        const coverUrl = text(activeCircuit.image).trim();
-        if (coverUrl && !allMedia.some((item) => (rootUrl(item.url) || text(item.url).trim()) === (rootUrl(coverUrl) || coverUrl))) {
-          allMedia.unshift({
-            id: "circuit-cover-" + String(activeCircuit.id),
-            circuit: { id: activeCircuit.id, slug: activeCircuit.slug, title: activeCircuit.title },
-            type: "image",
-            source: "circuit-cover",
-            title: activeCircuit.title,
-            description: activeCircuit.summary || "Couverture du circuit",
-            alt: activeCircuit.title,
-            url: coverUrl,
-            thumbnail: coverUrl,
-            isHero: true
-          });
-        } else if (coverUrl) {
-          const coverIndex = allMedia.findIndex((item) => (rootUrl(item.url) || text(item.url).trim()) === (rootUrl(coverUrl) || coverUrl));
-          if (coverIndex > 0) {
-            const [coverItem] = allMedia.splice(coverIndex, 1);
-            allMedia.unshift(coverItem);
-          }
-        }
-      }
+      const mediaByCircuit = new Map();
+      const globalSeen = new Set();
+      allMedia = [];
 
-      // Fusionner aussi les médias publiés dans la galerie d’administration.
-      // L’ordre reste : couverture, photos d’itinéraire, puis médias complémentaires.
-      try {
-        const mediaPayload = await getJson(API_BASE + "gallery.php?circuit_id=" + encodeURIComponent(activeCircuit.id) + "&lang=" + encodeURIComponent(LANGUAGE));
-        const galleryMedia = Array.isArray(mediaPayload.data) ? mediaPayload.data : [];
-        const seenUrls = new Set(allMedia.map((item) => rootUrl(item.url) || text(item.url).trim()).filter(Boolean));
-        galleryMedia.forEach((item) => {
-          const url = text(item.url).trim();
+      for (const circuit of circuits) {
+        const circuitPage = pages.find((page) =>
+          String(page.id) === String(circuit.id) ||
+          normalize(page.slug) === normalize(circuit.slug) ||
+          normalize(page.title_fr) === normalize(circuit.title)
+        );
+        const circuitMedia = [];
+        const localSeen = new Set();
+
+        const addPhoto = (photo, source, fallbackTitle) => {
+          if (!photo || !photo.url || isVideo(photo)) return;
+          const url = text(photo.url).trim();
           const key = rootUrl(url) || url;
-          if (!url || seenUrls.has(key)) return;
-          seenUrls.add(key);
-          allMedia.push(item);
-        });
-      } catch (_) {
-        // La galerie d’itinéraire reste utilisable si les médias complémentaires sont indisponibles.
+          if (!url || localSeen.has(key) || globalSeen.has(key)) return;
+          localSeen.add(key);
+          globalSeen.add(key);
+          circuitMedia.push({
+            id: text(photo.id, "circuit-" + circuit.id + "-photo-" + circuitMedia.length),
+            circuit: { id: circuit.id, slug: circuit.slug, title: circuit.title },
+            type: "image",
+            source,
+            title: text(photo.title, text(photo.alt, fallbackTitle || circuit.title)),
+            description: text(photo.description, text(photo.alt, text(circuit.summary, circuit.title))),
+            alt: text(photo.alt, text(photo.title, circuit.title)),
+            url,
+            thumbnail: text(photo.thumbnail, url),
+            isHero: source === "circuit-cover"
+          });
+        };
+
+        // La couverture ouvre chaque série, suivie des photos de l'itinéraire.
+        if (circuit.image) addPhoto({ url: circuit.image, title: circuit.title, alt: circuit.title, description: circuit.summary }, "circuit-cover", circuit.title);
+        if (circuitPage && Array.isArray(circuitPage.gallery)) {
+          circuitPage.gallery.forEach((photo, index) => {
+            addPhoto(photo, index === 0 && !circuit.image ? "circuit-cover" : "itinerary", circuit.title);
+          });
+        }
+
+        try {
+          const mediaPayload = await getJson(API_BASE + "gallery.php?circuit_id=" + encodeURIComponent(circuit.id) + "&lang=" + encodeURIComponent(LANGUAGE));
+          const galleryMedia = Array.isArray(mediaPayload.data) ? mediaPayload.data : [];
+          galleryMedia.forEach((photo) => addPhoto(photo, "gallery", circuit.title));
+        } catch (_) {
+          // On conserve les photos déjà chargées pour ce circuit.
+        }
+
+        mediaByCircuit.set(String(circuit.id), circuitMedia);
+        allMedia.push(...circuitMedia);
       }
 
-      setCircuitHeader(activeCircuit, allMedia);
+      $("gallery-media-count").textContent = allMedia.length + " photo" + (allMedia.length > 1 ? "s" : "");
+      $("gallery-page-thumbs-count").textContent = String(allMedia.length).padStart(2, "0") + " PHOTOS";
+      $("gallery-page-quote").href = "index.html#contact";
+      activeCircuit = allMedia.length && allMedia[0].circuit
+        ? circuits.find((circuit) => String(circuit.id) === String(allMedia[0].circuit.id)) || circuits[0]
+        : circuits[0];
+
       renderThumbnails();
       showMedia(0);
 
-      const suggestions = circuits.filter((circuit) => String(circuit.id) !== String(activeCircuit.id));
-      const mediaResults = await Promise.all(suggestions.map(async (circuit) => {
-        try {
-          const payload = await getJson(API_BASE + "gallery.php?circuit_id=" + encodeURIComponent(circuit.id) + "&lang=" + encodeURIComponent(LANGUAGE));
-          return [String(circuit.id), Array.isArray(payload.data) ? payload.data : []];
-        } catch (_) {
-          return [String(circuit.id), []];
-        }
-      }));
-      renderSuggestions(suggestions, new Map(mediaResults));
+      const suggestions = circuits.filter((circuit) => (mediaByCircuit.get(String(circuit.id)) || []).length > 0);
+      renderSuggestions(suggestions, mediaByCircuit);
       requestAnimationFrame(updateSuggestionsControls);
+
+      if (!allMedia.length) {
+        const status = $("gallery-page-load-status");
+        if (status) {
+          status.hidden = false;
+          status.textContent = "Aucune photo publiée n’a été trouvée. Ajoutez des photos aux circuits ou à la galerie depuis l’administration.";
+        }
+      }
     } catch (error) {
       $("gallery-page-title").textContent = "Galerie momentanément indisponible";
-      $("gallery-page-description").textContent = error.message || "Impossible de charger les circuits et les médias.";
+      $("gallery-page-description").textContent = error.message || "Impossible de charger les photos de Madagascar.";
       $("gallery-region").textContent = "MIARADI-TRAVEL";
       $("gallery-region-short").textContent = "Madagascar";
-      $("gallery-media-count").textContent = "0 média";
-      $("gallery-page-thumbs-count").textContent = "00 MÉDIAS";
+      $("gallery-media-count").textContent = "0 photo";
+      $("gallery-page-thumbs-count").textContent = "00 PHOTOS";
       title.textContent = "La galerie n’a pas pu être chargée";
       description.textContent = "Vérifiez que l’API PHP et la base de données sont accessibles.";
       thumbs.replaceChildren();
@@ -528,6 +495,17 @@
   if (typeof ResizeObserver !== "undefined" && suggestionsGrid) {
     new ResizeObserver(updateSuggestionsControls).observe(suggestionsGrid);
   }
+
+  toggleButton?.addEventListener("click", () => {
+    isManuallyPaused = !isManuallyPaused;
+    if (toggleButton) {
+      toggleButton.textContent = isManuallyPaused ? "▶ Reprendre" : "Ⅱ Pause";
+      toggleButton.setAttribute("aria-pressed", String(isManuallyPaused));
+      toggleButton.setAttribute("aria-label", isManuallyPaused ? "Reprendre le diaporama" : "Mettre le diaporama en pause");
+    }
+    if (isManuallyPaused) stopAutoAdvance();
+    else scheduleAutoAdvance();
+  });
 
   prevButton.addEventListener("click", () => showMedia(activeIndex - 1));
   nextButton.addEventListener("click", () => showMedia(activeIndex + 1));

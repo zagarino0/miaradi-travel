@@ -7,3 +7,43 @@
 .gallery-suggestions-empty{grid-column:1/-1;color:var(--muted);font-size:13px}
 .gallery-suggestion-image.is-image-unavailable{display:grid;place-items:center;background:linear-gradient(145deg,#f5eee7,#e6d8cb)}
 .gallery-suggestion-image.is-image-unavailable:after{content:'Photo momentanément indisponible';padding:16px;color:var(--muted);font-size:12px;text-align:center}
+
+/* Immersive global slideshow: one photo at a time, drawn from all published circuits. */
+.gallery-page-main{width:min(1680px,calc(100% - 8vw));display:flex;flex-direction:column;gap:28px;margin-top:clamp(24px,3vw,48px);margin-bottom:clamp(50px,6vw,90px)}
+.gallery-page-editorial{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(260px,.8fr);column-gap:clamp(28px,6vw,100px);align-items:end;padding:0}
+.gallery-page-editorial .gallery-page-kicker{grid-column:1/-1;margin-bottom:12px}
+.gallery-page-editorial h1{font-family:var(--sans,Arial,sans-serif);font-size:clamp(3rem,7vw,6.6rem);line-height:.95;letter-spacing:-.065em;margin:0}
+.gallery-page-intro{font-size:clamp(14px,1.15vw,17px);max-width:520px;line-height:1.8}
+.gallery-page-meta{grid-column:1/-1;margin-top:18px}
+.gallery-page-bottom{grid-column:1/-1;display:flex;align-items:center;flex-wrap:wrap;gap:10px 20px;margin-top:20px;padding-top:0}
+.gallery-page-note,.gallery-page-note-copy,.gallery-page-caption-note{margin:0}
+.gallery-page-note-copy{max-width:260px}
+.gallery-page-quote{width:auto;min-height:46px;padding:12px 18px}
+.gallery-page-stage{aspect-ratio:16/8.3;min-height:clamp(340px,52vw,740px);border-radius:3px;background:#e8ded5}
+.gallery-page-stage>img{animation:galleryPhotoFade .65s ease both}
+.gallery-page-stage-caption{padding:clamp(60px,10vw,140px) clamp(18px,3vw,44px) clamp(20px,3vw,38px)}
+.gallery-page-stage-caption strong{font-family:var(--serif);font-size:clamp(20px,2.3vw,34px);font-weight:400}
+.gallery-page-stage-caption span{font-size:clamp(11px,1vw,14px);max-width:900px}
+.gallery-page-counter{top:20px;right:20px;letter-spacing:.12em}
+.gallery-page-nav{top:50%;width:46px;height:46px}
+.gallery-page-toggle{position:absolute;z-index:5;right:18px;bottom:18px;border:1px solid rgba(255,255,255,.65);border-radius:30px;padding:9px 14px;background:rgba(25,23,21,.7);color:#fff;font:inherit;font-size:11px;font-weight:700;backdrop-filter:blur(8px);cursor:pointer}
+.gallery-page-toggle:hover{background:var(--red)}
+.gallery-page-thumbnails{gap:10px}
+.gallery-page-thumb{flex-basis:clamp(100px,10vw,150px);width:clamp(100px,10vw,150px);height:clamp(68px,6vw,100px);border-radius:2px}
+.gallery-page-keyboard-note{font-size:11px}
+.gallery-suggestions{padding-top:clamp(42px,5vw,72px)}
+@keyframes galleryPhotoFade{from{opacity:.35}to{opacity:1}}
+@media(max-width:700px){
+ .gallery-page-main{width:calc(100% - 28px);gap:22px;margin-top:22px}
+ .gallery-page-editorial{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+ .gallery-page-editorial .gallery-page-kicker{margin-bottom:0}
+ .gallery-page-editorial h1{font-size:clamp(2.8rem,13vw,4.5rem)}
+ .gallery-page-intro{font-size:14px}
+ .gallery-page-meta{margin-top:2px}
+ .gallery-page-bottom{display:flex;align-items:flex-start;flex-direction:column;gap:10px;margin-top:8px}
+ .gallery-page-stage{aspect-ratio:4/5;min-height:0;max-height:72vh}
+ .gallery-page-toggle{right:10px;bottom:10px;font-size:10px;padding:8px 11px}
+ .gallery-page-counter{right:10px;top:10px}
+ .gallery-page-stage-caption{padding:55px 13px 48px}
+}
+@media(prefers-reduced-motion:reduce){.gallery-page-stage>img{animation:none}}
