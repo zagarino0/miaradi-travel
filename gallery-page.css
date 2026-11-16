@@ -146,3 +146,21 @@
     flex-direction: column !important;
   }
 }
+
+
+/* Suggestions carousel: four complete cards visible on desktop. */
+@media (min-width: 1101px) {
+  body.gallery-page .gallery-suggestions-grid {
+    display: flex !important;
+    gap: 16px !important;
+  }
+  body.gallery-page .gallery-suggestion-card {
+    flex: 0 0 calc((100% - 48px) / 4) !important;
+    min-width: 0 !important;
+  }
+}
+@media (min-width: 701px) and (max-width: 1100px) {
+  body.gallery-page .gallery-suggestion-card {
+    flex: 0 0 calc((100% - 16px) / 2) !important;
+  }
+}
