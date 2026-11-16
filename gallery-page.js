@@ -349,6 +349,36 @@
       link.append(visual, copy);
       suggestionsGrid.append(link);
     });
+
+    // Défilement automatique du carrousel : une carte vers la gauche toutes les 3 s.
+    if (suggestionsGrid._autoSlideTimer) {
+      window.clearInterval(suggestionsGrid._autoSlideTimer);
+      suggestionsGrid._autoSlideTimer = null;
+    }
+    const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduceMotion && suggestions.length > 4) {
+      let paused = false;
+      const advance = () => {
+        if (paused) return;
+        const cards = suggestionsGrid.querySelectorAll(".gallery-suggestion-card");
+        if (cards.length <= 4) return;
+        const first = cards[0];
+        const step = first.getBoundingClientRect().width + (parseFloat(getComputedStyle(suggestionsGrid).columnGap || getComputedStyle(suggestionsGrid).gap) || 0);
+        const maxScroll = suggestionsGrid.scrollWidth - suggestionsGrid.clientWidth;
+        if (suggestionsGrid.scrollLeft + step >= maxScroll - 8) {
+          suggestionsGrid.scrollTo({ left: 0, behavior: "smooth" });
+        } else {
+          suggestionsGrid.scrollBy({ left: step, behavior: "smooth" });
+        }
+      };
+      suggestionsGrid._autoSlideTimer = window.setInterval(advance, 3000);
+      suggestionsGrid.addEventListener("mouseenter", () => { paused = true; });
+      suggestionsGrid.addEventListener("mouseleave", () => { paused = false; });
+      suggestionsGrid.addEventListener("focusin", () => { paused = true; });
+      suggestionsGrid.addEventListener("focusout", () => { paused = false; });
+      suggestionsGrid.addEventListener("touchstart", () => { paused = true; }, { passive: true });
+      suggestionsGrid.addEventListener("touchend", () => { paused = false; }, { passive: true });
+    }
   }
 
   async function init() {
