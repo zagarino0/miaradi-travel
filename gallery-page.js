@@ -18,6 +18,8 @@
   const suggestionsGrid = $("gallery-suggestions-grid");
   const prevButton = $("gallery-page-prev");
   const nextButton = $("gallery-page-next");
+  const suggestionsPrev = $("gallery-suggestions-prev");
+  const suggestionsNext = $("gallery-suggestions-next");
 
   let circuits = [];
   let activeCircuit = null;
@@ -423,7 +425,7 @@
       renderThumbnails();
       showMedia(0);
 
-      const suggestions = circuits.filter((circuit) => String(circuit.id) !== String(activeCircuit.id)).slice(0, 3);
+      const suggestions = circuits.filter((circuit) => String(circuit.id) !== String(activeCircuit.id));
       const mediaResults = await Promise.all(suggestions.map(async (circuit) => {
         try {
           const payload = await getJson(API_BASE + "gallery.php?circuit_id=" + encodeURIComponent(circuit.id) + "&lang=" + encodeURIComponent(LANGUAGE));
@@ -433,6 +435,7 @@
         }
       }));
       renderSuggestions(suggestions, new Map(mediaResults));
+      requestAnimationFrame(updateSuggestionsControls);
     } catch (error) {
       $("gallery-page-title").textContent = "Galerie momentanément indisponible";
       $("gallery-page-description").textContent = error.message || "Impossible de charger les circuits et les médias.";
@@ -444,6 +447,7 @@
       description.textContent = "Vérifiez que l’API PHP et la base de données sont accessibles.";
       thumbs.replaceChildren();
       suggestionsGrid.replaceChildren();
+      updateSuggestionsControls();
       showUnavailable("Galerie momentanément indisponible");
       prevButton.disabled = true;
       nextButton.disabled = true;
@@ -453,6 +457,33 @@
         status.textContent = error.message || "Erreur de chargement.";
       }
     }
+  }
+
+  function updateSuggestionsControls() {
+    if (!suggestionsGrid || !suggestionsPrev || !suggestionsNext) return;
+    const maxScroll = Math.max(0, suggestionsGrid.scrollWidth - suggestionsGrid.clientWidth);
+    suggestionsPrev.disabled = suggestionsGrid.scrollLeft <= 2;
+    suggestionsNext.disabled = suggestionsGrid.scrollLeft >= maxScroll - 2;
+    const hasOverflow = maxScroll > 2;
+    suggestionsPrev.hidden = !hasOverflow;
+    suggestionsNext.hidden = !hasOverflow;
+  }
+
+  function scrollSuggestions(direction) {
+    if (!suggestionsGrid) return;
+    const card = suggestionsGrid.querySelector(".gallery-suggestion-card");
+    const styles = getComputedStyle(suggestionsGrid);
+    const gap = parseFloat(styles.columnGap || styles.gap) || 22;
+    const distance = card ? card.getBoundingClientRect().width + gap : suggestionsGrid.clientWidth * 0.8;
+    suggestionsGrid.scrollBy({ left: direction * distance, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  }
+
+  suggestionsPrev?.addEventListener("click", () => scrollSuggestions(-1));
+  suggestionsNext?.addEventListener("click", () => scrollSuggestions(1));
+  suggestionsGrid?.addEventListener("scroll", updateSuggestionsControls, { passive: true });
+  window.addEventListener("resize", updateSuggestionsControls);
+  if (typeof ResizeObserver !== "undefined" && suggestionsGrid) {
+    new ResizeObserver(updateSuggestionsControls).observe(suggestionsGrid);
   }
 
   prevButton.addEventListener("click", () => showMedia(activeIndex - 1));
