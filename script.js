@@ -1239,18 +1239,23 @@ document.addEventListener("DOMContentLoaded", () => {
       const cards = [...regionalCards, ...circuitCards];
       const slides = [];
       const seenUrls = new Set();
-      cards.forEach(card => {
-        card.photos.forEach(photo => {
-          if (!photo || !photo.url) return;
-          const url = String(photo.url).trim();
-          if (!url || seenUrls.has(url)) return;
-          seenUrls.add(url);
-          slides.push({
-            url,
-            alt: photo.alt || photo.title || card.key,
-            title: photo.title || photo.alt || (card.key.startsWith("circuit:") ? card.key.slice(8) : card.key.slice(7)),
-            label: card.key.startsWith("circuit:") ? (lang === "en" ? "FEATURED CIRCUIT" : "CIRCUIT SIGNATURE") : card.key.slice(7).replace(/[-_]+/g, " ").toLocaleUpperCase()
-          });
+      const sourcePhotos = [
+        ...media.map(photo => ({ photo, label: photo.region || photo.title || (lang === "en" ? "MADAGASCAR" : "MADAGASCAR") })),
+        ...detailedPages.flatMap(page => {
+          const circuitTitle = page["title_" + lang] || page.title_fr || page.slug;
+          return page.gallery.filter(photo => photo && photo.url).map(photo => ({ photo, label: circuitTitle }));
+        })
+      ];
+      sourcePhotos.forEach(({ photo, label }) => {
+        if (!photo || !photo.url) return;
+        const url = String(photo.url).trim();
+        if (!url || seenUrls.has(url)) return;
+        seenUrls.add(url);
+        slides.push({
+          url,
+          alt: photo.alt || photo.title || label,
+          title: photo.title || photo.alt || label,
+          label: String(label).replace(/[-_]+/g, " ").toLocaleUpperCase()
         });
       });
       if (!slides.length) {
