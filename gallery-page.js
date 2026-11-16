@@ -350,25 +350,47 @@
       suggestionsGrid.append(link);
     });
 
-    // Défilement automatique du carrousel : une carte vers la gauche toutes les 3 s.
+    // Carrousel infini : avance vers la gauche toutes les 3 secondes,
+    // avec une copie des cartes pour éviter le retour visuel au début.
     if (suggestionsGrid._autoSlideTimer) {
       window.clearInterval(suggestionsGrid._autoSlideTimer);
       suggestionsGrid._autoSlideTimer = null;
     }
+    suggestionsGrid.querySelectorAll("[data-carousel-clone]").forEach((node) => node.remove());
+    const visibleCount = window.matchMedia("(min-width: 1101px)").matches ? 4
+      : window.matchMedia("(min-width: 701px)").matches ? 3 : 1;
+    const originalCards = Array.from(suggestionsGrid.querySelectorAll(".gallery-suggestion-card"));
     const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!reduceMotion && suggestions.length > 4) {
+    suggestionsGrid._carouselLoopWidth = 0;
+    suggestionsGrid._carouselVisibleCount = visibleCount;
+    if (originalCards.length > visibleCount) {
+      originalCards.forEach((card) => {
+        const clone = card.cloneNode(true);
+        clone.dataset.carouselClone = "true";
+        clone.setAttribute("aria-hidden", "true");
+        clone.querySelectorAll("a, button, [tabindex]").forEach((item) => item.setAttribute("tabindex", "-1"));
+        suggestionsGrid.append(clone);
+      });
+      const firstClone = suggestionsGrid.querySelector("[data-carousel-clone]");
+      suggestionsGrid._carouselLoopWidth = firstClone.offsetLeft - originalCards[0].offsetLeft;
+    }
+    if (!reduceMotion && suggestionsGrid._carouselLoopWidth > 0) {
       let paused = false;
       const advance = () => {
-        if (paused) return;
-        const cards = suggestionsGrid.querySelectorAll(".gallery-suggestion-card");
-        if (cards.length <= 4) return;
-        const first = cards[0];
-        const step = first.getBoundingClientRect().width + (parseFloat(getComputedStyle(suggestionsGrid).columnGap || getComputedStyle(suggestionsGrid).gap) || 0);
-        const maxScroll = suggestionsGrid.scrollWidth - suggestionsGrid.clientWidth;
-        if (suggestionsGrid.scrollLeft + step >= maxScroll - 8) {
-          suggestionsGrid.scrollTo({ left: 0, behavior: "smooth" });
-        } else {
-          suggestionsGrid.scrollBy({ left: step, behavior: "smooth" });
+        if (paused || !suggestionsGrid._carouselLoopWidth) return;
+        const first = suggestionsGrid.querySelector(".gallery-suggestion-card");
+        const styles = getComputedStyle(suggestionsGrid);
+        const gap = parseFloat(styles.columnGap || styles.gap) || 0;
+        const step = first.getBoundingClientRect().width + gap;
+        const loopWidth = suggestionsGrid._carouselLoopWidth;
+        const target = suggestionsGrid.scrollLeft + step;
+        suggestionsGrid.scrollTo({ left: target, behavior: "smooth" });
+        if (target >= loopWidth - 2) {
+          window.setTimeout(() => {
+            if (suggestionsGrid.scrollLeft >= loopWidth - 2) {
+              suggestionsGrid.scrollLeft -= loopWidth;
+            }
+          }, 550);
         }
       };
       suggestionsGrid._autoSlideTimer = window.setInterval(advance, 3000);
