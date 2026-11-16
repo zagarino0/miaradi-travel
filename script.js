@@ -1237,41 +1237,87 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       const cards = [...regionalCards, ...circuitCards];
-      if (!cards.length) {
+      const slides = [];
+      const seenUrls = new Set();
+      cards.forEach(card => {
+        card.photos.forEach(photo => {
+          if (!photo || !photo.url) return;
+          const url = String(photo.url).trim();
+          if (!url || seenUrls.has(url)) return;
+          seenUrls.add(url);
+          slides.push({
+            url,
+            alt: photo.alt || photo.title || card.key,
+            title: photo.title || photo.alt || (card.key.startsWith("circuit:") ? card.key.slice(8) : card.key.slice(7)),
+            label: card.key.startsWith("circuit:") ? (lang === "en" ? "FEATURED CIRCUIT" : "CIRCUIT SIGNATURE") : card.key.slice(7).replace(/[-_]+/g, " ").toLocaleUpperCase()
+          });
+        });
+      });
+      if (!slides.length) {
         grid.innerHTML = '<p class="regional-gallery-empty">' +
           (lang === "en" ? "Gallery photos will appear here when published images are available." :
           "Les photos apparaîtront ici dès que des images seront publiées dans la galerie ou dans les itinéraires des circuits.") +
           '</p>';
         return;
       }
-      grid.innerHTML = cards.map(card => card.html).join("");
-      const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      cards.forEach(({ key, photos }) => {
-        if (photos.length < 2) return;
-        const card = key.startsWith("region:")
-          ? grid.querySelector('[data-region-card="' + encodeURIComponent(key.slice(7)) + '"]')
-          : grid.querySelector('[data-circuit-gallery-card="' + CSS.escape(key.slice(8)) + '"]');
-        if (!card) return;
-        const img = card.querySelector(".regional-gallery-image");
-        const title = card.querySelector(".regional-gallery-title");
-        const counter = card.querySelector("[data-gallery-count]");
-        let index = 0;
-        const show = next => {
-          index = (next + photos.length) % photos.length;
-          const photo = photos[index];
-          img.classList.add("is-changing");
-          window.setTimeout(() => {
-            img.src = photo.url;
-            img.alt = photo.alt || photo.title || key;
-            title.textContent = photo.title || photo.alt || (key.startsWith("circuit:") ? key.slice(8) : key.slice(7));
-            counter.textContent = String(index + 1).padStart(2, "0") + " / " + String(photos.length).padStart(2, "0");
-            img.classList.remove("is-changing");
-          }, 220);
-        };
-        card.querySelector("[data-gallery-prev]")?.addEventListener("click", event => { event.preventDefault(); event.stopPropagation(); show(index - 1); });
-        card.querySelector("[data-gallery-next]")?.addEventListener("click", event => { event.preventDefault(); event.stopPropagation(); show(index + 1); });
-        if (!reducedMotion) window.setInterval(() => { if (!document.hidden) show(index + 1); }, 6500);
+
+      grid.classList.add("is-global-slideshow");
+      grid.innerHTML =
+        '<article class="regional-gallery-card regional-gallery-global-card">' +
+          '<img class="regional-gallery-image" src="' + escapeHtml(slides[0].url) + '" alt="' + escapeHtml(slides[0].alt) + '" decoding="async">' +
+          '<span class="regional-gallery-shade"></span>' +
+          '<span class="circuit-gallery-caption"><small data-global-slide-label>01 · ' + escapeHtml(slides[0].label) + '</small><strong class="regional-gallery-title">' + escapeHtml(slides[0].title) + '</strong></span>' +
+          '<div class="regional-gallery-controls global-gallery-controls">' +
+            '<button type="button" data-global-prev aria-label="' + (lang === "en" ? "Previous photo" : "Photo précédente") + '">‹</button>' +
+            '<span data-global-count>01 / ' + String(slides.length).padStart(2, "0") + '</span>' +
+            '<button type="button" data-global-next aria-label="' + (lang === "en" ? "Next photo" : "Photo suivante") + '">›</button>' +
+          '</div>' +
+          '<button type="button" class="global-gallery-toggle" data-global-toggle aria-pressed="false">' + (lang === "en" ? "Ⅱ Pause" : "Ⅱ Pause") + '</button>' +
+        '</article>';
+
+      const card = grid.querySelector(".regional-gallery-global-card");
+      const img = card.querySelector(".regional-gallery-image");
+      const heading = card.querySelector(".regional-gallery-title");
+      const label = card.querySelector("[data-global-slide-label]");
+      const count = card.querySelector("[data-global-count]");
+      const toggle = card.querySelector("[data-global-toggle]");
+      let active = 0;
+      let paused = false;
+      let timer = null;
+      const show = next => {
+        active = (next + slides.length) % slides.length;
+        const photo = slides[active];
+        img.classList.add("is-changing");
+        window.setTimeout(() => {
+          img.src = photo.url;
+          img.alt = photo.alt;
+          heading.textContent = photo.title;
+          label.textContent = String(active + 1).padStart(2, "0") + " · " + photo.label;
+          count.textContent = String(active + 1).padStart(2, "0") + " / " + String(slides.length).padStart(2, "0");
+          img.classList.remove("is-changing");
+        }, 180);
+      };
+      const stop = () => { if (timer !== null) window.clearInterval(timer); timer = null; };
+      const start = () => {
+        stop();
+        if (paused || slides.length < 2 || document.hidden ||
+            (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) return;
+        timer = window.setInterval(() => show(active + 1), 3000);
+      };
+      card.querySelector("[data-global-prev]").addEventListener("click", () => { show(active - 1); start(); });
+      card.querySelector("[data-global-next]").addEventListener("click", () => { show(active + 1); start(); });
+      toggle.addEventListener("click", () => {
+        paused = !paused;
+        toggle.textContent = paused ? (lang === "en" ? "▶ Resume" : "▶ Reprendre") : "Ⅱ Pause";
+        toggle.setAttribute("aria-pressed", String(paused));
+        start();
       });
+      card.addEventListener("mouseenter", stop);
+      card.addEventListener("mouseleave", start);
+      card.addEventListener("focusin", stop);
+      card.addEventListener("focusout", start);
+      document.addEventListener("visibilitychange", start);
+      start();
     } catch (_) {
       grid.innerHTML = '<p class="regional-gallery-empty">La galerie sera disponible lorsque les médias seront accessibles.</p>';
     }
