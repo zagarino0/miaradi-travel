@@ -164,3 +164,77 @@
     flex: 0 0 calc((100% - 16px) / 2) !important;
   }
 }
+
+
+/* Galerie — contenir strictement le grand visuel dans la largeur de page. */
+html, body.gallery-page {
+  max-width: 100%;
+  overflow-x: clip;
+}
+body.gallery-page *,
+body.gallery-page *::before,
+body.gallery-page *::after {
+  box-sizing: border-box;
+}
+body.gallery-page .gallery-page-main,
+body.gallery-page .gallery-page-viewer,
+body.gallery-page .gallery-page-stage,
+body.gallery-page .gallery-suggestions,
+body.gallery-page .gallery-suggestions-carousel {
+  min-width: 0;
+  max-width: 100%;
+}
+body.gallery-page .gallery-page-main {
+  width: min(1560px, calc(100% - 8vw));
+}
+body.gallery-page .gallery-page-viewer {
+  width: 100%;
+  overflow: hidden;
+}
+body.gallery-page .gallery-page-stage {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 0;
+  aspect-ratio: 16 / 8.3;
+}
+body.gallery-page .gallery-page-stage > img,
+body.gallery-page .gallery-page-stage > video,
+body.gallery-page .gallery-page-stage > iframe {
+  max-width: 100%;
+}
+body.gallery-page .gallery-suggestions-carousel {
+  overflow: hidden;
+}
+body.gallery-page .gallery-suggestions-grid {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: x mandatory;
+}
+body.gallery-page .gallery-suggestion-card {
+  min-width: 0;
+}
+@media (min-width: 1101px) {
+  body.gallery-page .gallery-suggestions-grid { gap: 16px !important; }
+  body.gallery-page .gallery-suggestion-card {
+    flex: 0 0 calc((100% - 48px) / 4) !important;
+  }
+}
+@media (min-width: 701px) and (max-width: 1100px) {
+  body.gallery-page .gallery-suggestions-grid { gap: 14px !important; }
+  body.gallery-page .gallery-suggestion-card {
+    flex: 0 0 calc((100% - 28px) / 3) !important;
+  }
+}
+@media (max-width: 700px) {
+  body.gallery-page .gallery-page-main { width: calc(100% - 28px); }
+  body.gallery-page .gallery-page-stage {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    max-height: 72vh;
+  }
+  body.gallery-page .gallery-suggestions-carousel { overflow: hidden; }
+}
