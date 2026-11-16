@@ -425,17 +425,29 @@
         allMedia.push(...circuitMedia);
       }
 
-      $("gallery-media-count").textContent = allMedia.length + " photo" + (allMedia.length > 1 ? "s" : "");
-      $("gallery-page-thumbs-count").textContent = String(allMedia.length).padStart(2, "0") + " PHOTOS";
-      $("gallery-page-quote").href = "index.html#contact";
-      activeCircuit = allMedia.length && allMedia[0].circuit
-        ? circuits.find((circuit) => String(circuit.id) === String(allMedia[0].circuit.id)) || circuits[0]
-        : circuits[0];
+      // Une URL ?circuit=... doit ouvrir la galerie du circuit demandé.
+      // Sans paramètre, on conserve la galerie globale de tous les circuits.
+      const selectedCircuit = requestedCircuit ? chooseCircuit(circuits) : null;
+      if (selectedCircuit) {
+        activeCircuit = selectedCircuit;
+        allMedia = mediaByCircuit.get(String(selectedCircuit.id)) || [];
+        setCircuitHeader(selectedCircuit, allMedia);
+      } else {
+        $("gallery-media-count").textContent = allMedia.length + " photo" + (allMedia.length > 1 ? "s" : "");
+        $("gallery-page-thumbs-count").textContent = String(allMedia.length).padStart(2, "0") + " PHOTOS";
+        $("gallery-page-quote").href = "index.html#contact";
+        activeCircuit = allMedia.length && allMedia[0].circuit
+          ? circuits.find((circuit) => String(circuit.id) === String(allMedia[0].circuit.id)) || circuits[0]
+          : circuits[0];
+      }
 
       renderThumbnails();
       showMedia(0);
 
-      const suggestions = circuits.filter((circuit) => (mediaByCircuit.get(String(circuit.id)) || []).length > 0);
+      const suggestions = circuits.filter((circuit) =>
+        (mediaByCircuit.get(String(circuit.id)) || []).length > 0 &&
+        (!selectedCircuit || String(circuit.id) !== String(selectedCircuit.id))
+      );
       renderSuggestions(suggestions, mediaByCircuit);
       requestAnimationFrame(updateSuggestionsControls);
 
