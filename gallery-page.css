@@ -236,5 +236,5 @@ body.gallery-page .gallery-suggestion-card {
     aspect-ratio: 4 / 5;
     max-height: 72vh;
   }
-  body.gallery-page .gallery-suggestions-carousel { overflow: hidden; }
+  body.gallery-page .gallery-suggestions-carousel { overflow: visible; }
 }
