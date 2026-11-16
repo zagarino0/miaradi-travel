@@ -205,7 +205,7 @@ body.gallery-page .gallery-page-stage > iframe {
   max-width: 100%;
 }
 body.gallery-page .gallery-suggestions-carousel {
-  overflow: hidden;
+  overflow: visible;
 }
 body.gallery-page .gallery-suggestions-grid {
   width: 100%;
