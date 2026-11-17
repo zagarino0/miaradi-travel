@@ -515,3 +515,72 @@ body.gallery-page .gallery-suggestion-card {
     padding: 60px 13px 48px !important;
   }
 }
+
+
+/* Correctif ciblé du lecteur de la page Galerie (galerie.html).
+   Le précédent correctif visait des classes absentes de cette page. */
+.gallery-page .gallery-page-stage {
+  position: relative !important;
+  overflow: hidden !important;
+  background: transparent !important;
+}
+.gallery-page .gallery-page-stage > #gallery-stage-image,
+.gallery-page .gallery-page-stage > #gallery-stage-video,
+.gallery-page .gallery-page-stage > .gallery-page-stage-embed {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: none !important;
+  border: 0 !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  background: transparent !important;
+}
+.gallery-page .gallery-page-stage > #gallery-stage-image[hidden],
+.gallery-page .gallery-page-stage > #gallery-stage-video[hidden] {
+  display: none !important;
+}
+.gallery-page .gallery-page-stage-caption {
+  inset: auto 0 0 !important;
+  z-index: 6 !important;
+  padding: 54px clamp(14px, 3vw, 40px) 22px !important;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  color: #fff !important;
+  text-shadow: 0 1px 4px rgba(0,0,0,.95), 0 0 12px rgba(0,0,0,.65) !important;
+}
+.gallery-page .gallery-page-stage-caption strong,
+.gallery-page .gallery-page-stage-caption span {
+  color: #fff !important;
+  text-shadow: inherit !important;
+}
+.gallery-page .gallery-page-toggle {
+  z-index: 8 !important;
+}
+.gallery-page .gallery-page-counter,
+.gallery-page .gallery-page-nav {
+  z-index: 8 !important;
+}
+@media (max-width: 700px) {
+  .gallery-page .gallery-page-stage {
+    aspect-ratio: 4 / 3 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+  .gallery-page .gallery-page-stage-caption {
+    padding: 48px 12px 12px !important;
+    gap: 4px !important;
+  }
+  .gallery-page .gallery-page-stage-caption strong {
+    font-size: 16px !important;
+    line-height: 1.25 !important;
+  }
+  .gallery-page .gallery-page-stage-caption span {
+    font-size: 11px !important;
+    line-height: 1.35 !important;
+  }
+}
