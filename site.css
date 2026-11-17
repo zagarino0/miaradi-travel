@@ -7140,3 +7140,83 @@ dialog#circuit-gallery.gallery-dialog .gallery-main-frame{position:relative;over
 dialog#circuit-gallery.gallery-dialog .gallery-main-frame > video#gallery-main-video:not([hidden]){position:absolute!important;inset:0!important;display:block!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:cover!important;object-position:center!important;background:transparent!important;}
 dialog#circuit-gallery.gallery-dialog .gallery-main-overlay{background:transparent!important;background-image:none!important;}
 @media(max-width:700px){dialog#circuit-gallery.gallery-dialog .gallery-main-frame > video#gallery-main-video:not([hidden]){object-fit:cover!important;object-position:center!important;}}
+
+
+/* MIARADI — correctif ferme du lecteur média sur mobile :
+   le navigateur n'affiche plus sa barre de contrôle noire/grise sous la photo.
+   Les commandes personnalisées (flèches, compteur et bouton Pause) restent visibles. */
+dialog#circuit-gallery.gallery-dialog .gallery-main-frame {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  aspect-ratio: 16 / 9 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  background: transparent !important;
+}
+dialog#circuit-gallery.gallery-dialog .gallery-main-frame > video#gallery-main-video:not([hidden]),
+dialog#circuit-gallery.gallery-dialog .gallery-main-frame > img:not([hidden]) {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  background: transparent !important;
+}
+/* Masquer les contrôles natifs du navigateur qui créent une barre sombre. */
+dialog#circuit-gallery.gallery-dialog video#gallery-main-video::-webkit-media-controls,
+dialog#circuit-gallery.gallery-dialog video#gallery-main-video::-webkit-media-controls-enclosure,
+dialog#circuit-gallery.gallery-dialog video#gallery-main-video::-webkit-media-controls-panel,
+dialog#circuit-gallery.gallery-dialog video#gallery-main-video::-webkit-media-controls-timeline,
+dialog#circuit-gallery.gallery-dialog video#gallery-main-video::-moz-media-controls {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+dialog#circuit-gallery.gallery-dialog .gallery-main-overlay {
+  position: absolute !important;
+  z-index: 5 !important;
+  inset: auto 0 0 !important;
+  display: flex !important;
+  align-items: flex-end !important;
+  min-height: 0 !important;
+  padding: 54px 14px 14px !important;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  pointer-events: none !important;
+}
+dialog#circuit-gallery.gallery-dialog .gallery-main-overlay .gallery-caption-copy,
+dialog#circuit-gallery.gallery-dialog .gallery-main-overlay #gallery-counter,
+dialog#circuit-gallery.gallery-dialog .gallery-main-overlay .gallery-pause,
+dialog#circuit-gallery.gallery-dialog .gallery-main-overlay button {
+  position: relative;
+  z-index: 6;
+}
+dialog#circuit-gallery.gallery-dialog .gallery-main-overlay .gallery-caption-copy strong,
+dialog#circuit-gallery.gallery-dialog .gallery-main-overlay .gallery-caption-copy #gallery-main-description {
+  color: #fff !important;
+  text-shadow: 0 1px 4px rgba(0,0,0,.85) !important;
+}
+@media (max-width: 700px) {
+  dialog#circuit-gallery.gallery-dialog .gallery-main-frame {
+    aspect-ratio: 4 / 3 !important;
+  }
+  dialog#circuit-gallery.gallery-dialog .gallery-main-overlay {
+    padding: 42px 12px 12px !important;
+    gap: 8px !important;
+  }
+  dialog#circuit-gallery.gallery-dialog .gallery-main-overlay .gallery-caption-copy strong {
+    font-size: .98rem !important;
+    line-height: 1.2 !important;
+  }
+  dialog#circuit-gallery.gallery-dialog .gallery-main-overlay .gallery-caption-copy #gallery-main-description {
+    font-size: .68rem !important;
+    line-height: 1.3 !important;
+  }
+}
