@@ -7222,30 +7222,25 @@ dialog#circuit-gallery.gallery-dialog .gallery-main-overlay .gallery-caption-cop
 }
 
 
-/* Mobile : supprimer le panneau vidéo séparé sous la photo.
-   Le lecteur vidéo et son panneau de commandes ne doivent pas créer une seconde carte. */
-@media (max-width: 700px) {
-  dialog#circuit-gallery.gallery-dialog .gallery-main-frame > video#gallery-main-video:not([hidden]) {
-    display: none !important;
-  }
-  dialog#circuit-gallery.gallery-dialog .gallery-main-frame {
-    height: auto !important;
-    min-height: 0 !important;
-    aspect-ratio: 4 / 3 !important;
-    overflow: hidden !important;
-    background: transparent !important;
-  }
-  dialog#circuit-gallery.gallery-dialog .gallery-main-frame > img:not([hidden]) {
-    position: absolute !important;
-    inset: 0 !important;
-    display: block !important;
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-  }
-  dialog#circuit-gallery.gallery-dialog .gallery-main-overlay {
-    background: transparent !important;
-    background-image: none !important;
-    box-shadow: none !important;
-  }
+
+
+/* Correctif structurel : un lecteur vidéo masqué ne doit jamais occuper
+   une partie du cadre photo, même si d'autres règles définissent display. */
+#gallery-main-video[hidden],
+.gallery-main-video[hidden] {
+  display: none !important;
+}
+.gallery-main-frame,
+#circuit-gallery .gallery-main-frame {
+  position: relative;
+  overflow: hidden;
+}
+.gallery-main-frame > #gallery-main-image:not([hidden]),
+#circuit-gallery .gallery-main-frame > #gallery-main-image:not([hidden]) {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
 }
