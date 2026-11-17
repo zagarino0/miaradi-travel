@@ -6866,3 +6866,13 @@ button:focus-visible, a:focus-visible {
     letter-spacing: -0.15px !important;
   }
 }
+
+
+/* Correctif : la flèche du select Thématique doit rester juste après son texte */
+#homepage-finder #finder-theme {
+  width: max-content !important;
+  max-width: 100% !important;
+  justify-self: start !important;
+  padding-right: 0 !important;
+  background-position: initial !important;
+}
