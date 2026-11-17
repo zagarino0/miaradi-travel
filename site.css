@@ -6740,3 +6740,48 @@ button:focus-visible, a:focus-visible {
   #homepage-finder .finder-submit,
   .finder-panel .finder-submit { grid-column: 4 !important; width: 38px !important; min-width: 38px !important; }
 }
+
+
+/* Alignement final mobile : marges symétriques et filtres répartis proportionnellement */
+@media (max-width: 760px) {
+  #homepage-finder .finder-inner,
+  .finder-panel .finder-inner {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) 42px !important;
+    column-gap: 8px !important;
+    padding: 9px 12px !important;
+  }
+  #homepage-finder .finder-field,
+  .finder-panel .finder-field,
+  #homepage-finder .finder-field:first-child,
+  .finder-panel .finder-field:first-child {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 7px !important;
+    gap: 5px !important;
+  }
+  #homepage-finder .finder-field > span:last-child,
+  .finder-panel .finder-field > span:last-child {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+  }
+  #homepage-finder .finder-submit,
+  .finder-panel .finder-submit {
+    justify-self: end !important;
+    width: 42px !important;
+    min-width: 42px !important;
+    margin-right: 0 !important;
+  }
+}
+@media (max-width: 380px) {
+  #homepage-finder .finder-inner,
+  .finder-panel .finder-inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) 38px !important;
+    column-gap: 5px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+}
