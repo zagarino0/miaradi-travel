@@ -6992,3 +6992,32 @@ button:focus-visible, a:focus-visible {
     display: none !important;
   }
 }
+
+
+/* Responsive title sizing for detailed circuit pages: balanced on desktop and mobile */
+.circuit-editorial-page .journey-hero h1 {
+  font-size: clamp(2.5rem, 4.5vw, 5.6rem);
+  line-height: 1.02;
+  letter-spacing: -0.05em;
+  overflow-wrap: normal;
+  hyphens: auto;
+}
+@media (max-width: 900px) {
+  .circuit-editorial-page .journey-hero h1 {
+    font-size: clamp(2.6rem, 6.5vw, 4.6rem);
+    line-height: 1.04;
+  }
+}
+@media (max-width: 600px) {
+  .circuit-editorial-page .journey-hero h1 {
+    font-size: clamp(2rem, 8.2vw, 2.8rem) !important;
+    line-height: 1.08 !important;
+    letter-spacing: -0.045em !important;
+    max-width: 100%;
+    margin-bottom: 16px;
+    text-wrap: pretty;
+  }
+  .circuit-editorial-page .journey-hero h1 em {
+    display: inline;
+  }
+}
