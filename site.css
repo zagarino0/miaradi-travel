@@ -5948,3 +5948,47 @@ body::-webkit-scrollbar{
 .circuit-photo-gallery #regional-gallery-grid.is-global-slideshow .global-gallery-toggle:hover,.circuit-photo-gallery #regional-gallery-grid.is-global-slideshow .global-gallery-controls button:hover{background:var(--red,#922d20)}
 @media(max-width:700px){.circuit-photo-gallery #regional-gallery-grid.is-global-slideshow .regional-gallery-global-card{height:clamp(300px,112vw,540px);min-height:300px;border-radius:8px}.circuit-photo-gallery #regional-gallery-grid.is-global-slideshow .global-gallery-controls{top:10px;right:10px;gap:6px}.circuit-photo-gallery #regional-gallery-grid.is-global-slideshow .global-gallery-toggle{right:10px;bottom:10px}.circuit-photo-gallery #regional-gallery-grid.is-global-slideshow .circuit-gallery-caption{left:16px;right:16px;bottom:18px}}
 @media(prefers-reduced-motion:reduce){.circuit-photo-gallery #regional-gallery-grid.is-global-slideshow .regional-gallery-image{transition:none;filter:none!important;transform:none!important;opacity:1!important}}
+
+
+/* MIARADI — système d'icônes global, fin et cohérent sur toutes les pages */
+:root { --icon-stroke: 1.7; --icon-size: 18px; }
+svg.icon, a > svg.icon, button > svg.icon, .button > svg.icon {
+  display: inline-block;
+  width: var(--icon-size);
+  height: var(--icon-size);
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: var(--icon-stroke);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: middle;
+}
+a:has(> svg.icon), button:has(> svg.icon), .button:has(> svg.icon) {
+  align-items: center;
+  gap: .55rem;
+}
+button svg.icon, a svg.icon { transition: transform .2s ease, opacity .2s ease; }
+button:hover svg.icon, a:hover svg.icon { opacity: .92; }
+button:focus-visible, a:focus-visible {
+  outline-color: var(--red, #922d20);
+  outline-offset: 3px;
+}
+.trust-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(146,45,32,.2);
+  border-radius: 50%;
+  color: var(--red, #922d20);
+  background: rgba(251,248,245,.7);
+  font-size: 0;
+}
+.trust-icon svg { width: 22px; height: 22px; }
+.hero-location > svg.icon { width: 17px; height: 17px; }
+.circuit-feature-arrow svg.icon,
+.signature-slider-controls button svg.icon { width: 20px; height: 20px; }
+@media (prefers-reduced-motion: reduce) {
+  svg.icon, button svg.icon, a svg.icon { transition: none !important; }
+}
