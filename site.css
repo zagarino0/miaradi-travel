@@ -7244,3 +7244,88 @@ dialog#circuit-gallery.gallery-dialog .gallery-main-overlay .gallery-caption-cop
   height: 100% !important;
   object-fit: cover !important;
 }
+
+
+/* MIARADI FIX — galerie intégrée des circuits : le texte reste superposé
+   sur la photo. Aucun panneau vidéo séparé sous l’image sur mobile. */
+.circuit-editorial-page .gallery-main-frame {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  aspect-ratio: 16 / 9 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+  background: transparent !important;
+  border-radius: 8px !important;
+}
+.circuit-editorial-page .gallery-main-frame > #gallery-main-image:not([hidden]),
+.circuit-editorial-page .gallery-main-frame > img:not([hidden]),
+.circuit-editorial-page .gallery-main-frame > #gallery-main-video:not([hidden]),
+.circuit-editorial-page .gallery-main-frame > video:not([hidden]) {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  background: transparent !important;
+}
+.circuit-editorial-page .gallery-main-frame > #gallery-main-video[hidden],
+.circuit-editorial-page .gallery-main-frame > video[hidden] {
+  display: none !important;
+}
+.circuit-editorial-page .gallery-main-overlay {
+  position: absolute !important;
+  inset: auto 0 0 0 !important;
+  z-index: 5 !important;
+  display: flex !important;
+  min-height: 0 !important;
+  padding: 64px 18px 16px !important;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  pointer-events: none !important;
+}
+.circuit-editorial-page .gallery-main-overlay .gallery-caption-copy,
+.circuit-editorial-page .gallery-main-overlay button,
+.circuit-editorial-page .gallery-main-overlay .gallery-pause {
+  pointer-events: auto !important;
+}
+.circuit-editorial-page .gallery-main-overlay .gallery-caption-copy strong,
+.circuit-editorial-page .gallery-main-overlay .gallery-caption-copy #gallery-main-description {
+  color: #fff !important;
+  text-shadow: 0 1px 4px rgba(0,0,0,.9) !important;
+}
+/* Masquer les contrôles natifs : seules les commandes personnalisées restent visibles. */
+.circuit-editorial-page .gallery-main-frame video::-webkit-media-controls,
+.circuit-editorial-page .gallery-main-frame video::-webkit-media-controls-enclosure,
+.circuit-editorial-page .gallery-main-frame video::-webkit-media-controls-panel,
+.circuit-editorial-page .gallery-main-frame video::-webkit-media-controls-timeline {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+@media (max-width: 700px) {
+  .circuit-editorial-page .gallery-main-frame {
+    aspect-ratio: 4 / 3 !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+  .circuit-editorial-page .gallery-main-overlay {
+    padding: 44px 12px 12px !important;
+    gap: 6px !important;
+  }
+  .circuit-editorial-page .gallery-main-overlay .gallery-caption-copy strong {
+    font-size: .98rem !important;
+    line-height: 1.25 !important;
+  }
+  .circuit-editorial-page .gallery-main-overlay .gallery-caption-copy #gallery-main-description {
+    font-size: .68rem !important;
+    line-height: 1.3 !important;
+  }
+}
