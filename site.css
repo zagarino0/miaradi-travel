@@ -7098,3 +7098,22 @@ button:focus-visible, a:focus-visible {
     line-height:1.35;
   }
 }
+
+
+/* Final correction: overlay captions directly on the media without any dark gradient */
+.circuit-editorial-page .gallery-main-overlay{
+  background:transparent !important;
+  background-image:none !important;
+  box-shadow:none !important;
+}
+.circuit-editorial-page .gallery-main-overlay .gallery-caption-copy strong,
+.circuit-editorial-page .gallery-main-overlay .gallery-caption-copy #gallery-main-description{
+  text-shadow:0 1px 3px rgba(0,0,0,.7);
+}
+@media(max-width:700px){
+  .circuit-editorial-page .gallery-main-overlay{
+    background:transparent !important;
+    background-image:none !important;
+    padding:16px 14px 14px;
+  }
+}
