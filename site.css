@@ -6379,3 +6379,91 @@ button:focus-visible, a:focus-visible {
   align-items: center !important;
   margin-left: 4px !important;
 }
+
+
+/* Mise au propre finale des cartes : statut aligné avec la durée, anciennes icônes retirées, cartes moins hautes */
+#circuits .circuit-grid .circuit-card .circuit-overlay {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  grid-template-rows: auto auto auto !important;
+  align-content: start !important;
+  column-gap: 8px !important;
+  row-gap: 5px !important;
+  padding: 12px 14px 12px !important;
+}
+#circuits .circuit-grid .circuit-card .circuit-overlay > h3 {
+  grid-column: 1 / -1 !important;
+  grid-row: 1 !important;
+  margin: 0 0 5px !important;
+}
+#circuits .circuit-grid .circuit-card .circuit-overlay > .circuit-meta {
+  grid-column: 1 !important;
+  grid-row: 2 !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  grid-template-rows: auto auto auto !important;
+  gap: 5px !important;
+  min-height: 0 !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+#circuits .circuit-grid .circuit-card .circuit-overlay > .circuit-meta > .circuit-duration {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+}
+#circuits .circuit-grid .circuit-card .circuit-overlay > .circuit-meta > .circuit-region {
+  grid-column: 1 !important;
+  grid-row: 2 !important;
+}
+#circuits .circuit-grid .circuit-card .circuit-overlay > .circuit-meta > .circuit-theme {
+  grid-column: 1 !important;
+  grid-row: 3 !important;
+}
+#circuits .circuit-grid .circuit-card .circuit-overlay > .circuit-status {
+  grid-column: 2 !important;
+  grid-row: 2 !important;
+  justify-self: end !important;
+  align-self: start !important;
+  order: initial !important;
+  margin: 0 !important;
+  white-space: nowrap !important;
+}
+#circuits .circuit-grid .circuit-card .circuit-card-actions {
+  grid-column: 1 / -1 !important;
+  grid-row: 3 !important;
+  margin-top: 8px !important;
+  padding-top: 0 !important;
+}
+/* Supprimer les anciens pictogrammes CSS, le HTML fournit désormais les SVG */
+#circuits .circuit-grid .circuit-card .circuit-status::before {
+  content: none !important;
+  display: none !important;
+}
+#circuits .circuit-grid .circuit-card .circuit-fact::before,
+#circuits .circuit-grid .circuit-card .circuit-fact::after,
+#circuits .circuit-grid .circuit-card .circuit-status::after {
+  content: none !important;
+  display: none !important;
+}
+#circuits .circuit-grid .circuit-card .circuit-inline-icon {
+  width: 13px !important;
+  height: 13px !important;
+  min-width: 13px !important;
+}
+@media (max-width: 560px) {
+  #circuits .circuit-grid .circuit-card .circuit-overlay {
+    grid-template-columns: minmax(0, 1fr) !important;
+    padding: 10px !important;
+  }
+  #circuits .circuit-grid .circuit-card .circuit-overlay > .circuit-status {
+    grid-column: 1 !important;
+    grid-row: 3 !important;
+    justify-self: start !important;
+    margin-top: 0 !important;
+  }
+  #circuits .circuit-grid .circuit-card .circuit-card-actions {
+    grid-column: 1 !important;
+    grid-row: 4 !important;
+  }
+}
