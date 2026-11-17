@@ -236,6 +236,30 @@ document.addEventListener("DOMContentLoaded", () => {
     const max = Number(duration?.max);
     return min > 0 && max > 0 ? min + "-" + max : "custom";
   };
+  const createCircuitIcon = (name) => {
+    const paths = {
+      calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/>',
+      pin: '<path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>',
+      compass: '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2.2 4.8-4.8 2.2 2.2-4.8 4.8-2.2Z"/>',
+      clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+      send: '<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>',
+      arrow: '<path d="M7 17 17 7M7 7h10v10"/>'
+    };
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("width", "15");
+    svg.setAttribute("height", "15");
+    svg.setAttribute("fill", "none");
+    svg.setAttribute("stroke", "currentColor");
+    svg.setAttribute("stroke-width", "1.8");
+    svg.setAttribute("stroke-linecap", "round");
+    svg.setAttribute("stroke-linejoin", "round");
+    svg.setAttribute("aria-hidden", "true");
+    svg.innerHTML = paths[name] || paths.compass;
+    svg.classList.add("circuit-inline-icon");
+    return svg;
+  };
+
   const createCircuitElement = (tag, className, value) => {
     const element = document.createElement(tag);
     if (className) element.className = className;
@@ -287,29 +311,32 @@ document.addEventListener("DOMContentLoaded", () => {
       const content = createCircuitElement("div", "circuit-overlay");
       const heading = createCircuitElement("h3", "", circuit.title || (currentLanguage === "fr" ? "Circuit à découvrir" : "Journey to discover"));
       const meta = createCircuitElement("div", "circuit-meta");
-      const duration = createCircuitElement("span", "circuit-fact circuit-duration", durationLabel(circuit.duration));
-      const region = createCircuitElement("span", "circuit-fact circuit-region", String(circuit.region || "Madagascar"));
-      const themeLabel = createCircuitElement("span", "circuit-fact circuit-theme", themeName);
+      const duration = createCircuitElement("span", "circuit-fact circuit-duration");
+      duration.append(createCircuitIcon("calendar"), document.createTextNode(" " + durationLabel(circuit.duration)));
+      const region = createCircuitElement("span", "circuit-fact circuit-region");
+      region.append(createCircuitIcon("pin"), document.createTextNode(" " + String(circuit.region || "Madagascar")));
+      const themeLabel = createCircuitElement("span", "circuit-fact circuit-theme");
+      themeLabel.append(createCircuitIcon("compass"), document.createTextNode(" " + themeName));
       meta.append(duration, region, themeLabel);
 
-      const status = createCircuitElement("span", "circuit-status", currentLanguage === "fr" ? "Sur demande" : "By request");
+      const status = createCircuitElement("span", "circuit-status");
+      status.append(createCircuitIcon("clock"), document.createTextNode(" " + (currentLanguage === "fr" ? "Sur demande" : "By request")));
       status.setAttribute("aria-label", currentLanguage === "fr" ? "Disponibilité : sur demande" : "Availability: by request");
 
       const actions = createCircuitElement("div", "circuit-card-actions");
       const quoteLink = createCircuitElement("a", "button button-quote circuit-link");
       quoteLink.href = "#contact";
       quoteLink.dataset.circuit = String(circuit.id);
-      quoteLink.append(
-        createCircuitElement("span", "quote-plane", "➤"),
-        createCircuitElement("span", "", currentLanguage === "fr" ? "Demander un devis" : "Request a quote")
-      );
+      const quoteIcon = createCircuitElement("span", "quote-plane");
+      quoteIcon.append(createCircuitIcon("send"));
+      quoteLink.append(quoteIcon, createCircuitElement("span", "", currentLanguage === "fr" ? "Demander un devis" : "Request a quote"));
       {
         const discoverLink = createCircuitElement("a", "circuit-link circuit-discover-link");
         const detailIdentifier = circuit.slug || String(circuit.id);
         discoverLink.href = "backend/public/circuit-detail.php?" + (circuit.slug ? "slug=" + encodeURIComponent(circuit.slug) : "id=" + encodeURIComponent(detailIdentifier));
         discoverLink.append(
           createCircuitElement("span", "", currentLanguage === "fr" ? "Découvrir le circuit" : "Discover this journey"),
-          createCircuitElement("span", "", " ↗")
+          (() => { const icon = createCircuitElement("span", "discover-arrow"); icon.append(createCircuitIcon("arrow")); return icon; })()
         );
         discoverLink.setAttribute("aria-label", (currentLanguage === "fr" ? "Découvrir le circuit : " : "Discover this journey: ") + circuit.title);
         actions.append(discoverLink);
