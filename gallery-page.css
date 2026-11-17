@@ -476,3 +476,42 @@ body.gallery-page .gallery-suggestion-card {
     object-fit: contain !important;
   }
 }
+
+
+/* Mobile circuit slideshow: show the complete original image without forced crop */
+@media (max-width: 700px) {
+  body.gallery-page .gallery-page-stage {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: auto !important;
+    overflow: hidden;
+  }
+  body.gallery-page .gallery-page-stage > img {
+    position: relative !important;
+    inset: auto !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    animation: none !important;
+  }
+  body.gallery-page .gallery-page-stage > video,
+  body.gallery-page .gallery-page-stage > iframe,
+  body.gallery-page .gallery-page-stage > .gallery-page-stage-embed {
+    position: relative !important;
+    inset: auto !important;
+    display: block;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 9;
+    object-fit: contain !important;
+  }
+  body.gallery-page .gallery-page-stage-caption {
+    padding: 60px 13px 48px !important;
+  }
+}
