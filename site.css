@@ -6150,3 +6150,88 @@ button:focus-visible, a:focus-visible {
   #circuits .circuit-grid .circuit-card .circuit-card-actions .circuit-discover-link,
   #circuits .circuit-grid .circuit-card .circuit-card-actions .button-quote { grid-column: 1 !important; }
 }
+
+
+/* Circuits : métadonnées alignées à gauche, statut placé dans la colonne de droite */
+#circuits .circuit-grid > .circuit-card .circuit-overlay {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  grid-template-rows: auto auto auto 1fr auto !important;
+  align-items: start !important;
+  column-gap: 14px !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-overlay > h3 {
+  grid-column: 1 / -1 !important;
+  grid-row: 1 !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-meta {
+  grid-column: 1 !important;
+  grid-row: 2 !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  grid-auto-rows: minmax(24px, auto) !important;
+  align-items: start !important;
+  justify-content: start !important;
+  gap: 4px 12px !important;
+  width: 100% !important;
+  min-height: 76px !important;
+  margin: 0 !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-meta > .circuit-duration {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-meta > .circuit-region {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-meta > .circuit-theme {
+  grid-column: 1 / -1 !important;
+  grid-row: 2 !important;
+  display: block !important;
+  overflow: visible !important;
+  -webkit-line-clamp: unset !important;
+  line-clamp: unset !important;
+  max-width: 100% !important;
+  overflow-wrap: anywhere !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-status {
+  grid-column: 2 !important;
+  grid-row: 2 !important;
+  justify-self: start !important;
+  align-self: start !important;
+  margin: 0 !important;
+  white-space: nowrap !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-card-actions {
+  grid-column: 1 / -1 !important;
+  grid-row: 5 !important;
+  align-self: end !important;
+  margin-top: 18px !important;
+}
+@media (max-width: 1050px) {
+  #circuits .circuit-grid > .circuit-card .circuit-overlay {
+    column-gap: 8px !important;
+  }
+  #circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-meta {
+    column-gap: 7px !important;
+    font-size: 11px !important;
+  }
+}
+@media (max-width: 560px) {
+  #circuits .circuit-grid > .circuit-card .circuit-overlay {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  #circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-meta {
+    grid-column: 1 !important;
+  }
+  #circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-status {
+    grid-column: 1 !important;
+    grid-row: 3 !important;
+    margin-top: 4px !important;
+  }
+  #circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-card-actions {
+    grid-column: 1 !important;
+    grid-row: 5 !important;
+  }
+}
