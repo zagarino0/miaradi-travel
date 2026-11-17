@@ -691,7 +691,7 @@ document.addEventListener("DOMContentLoaded", () => {
         video = document.createElement("video");
         video.id = "gallery-main-video";
         video.className = "gallery-main-video";
-        video.controls = true;
+        video.controls = false;
         video.playsInline = true;
         video.preload = "metadata";
         frame?.insertBefore(video, galleryMainImage);
