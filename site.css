@@ -6348,3 +6348,34 @@ button:focus-visible, a:focus-visible {
     margin-bottom: 4px !important;
   }
 }
+
+
+/* Icônes SVG fines et cohérentes dans les cartes de circuits */
+#circuits .circuit-inline-icon {
+  display: inline-block !important;
+  width: 14px !important;
+  height: 14px !important;
+  min-width: 14px !important;
+  vertical-align: -2px !important;
+  stroke: currentColor !important;
+  stroke-width: 1.8 !important;
+  flex: 0 0 14px !important;
+}
+#circuits .circuit-fact,
+#circuits .circuit-status {
+  align-items: flex-start !important;
+  gap: 5px !important;
+}
+#circuits .circuit-status .circuit-inline-icon {
+  color: #a85a00 !important;
+}
+#circuits .quote-plane .circuit-inline-icon {
+  width: 15px !important;
+  height: 15px !important;
+  vertical-align: middle !important;
+}
+#circuits .discover-arrow {
+  display: inline-flex !important;
+  align-items: center !important;
+  margin-left: 4px !important;
+}
