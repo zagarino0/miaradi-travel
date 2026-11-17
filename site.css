@@ -6953,3 +6953,42 @@ button:focus-visible, a:focus-visible {
     white-space: nowrap !important;
   }
 }
+
+
+/* Correctif mobile : ne jamais masquer le bouton « Découvrir le circuit » */
+@media (max-width: 560px) {
+  #circuits .circuit-grid .circuit-card .circuit-card-actions {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    grid-auto-flow: row !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+  }
+  #circuits .circuit-grid .circuit-card .circuit-card-actions > .circuit-discover-link {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: static !important;
+    grid-column: 1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+  }
+  #circuits .circuit-grid .circuit-card .circuit-card-actions > .button-quote {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: static !important;
+    grid-column: 2 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+  }
+  #circuits .circuit-grid .circuit-card .circuit-card-actions > .gallery-trigger {
+    display: none !important;
+  }
+}
