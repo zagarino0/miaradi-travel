@@ -7413,3 +7413,54 @@ dialog#circuit-gallery.gallery-dialog .gallery-main-overlay .gallery-caption-cop
       linear-gradient(0deg, rgba(16,27,50,.10), rgba(255,255,255,.04) 55%) !important;
   }
 }
+
+
+/* FIX définitif du hero d'accueil sur mobile : neutraliser l'animation qui rendait
+   tout le bloc translucide et renforcer le contraste sur chaque panorama. */
+@media (max-width: 760px) {
+  .hero .hero-content {
+    animation: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    color: #101b32 !important;
+    mix-blend-mode: normal !important;
+    isolation: isolate;
+  }
+  .hero .hero-content > * {
+    opacity: 1 !important;
+    visibility: visible !important;
+    filter: none !important;
+    mix-blend-mode: normal !important;
+  }
+  .hero .hero-location {
+    color: #101b32 !important;
+    background: #fff !important;
+    border-color: rgba(146,45,32,.18) !important;
+  }
+  .hero .hero-location svg {
+    color: #922d20 !important;
+    opacity: 1 !important;
+  }
+  .hero h1,
+  .hero .hero-content h1 {
+    color: #101b32 !important;
+    opacity: 1 !important;
+    -webkit-text-fill-color: #101b32 !important;
+    text-shadow: none !important;
+  }
+  .hero .hero-copy {
+    color: #263955 !important;
+    opacity: 1 !important;
+    -webkit-text-fill-color: #263955 !important;
+    text-shadow: none !important;
+  }
+  .hero .hero-shade {
+    background: linear-gradient(
+      90deg,
+      rgba(235,244,255,.98) 0%,
+      rgba(235,244,255,.94) 52%,
+      rgba(235,244,255,.72) 100%
+    ) !important;
+    opacity: 1 !important;
+  }
+}
