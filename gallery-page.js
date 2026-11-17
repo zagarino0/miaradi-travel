@@ -282,7 +282,8 @@
     activeCircuit = circuit;
     $("gallery-page-title").textContent = circuit.title;
     $("gallery-region").textContent = text(circuit.region, "MADAGASCAR · INSPIRATIONS").toUpperCase();
-    $("gallery-region-short").textContent = [circuit.region, circuit.theme].filter(Boolean).join(" · ");
+    $("gallery-region-short").textContent = text(circuit.region, "Madagascar");
+    $("gallery-theme").textContent = text(circuit.theme, "Découverte");
     $("gallery-page-description").textContent = text(circuit.summary, "Découvrez Madagascar à travers nos inspirations de voyage.");
     $("gallery-media-count").textContent = media.length + " média" + (media.length > 1 ? "s" : "");
     $("gallery-page-thumbs-count").textContent = String(media.length).padStart(2, "0") + " MÉDIAS";
@@ -412,7 +413,8 @@
       $("gallery-page-title").textContent = "Laissez-vous inspirer";
       $("gallery-page-description").textContent = "Une sélection de photographies de Madagascar, des paysages côtiers aux hauts plateaux, réunies dans un diaporama.";
       $("gallery-region").textContent = "MADAGASCAR EN IMAGES";
-      $("gallery-region-short").textContent = "Tous les circuits";
+      $("gallery-region-short").textContent = "Toutes les régions";
+      $("gallery-theme").textContent = "Toutes les thématiques";
       document.title = "Madagascar en images — MIARADI-TRAVEL";
 
       let pages = [];
