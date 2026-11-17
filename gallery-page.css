@@ -584,3 +584,78 @@ body.gallery-page .gallery-suggestion-card {
     line-height: 1.35 !important;
   }
 }
+
+
+/* Correctif final mobile : un seul cadre média, image/vidéo dans le même lecteur.
+   Empêche le lecteur vidéo de prendre une deuxième ligne sous la photo et
+   garantit que le cadre conserve une hauteur même lorsque ses médias sont absolus. */
+@media (max-width: 700px) {
+  body.gallery-page .gallery-page-viewer {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    overflow: visible !important;
+  }
+
+  body.gallery-page .gallery-page-stage {
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: 4 / 3 !important;
+    overflow: hidden !important;
+    background: transparent !important;
+    isolation: isolate !important;
+  }
+
+  body.gallery-page .gallery-page-stage > #gallery-stage-image,
+  body.gallery-page .gallery-page-stage > #gallery-stage-video,
+  body.gallery-page .gallery-page-stage > iframe,
+  body.gallery-page .gallery-page-stage > .gallery-page-stage-embed {
+    position: absolute !important;
+    inset: 0 !important;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 0 !important;
+    border: 0 !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    background: transparent !important;
+  }
+
+  body.gallery-page .gallery-page-stage > #gallery-stage-image[hidden],
+  body.gallery-page .gallery-page-stage > #gallery-stage-video[hidden] {
+    display: none !important;
+  }
+
+  body.gallery-page .gallery-page-stage-caption {
+    position: absolute !important;
+    inset: auto 0 0 !important;
+    display: grid !important;
+    gap: 4px !important;
+    padding: 58px 14px 14px !important;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.18) 45%, rgba(0,0,0,.68) 100%) !important;
+    pointer-events: none !important;
+  }
+
+  body.gallery-page .gallery-page-stage-caption strong {
+    font-size: clamp(15px, 4.5vw, 20px) !important;
+    line-height: 1.2 !important;
+  }
+
+  body.gallery-page .gallery-page-stage-caption span {
+    font-size: 11px !important;
+    line-height: 1.35 !important;
+  }
+
+  body.gallery-page .gallery-page-counter,
+  body.gallery-page .gallery-page-nav,
+  body.gallery-page .gallery-page-toggle {
+    z-index: 10 !important;
+  }
+}
