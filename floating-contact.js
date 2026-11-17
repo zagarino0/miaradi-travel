@@ -28,6 +28,12 @@
       text-decoration: none;
       transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
     }
+    .miaradi-floating-contact.miaradi-home-contact-hidden {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+      transform: translateY(8px);
+    }
     .miaradi-floating-contact:hover {
       transform: translateY(-3px);
       background: #742319;
@@ -80,6 +86,19 @@
       <span>Contactez-nous</span>
     `;
     document.body.append(button);
+
+    // Sur l'accueil mobile, masquer le bouton flottant tant que le hero est visible.
+    if (onHomePage && window.matchMedia("(max-width: 760px)").matches) {
+      const hero = document.querySelector(".hero");
+      if (hero && "IntersectionObserver" in window) {
+        button.classList.add("miaradi-home-contact-hidden");
+        const observer = new IntersectionObserver(([entry]) => {
+          const heroStillVisible = entry.isIntersecting;
+          button.classList.toggle("miaradi-home-contact-hidden", heroStillVisible);
+        }, { threshold: 0.05 });
+        observer.observe(hero);
+      }
+    }
 
     // When the footer bottom row enters the viewport, lift the WhatsApp button above it.
     const repositionForFooter = () => {
