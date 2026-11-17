@@ -6098,3 +6098,55 @@ button:focus-visible, a:focus-visible {
   #circuits .circuit-grid > .circuit-card .circuit-card-actions .circuit-discover-link,
   #circuits .circuit-grid > .circuit-card .circuit-card-actions .button-quote { font-size: 11px !important; padding-inline: 8px !important; }
 }
+
+
+/* Correctif explicite : rendre visibles les deux actions principales des cartes */
+#circuits .circuit-grid .circuit-card .circuit-card-actions {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  align-items: stretch !important;
+  gap: 10px !important;
+}
+#circuits .circuit-grid .circuit-card .circuit-card-actions .circuit-discover-link,
+#circuits .circuit-grid .circuit-card .circuit-card-actions .button-quote {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: static !important;
+  align-items: center !important;
+  justify-content: center !important;
+  align-self: stretch !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 42px !important;
+  margin: 0 !important;
+  padding: 9px 10px !important;
+  white-space: normal !important;
+  text-align: center !important;
+  line-height: 1.25 !important;
+  font-size: clamp(10px, .72vw, 12px) !important;
+}
+#circuits .circuit-grid .circuit-card .circuit-card-actions .circuit-discover-link {
+  grid-column: 1 !important;
+  border: 1px solid rgba(146,45,32,.25) !important;
+  border-radius: 24px !important;
+  background: #fff4f0 !important;
+  color: #922d20 !important;
+}
+#circuits .circuit-grid .circuit-card .circuit-card-actions .button-quote {
+  grid-column: 2 !important;
+  border-radius: 24px !important;
+  background: #922d20 !important;
+  color: #fff !important;
+}
+#circuits .circuit-grid .circuit-card .circuit-card-actions .gallery-trigger {
+  display: none !important;
+}
+@media (max-width: 1050px) {
+  #circuits .circuit-grid .circuit-card .circuit-card-actions { gap: 7px !important; }
+}
+@media (max-width: 560px) {
+  #circuits .circuit-grid .circuit-card .circuit-card-actions { grid-template-columns: minmax(0, 1fr) !important; }
+  #circuits .circuit-grid .circuit-card .circuit-card-actions .circuit-discover-link,
+  #circuits .circuit-grid .circuit-card .circuit-card-actions .button-quote { grid-column: 1 !important; }
+}
