@@ -718,3 +718,46 @@ body.gallery-page .gallery-meta-value {
     font-size: 13px;
   }
 }
+
+
+/* Alignement uniforme des liens « Découvrir la galerie » malgré des textes de longueur différente. */
+body.gallery-page .gallery-suggestions-grid {
+  align-items: stretch !important;
+}
+body.gallery-page .gallery-suggestion-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-self: stretch !important;
+  height: auto !important;
+  min-height: 100% !important;
+}
+body.gallery-page .gallery-suggestion-image {
+  flex: 0 0 auto !important;
+}
+body.gallery-page .gallery-suggestion-copy {
+  display: flex !important;
+  flex: 1 1 auto !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  min-height: 0 !important;
+}
+body.gallery-page .gallery-suggestion-copy h3,
+body.gallery-page .gallery-suggestion-copy p {
+  flex: 0 0 auto;
+}
+body.gallery-page .gallery-suggestion-copy strong {
+  margin-top: auto !important;
+  padding-top: 18px !important;
+  align-self: flex-start !important;
+}
+@media (max-width: 700px) {
+  body.gallery-page .gallery-suggestion-card {
+    height: 100% !important;
+  }
+  body.gallery-page .gallery-suggestion-copy {
+    min-height: 300px !important;
+  }
+  body.gallery-page .gallery-suggestion-copy strong {
+    padding-top: 16px !important;
+  }
+}
