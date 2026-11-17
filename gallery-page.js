@@ -344,7 +344,7 @@
       const summary = document.createElement("p");
       summary.textContent = text(circuit.summary, "Découvrez ce circuit à Madagascar.");
       const cta = document.createElement("strong");
-      cta.textContent = "Découvrir la galerie ↗";
+      cta.innerHTML = 'Découvrir la galerie <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>';
       copy.append(heading, summary, cta);
       link.append(visual, copy);
       suggestionsGrid.append(link);
@@ -563,7 +563,9 @@
   toggleButton?.addEventListener("click", () => {
     isManuallyPaused = !isManuallyPaused;
     if (toggleButton) {
-      toggleButton.textContent = isManuallyPaused ? "▶ Reprendre" : "Ⅱ Pause";
+      toggleButton.innerHTML = isManuallyPaused
+        ? '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7Z"/></svg><span>Reprendre</span>'
+        : '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg><span>Pause</span>';
       toggleButton.setAttribute("aria-pressed", String(isManuallyPaused));
       toggleButton.setAttribute("aria-label", isManuallyPaused ? "Reprendre le diaporama" : "Mettre le diaporama en pause");
     }
