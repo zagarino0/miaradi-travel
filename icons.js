@@ -10,10 +10,10 @@
         : label.includes("accompagnement") ? "compass"
         : label.includes("sur mesure") ? "route"
         : ["map-pinned", "hand-heart", "compass", "route"][index % 4];
-      container.replaceChildren(Object.assign(document.createElement("i"), {
-        className: "icon-lucide",
-        dataset: { lucide: icon }
-      }));
+      const placeholder = document.createElement("i");
+      placeholder.setAttribute("data-lucide", icon);
+      placeholder.setAttribute("aria-hidden", "true");
+      container.replaceChildren(placeholder);
     });
     document.querySelectorAll("[data-lucide]").forEach((node) => {
       if (!node.hasAttribute("aria-hidden") && !node.getAttribute("aria-label")) {
