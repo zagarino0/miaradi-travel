@@ -6811,3 +6811,44 @@ button:focus-visible, a:focus-visible {
     transform: none !important;
   }
 }
+
+
+/* Mobile : présenter les quatre cartes de confiance sur une ligne, avec retour à 2 colonnes si nécessaire */
+@media (max-width: 760px) {
+  .trust-strip {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    align-items: stretch !important;
+  }
+  .trust-card {
+    min-width: 0 !important;
+    min-height: 112px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    gap: 9px !important;
+    padding: 12px !important;
+    border-radius: 18px !important;
+  }
+  .trust-icon {
+    flex: 0 0 38px !important;
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 20px !important;
+  }
+  .trust-card strong {
+    font-size: 12px !important;
+    line-height: 1.3 !important;
+  }
+  .trust-card p {
+    font-size: 10px !important;
+    line-height: 1.35 !important;
+  }
+}
+@media (max-width: 360px) {
+  .trust-strip { gap: 7px !important; }
+  .trust-card { padding: 9px !important; min-height: 116px !important; }
+  .trust-card strong { font-size: 11px !important; }
+  .trust-card p { font-size: 9px !important; }
+}
