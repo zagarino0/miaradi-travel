@@ -7021,3 +7021,80 @@ button:focus-visible, a:focus-visible {
     display: inline;
   }
 }
+
+
+/* Circuit media viewer: keep captions over the photo, never in a separate grey panel */
+.circuit-editorial-page .gallery-main-frame{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  background:transparent !important;
+}
+.circuit-editorial-page .gallery-main-frame > img,
+.circuit-editorial-page .gallery-main-frame > video{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  background:transparent !important;
+}
+.circuit-editorial-page .gallery-main-frame > img[hidden],
+.circuit-editorial-page .gallery-main-frame > video[hidden]{
+  display:none !important;
+}
+.circuit-editorial-page .gallery-main-overlay{
+  position:absolute;
+  z-index:3;
+  inset:auto 0 0;
+  min-height:0;
+  padding:clamp(54px,9vw,100px) clamp(14px,2.5vw,24px) 20px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:12px;
+  color:#fff;
+  background:linear-gradient(180deg,transparent 0%,rgba(15,13,12,.12) 25%,rgba(15,13,12,.78) 100%) !important;
+  pointer-events:none;
+}
+.circuit-editorial-page .gallery-main-overlay .gallery-caption-copy{
+  min-width:0;
+  max-width:calc(100% - 74px);
+  display:grid;
+  gap:5px;
+}
+.circuit-editorial-page .gallery-main-overlay .gallery-caption-copy strong{
+  color:#fff;
+  font-size:clamp(1rem,2vw,1.65rem);
+  line-height:1.2;
+  text-shadow:0 1px 5px rgba(0,0,0,.45);
+}
+.circuit-editorial-page .gallery-main-overlay .gallery-caption-copy #gallery-main-description{
+  color:#fff;
+  font-size:clamp(.72rem,1vw,.9rem);
+  line-height:1.4;
+  text-shadow:0 1px 4px rgba(0,0,0,.65);
+  opacity:1;
+}
+.circuit-editorial-page .gallery-main-overlay #gallery-counter{
+  flex:0 0 auto;
+  align-self:flex-end;
+}
+@media(max-width:700px){
+  .circuit-editorial-page .gallery-main-overlay{
+    padding:64px 14px 16px;
+    gap:8px;
+  }
+  .circuit-editorial-page .gallery-main-overlay .gallery-caption-copy{
+    max-width:calc(100% - 58px);
+  }
+  .circuit-editorial-page .gallery-main-overlay .gallery-caption-copy strong{
+    font-size:1rem;
+  }
+  .circuit-editorial-page .gallery-main-overlay .gallery-caption-copy #gallery-main-description{
+    font-size:.68rem;
+    line-height:1.35;
+  }
+}
