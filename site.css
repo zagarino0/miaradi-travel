@@ -6235,3 +6235,59 @@ button:focus-visible, a:focus-visible {
     grid-row: 5 !important;
   }
 }
+
+
+/* Ajustement final des cartes : métadonnées sur toute la largeur, statut à droite sans chevauchement */
+#circuits .circuit-grid > .circuit-card .circuit-overlay {
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  grid-template-rows: auto auto auto 1fr auto !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-meta {
+  grid-column: 1 / -1 !important;
+  grid-row: 2 !important;
+  width: 100% !important;
+  min-height: 72px !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  grid-template-rows: auto auto !important;
+  column-gap: 12px !important;
+  row-gap: 5px !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-meta > .circuit-duration {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-meta > .circuit-region {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-meta > .circuit-theme {
+  grid-column: 1 !important;
+  grid-row: 2 !important;
+  max-width: 100% !important;
+  overflow-wrap: anywhere !important;
+  line-height: 1.35 !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-status {
+  grid-column: 2 !important;
+  grid-row: 3 !important;
+  justify-self: end !important;
+  align-self: start !important;
+  margin: 0 !important;
+  white-space: nowrap !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-card-actions {
+  grid-column: 1 / -1 !important;
+  grid-row: 5 !important;
+  margin-top: 18px !important;
+}
+@media (max-width: 560px) {
+  #circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-meta {
+    grid-column: 1 !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  }
+  #circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-status {
+    grid-column: 1 !important;
+    grid-row: 3 !important;
+    justify-self: start !important;
+  }
+}
