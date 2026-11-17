@@ -6667,3 +6667,76 @@ button:focus-visible, a:focus-visible {
   #homepage-finder .finder-submit,
   .finder-panel .finder-submit { grid-column: 4 !important; width: 36px !important; min-width: 36px !important; height: 38px !important; min-height: 38px !important; }
 }
+
+
+/* Ajustement mobile : donner plus de largeur aux libellés et éviter les textes coupés */
+@media (max-width: 760px) {
+  #homepage-finder .finder-inner,
+  .finder-panel .finder-inner {
+    grid-template-columns: minmax(0, 1.18fr) minmax(0, 1.28fr) minmax(0, 1.08fr) 44px !important;
+    gap: 7px !important;
+    padding: 9px 10px !important;
+  }
+  #homepage-finder .finder-field,
+  .finder-panel .finder-field,
+  #homepage-finder .finder-field:first-child,
+  .finder-panel .finder-field:first-child {
+    justify-content: flex-start !important;
+    gap: 6px !important;
+    padding: 2px 5px !important;
+  }
+  #homepage-finder .finder-icon,
+  .finder-panel .finder-icon {
+    flex: 0 0 27px !important;
+    width: 27px !important;
+    height: 27px !important;
+    min-width: 27px !important;
+  }
+  #homepage-finder .finder-field > span:last-child,
+  .finder-panel .finder-field > span:last-child {
+    flex: 1 1 auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    overflow: visible !important;
+  }
+  #homepage-finder .finder-field strong,
+  .finder-panel .finder-field strong {
+    font-size: 10px !important;
+    letter-spacing: -0.2px !important;
+  }
+  #homepage-finder .finder-field select,
+  .finder-panel .finder-field select {
+    font-size: 9px !important;
+    letter-spacing: -0.25px !important;
+    padding-right: 10px !important;
+    text-overflow: clip !important;
+  }
+}
+@media (max-width: 380px) {
+  #homepage-finder .finder-inner,
+  .finder-panel .finder-inner {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.2fr) minmax(0, 1fr) 38px !important;
+    gap: 4px !important;
+    padding: 7px !important;
+  }
+  #homepage-finder .finder-field,
+  .finder-panel .finder-field,
+  #homepage-finder .finder-field:first-child,
+  .finder-panel .finder-field:first-child {
+    gap: 3px !important;
+    padding-inline: 2px !important;
+  }
+  #homepage-finder .finder-icon,
+  .finder-panel .finder-icon {
+    flex-basis: 22px !important;
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px !important;
+  }
+  #homepage-finder .finder-field strong,
+  .finder-panel .finder-field strong { font-size: 9px !important; }
+  #homepage-finder .finder-field select,
+  .finder-panel .finder-field select { font-size: 8px !important; }
+  #homepage-finder .finder-submit,
+  .finder-panel .finder-submit { grid-column: 4 !important; width: 38px !important; min-width: 38px !important; }
+}
