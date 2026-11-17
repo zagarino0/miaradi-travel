@@ -7464,3 +7464,13 @@ dialog#circuit-gallery.gallery-dialog .gallery-main-overlay .gallery-caption-cop
     opacity: 1 !important;
   }
 }
+
+
+/* Masquer uniquement les commandes fléchées du carrousel du hero,
+   sur mobile comme sur desktop. Les points de pagination restent disponibles. */
+.hero .hero-arrows,
+.hero .hero-controls > button,
+.hero .hero-controls > span:not(.hero-dot),
+.hero .hero-controls .hero-arrow {
+  display: none !important;
+}
