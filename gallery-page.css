@@ -449,3 +449,30 @@ body.gallery-page .gallery-suggestion-card {
     padding: 48px 13px 44px !important;
   }
 }
+
+
+/* Mobile: conserver les proportions natives des photos du diaporama, sans recadrage */
+@media (max-width: 700px) {
+  body.gallery-page .gallery-page-stage {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: auto !important;
+    overflow: hidden;
+    background: #e8ded5;
+  }
+  body.gallery-page .gallery-page-stage > img {
+    position: relative !important;
+    inset: auto !important;
+    display: block;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+  }
+  body.gallery-page .gallery-page-stage > video,
+  body.gallery-page .gallery-page-stage > iframe {
+    object-fit: contain !important;
+  }
+}
