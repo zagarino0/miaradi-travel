@@ -238,3 +238,66 @@ body.gallery-page .gallery-suggestion-card {
   }
   body.gallery-page .gallery-suggestions-carousel { overflow: visible; }
 }
+
+
+/* Iconographie élégante et cohérente — page Galerie */
+.gallery-page .icon {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: middle;
+}
+.gallery-page .gallery-back-link,
+.gallery-page .gallery-page-quote,
+.gallery-page .gallery-suggestions-heading > a,
+.gallery-page .gallery-page-footer > a,
+.gallery-page .gallery-suggestion-copy strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.gallery-page .gallery-meta-pin { width: 19px; height: 19px; }
+.gallery-page .gallery-page-quote .icon,
+.gallery-page .gallery-suggestions-heading > a .icon { width: 19px; height: 19px; }
+.gallery-page .gallery-page-nav,
+.gallery-page .gallery-suggestions-nav {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  cursor: pointer;
+}
+.gallery-page .gallery-page-nav .icon,
+.gallery-page .gallery-suggestions-nav .icon {
+  width: 20px;
+  height: 20px;
+  transition: transform .2s ease;
+}
+.gallery-page .gallery-page-nav:hover .icon,
+.gallery-page .gallery-suggestions-nav:hover:not(:disabled) .icon {
+  transform: translateX(1px);
+}
+.gallery-page .gallery-page-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+.gallery-page .gallery-page-toggle .icon { width: 15px; height: 15px; }
+.gallery-page .gallery-suggestion-copy strong .icon { width: 16px; height: 16px; }
+.gallery-page .gallery-page-footer > a .icon { width: 15px; height: 15px; }
+.gallery-page .gallery-page-nav:focus-visible,
+.gallery-page .gallery-suggestions-nav:focus-visible,
+.gallery-page .gallery-page-toggle:focus-visible,
+.gallery-page a:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gallery-page .icon { transition: none !important; }
+}
