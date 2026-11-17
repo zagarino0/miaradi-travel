@@ -6852,3 +6852,17 @@ button:focus-visible, a:focus-visible {
   .trust-card strong { font-size: 11px !important; }
   .trust-card p { font-size: 9px !important; }
 }
+
+
+/* Rapprocher la flèche native du select Thématique de son libellé */
+#homepage-finder #finder-theme {
+  padding-right: 1.1rem !important;
+  background-position: right 0.15rem center !important;
+}
+@media (max-width: 760px) {
+  #homepage-finder #finder-theme {
+    padding-right: 0.7rem !important;
+    background-position: right 0.05rem center !important;
+    letter-spacing: -0.15px !important;
+  }
+}
