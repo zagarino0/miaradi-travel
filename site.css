@@ -6785,3 +6785,29 @@ button:focus-visible, a:focus-visible {
     padding-right: 10px !important;
   }
 }
+
+
+/* Centrage précis de la loupe dans le fond du bouton de recherche mobile */
+@media (max-width: 760px) {
+  #homepage-finder .finder-submit,
+  .finder-panel .finder-submit {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    place-items: center !important;
+    box-sizing: border-box !important;
+    padding: 0 !important;
+    line-height: 0 !important;
+    text-align: center !important;
+  }
+  #homepage-finder .finder-submit .finder-search-icon,
+  .finder-panel .finder-submit .finder-search-icon {
+    display: block !important;
+    position: static !important;
+    flex: 0 0 18px !important;
+    width: 18px !important;
+    height: 18px !important;
+    margin: 0 !important;
+    transform: none !important;
+  }
+}
