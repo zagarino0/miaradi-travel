@@ -7117,3 +7117,19 @@ button:focus-visible, a:focus-visible {
     padding:16px 14px 14px;
   }
 }
+
+
+/* Fix mobile featured media: remove the grey letterbox below videos */
+dialog#circuit-gallery.gallery-dialog .gallery-main-frame > #gallery-main-video {
+  object-fit: cover !important;
+  background: transparent !important;
+}
+dialog#circuit-gallery.gallery-dialog .gallery-main-frame {
+  background: transparent !important;
+}
+@media (max-width: 700px) {
+  dialog#circuit-gallery.gallery-dialog .gallery-main-frame > #gallery-main-video {
+    object-fit: cover !important;
+    background: transparent !important;
+  }
+}
