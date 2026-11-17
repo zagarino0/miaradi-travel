@@ -6891,3 +6891,35 @@ button:focus-visible, a:focus-visible {
     padding-right: 12px !important;
   }
 }
+
+
+/* Mobile : garder « Sur demande » sur la même ligne que la durée, à droite */
+@media (max-width: 560px) {
+  #circuits .circuit-grid .circuit-card .circuit-overlay {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    grid-template-rows: auto auto auto !important;
+    column-gap: 8px !important;
+    row-gap: 5px !important;
+  }
+  #circuits .circuit-grid .circuit-card .circuit-overlay > .circuit-meta {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    min-width: 0 !important;
+  }
+  #circuits .circuit-grid .circuit-card .circuit-overlay > .circuit-meta > .circuit-duration {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+  }
+  #circuits .circuit-grid .circuit-card .circuit-overlay > .circuit-status {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    justify-self: end !important;
+    align-self: start !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+  }
+  #circuits .circuit-grid .circuit-card .circuit-card-actions {
+    grid-column: 1 / -1 !important;
+    grid-row: 3 !important;
+  }
+}
