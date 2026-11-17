@@ -639,7 +639,11 @@ body.gallery-page .gallery-suggestion-card {
     display: grid !important;
     gap: 4px !important;
     padding: 58px 14px 14px !important;
-    background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.18) 45%, rgba(0,0,0,.68) 100%) !important;
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    color: #fff !important;
+    text-shadow: 0 1px 3px rgba(0,0,0,.95), 0 0 8px rgba(0,0,0,.75) !important;
     pointer-events: none !important;
   }
 
