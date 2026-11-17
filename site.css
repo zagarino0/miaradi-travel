@@ -6561,3 +6561,109 @@ button:focus-visible, a:focus-visible {
   .finder-panel .finder-field strong { font-size: 11px !important; }
   .finder-panel .finder-field select { font-size: 9px !important; }
 }
+
+
+/* Mobile compact : les trois filtres ET la loupe sur une seule ligne */
+@media (max-width: 760px) {
+  #homepage-finder .finder-inner,
+  .finder-panel .finder-inner {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) 42px !important;
+    gap: 5px !important;
+    align-items: stretch !important;
+    padding: 8px !important;
+  }
+  #homepage-finder .finder-field,
+  .finder-panel .finder-field,
+  #homepage-finder .finder-field:first-child,
+  .finder-panel .finder-field:first-child {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 5px !important;
+    min-width: 0 !important;
+    padding: 2px 4px !important;
+    border-right: 1px solid #eadfdd !important;
+    border-bottom: 0 !important;
+  }
+  #homepage-finder .finder-icon,
+  .finder-panel .finder-icon {
+    flex: 0 0 25px !important;
+    width: 25px !important;
+    height: 25px !important;
+    min-width: 25px !important;
+    border-radius: 8px !important;
+    background: #fff0ed !important;
+    color: #922D20 !important;
+  }
+  #homepage-finder .finder-icon svg,
+  .finder-panel .finder-icon svg {
+    width: 15px !important;
+    height: 15px !important;
+  }
+  #homepage-finder .finder-field > span:last-child,
+  .finder-panel .finder-field > span:last-child {
+    display: block !important;
+    width: auto !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+  #homepage-finder .finder-field strong,
+  .finder-panel .finder-field strong {
+    display: block !important;
+    font-size: 10px !important;
+    line-height: 1.15 !important;
+    white-space: nowrap !important;
+  }
+  #homepage-finder .finder-field select,
+  .finder-panel .finder-field select {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    padding: 2px 12px 2px 0 !important;
+    font-size: 9px !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+  #homepage-finder .finder-submit,
+  .finder-panel .finder-submit {
+    grid-column: 4 !important;
+    grid-row: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 42px !important;
+    min-width: 42px !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 0 !important;
+    border-radius: 10px !important;
+  }
+  #homepage-finder .finder-submit .finder-search-icon,
+  .finder-panel .finder-submit .finder-search-icon {
+    display: block !important;
+    width: 18px !important;
+    height: 18px !important;
+    margin: 0 !important;
+  }
+}
+@media (max-width: 380px) {
+  #homepage-finder .finder-inner,
+  .finder-panel .finder-inner { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) 36px !important; gap: 3px !important; padding: 6px !important; }
+  #homepage-finder .finder-icon,
+  .finder-panel .finder-icon { flex-basis: 22px !important; width: 22px !important; height: 22px !important; min-width: 22px !important; }
+  #homepage-finder .finder-field,
+  .finder-panel .finder-field,
+  #homepage-finder .finder-field:first-child,
+  .finder-panel .finder-field:first-child { gap: 3px !important; padding-inline: 2px !important; }
+  #homepage-finder .finder-field strong,
+  .finder-panel .finder-field strong { font-size: 9px !important; }
+  #homepage-finder .finder-field select,
+  .finder-panel .finder-field select { font-size: 8px !important; }
+  #homepage-finder .finder-submit,
+  .finder-panel .finder-submit { grid-column: 4 !important; width: 36px !important; min-width: 36px !important; height: 38px !important; min-height: 38px !important; }
+}
