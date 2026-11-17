@@ -6483,3 +6483,81 @@ button:focus-visible, a:focus-visible {
   margin-right: 7px;
   vertical-align: -3px;
 }
+
+
+/* Mobile : conserver les trois filtres sur une ligne et afficher uniquement la loupe */
+@media (max-width: 760px) {
+  .finder-panel .finder-inner {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    padding: 10px !important;
+  }
+  .finder-panel .finder-field,
+  .finder-panel .finder-field:first-child {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    gap: 6px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 4px 5px 8px !important;
+    border-right: 1px solid #eadfdd !important;
+    border-bottom: 0 !important;
+  }
+  .finder-panel .finder-field:last-of-type {
+    border-right: 0 !important;
+  }
+  .finder-panel .finder-icon {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    flex-basis: 32px !important;
+    border-radius: 10px !important;
+    background: #fff0ed !important;
+    color: #922D20 !important;
+  }
+  .finder-panel .finder-icon svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  .finder-panel .finder-field > span:last-child {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+  .finder-panel .finder-field strong {
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+  }
+  .finder-panel .finder-field select {
+    width: 100% !important;
+    min-width: 0 !important;
+    font-size: 10px !important;
+    white-space: normal !important;
+  }
+  .finder-panel .finder-submit {
+    grid-column: 1 / -1 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    min-height: 42px !important;
+    margin: 4px 0 0 !important;
+    padding: 8px !important;
+    font-size: 0 !important;
+  }
+  .finder-panel .finder-submit .finder-search-icon {
+    width: 19px !important;
+    height: 19px !important;
+    margin: 0 !important;
+  }
+}
+@media (max-width: 380px) {
+  .finder-panel .finder-inner { gap: 4px !important; padding: 8px !important; }
+  .finder-panel .finder-field,
+  .finder-panel .finder-field:first-child { padding-inline: 3px !important; }
+  .finder-panel .finder-field strong { font-size: 11px !important; }
+  .finder-panel .finder-field select { font-size: 9px !important; }
+}
