@@ -6291,3 +6291,60 @@ button:focus-visible, a:focus-visible {
     justify-self: start !important;
   }
 }
+
+
+/* Disposition souhaitée : durée à gauche, statut à droite sur la même ligne,
+   puis région et thématique en dessous, dans cet ordre. */
+#circuits .circuit-grid > .circuit-card .circuit-overlay {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-meta {
+  order: 2 !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  grid-template-rows: auto auto !important;
+  align-items: start !important;
+  gap: 5px 12px !important;
+  width: 100% !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-meta > .circuit-duration {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-status {
+  order: 3 !important;
+  grid-column: 2 !important;
+  grid-row: auto !important;
+  align-self: flex-end !important;
+  margin-top: -30px !important;
+  margin-bottom: 6px !important;
+  white-space: nowrap !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-meta > .circuit-region {
+  grid-column: 1 / -1 !important;
+  grid-row: 2 !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-meta > .circuit-theme {
+  grid-column: 1 / -1 !important;
+  grid-row: 3 !important;
+  display: block !important;
+  max-width: 100% !important;
+  overflow-wrap: anywhere !important;
+  line-clamp: unset !important;
+  -webkit-line-clamp: unset !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-card-actions {
+  order: 4 !important;
+  margin-top: auto !important;
+}
+@media (max-width: 560px) {
+  #circuits .circuit-grid > .circuit-card .circuit-overlay > .circuit-status {
+    align-self: flex-start !important;
+    margin-top: 0 !important;
+    margin-bottom: 4px !important;
+  }
+}
