@@ -7347,3 +7347,36 @@ dialog#circuit-gallery.gallery-dialog .gallery-main-overlay .gallery-caption-cop
     max-width: 100% !important;
   }
 }
+
+
+/* Accueil mobile : CTA rapprochés du bas du hero, juste au-dessus des flèches. */
+@media (max-width: 760px) {
+  body:has(.hero) .hero {
+    position: relative;
+  }
+  body:has(.hero) .hero-content {
+    position: static !important;
+  }
+  body:has(.hero) .hero-actions {
+    position: absolute !important;
+    left: 34px !important;
+    bottom: 76px !important;
+    z-index: 4 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 9px !important;
+    width: max-content !important;
+    max-width: calc(100% - 68px) !important;
+  }
+  body:has(.hero) .hero-actions .button {
+    min-height: 42px !important;
+    padding: 10px 18px !important;
+    white-space: nowrap !important;
+  }
+  body:has(.hero) .hero-arrows,
+  body:has(.hero) .hero-controls {
+    bottom: 16px !important;
+    z-index: 5 !important;
+  }
+}
