@@ -761,3 +761,17 @@ body.gallery-page .gallery-suggestion-copy strong {
     padding-top: 16px !important;
   }
 }
+
+
+/* Titres plus compacts dans les cartes « D'autres façons de découvrir l'île ». */
+body.gallery-page .gallery-suggestion-copy h3 {
+  font-size: clamp(1.08rem, 1.45vw, 1.45rem) !important;
+  line-height: 1.16 !important;
+  letter-spacing: -0.02em;
+}
+@media (max-width: 700px) {
+  body.gallery-page .gallery-suggestion-copy h3 {
+    font-size: 1.05rem !important;
+    line-height: 1.18 !important;
+  }
+}
