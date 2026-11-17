@@ -5992,3 +5992,109 @@ button:focus-visible, a:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   svg.icon, button svg.icon, a svg.icon { transition: none !important; }
 }
+
+
+/* MIARADI — alignement final des cartes de circuits */
+#circuits .circuit-grid > .circuit-card {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  min-height: 590px;
+}
+#circuits .circuit-grid > .circuit-card .circuit-image-link {
+  flex: 0 0 auto !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-overlay {
+  display: flex !important;
+  flex: 1 1 auto !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 12px !important;
+  min-height: 0 !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-overlay h3 {
+  min-height: 3.9em !important;
+  max-height: 3.9em !important;
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 3 !important;
+  line-clamp: 3 !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-meta {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  align-content: start !important;
+  align-items: start !important;
+  justify-content: initial !important;
+  gap: 8px 12px !important;
+  min-height: 52px !important;
+  width: 100% !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-meta > .circuit-fact {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  align-items: flex-start !important;
+  line-height: 1.4 !important;
+  overflow-wrap: anywhere !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-theme {
+  grid-column: 1 / -1 !important;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 2 !important;
+  line-clamp: 2 !important;
+  overflow: hidden !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-status {
+  align-self: flex-start !important;
+  flex: 0 0 auto !important;
+  min-height: 28px !important;
+  margin: 0 !important;
+  white-space: nowrap !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-card-actions {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  align-items: stretch !important;
+  gap: 9px !important;
+  margin-top: auto !important;
+  padding-top: 6px !important;
+  width: 100% !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-card-actions .circuit-discover-link,
+#circuits .circuit-grid > .circuit-card .circuit-card-actions .button-quote {
+  display: inline-flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 42px !important;
+  padding: 9px 10px !important;
+  gap: 6px !important;
+  text-align: center !important;
+  white-space: normal !important;
+  line-height: 1.25 !important;
+  font-size: clamp(10px, .75vw, 12px) !important;
+}
+#circuits .circuit-grid > .circuit-card .circuit-card-actions .circuit-discover-link > span,
+#circuits .circuit-grid > .circuit-card .circuit-card-actions .button-quote > span {
+  min-width: 0 !important;
+}
+@media (max-width: 1050px) {
+  #circuits .circuit-grid > .circuit-card { min-height: 560px; }
+  #circuits .circuit-grid > .circuit-card .circuit-card-actions { grid-template-columns: 1fr !important; }
+  #circuits .circuit-grid > .circuit-card .circuit-card-actions .circuit-discover-link,
+  #circuits .circuit-grid > .circuit-card .circuit-card-actions .button-quote { font-size: 12px !important; }
+}
+@media (max-width: 620px) {
+  #circuits .circuit-grid > .circuit-card { min-height: 0; }
+  #circuits .circuit-grid > .circuit-card .circuit-overlay h3 {
+    min-height: 0 !important;
+    max-height: none !important;
+    -webkit-line-clamp: 3 !important;
+  }
+  #circuits .circuit-grid > .circuit-card .circuit-card-actions { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; }
+  #circuits .circuit-grid > .circuit-card .circuit-card-actions .circuit-discover-link,
+  #circuits .circuit-grid > .circuit-card .circuit-card-actions .button-quote { font-size: 11px !important; padding-inline: 8px !important; }
+}
