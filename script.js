@@ -303,9 +303,10 @@ document.addEventListener("DOMContentLoaded", () => {
         createCircuitElement("span", "quote-plane", "➤"),
         createCircuitElement("span", "", currentLanguage === "fr" ? "Demander un devis" : "Request a quote")
       );
-      if (circuit.slug) {
+      {
         const discoverLink = createCircuitElement("a", "circuit-link circuit-discover-link");
-        discoverLink.href = "backend/public/circuit-detail.php?slug=" + encodeURIComponent(circuit.slug);
+        const detailIdentifier = circuit.slug || String(circuit.id);
+        discoverLink.href = "backend/public/circuit-detail.php?" + (circuit.slug ? "slug=" + encodeURIComponent(circuit.slug) : "id=" + encodeURIComponent(detailIdentifier));
         discoverLink.append(
           createCircuitElement("span", "", currentLanguage === "fr" ? "Découvrir le circuit" : "Discover this journey"),
           createCircuitElement("span", "", " ↗")
