@@ -7474,3 +7474,30 @@ dialog#circuit-gallery.gallery-dialog .gallery-main-overlay .gallery-caption-cop
 .hero .hero-controls .hero-arrow {
   display: none !important;
 }
+
+
+/* Pied de page mobile : les deux groupes de liens restent côte à côte. */
+@media (max-width: 760px) {
+  .site-footer .footer-editorial {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    align-items: start !important;
+    column-gap: 22px !important;
+    row-gap: 24px !important;
+  }
+  .site-footer .footer-brand-block {
+    grid-column: 1 / -1 !important;
+    min-width: 0 !important;
+  }
+  .site-footer .footer-link-group {
+    grid-column: auto !important;
+    min-width: 0 !important;
+  }
+  .site-footer .footer-link-group h2 {
+    line-height: 1.35 !important;
+  }
+  .site-footer .footer-link-group a {
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+  }
+}
