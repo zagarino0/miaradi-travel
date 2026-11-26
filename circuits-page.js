@@ -65,17 +65,32 @@
     window.setTimeout(() => map.invalidateSize(), 120);
   }
   function locationFor(region) {
-    const text = category(region).normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').replace(/[_–—]/g, '-');
-    // Matcher du plus spécifique au plus générique évite qu'un "nord-ouest"
-    // soit confondu avec une région du Nord ou qu'une région inconnue soit
-    // silencieusement placée au centre de l'île.
-    const sorted = [...regionLocations].sort((a, b) =>
+    const normalizeRegion = value => String(value || '')
+      .toLocaleLowerCase('fr')
+      .normalize('NFD')
+      .replace(/[\\u0300-\\u036f]/g, '')
+      .replace(/[_–—]/g, '-')
+      .replace(/\\s+/g, ' ')
+      .trim();
+    const text = normalizeRegion(region);
+    const entries = regionLocations.map(item => ({
+      item,
+      keys: item.keys.map(normalizeRegion)
+    }));
+
+    // Priorité au libellé exact : "Ouest" ne doit jamais correspondre à "Est".
+    const exact = entries.find(entry => entry.keys.includes(text));
+    if (exact) return exact.item;
+
+    // Pour les titres de circuits plus longs, reconnaître les mots entiers.
+    const sorted = entries.sort((a, b) =>
       Math.max(...b.keys.map(key => key.length)) - Math.max(...a.keys.map(key => key.length))
     );
-    const match = sorted.find(item => item.keys.some(key =>
-      text.includes(key.normalize('NFD').replace(/[\\u0300-\\u036f]/g, ''))
-    ));
-    return match || null;
+    const match = sorted.find(entry => entry.keys.some(key => {
+      const escaped = key.replace(/[.*+?^$()|[\\]\\\\]/g, '\\$&');
+      return new RegExp('(^|[^a-z0-9])' + escaped + '([^a-z0-9]|$)').test(text);
+    }));
+    return match ? match.item : null;
   }
   function renderMap(filteredCircuits) {
     if (!mapElement || !window.L) return;
