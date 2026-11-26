@@ -26,7 +26,8 @@
     {keys:['haute matsiatra','fianarantsoa','ihorombe','ranohira','isalo'],name:'Centre-Sud · Haute Matsiatra',lat:-21.4527,lng:47.0857},
     {keys:['alaotra','ambatondrazaka'],name:'Centre-Est · Alaotra-Mangoro',lat:-17.8333,lng:48.4167},
     {keys:['betsiboka','maevatanana'],name:'Centre-Nord · Betsiboka',lat:-16.9500,lng:46.8333},
-    {keys:['nosy be','nosy-be','hell-ville'],name:'Nosy Be',lat:-13.4000,lng:48.2667}
+    {keys:['nosy be','nosy-be','hell-ville'],name:'Nosy Be',lat:-13.4000,lng:48.2667},
+    {keys:['madagascar'],name:'Madagascar · itinéraire national',lat:-19.1,lng:46.7}
   ];
   const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
   const normal = value => String(value || '').trim();
