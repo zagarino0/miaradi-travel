@@ -9,57 +9,22 @@
   let circuits = [];
   let map = null;
   let markerLayer = null;
-  // Repères géographiques par région, pas par grande zone approximative.
-  // Les valeurs correspondent à des centres régionaux/lieux connus de Madagascar.
-  // Repères de destination : les grands secteurs pointent vers leur ville/région de référence.
-  // Les coordonnées sont des repères cartographiques, pas des limites administratives.
-  const regionLocations = [
-    // Zones de voyage MIARADI : les circuits nommés par zone utilisent ces repères.
-    {keys:['nord – nord-ouest','nord-nord-ouest','nord-ouest','nord ouest','nord-oest','nord oest','fleuve sofia','boeny','mahajanga','majunga'],name:'Nord-Ouest · Boeny',lat:-15.7167,lng:46.3167},
-    {keys:['ouest','menabe','morondava','tsiribihina','bemaraha','melaky','maintirano'],name:'Ouest · Menabe',lat:-20.2833,lng:44.2833},
-    {keys:['est','atsinanana','toamasina','tamatave','sainte-marie','analanjirofo','fenoarivo atsinhana','mananara'],name:'Est · Atsinanana',lat:-18.1492,lng:49.4023},
-    {keys:['hautes terres','haute terre','haute terres','hautes terre','analamanga','antananarivo','tananarive','vakinankaratra','antsirabe','itas','mianinarivo'],name:'Hautes Terres · Analamanga',lat:-18.8792,lng:47.5079},
-    {keys:['nord','diana','antsiranana','diego suarez','diego-suarez','antsiranane'],name:'Nord · Diana',lat:-12.2765,lng:49.2917},
-    {keys:['sud-ouest','sud ouest','atsimo-andrefana','toliara','tuléar','tulear'],name:'Sud-Ouest · Atsimo-Andrefana',lat:-23.3500,lng:43.6667},
-    {keys:['sud-est','sud est','atsimo-atsinanana','farafangana'],name:'Sud-Est · Atsimo-Atsinanana',lat:-22.8167,lng:47.8333},
-    {keys:['sud · androy','androy','ambovombe'],name:'Sud · Androy',lat:-25.1784,lng:46.0870},
-    // Région générique « SUD » pour les itinéraires couvrant plusieurs zones du sud.
-    // Les alias plus précis (Sud-Ouest, Sud-Est, Androy, Anosy) restent prioritaires.
-    {keys:['sud'],name:'Sud de Madagascar',lat:-23.3500,lng:46.0000},
-    {keys:['anosy','tolagnaro','fort-dauphin','fort dauphin'],name:'Sud-Est · Anosy',lat:-25.0319,lng:46.9987},
-
-    // Les 23 régions administratives : coordonnées indicatives de leur chef-lieu.
-    {keys:['analamanga','antananarivo','tananarive'],name:'Analamanga',lat:-18.8792,lng:47.5079},
-    {keys:['vakinankaratra','antsirabe'],name:'Vakinankaratra',lat:-19.8659,lng:47.0333},
-    {keys:['itasy','mianinarivo'],name:'Itasy',lat:-19.1667,lng:46.7667},
-    {keys:['bongolava','tsiroanomandidy'],name:'Bongolava',lat:-18.7667,lng:46.0333},
-    {keys:['haute matsiatra','fianarantsoa'],name:'Haute Matsiatra',lat:-21.4527,lng:47.0857},
-    {keys:['amoron i mania','amoron’i mania','amoron mania','ambositra'],name:'Amoron’i Mania',lat:-20.5303,lng:47.2434},
-    {keys:['vatovavy','mananjary'],name:'Vatovavy',lat:-21.2167,lng:48.3333},
-    {keys:['fitovinany','manakara'],name:'Fitovinany',lat:-22.1430,lng:48.0100},
-    {keys:['atsimo-atsinanana','atsimo ats inan ana','farafangana'],name:'Atsimo-Atsinanana',lat:-22.8167,lng:47.8333},
-    {keys:['atsinanana','toamasina','tamatave'],name:'Atsinanana',lat:-18.1492,lng:49.4023},
-    {keys:['analanjirofo','fenoarivo atsinanana','fenoarivo atsinhana'],name:'Analanjirofo',lat:-17.3833,lng:49.4167},
-    {keys:['alaotra-mangoro','alaotra mangoro','ambatondrazaka','moramanga'],name:'Alaotra-Mangoro',lat:-17.8333,lng:48.4167},
-    {keys:['boeny','mahajanga','majunga'],name:'Boeny',lat:-15.7167,lng:46.3167},
-    {keys:['betsiboka','maevatanana'],name:'Betsiboka',lat:-16.9500,lng:46.8333},
-    {keys:['melaky','maintirano'],name:'Melaky',lat:-18.0667,lng:44.0167},
-    {keys:['sofia','antsohihy'],name:'Sofia',lat:-14.8833,lng:47.9833},
-    {keys:['diana','antsiranana','diego suarez'],name:'Diana',lat:-12.2765,lng:49.2917},
-    {keys:['sava','sambava','antalaha','vohemar','andapa'],name:'Sava',lat:-14.2667,lng:50.1667},
-    {keys:['menabe','morondava'],name:'Menabe',lat:-20.2833,lng:44.2833},
-    {keys:['atsimo-andrefana','toliara','tuléar','tulear'],name:'Atsimo-Andrefana',lat:-23.3500,lng:43.6667},
-    {keys:['androy','ambovombe'],name:'Androy',lat:-25.1784,lng:46.0870},
-    {keys:['anosy','tolagnaro','fort-dauphin'],name:'Anosy',lat:-25.0319,lng:46.9987},
-    {keys:['ihorombe','ihosy','ranohira','isalo'],name:'Ihorombe',lat:-22.4000,lng:46.1167},
-
-    // Alias de lieux et d’itinéraires souvent utilisés dans les futurs circuits.
-    {keys:['nosy be','nosy-be','hell-ville','hellville'],name:'Nosy Be',lat:-13.4000,lng:48.2667},
-    {keys:['tsingy de bemaraha','bekopaka'],name:'Tsingy de Bemaraha',lat:-19.1333,lng:44.7833},
-    {keys:['ranomafana'],name:'Ranomafana',lat:-21.2500,lng:47.4500},
-    {keys:['andringitra','ambalavao'],name:'Andringitra',lat:-21.8500,lng:46.9333},
-    {keys:['madagascar','itineraire national','itinéraire national'],name:'Madagascar · itinéraire national',lat:-19.1,lng:46.7}
+  // Les circuits sont regroupés dans neuf grandes zones de voyage MIARADI.
+  // Les 23 régions administratives et les alias des destinations sont normalisés
+  // avant le classement : le nom d'une région ne dépend jamais d'un simple mot
+  // générique comme « nord », « est » ou « ouest ».
+  const zones = [
+    {name:'NORD', lat:-12.2765, lng:49.2917, aliases:['nord','diana','antsiranana','diego suarez','diego-suarez']},
+    {name:'NORD-EST', lat:-14.2667, lng:50.1667, aliases:['nord-est','nord est','analanjirofo','sava','sambava','antalaha','vohemar','andapa','fenoarivo atsinanana','mananara']},
+    {name:'NORD-OUEST', lat:-15.7167, lng:46.3167, aliases:['nord-ouest','nord ouest','nord-oest','nord oest','boeny','mahajanga','majunga','sofia','antsohihy','betsiboka','maevatanana','fleuve sofia']},
+    {name:'OUEST', lat:-20.2833, lng:44.2833, aliases:['ouest','menabe','morondava','melaky','maintirano','tsiribihina','bemaraha','tsingy de bemaraha','bekopaka']},
+    {name:'EST', lat:-18.1492, lng:49.4023, aliases:['est','atsinanana','toamasina','tamatave','alaotra-mangoro','alaotra mangoro','ambatondrazaka','moramanga','ranomafana']},
+    {name:'SUD', lat:-25.1784, lng:46.0870, aliases:['sud','androy','ambovombe','ihorombe','ihosy','ranohira','isalo']},
+    {name:'SUD-OUEST', lat:-23.3500, lng:43.6667, aliases:['sud-ouest','sud ouest','atsimo-andrefana','toliara','tulear','tulear','tuléar']},
+    {name:'SUD-EST', lat:-25.0319, lng:46.9987, aliases:['sud-est','sud est','atsimo-atsinanana','farafangana','vatovavy','mananjary','fitovinany','manakara','anosy','tolagnaro','fort-dauphin','fort dauphin']},
+    {name:'HAUTE-TERRE', lat:-18.8792, lng:47.5079, aliases:['haute-terre','haute terre','hautes-terres','hautes terres','haute terres','analamanga','antananarivo','tananarive','vakinankaratra','antsirabe','itasy','mianinarivo','bongolava','tsiroanomandidy','haute matsiatra','fianarantsoa','amoron i mania','amoron mania','ambositra','andringitra','ambalavao']}
   ];
+  const nationalLocation = {name:'MADAGASCAR', lat:-19.1, lng:46.7};
   const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
   const normal = value => String(value || '').trim();
   const durationLabel = duration => {
@@ -95,94 +60,120 @@
     markerLayer = L.layerGroup().addTo(map);
     window.setTimeout(() => map.invalidateSize(), 120);
   }
-  function locationFor(region) {
-    const key = String(region || '')
+  function normalizeRegion(value) {
+    return String(value || '')
       .toLocaleLowerCase('fr')
       .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[\\u0300-\\u036f]/g, '')
+      .replace(/[’']/g, ' ')
       .replace(/[_–—]/g, '-')
-      .replace(/\s*-\s*/g, '-')
-      .replace(/\s+/g, ' ')
+      .replace(/\\s*-\\s*/g, '-')
+      .replace(/[^a-z0-9-]+/g, ' ')
+      .replace(/\\s+/g, ' ')
       .trim();
+  }
+  function zoneForRegion(region) {
+    const key = normalizeRegion(region);
+    if (!key) return null;
 
-    // Priorité absolue aux zones composées : ne jamais laisser « Nord »
-    // détourner un circuit Nord-Ouest vers Antsiranana.
-    if (/(^|[^a-z0-9])nord(-| )+(ouest|oest)([^a-z0-9]|$)/.test(key) ||
-        /(^|[^a-z0-9])nord(-| )+nord(-| )+(ouest|oest)([^a-z0-9]|$)/.test(key) ||
-        /(^|[^a-z0-9])(boeny|mahajanga|majunga|fleuve sofia)([^a-z0-9]|$)/.test(key)) {
-      return {name:'Nord-Ouest · Boeny',lat:-15.7167,lng:46.3167};
-    }
-
-    // Éviter que les alias génériques « nord », « sud », « est » et « ouest »
-    // l'emportent sur une région administrative ou une destination précise.
-    const candidates = [];
-    regionLocations.forEach(item => item.keys.forEach(alias => {
-      const normalizedAlias = String(alias).toLocaleLowerCase('fr')
-        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-        .replace(/[_–—]/g, '-').replace(/\s*-\s*/g, '-').replace(/\s+/g, ' ').trim();
-      if (!normalizedAlias) return;
-      const escaped = normalizedAlias.replace(/[.*+?^$()|[\]\\]/g, '\\$&');
-      if (new RegExp('(^|[^a-z0-9])' + escaped + '([^a-z0-9]|$)').test(key)) {
-        candidates.push({item, length: normalizedAlias.length});
-      }
-    }));
-    candidates.sort((a, b) => b.length - a.length);
-    return candidates[0]?.item || null;
+    // Les zones composées et les régions précises passent avant les alias génériques.
+    if (/nord(-| )+nord(-| )+(ouest|oest)/.test(key) ||
+        /nord(-| )+(ouest|oest)/.test(key) ||
+        /\\b(boeny|mahajanga|majunga|sofia|antsohihy|betsiboka|maevatanana|fleuve sofia)\\b/.test(key)) return 'NORD-OUEST';
+    if (/sud(-| )+ouest/.test(key) ||
+        /\\b(atsimo-andrefana|toliara|tulear)\\b/.test(key)) return 'SUD-OUEST';
+    if (/sud(-| )+est/.test(key) ||
+        /\\b(atsimo-atsinanana|farafangana|vatovavy|mananjary|fitovinany|manakara|anosy|tolagnaro|fort-dauphin)\\b/.test(key)) return 'SUD-EST';
+    if (/nord(-| )+est/.test(key) ||
+        /\\b(analanjirofo|sava|sambava|antalaha|vohemar|andapa|fenoarivo atsinanana|mananara)\\b/.test(key)) return 'NORD-EST';
+    if (/hautes?(-| )+terres?/.test(key) ||
+        /\\b(analamanga|antananarivo|tananarive|vakinankaratra|antsirabe|itasy|mianinarivo|bongolava|tsiroanomandidy|haute matsiatra|fianarantsoa|amoron i mania|amoron mania|ambositra|andringitra|ambalavao)\\b/.test(key)) return 'HAUTE-TERRE';
+    if (/\\b(atsinanana|toamasina|tamatave|alaotra-mangoro|ambatondrazaka|moramanga|ranomafana)\\b/.test(key) ||
+        /(^|\\s)est($|\\s)/.test(key)) return 'EST';
+    if (/\\b(menabe|morondava|melaky|maintirano|tsiribihina|bemaraha|bekopaka)\\b/.test(key) ||
+        /(^|\\s)ouest($|\\s)/.test(key)) return 'OUEST';
+    if (/\\b(androy|ambovombe|ihorombe|ihosy|ranohira|isalo)\\b/.test(key) ||
+        /(^|\\s)sud($|\\s)/.test(key)) return 'SUD';
+    if (/\\b(diana|antsiranana|diego suarez|diego-suarez)\\b/.test(key) ||
+        /(^|\\s)nord($|\\s)/.test(key)) return 'NORD';
+    // Les circuits nationaux ne sont pas forcés dans une région administrative.
+    if (/\\b(madagascar|itineraire national|circuit national)\\b/.test(key)) return 'MADAGASCAR';
+    return null;
+  }
+  function locationFor(region) {
+    const zoneName = zoneForRegion(region);
+    if (zoneName === 'MADAGASCAR') return nationalLocation;
+    return zones.find(zone => zone.name === zoneName) || null;
   }
   function renderMap(filteredCircuits) {
     if (!mapElement || !window.L) return;
     initMap();
     if (!map || !markerLayer) return;
     markerLayer.clearLayers();
+
     const active = filteredCircuits || circuits;
-    const byRegion = new Map();
+    const byZone = new Map();
     active.forEach(c => {
-      const region = normal(c.region) || 'Madagascar';
-      if (!byRegion.has(region)) byRegion.set(region, []);
-      byRegion.get(region).push(c);
+      const sourceRegion = normal(c.region) || 'Madagascar';
+      const zoneName = zoneForRegion(sourceRegion);
+      if (!zoneName) return;
+      if (!byZone.has(zoneName)) byZone.set(zoneName, []);
+      byZone.get(zoneName).push({circuit:c, sourceRegion});
     });
-    if (mapCount) mapCount.textContent = byRegion.size + (byRegion.size > 1 ? ' régions' : ' région');
+
+    if (mapCount) {
+      const zoneCount = [...byZone.keys()].filter(name => name !== 'MADAGASCAR').length;
+      mapCount.textContent = zoneCount + (zoneCount > 1 ? ' zones' : ' zone');
+    }
+
     const unmappedRegions = [];
-    byRegion.forEach((items, region) => {
-      const loc = locationFor(region);
+    const sortedZones = [...byZone.keys()].sort((a,b) => {
+      if (a === 'MADAGASCAR') return 1;
+      if (b === 'MADAGASCAR') return -1;
+      return a.localeCompare(b,'fr');
+    });
+    sortedZones.forEach(zoneName => {
+      const items = byZone.get(zoneName);
+      const loc = zoneName === 'MADAGASCAR' ? nationalLocation : zones.find(zone => zone.name === zoneName);
       if (!loc) {
-        unmappedRegions.push(region);
+        unmappedRegions.push(...items.map(item => item.sourceRegion));
         return;
       }
       const marker = L.circleMarker([loc.lat,loc.lng], {
         radius: Math.min(12, 6 + Math.sqrt(items.length) * 2),
         color:'#fff8f5', weight:2, fillColor:'#922d20', fillOpacity:.95
       }).addTo(markerLayer);
-      marker.bindTooltip(region + ' · ' + items.length + (items.length > 1 ? ' circuits' : ' circuit'));
-      marker.bindPopup('<strong>' + escapeHtml(region) + '</strong><br>' + items.length + (items.length > 1 ? ' circuits disponibles' : ' circuit disponible') + '<br><button type="button" class="map-filter-button" data-region="' + escapeHtml(region) + '">Voir cette région</button>');
+      const label = zoneName === 'MADAGASCAR' ? 'Madagascar · itinéraires nationaux' : zoneName;
+      marker.bindTooltip(label + ' · ' + items.length + (items.length > 1 ? ' circuits' : ' circuit'));
+      marker.bindPopup('<strong>' + escapeHtml(label) + '</strong><br>' + items.length + (items.length > 1 ? ' circuits disponibles' : ' circuit disponible') + '<br><button type="button" class="map-filter-button" data-region="' + escapeHtml(zoneName) + '">Voir cette zone</button>');
       marker.on('popupopen', event => {
         const button = event.popup.getElement()?.querySelector('.map-filter-button');
         if (button) button.addEventListener('click', () => {
-          const exactOption = [...regionFilter.options].find(option => option.value === region);
-          if (exactOption) {
-            regionFilter.value = region;
+          if (zoneName === 'MADAGASCAR') {
+            regionFilter.value = 'all';
             render();
-            document.getElementById('catalogue-grid')?.scrollIntoView({behavior:'smooth',block:'start'});
           } else {
-            const location = locationFor(region);
-            const related = [...regionFilter.options].find(option => category(option.value).includes(category(location.name).split(' / ')[0]));
-            if (related) { regionFilter.value = related.value; render(); }
+            const option = [...regionFilter.options].find(item => item.value === zoneName);
+            if (option) {
+              regionFilter.value = zoneName;
+              render();
+              document.getElementById('catalogue-grid')?.scrollIntoView({behavior:'smooth',block:'start'});
+            }
           }
           map.closePopup();
         }, {once:true});
       });
     });
     if (unmappedRegions.length) {
-      console.warn('[MIARADI map] Coordonnées manquantes pour les régions :', unmappedRegions);
+      console.warn('[MIARADI map] Régions non classées dans les 9 zones :', [...new Set(unmappedRegions)]);
     }
-    // Garder la vue centrée sur Madagascar : fitBounds sur les seuls marqueurs
-    // décalait la carte vers la côte africaine ou coupait l'île selon les filtres.
+    // Vue stable sur l'île entière, indépendamment des filtres actifs.
     map.setView([-18.8,46.9], 5.3, {animate:false});
   }
   function render() {
     const region = regionFilter.value, theme = themeFilter.value, duration = durationFilter.value;
     const filtered = circuits.filter(c => {
-      if(region!=='all' && normal(c.region)!==region) return false;
+      if(region!=='all' && zoneForRegion(normal(c.region) || 'Madagascar')!==region) return false;
       if(theme!=='all' && normal(c.theme)!==theme) return false;
       const days = Number(c.duration?.max || c.duration?.min || 0);
       if(duration==='short' && (!days || days>5)) return false;
@@ -210,7 +201,7 @@
     .then(payload=>{
       if(!Array.isArray(payload.data))throw new Error(payload.error?.message || 'Impossible de charger les circuits.');
       circuits=payload.data;
-      fillFilter(regionFilter,[...new Set(circuits.map(c=>normal(c.region)).filter(Boolean))],'Toutes les régions');
+      fillFilter(regionFilter,[...new Set(circuits.map(c=>zoneForRegion(normal(c.region) || 'Madagascar')).filter(zone=>zone && zone!=='MADAGASCAR'))],'Toutes les zones');
       fillFilter(themeFilter,[...new Set(circuits.map(c=>normal(c.theme)).filter(Boolean))],'Toutes les thématiques');
       render();
       renderMap(circuits);
