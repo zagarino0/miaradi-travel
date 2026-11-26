@@ -14,20 +14,48 @@
   // Repères de destination : les grands secteurs pointent vers leur ville/région de référence.
   // Les coordonnées sont des repères cartographiques, pas des limites administratives.
   const regionLocations = [
-    {keys:['nord – nord-ouest','nord-nord-ouest','nord-ouest','fleuve sofia','boeny','mahajanga','majunga'],name:'Nord-Ouest · Boeny',lat:-15.7167,lng:46.3167},
+    // Zones de voyage MIARADI : les circuits nommés par zone utilisent ces repères.
+    {keys:['nord – nord-ouest','nord-nord-ouest','nord-ouest','nord ouest','fleuve sofia','boeny','mahajanga','majunga'],name:'Nord-Ouest · Boeny',lat:-15.7167,lng:46.3167},
     {keys:['ouest','menabe','morondava','tsiribihina','bemaraha','melaky','maintirano'],name:'Ouest · Menabe',lat:-20.2833,lng:44.2833},
-    {keys:['est','atsinanana','toamasina','tamatave','sainte-marie'],name:'Est · Atsinanana',lat:-18.1492,lng:49.4023},
-    {keys:['hautes terres','haute terre','analamanga','antananarivo','vakinankaratra','antsirabe','itas','mianinarivo'],name:'Hautes Terres · Analamanga',lat:-18.8792,lng:47.5079},
-    {keys:['nord','diana','antsiranana','diego suarez','sava','sambava','antalaha','vohemar'],name:'Nord · Diana',lat:-12.2765,lng:49.2917},
-    {keys:['sud','atsimo-andrefana','toliara','tuléar','tulear'],name:'Sud-Ouest · Atsimo-Andrefana',lat:-23.3500,lng:43.6667},
-    {keys:['androy','ambovombe'],name:'Sud · Androy',lat:-25.1784,lng:46.0870},
-    {keys:['anosy','tolagnaro','fort-dauphin'],name:'Sud-Est · Anosy',lat:-25.0319,lng:46.9987},
-    {keys:['atsimo-atsinanana','farafangana'],name:'Sud-Est · Atsimo-Atsinanana',lat:-22.8167,lng:47.8333},
-    {keys:['haute matsiatra','fianarantsoa','ihorombe','ranohira','isalo'],name:'Centre-Sud · Haute Matsiatra',lat:-21.4527,lng:47.0857},
-    {keys:['alaotra','ambatondrazaka'],name:'Centre-Est · Alaotra-Mangoro',lat:-17.8333,lng:48.4167},
-    {keys:['betsiboka','maevatanana'],name:'Centre-Nord · Betsiboka',lat:-16.9500,lng:46.8333},
-    {keys:['nosy be','nosy-be','hell-ville'],name:'Nosy Be',lat:-13.4000,lng:48.2667},
-    {keys:['madagascar'],name:'Madagascar · itinéraire national',lat:-19.1,lng:46.7}
+    {keys:['est','atsinanana','toamasina','tamatave','sainte-marie','analanjirofo','fenoarivo atsinhana','mananara'],name:'Est · Atsinanana',lat:-18.1492,lng:49.4023},
+    {keys:['hautes terres','haute terre','analamanga','antananarivo','tananarive','vakinankaratra','antsirabe','itas','mianinarivo'],name:'Hautes Terres · Analamanga',lat:-18.8792,lng:47.5079},
+    {keys:['nord','diana','antsiranana','diego suarez','diego-suarez','antsiranane'],name:'Nord · Diana',lat:-12.2765,lng:49.2917},
+    {keys:['sud-ouest','sud ouest','atsimo-andrefana','toliara','tuléar','tulear'],name:'Sud-Ouest · Atsimo-Andrefana',lat:-23.3500,lng:43.6667},
+    {keys:['sud-est','sud est','atsimo-atsinanana','farafangana'],name:'Sud-Est · Atsimo-Atsinanana',lat:-22.8167,lng:47.8333},
+    {keys:['sud · androy','androy','ambovombe'],name:'Sud · Androy',lat:-25.1784,lng:46.0870},
+    {keys:['anosy','tolagnaro','fort-dauphin','fort dauphin'],name:'Sud-Est · Anosy',lat:-25.0319,lng:46.9987},
+
+    // Les 23 régions administratives : coordonnées indicatives de leur chef-lieu.
+    {keys:['analamanga','antananarivo','tananarive'],name:'Analamanga',lat:-18.8792,lng:47.5079},
+    {keys:['vakinankaratra','antsirabe'],name:'Vakinankaratra',lat:-19.8659,lng:47.0333},
+    {keys:['itasy','mianinarivo'],name:'Itasy',lat:-19.1667,lng:46.7667},
+    {keys:['bongolava','tsiroanomandidy'],name:'Bongolava',lat:-18.7667,lng:46.0333},
+    {keys:['haute matsiatra','fianarantsoa'],name:'Haute Matsiatra',lat:-21.4527,lng:47.0857},
+    {keys:['amoron i mania','amoron’i mania','amoron mania','ambositra'],name:'Amoron’i Mania',lat:-20.5303,lng:47.2434},
+    {keys:['vatovavy','mananjary'],name:'Vatovavy',lat:-21.2167,lng:48.3333},
+    {keys:['fitovinany','manakara'],name:'Fitovinany',lat:-22.1430,lng:48.0100},
+    {keys:['atsimo-atsinanana','atsimo ats inan ana','farafangana'],name:'Atsimo-Atsinanana',lat:-22.8167,lng:47.8333},
+    {keys:['atsinanana','toamasina','tamatave'],name:'Atsinanana',lat:-18.1492,lng:49.4023},
+    {keys:['analanjirofo','fenoarivo atsinanana','fenoarivo atsinhana'],name:'Analanjirofo',lat:-17.3833,lng:49.4167},
+    {keys:['alaotra-mangoro','alaotra mangoro','ambatondrazaka','moramanga'],name:'Alaotra-Mangoro',lat:-17.8333,lng:48.4167},
+    {keys:['boeny','mahajanga','majunga'],name:'Boeny',lat:-15.7167,lng:46.3167},
+    {keys:['betsiboka','maevatanana'],name:'Betsiboka',lat:-16.9500,lng:46.8333},
+    {keys:['melaky','maintirano'],name:'Melaky',lat:-18.0667,lng:44.0167},
+    {keys:['sofia','antsohihy'],name:'Sofia',lat:-14.8833,lng:47.9833},
+    {keys:['diana','antsiranana','diego suarez'],name:'Diana',lat:-12.2765,lng:49.2917},
+    {keys:['sava','sambava','antalaha','vohemar','andapa'],name:'Sava',lat:-14.2667,lng:50.1667},
+    {keys:['menabe','morondava'],name:'Menabe',lat:-20.2833,lng:44.2833},
+    {keys:['atsimo-andrefana','toliara','tuléar','tulear'],name:'Atsimo-Andrefana',lat:-23.3500,lng:43.6667},
+    {keys:['androy','ambovombe'],name:'Androy',lat:-25.1784,lng:46.0870},
+    {keys:['anosy','tolagnaro','fort-dauphin'],name:'Anosy',lat:-25.0319,lng:46.9987},
+    {keys:['ihorombe','ihosy','ranohira','isalo'],name:'Ihorombe',lat:-22.4000,lng:46.1167},
+
+    // Alias de lieux et d’itinéraires souvent utilisés dans les futurs circuits.
+    {keys:['nosy be','nosy-be','hell-ville','hellville'],name:'Nosy Be',lat:-13.4000,lng:48.2667},
+    {keys:['tsingy de bemaraha','bekopaka'],name:'Tsingy de Bemaraha',lat:-19.1333,lng:44.7833},
+    {keys:['ranomafana'],name:'Ranomafana',lat:-21.2500,lng:47.4500},
+    {keys:['andringitra','ambalavao'],name:'Andringitra',lat:-21.8500,lng:46.9333},
+    {keys:['madagascar','itineraire national','itinéraire national'],name:'Madagascar · itinéraire national',lat:-19.1,lng:46.7}
   ];
   const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
   const normal = value => String(value || '').trim();
@@ -68,53 +96,21 @@
     const key = String(region || '')
       .toLocaleLowerCase('fr')
       .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[\\u0300-\\u036f]/g, '')
       .replace(/[_–—]/g, '-')
-      .replace(/\s*-\s*/g, '-')
-      .replace(/\s+/g, ' ')
+      .replace(/\\s*-\\s*/g, '-')
+      .replace(/\\s+/g, ' ')
       .trim();
 
-    // Les cinq zones demandées utilisent des correspondances explicites.
-    // On teste les libellés composés avant les libellés simples.
-    // Retourner directement les coordonnées évite toute ambiguïté entre
-    // « Nord-Ouest » et « Nord » et ne dépend pas d'une recherche par nom.
-    const rules = [
-      {
-        match: value => value.includes('nord-nord-ouest') || value.includes('nord-ouest') ||
-          /\bboeny\b|\bmahajanga\b|\bmajunga\b|\bfleuve sofia\b/.test(value),
-        location: {name:'Nord-Ouest · Boeny',lat:-15.7167,lng:46.3167}
-      },
-      {
-        match: value => value === 'ouest' || value.startsWith('ouest ') ||
-          /\bmenabe\b|\bmorondava\b/.test(value),
-        location: {name:'Ouest · Menabe',lat:-20.2833,lng:44.2833}
-      },
-      {
-        match: value => value === 'est' || value.startsWith('est ') ||
-          /\batsinanana\b|\btoamasina\b|\btamatave\b/.test(value),
-        location: {name:'Est · Atsinanana',lat:-18.1492,lng:49.4023}
-      },
-      {
-        match: value => /\bhautes terres\b|\banalamanga\b|\bantananarivo\b|\bvakinankaratra\b|\bantsirabe\b/.test(value),
-        location: {name:'Hautes Terres · Analamanga',lat:-18.8792,lng:47.5079}
-      },
-      {
-        match: value => value === 'nord' || value.startsWith('nord ') ||
-          /\bdiana\b|\bantsiranana\b|\bdiego suarez\b/.test(value),
-        location: {name:'Nord · Diana',lat:-12.2765,lng:49.2917}
-      }
-    ];
-    const rule = rules.find(item => item.match(key));
-    if (rule) return rule.location;
-
-    // Fallback pour les autres régions : correspondance par mots entiers.
+    // Match le plus spécifique d'abord : « Nord – Nord-Ouest » doit pointer
+    // vers Mahajanga, jamais vers le repère « Nord » d'Antsiranana.
     const candidates = [];
     regionLocations.forEach(item => item.keys.forEach(alias => {
       const normalizedAlias = String(alias).toLocaleLowerCase('fr')
-        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-        .replace(/[_–—]/g, '-').replace(/\s*-\s*/g, '-').replace(/\s+/g, ' ').trim();
+        .normalize('NFD').replace(/[\\u0300-\\u036f]/g, '')
+        .replace(/[_–—]/g, '-').replace(/\\s*-\\s*/g, '-').replace(/\\s+/g, ' ').trim();
       if (!normalizedAlias) return;
-      const escaped = normalizedAlias.replace(/[.*+?^$()|[\]\\]/g, '\\$&');
+      const escaped = normalizedAlias.replace(/[.*+?^$()|[\\]\\\\]/g, '\\\\$&');
       if (new RegExp('(^|[^a-z0-9])' + escaped + '([^a-z0-9]|$)').test(key)) {
         candidates.push({item, length: normalizedAlias.length});
       }
