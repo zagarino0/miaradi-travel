@@ -96,10 +96,10 @@
     const key = String(region || '')
       .toLocaleLowerCase('fr')
       .normalize('NFD')
-      .replace(/[\\u0300-\\u036f]/g, '')
+      .replace(/[\u0300-\u036f]/g, '')
       .replace(/[_–—]/g, '-')
-      .replace(/\\s*-\\s*/g, '-')
-      .replace(/\\s+/g, ' ')
+      .replace(/\s*-\s*/g, '-')
+      .replace(/\s+/g, ' ')
       .trim();
 
     // Match le plus spécifique d'abord : « Nord – Nord-Ouest » doit pointer
@@ -107,10 +107,10 @@
     const candidates = [];
     regionLocations.forEach(item => item.keys.forEach(alias => {
       const normalizedAlias = String(alias).toLocaleLowerCase('fr')
-        .normalize('NFD').replace(/[\\u0300-\\u036f]/g, '')
-        .replace(/[_–—]/g, '-').replace(/\\s*-\\s*/g, '-').replace(/\\s+/g, ' ').trim();
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[_–—]/g, '-').replace(/\s*-\s*/g, '-').replace(/\s+/g, ' ').trim();
       if (!normalizedAlias) return;
-      const escaped = normalizedAlias.replace(/[.*+?^$()|[\\]\\\\]/g, '\\\\$&');
+      const escaped = normalizedAlias.replace(/[.*+?^$()|[\]\\]/g, '\\$&');
       if (new RegExp('(^|[^a-z0-9])' + escaped + '([^a-z0-9]|$)').test(key)) {
         candidates.push({item, length: normalizedAlias.length});
       }
