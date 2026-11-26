@@ -78,7 +78,7 @@
     // On teste les libellés composés avant les libellés simples.
     const rules = [
       {
-        match: value => value === 'nord-ouest' || value.startsWith('nord-ouest ') ||
+        match: value => value.includes('nord-ouest') || value.includes('nord - nord-ouest') ||
           /\bboeny\b|\bmahajanga\b|\bmajunga\b|\bfleuve sofia\b/.test(value),
         name: 'Nord-Ouest · Boeny'
       },
