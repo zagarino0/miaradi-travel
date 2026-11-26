@@ -64,12 +64,12 @@
     return String(value || '')
       .toLocaleLowerCase('fr')
       .normalize('NFD')
-      .replace(/[\\u0300-\\u036f]/g, '')
+      .replace(/[\u0300-\u036f]/g, '')
       .replace(/[’']/g, ' ')
       .replace(/[_–—]/g, '-')
-      .replace(/\\s*-\\s*/g, '-')
+      .replace(/\s*-\s*/g, '-')
       .replace(/[^a-z0-9-]+/g, ' ')
-      .replace(/\\s+/g, ' ')
+      .replace(/\s+/g, ' ')
       .trim();
   }
   function zoneForRegion(region) {
@@ -79,25 +79,25 @@
     // Les zones composées et les régions précises passent avant les alias génériques.
     if (/nord(-| )+nord(-| )+(ouest|oest)/.test(key) ||
         /nord(-| )+(ouest|oest)/.test(key) ||
-        /\\b(boeny|mahajanga|majunga|sofia|antsohihy|betsiboka|maevatanana|fleuve sofia)\\b/.test(key)) return 'NORD-OUEST';
+        /\b(boeny|mahajanga|majunga|sofia|antsohihy|betsiboka|maevatanana|fleuve sofia)\b/.test(key)) return 'NORD-OUEST';
     if (/sud(-| )+ouest/.test(key) ||
-        /\\b(atsimo-andrefana|toliara|tulear)\\b/.test(key)) return 'SUD-OUEST';
+        /\b(atsimo-andrefana|toliara|tulear)\b/.test(key)) return 'SUD-OUEST';
     if (/sud(-| )+est/.test(key) ||
-        /\\b(atsimo-atsinanana|farafangana|vatovavy|mananjary|fitovinany|manakara|anosy|tolagnaro|fort-dauphin)\\b/.test(key)) return 'SUD-EST';
+        /\b(atsimo-atsinanana|farafangana|vatovavy|mananjary|fitovinany|manakara|anosy|tolagnaro|fort-dauphin)\b/.test(key)) return 'SUD-EST';
     if (/nord(-| )+est/.test(key) ||
-        /\\b(analanjirofo|sava|sambava|antalaha|vohemar|andapa|fenoarivo atsinanana|mananara)\\b/.test(key)) return 'NORD-EST';
+        /\b(analanjirofo|sava|sambava|antalaha|vohemar|andapa|fenoarivo atsinanana|mananara)\b/.test(key)) return 'NORD-EST';
     if (/hautes?(-| )+terres?/.test(key) ||
-        /\\b(analamanga|antananarivo|tananarive|vakinankaratra|antsirabe|itasy|mianinarivo|bongolava|tsiroanomandidy|haute matsiatra|fianarantsoa|amoron i mania|amoron mania|ambositra|andringitra|ambalavao)\\b/.test(key)) return 'HAUTE-TERRE';
-    if (/\\b(atsinanana|toamasina|tamatave|alaotra-mangoro|ambatondrazaka|moramanga|ranomafana)\\b/.test(key) ||
-        /(^|\\s)est($|\\s)/.test(key)) return 'EST';
-    if (/\\b(menabe|morondava|melaky|maintirano|tsiribihina|bemaraha|bekopaka)\\b/.test(key) ||
-        /(^|\\s)ouest($|\\s)/.test(key)) return 'OUEST';
-    if (/\\b(androy|ambovombe|ihorombe|ihosy|ranohira|isalo)\\b/.test(key) ||
-        /(^|\\s)sud($|\\s)/.test(key)) return 'SUD';
-    if (/\\b(diana|antsiranana|diego suarez|diego-suarez)\\b/.test(key) ||
-        /(^|\\s)nord($|\\s)/.test(key)) return 'NORD';
+        /\b(analamanga|antananarivo|tananarive|vakinankaratra|antsirabe|itasy|mianinarivo|bongolava|tsiroanomandidy|haute matsiatra|fianarantsoa|amoron i mania|amoron mania|ambositra|andringitra|ambalavao)\b/.test(key)) return 'HAUTE-TERRE';
+    if (/\b(atsinanana|toamasina|tamatave|alaotra-mangoro|ambatondrazaka|moramanga|ranomafana)\b/.test(key) ||
+        /(^|\s)est($|\s)/.test(key)) return 'EST';
+    if (/\b(menabe|morondava|melaky|maintirano|tsiribihina|bemaraha|bekopaka)\b/.test(key) ||
+        /(^|\s)ouest($|\s)/.test(key)) return 'OUEST';
+    if (/\b(androy|ambovombe|ihorombe|ihosy|ranohira|isalo)\b/.test(key) ||
+        /(^|\s)sud($|\s)/.test(key)) return 'SUD';
+    if (/\b(diana|antsiranana|diego suarez|diego-suarez)\b/.test(key) ||
+        /(^|\s)nord($|\s)/.test(key)) return 'NORD';
     // Les circuits nationaux ne sont pas forcés dans une région administrative.
-    if (/\\b(madagascar|itineraire national|circuit national)\\b/.test(key)) return 'MADAGASCAR';
+    if (/\b(madagascar|itineraire national|circuit national)\b/.test(key)) return 'MADAGASCAR';
     return null;
   }
   function locationFor(region) {
