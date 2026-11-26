@@ -108,7 +108,7 @@
     });
     count.textContent = filtered.length + (filtered.length>1 ? ' circuits disponibles' : ' circuit disponible');
     renderMap(filtered);
-    if(!filtered.length){grid.innerHTML='<p class="catalogue-empty">Aucun circuit ne correspond à ces filtres. Essayez une autre sélection.</p>';return;}
+    if(!filtered.length){grid.innerHTML='<p class="catalogue-empty">Aucun circuit ne correspond à ces filtres. Essayez une autre sélection.</p>';renderMap(filtered);return;}
     grid.innerHTML = filtered.map(c => {
       const slug = normal(c.slug), title = normal(c.title) || 'Circuit à découvrir';
       const image = normal(c.image);
