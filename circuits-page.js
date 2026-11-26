@@ -15,7 +15,7 @@
   // Les coordonnées sont des repères cartographiques, pas des limites administratives.
   const regionLocations = [
     // Zones de voyage MIARADI : les circuits nommés par zone utilisent ces repères.
-    {keys:['nord – nord-ouest','nord-nord-ouest','nord-ouest','nord ouest','fleuve sofia','boeny','mahajanga','majunga'],name:'Nord-Ouest · Boeny',lat:-15.7167,lng:46.3167},
+    {keys:['nord – nord-ouest','nord-nord-ouest','nord-ouest','nord ouest','nord-oest','nord oest','fleuve sofia','boeny','mahajanga','majunga'],name:'Nord-Ouest · Boeny',lat:-15.7167,lng:46.3167},
     {keys:['ouest','menabe','morondava','tsiribihina','bemaraha','melaky','maintirano'],name:'Ouest · Menabe',lat:-20.2833,lng:44.2833},
     {keys:['est','atsinanana','toamasina','tamatave','sainte-marie','analanjirofo','fenoarivo atsinhana','mananara'],name:'Est · Atsinanana',lat:-18.1492,lng:49.4023},
     {keys:['hautes terres','haute terre','haute terres','hautes terre','analamanga','antananarivo','tananarive','vakinankaratra','antsirabe','itas','mianinarivo'],name:'Hautes Terres · Analamanga',lat:-18.8792,lng:47.5079},
@@ -107,8 +107,8 @@
 
     // Priorité absolue aux zones composées : ne jamais laisser « Nord »
     // détourner un circuit Nord-Ouest vers Antsiranana.
-    if (/(^|[^a-z0-9])nord(-| )+ouest([^a-z0-9]|$)/.test(key) ||
-        /(^|[^a-z0-9])nord(-| )+nord(-| )+ouest([^a-z0-9]|$)/.test(key) ||
+    if (/(^|[^a-z0-9])nord(-| )+(ouest|oest)([^a-z0-9]|$)/.test(key) ||
+        /(^|[^a-z0-9])nord(-| )+nord(-| )+(ouest|oest)([^a-z0-9]|$)/.test(key) ||
         /(^|[^a-z0-9])(boeny|mahajanga|majunga|fleuve sofia)([^a-z0-9]|$)/.test(key)) {
       return {name:'Nord-Ouest · Boeny',lat:-15.7167,lng:46.3167};
     }
