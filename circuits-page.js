@@ -14,6 +14,7 @@
   const regionLocations = [
     {keys:['boeny','mahajanga','majunga'],name:'Boeny',lat:-15.7167,lng:46.3167},
     {keys:['nord – nord-ouest','nord-nord-ouest','nord-ouest','fleuve sofia','nord-ouest de madagascar'],name:'Nord-Ouest / fleuve Sofia',lat:-15.0,lng:47.3},
+    {keys:['nord – nord-ouest','nord-nord-ouest','nord-ouest','fleuve sofia','nord-ouest de madagascar'],name:'Nord-Ouest / fleuve Sofia',lat:-15.0,lng:47.3},
     {keys:['sofia'],name:'Sofia',lat:-14.8833,lng:47.9833},
     {keys:['antsiranana','diego suarez'],name:'Diana',lat:-12.2765,lng:49.2917},
     {keys:['analamanga','antananarivo'],name:'Analamanga',lat:-18.8792,lng:47.5079},
