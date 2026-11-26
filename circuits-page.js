@@ -65,7 +65,7 @@
     window.setTimeout(() => map.invalidateSize(), 120);
   }
   function locationFor(region) {
-    const normalizeRegion = value => String(value || '')
+    const key = String(region || '')
       .toLocaleLowerCase('fr')
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
@@ -73,39 +73,52 @@
       .replace(/\s*-\s*/g, '-')
       .replace(/\s+/g, ' ')
       .trim();
-    const text = normalizeRegion(region);
 
-    // Règles explicites pour les cinq repères demandés.
-    // Nord-Ouest doit être évalué avant Nord, sinon "nord" peut capter le libellé.
-    if (text === 'nord-ouest' || text.startsWith('nord-ouest ') || text.includes('nord-ouest') || /\bboeny\b/.test(text) || /\bmahajanga\b|\bmajunga\b/.test(text) || /\bfleuve sofia\b/.test(text)) {
-      return regionLocations.find(item => item.name === 'Nord-Ouest · Boeny');
-    }
-    if (/^(ouest|ouest .*)$/.test(text) || /\bmenabe\b|\bmorondava\b/.test(text)) {
-      return regionLocations.find(item => item.name === 'Ouest · Menabe');
-    }
-    if (/^(est|est .*)$/.test(text) || /\batsinanana\b|\btoamasina\b|\btamatave\b/.test(text)) {
-      return regionLocations.find(item => item.name === 'Est · Atsinanana');
-    }
-    if (/\bhautes terres\b|\banalamanga\b|\bantananarivo\b|\bvakinankaratra\b|\bantsirabe\b/.test(text)) {
-      return regionLocations.find(item => item.name === 'Hautes Terres · Analamanga');
-    }
-    if (/^(nord|nord .*)$/.test(text) || /\bdiana\b|\bantsiranana\b|\bdiego suarez\b/.test(text)) {
-      return regionLocations.find(item => item.name === 'Nord · Diana');
-    }
+    // Les cinq zones demandées utilisent des correspondances explicites.
+    // On teste les libellés composés avant les libellés simples.
+    const rules = [
+      {
+        match: value => value === 'nord-ouest' || value.startsWith('nord-ouest ') ||
+          /\bboeny\b|\bmahajanga\b|\bmajunga\b|\bfleuve sofia\b/.test(value),
+        name: 'Nord-Ouest · Boeny'
+      },
+      {
+        match: value => value === 'ouest' || value.startsWith('ouest ') ||
+          /\bmenabe\b|\bmorondava\b/.test(value),
+        name: 'Ouest · Menabe'
+      },
+      {
+        match: value => value === 'est' || value.startsWith('est ') ||
+          /\batsinanana\b|\btoamasina\b|\btamatave\b/.test(value),
+        name: 'Est · Atsinanana'
+      },
+      {
+        match: value => /\bhautes terres\b|\banalamanga\b|\bantananarivo\b|\bvakinankaratra\b|\bantsirabe\b/.test(value),
+        name: 'Hautes Terres · Analamanga'
+      },
+      {
+        match: value => value === 'nord' || value.startsWith('nord ') ||
+          /\bdiana\b|\bantsiranana\b|\bdiego suarez\b/.test(value),
+        name: 'Nord · Diana'
+      }
+    ];
+    const rule = rules.find(item => item.match(key));
+    if (rule) return regionLocations.find(item => item.name === rule.name) || null;
 
-    // Pour les autres régions, privilégier la clé réellement correspondante la plus précise,
-    // plutôt que la plus longue clé présente dans une entrée sans rapport.
-    const matches = [];
-    regionLocations.forEach(item => item.keys.forEach(key => {
-      const normalizedKey = normalizeRegion(key);
-      if (!normalizedKey) return;
-      const escaped = normalizedKey.replace(/[.*+?^$()|[\]\\]/g, '\\$&');
-      if (new RegExp('(^|[^a-z0-9])' + escaped + '([^a-z0-9]|$)').test(text)) {
-        matches.push({item, length: normalizedKey.length});
+    // Fallback pour les autres régions : correspondance par mots entiers.
+    const candidates = [];
+    regionLocations.forEach(item => item.keys.forEach(alias => {
+      const normalizedAlias = String(alias).toLocaleLowerCase('fr')
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[_–—]/g, '-').replace(/\s*-\s*/g, '-').replace(/\s+/g, ' ').trim();
+      if (!normalizedAlias) return;
+      const escaped = normalizedAlias.replace(/[.*+?^$()|[\]\\]/g, '\\$&');
+      if (new RegExp('(^|[^a-z0-9])' + escaped + '([^a-z0-9]|$)').test(key)) {
+        candidates.push({item, length: normalizedAlias.length});
       }
     }));
-    matches.sort((a, b) => b.length - a.length);
-    return matches[0]?.item || null;
+    candidates.sort((a, b) => b.length - a.length);
+    return candidates[0]?.item || null;
   }
   function renderMap(filteredCircuits) {
     if (!mapElement || !window.L) return;
