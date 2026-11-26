@@ -177,7 +177,7 @@
     }
     // Garder la vue centrée sur Madagascar : fitBounds sur les seuls marqueurs
     // décalait la carte vers la côte africaine ou coupait l'île selon les filtres.
-    map.setView([-18.8,48.2], 5.5, {animate:false});
+    map.setView([-18.8,46.9], 5.3, {animate:false});
   }
   function render() {
     const region = regionFilter.value, theme = themeFilter.value, duration = durationFilter.value;
