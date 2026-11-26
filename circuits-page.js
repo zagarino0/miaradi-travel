@@ -18,11 +18,14 @@
     {keys:['nord – nord-ouest','nord-nord-ouest','nord-ouest','nord ouest','fleuve sofia','boeny','mahajanga','majunga'],name:'Nord-Ouest · Boeny',lat:-15.7167,lng:46.3167},
     {keys:['ouest','menabe','morondava','tsiribihina','bemaraha','melaky','maintirano'],name:'Ouest · Menabe',lat:-20.2833,lng:44.2833},
     {keys:['est','atsinanana','toamasina','tamatave','sainte-marie','analanjirofo','fenoarivo atsinhana','mananara'],name:'Est · Atsinanana',lat:-18.1492,lng:49.4023},
-    {keys:['hautes terres','haute terre','analamanga','antananarivo','tananarive','vakinankaratra','antsirabe','itas','mianinarivo'],name:'Hautes Terres · Analamanga',lat:-18.8792,lng:47.5079},
+    {keys:['hautes terres','haute terre','haute terres','hautes terre','analamanga','antananarivo','tananarive','vakinankaratra','antsirabe','itas','mianinarivo'],name:'Hautes Terres · Analamanga',lat:-18.8792,lng:47.5079},
     {keys:['nord','diana','antsiranana','diego suarez','diego-suarez','antsiranane'],name:'Nord · Diana',lat:-12.2765,lng:49.2917},
     {keys:['sud-ouest','sud ouest','atsimo-andrefana','toliara','tuléar','tulear'],name:'Sud-Ouest · Atsimo-Andrefana',lat:-23.3500,lng:43.6667},
     {keys:['sud-est','sud est','atsimo-atsinanana','farafangana'],name:'Sud-Est · Atsimo-Atsinanana',lat:-22.8167,lng:47.8333},
     {keys:['sud · androy','androy','ambovombe'],name:'Sud · Androy',lat:-25.1784,lng:46.0870},
+    // Région générique « SUD » pour les itinéraires couvrant plusieurs zones du sud.
+    // Les alias plus précis (Sud-Ouest, Sud-Est, Androy, Anosy) restent prioritaires.
+    {keys:['sud'],name:'Sud de Madagascar',lat:-23.3500,lng:46.0000},
     {keys:['anosy','tolagnaro','fort-dauphin','fort dauphin'],name:'Sud-Est · Anosy',lat:-25.0319,lng:46.9987},
 
     // Les 23 régions administratives : coordonnées indicatives de leur chef-lieu.
