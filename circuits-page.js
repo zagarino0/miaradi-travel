@@ -11,29 +11,22 @@
   let markerLayer = null;
   // Repères géographiques par région, pas par grande zone approximative.
   // Les valeurs correspondent à des centres régionaux/lieux connus de Madagascar.
+  // Repères de destination : les grands secteurs pointent vers leur ville/région de référence.
+  // Les coordonnées sont des repères cartographiques, pas des limites administratives.
   const regionLocations = [
-    {keys:['nord – nord-ouest','nord-nord-ouest','nord-ouest','fleuve sofia','nord-ouest de madagascar'],name:'Nord-Ouest / fleuve Sofia',lat:-15.0,lng:47.3},
-    {keys:['boeny','mahajanga','majunga'],name:'Boeny',lat:-15.7167,lng:46.3167},
-    {keys:['sofia'],name:'Sofia',lat:-14.8833,lng:47.9833},
-    {keys:['diana','antsiranana','diego suarez'],name:'Diana',lat:-12.2765,lng:49.2917},
-    {keys:['sava','sambava','antalaha','vohemar'],name:'SAVA',lat:-14.2667,lng:50.1667},
-    {keys:['analamanga','antananarivo'],name:'Analamanga',lat:-18.8792,lng:47.5079},
-    {keys:['hautes terres','haute terre'],name:'Hautes Terres',lat:-19.0,lng:47.0},
-    {keys:['vakinankaratra','antsirabe'],name:'Vakinankaratra',lat:-19.8659,lng:47.0333},
-    {keys:['itas','mianinarivo'],name:'Itasy',lat:-19.0000,lng:46.7667},
-    {keys:['betsiboka','maevatanana'],name:'Betsiboka',lat:-16.9500,lng:46.8333},
-    {keys:['melaky','maintirano'],name:'Melaky',lat:-18.0667,lng:44.0167},
-    {keys:['menabe','morondava'],name:'Menabe',lat:-20.2833,lng:44.2833},
-    {keys:['atsinanana','toamasina','tamatave'],name:'Atsinanana',lat:-18.1492,lng:49.4023},
-    {keys:['alaotra','ambatondrazaka'],name:'Alaotra-Mangoro',lat:-17.8333,lng:48.4167},
-    {keys:['nosy be','nosy-be','hell-ville'],name:'Nosy Be',lat:-13.4000,lng:48.2667},
-    {keys:['ihorombe','ranohira','isalo'],name:'Ihorombe',lat:-22.5500,lng:45.4000},
-    {keys:['atsimo-andrefana','toliara','tuléar','tulear'],name:'Atsimo-Andrefana',lat:-23.3500,lng:43.6667},
-    {keys:['androy','ambovombe'],name:'Androy',lat:-25.1784,lng:46.0870},
-    {keys:['anosy','tolagnaro','fort-dauphin'],name:'Anosy',lat:-25.0319,lng:46.9987},
-    {keys:['atsimo-atsinanana','farafangana'],name:'Atsimo-Atsinanana',lat:-22.8167,lng:47.8333},
-    {keys:['haute matsiatra','fianarantsoa'],name:'Haute Matsiatra',lat:-21.4527,lng:47.0857},
-    {keys:['amboasary'],name:'Amboasary',lat:-25.0333,lng:46.3833}
+    {keys:['nord – nord-ouest','nord-nord-ouest','nord-ouest','fleuve sofia','boeny','mahajanga','majunga'],name:'Nord-Ouest · Boeny',lat:-15.7167,lng:46.3167},
+    {keys:['ouest','menabe','morondava','tsiribihina','bemaraha','melaky','maintirano'],name:'Ouest · Menabe',lat:-20.2833,lng:44.2833},
+    {keys:['est','atsinanana','toamasina','tamatave','sainte-marie'],name:'Est · Atsinanana',lat:-18.1492,lng:49.4023},
+    {keys:['hautes terres','haute terre','analamanga','antananarivo','vakinankaratra','antsirabe','itas','mianinarivo'],name:'Hautes Terres · Analamanga',lat:-18.8792,lng:47.5079},
+    {keys:['nord','diana','antsiranana','diego suarez','sava','sambava','antalaha','vohemar'],name:'Nord · Diana',lat:-12.2765,lng:49.2917},
+    {keys:['sud','atsimo-andrefana','toliara','tuléar','tulear'],name:'Sud-Ouest · Atsimo-Andrefana',lat:-23.3500,lng:43.6667},
+    {keys:['androy','ambovombe'],name:'Sud · Androy',lat:-25.1784,lng:46.0870},
+    {keys:['anosy','tolagnaro','fort-dauphin'],name:'Sud-Est · Anosy',lat:-25.0319,lng:46.9987},
+    {keys:['atsimo-atsinanana','farafangana'],name:'Sud-Est · Atsimo-Atsinanana',lat:-22.8167,lng:47.8333},
+    {keys:['haute matsiatra','fianarantsoa','ihorombe','ranohira','isalo'],name:'Centre-Sud · Haute Matsiatra',lat:-21.4527,lng:47.0857},
+    {keys:['alaotra','ambatondrazaka'],name:'Centre-Est · Alaotra-Mangoro',lat:-17.8333,lng:48.4167},
+    {keys:['betsiboka','maevatanana'],name:'Centre-Nord · Betsiboka',lat:-16.9500,lng:46.8333},
+    {keys:['nosy be','nosy-be','hell-ville'],name:'Nosy Be',lat:-13.4000,lng:48.2667}
   ];
   const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
   const normal = value => String(value || '').trim();
@@ -56,7 +49,12 @@
   }
   function initMap() {
     if (!mapElement || !window.L || map) return;
-    map = L.map(mapElement, {scrollWheelZoom:false, zoomControl:true}).setView([-19.1,46.7], 5);
+    map = L.map(mapElement, {
+      scrollWheelZoom:false,
+      zoomControl:true,
+      maxBounds:[[-26.5,42.5],[-10.5,52.5]],
+      maxBoundsViscosity:0.9
+    }).setView([-18.8,48.0], 5);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 12,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -65,7 +63,7 @@
     window.setTimeout(() => map.invalidateSize(), 120);
   }
   function locationFor(region) {
-    const text = category(region).normalize('NFD').replace(/[\\u0300-\\u036f]/g, '');
+    const text = category(region).normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').replace(/[_–—]/g, '-');
     // Matcher du plus spécifique au plus générique évite qu'un "nord-ouest"
     // soit confondu avec une région du Nord ou qu'une région inconnue soit
     // silencieusement placée au centre de l'île.
@@ -123,10 +121,9 @@
     if (unmappedRegions.length) {
       console.warn('[MIARADI map] Coordonnées manquantes pour les régions :', unmappedRegions);
     }
-    const points = [...byRegion.keys()].map(locationFor).filter(Boolean).map(loc => [loc.lat,loc.lng]);
-    if (points.length > 1) map.fitBounds(points,{padding:[36,36],maxZoom:6});
-    else if (points.length === 1) map.setView(points[0],6);
-    else map.setView([-19.1,46.7],5);
+    // Garder la vue centrée sur Madagascar : fitBounds sur les seuls marqueurs
+    // décalait la carte vers la côte africaine ou coupait l'île selon les filtres.
+    map.setView([-18.8,48.0], 5, {animate:false});
   }
   function render() {
     const region = regionFilter.value, theme = themeFilter.value, duration = durationFilter.value;
