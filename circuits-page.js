@@ -76,34 +76,36 @@
 
     // Les cinq zones demandées utilisent des correspondances explicites.
     // On teste les libellés composés avant les libellés simples.
+    // Retourner directement les coordonnées évite toute ambiguïté entre
+    // « Nord-Ouest » et « Nord » et ne dépend pas d'une recherche par nom.
     const rules = [
       {
-        match: value => value.includes('nord-ouest') || value.includes('nord - nord-ouest') ||
+        match: value => value.includes('nord-nord-ouest') || value.includes('nord-ouest') ||
           /\bboeny\b|\bmahajanga\b|\bmajunga\b|\bfleuve sofia\b/.test(value),
-        name: 'Nord-Ouest · Boeny'
+        location: {name:'Nord-Ouest · Boeny',lat:-15.7167,lng:46.3167}
       },
       {
         match: value => value === 'ouest' || value.startsWith('ouest ') ||
           /\bmenabe\b|\bmorondava\b/.test(value),
-        name: 'Ouest · Menabe'
+        location: {name:'Ouest · Menabe',lat:-20.2833,lng:44.2833}
       },
       {
         match: value => value === 'est' || value.startsWith('est ') ||
           /\batsinanana\b|\btoamasina\b|\btamatave\b/.test(value),
-        name: 'Est · Atsinanana'
+        location: {name:'Est · Atsinanana',lat:-18.1492,lng:49.4023}
       },
       {
         match: value => /\bhautes terres\b|\banalamanga\b|\bantananarivo\b|\bvakinankaratra\b|\bantsirabe\b/.test(value),
-        name: 'Hautes Terres · Analamanga'
+        location: {name:'Hautes Terres · Analamanga',lat:-18.8792,lng:47.5079}
       },
       {
         match: value => value === 'nord' || value.startsWith('nord ') ||
           /\bdiana\b|\bantsiranana\b|\bdiego suarez\b/.test(value),
-        name: 'Nord · Diana'
+        location: {name:'Nord · Diana',lat:-12.2765,lng:49.2917}
       }
     ];
     const rule = rules.find(item => item.match(key));
-    if (rule) return regionLocations.find(item => item.name === rule.name) || null;
+    if (rule) return rule.location;
 
     // Fallback pour les autres régions : correspondance par mots entiers.
     const candidates = [];
