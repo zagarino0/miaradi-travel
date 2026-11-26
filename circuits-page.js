@@ -68,9 +68,9 @@
     const normalizeRegion = value => String(value || '')
       .toLocaleLowerCase('fr')
       .normalize('NFD')
-      .replace(/[\\u0300-\\u036f]/g, '')
+      .replace(/[\u0300-\u036f]/g, '')
       .replace(/[_–—]/g, '-')
-      .replace(/\\s+/g, ' ')
+      .replace(/\s+/g, ' ')
       .trim();
     const text = normalizeRegion(region);
     const entries = regionLocations.map(item => ({
@@ -87,7 +87,7 @@
       Math.max(...b.keys.map(key => key.length)) - Math.max(...a.keys.map(key => key.length))
     );
     const match = sorted.find(entry => entry.keys.some(key => {
-      const escaped = key.replace(/[.*+?^$()|[\\]\\\\]/g, '\\$&');
+      const escaped = key.replace(/[.*+?^$()|[\]\\]/g, '\\$&');
       return new RegExp('(^|[^a-z0-9])' + escaped + '([^a-z0-9]|$)').test(text);
     }));
     return match ? match.item : null;
