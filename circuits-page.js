@@ -52,9 +52,10 @@
     map = L.map(mapElement, {
       scrollWheelZoom:false,
       zoomControl:true,
+      zoomSnap:0.5,
       maxBounds:[[-26.5,42.5],[-10.5,52.5]],
       maxBoundsViscosity:0.9
-    }).setView([-18.8,48.0], 5);
+    }).setView([-18.8,51.2], 5.5);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 12,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
