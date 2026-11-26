@@ -105,8 +105,16 @@
       .replace(/\s+/g, ' ')
       .trim();
 
-    // Match le plus spécifique d'abord : « Nord – Nord-Ouest » doit pointer
-    // vers Mahajanga, jamais vers le repère « Nord » d'Antsiranana.
+    // Priorité absolue aux zones composées : ne jamais laisser « Nord »
+    // détourner un circuit Nord-Ouest vers Antsiranana.
+    if (/(^|[^a-z0-9])nord(-| )+ouest([^a-z0-9]|$)/.test(key) ||
+        /(^|[^a-z0-9])nord(-| )+nord(-| )+ouest([^a-z0-9]|$)/.test(key) ||
+        /(^|[^a-z0-9])(boeny|mahajanga|majunga|fleuve sofia)([^a-z0-9]|$)/.test(key)) {
+      return {name:'Nord-Ouest · Boeny',lat:-15.7167,lng:46.3167};
+    }
+
+    // Éviter que les alias génériques « nord », « sud », « est » et « ouest »
+    // l'emportent sur une région administrative ou une destination précise.
     const candidates = [];
     regionLocations.forEach(item => item.keys.forEach(alias => {
       const normalizedAlias = String(alias).toLocaleLowerCase('fr')
