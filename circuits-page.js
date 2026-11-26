@@ -13,8 +13,11 @@
   // Les valeurs correspondent à des centres régionaux/lieux connus de Madagascar.
   const regionLocations = [
     {keys:['boeny','mahajanga','majunga'],name:'Boeny',lat:-15.7167,lng:46.3167},
-    {keys:['sofia','ants sohia'],name:'Sofia',lat:-14.8833,lng:47.9833},
-    {keys:['analamanga','antananarivo','hautes terres','haute terre'],name:'Analamanga / Hautes Terres',lat:-18.8792,lng:47.5079},
+    {keys:['nord – nord-ouest','nord-nord-ouest','nord-ouest','fleuve sofia','nord-ouest de madagascar'],name:'Nord-Ouest / fleuve Sofia',lat:-15.0,lng:47.3},
+    {keys:['sofia'],name:'Sofia',lat:-14.8833,lng:47.9833},
+    {keys:['antsiranana','diego suarez'],name:'Diana',lat:-12.2765,lng:49.2917},
+    {keys:['analamanga','antananarivo'],name:'Analamanga',lat:-18.8792,lng:47.5079},
+    {keys:['hautes terres','haute terre'],name:'Hautes Terres',lat:-19.0,lng:47.0},
     {keys:['vakinankaratra','antsirabe'],name:'Vakinankaratra',lat:-19.8659,lng:47.0333},
     {keys:['itas','mianinarivo'],name:'Itasy',lat:-19.0000,lng:46.7667},
     {keys:['betsiboka','maevatanana'],name:'Betsiboka',lat:-16.9500,lng:46.8333},
@@ -22,8 +25,7 @@
     {keys:['menabe','morondava'],name:'Menabe',lat:-20.2833,lng:44.2833},
     {keys:['atsinanana','toamasina','tamatave','est'],name:'Atsinanana',lat:-18.1492,lng:49.4023},
     {keys:['alaotra','ambatondrazaka'],name:'Alaotra-Mangoro',lat:-17.8333,lng:48.4167},
-    {keys:['sava','sambava','antala ha','antalahaha','vohemar','v tham'],name:'SAVA',lat:-14.2667,lng:50.1667},
-    {keys:['antsiranana','diego suarez','antsofina'],name:'Diana',lat:-12.2765,lng:49.2917},
+    {keys:['sava','sambava','antalaha','vohemar'],name:'SAVA',lat:-14.2667,lng:50.1667},
     {keys:['nosy be','nosy-be','hell-ville'],name:'Nosy Be',lat:-13.4000,lng:48.2667},
     {keys:['ihorombe','ranohira','isalo'],name:'Ihorombe',lat:-22.5500,lng:45.4000},
     {keys:['atsimo-andrefana','toliara','tuléar','tulear'],name:'Atsimo-Andrefana',lat:-23.3500,lng:43.6667},
@@ -32,7 +34,6 @@
     {keys:['atsimo-atsinanana','farafangana'],name:'Atsimo-Atsinanana',lat:-22.8167,lng:47.8333},
     {keys:['haute matsiatra','fianarantsoa'],name:'Haute Matsiatra',lat:-21.4527,lng:47.0857},
     {keys:['amboasary'],name:'Amboasary',lat:-25.0333,lng:46.3833},
-    {keys:['nord-ouest','nord – nord-ouest','nord – nord-ouest','fleuve sofia','nord-ouest de madagascar'],name:'Nord-Ouest / fleuve Sofia',lat:-15.0,lng:47.3}
   ];
   const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
   const normal = value => String(value || '').trim();
