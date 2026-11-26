@@ -70,27 +70,42 @@
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
       .replace(/[_–—]/g, '-')
+      .replace(/\s*-\s*/g, '-')
       .replace(/\s+/g, ' ')
       .trim();
     const text = normalizeRegion(region);
-    const entries = regionLocations.map(item => ({
-      item,
-      keys: item.keys.map(normalizeRegion)
-    }));
 
-    // Priorité au libellé exact : "Ouest" ne doit jamais correspondre à "Est".
-    const exact = entries.find(entry => entry.keys.includes(text));
-    if (exact) return exact.item;
+    // Règles explicites pour les cinq repères demandés.
+    // Nord-Ouest doit être évalué avant Nord, sinon "nord" peut capter le libellé.
+    if (/\bnord-ouest\b/.test(text) || /\bboeny\b/.test(text) || /\bmahajanga\b|\bmajunga\b/.test(text) || /\bfleuve sofia\b/.test(text)) {
+      return regionLocations.find(item => item.name === 'Nord-Ouest · Boeny');
+    }
+    if (/^(ouest|ouest .*)$/.test(text) || /\bmenabe\b|\bmorondava\b/.test(text)) {
+      return regionLocations.find(item => item.name === 'Ouest · Menabe');
+    }
+    if (/^(est|est .*)$/.test(text) || /\batsinanana\b|\btoamasina\b|\btamatave\b/.test(text)) {
+      return regionLocations.find(item => item.name === 'Est · Atsinanana');
+    }
+    if (/\bhautes terres\b|\banalamanga\b|\bantananarivo\b|\bvakinankaratra\b|\bantsirabe\b/.test(text)) {
+      return regionLocations.find(item => item.name === 'Hautes Terres · Analamanga');
+    }
+    if (/^(nord|nord .*)$/.test(text) || /\bdiana\b|\bantsiranana\b|\bdiego suarez\b/.test(text)) {
+      return regionLocations.find(item => item.name === 'Nord · Diana');
+    }
 
-    // Pour les titres de circuits plus longs, reconnaître les mots entiers.
-    const sorted = entries.sort((a, b) =>
-      Math.max(...b.keys.map(key => key.length)) - Math.max(...a.keys.map(key => key.length))
-    );
-    const match = sorted.find(entry => entry.keys.some(key => {
-      const escaped = key.replace(/[.*+?^$()|[\]\\]/g, '\\$&');
-      return new RegExp('(^|[^a-z0-9])' + escaped + '([^a-z0-9]|$)').test(text);
+    // Pour les autres régions, privilégier la clé réellement correspondante la plus précise,
+    // plutôt que la plus longue clé présente dans une entrée sans rapport.
+    const matches = [];
+    regionLocations.forEach(item => item.keys.forEach(key => {
+      const normalizedKey = normalizeRegion(key);
+      if (!normalizedKey) return;
+      const escaped = normalizedKey.replace(/[.*+?^$()|[\]\\]/g, '\\$&');
+      if (new RegExp('(^|[^a-z0-9])' + escaped + '([^a-z0-9]|$)').test(text)) {
+        matches.push({item, length: normalizedKey.length});
+      }
     }));
-    return match ? match.item : null;
+    matches.sort((a, b) => b.length - a.length);
+    return matches[0]?.item || null;
   }
   function renderMap(filteredCircuits) {
     if (!mapElement || !window.L) return;
