@@ -56,7 +56,7 @@
       zoomSnap:0.5,
       maxBounds:[[-26.5,42.5],[-10.5,52.5]],
       maxBoundsViscosity:0.9
-    }).setView([-18.8,48.8], 6);
+    }).setView([-18.8,48.2], 5.5);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 12,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -77,7 +77,7 @@
 
     // Règles explicites pour les cinq repères demandés.
     // Nord-Ouest doit être évalué avant Nord, sinon "nord" peut capter le libellé.
-    if (/\bnord-ouest\b/.test(text) || /\bboeny\b/.test(text) || /\bmahajanga\b|\bmajunga\b/.test(text) || /\bfleuve sofia\b/.test(text)) {
+    if (text === 'nord-ouest' || text.startsWith('nord-ouest ') || text.includes('nord-ouest') || /\bboeny\b/.test(text) || /\bmahajanga\b|\bmajunga\b/.test(text) || /\bfleuve sofia\b/.test(text)) {
       return regionLocations.find(item => item.name === 'Nord-Ouest · Boeny');
     }
     if (/^(ouest|ouest .*)$/.test(text) || /\bmenabe\b|\bmorondava\b/.test(text)) {
@@ -155,7 +155,7 @@
     }
     // Garder la vue centrée sur Madagascar : fitBounds sur les seuls marqueurs
     // décalait la carte vers la côte africaine ou coupait l'île selon les filtres.
-    map.setView([-18.8,48.8], 6, {animate:false});
+    map.setView([-18.8,48.2], 5.5, {animate:false});
   }
   function render() {
     const region = regionFilter.value, theme = themeFilter.value, duration = durationFilter.value;
