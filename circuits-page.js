@@ -201,7 +201,7 @@
     .then(payload=>{
       if(!Array.isArray(payload.data))throw new Error(payload.error?.message || 'Impossible de charger les circuits.');
       circuits=payload.data;
-      fillFilter(regionFilter,[...new Set(circuits.map(c=>zoneForRegion(normal(c.region) || 'Madagascar')).filter(zone=>zone && zone!=='MADAGASCAR'))],'Toutes les zones');
+      fillFilter(regionFilter,zones.map(zone=>zone.name),'Toutes les zones');
       fillFilter(themeFilter,[...new Set(circuits.map(c=>normal(c.theme)).filter(Boolean))],'Toutes les thématiques');
       render();
       renderMap(circuits);
