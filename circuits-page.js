@@ -123,11 +123,15 @@
       // Les circuits nationaux ou sans région peuvent apparaître dans plusieurs zones
       // si leur titre/description nomme des destinations correspondantes.
       if (!resolvedZones.length) {
+        // Pour une détection à partir du titre/résumé, ignorer les mots-cardinaux
+        // génériques (« nord », « sud », « est », « ouest ») : ils sur-déclenchent
+        // plusieurs marqueurs pour un circuit national.
+        const genericAliases = new Set(['nord','sud','est','ouest']);
+        const textValue = normalizeRegion(routeText);
         resolvedZones = zones
           .filter(zone => zone.name !== 'MADAGASCAR' && zone.aliases.some(alias => {
             const a = normalizeRegion(alias);
-            const textValue = normalizeRegion(routeText);
-            return a.length > 2 && textValue.includes(a);
+            return a.length > 2 && !genericAliases.has(a) && textValue.includes(a);
           }))
           .map(zone => zone.name);
       }
