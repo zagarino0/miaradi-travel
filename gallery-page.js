@@ -33,7 +33,7 @@
 
   const text = (value, backup = "") => String(value == null || value === "" ? backup : value);
   const normalize = (value) => text(value).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
-  const isVideo = (item) => item.type === "video" || /\.(mp4|webm|ogg)(?:[?#].*)?$/i.test(text(item.url));
+  const isVideo = (item) => { const type = normalize(item && (item.type || item.media_type || item.mediaType || item.kind)); const url = text(item && (item.url || item.external_url || item.src || item.video_url || item.file_path)); return /video|youtube|vimeo|mp4|webm|ogg/.test(type) || /\.(mp4|webm|ogg)(?:[?#].*)?$/i.test(url) || /(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch|embed|shorts|live)|vimeo\.com\/)/i.test(url); };
   const rootUrl = (value) => {
     if (!value) return "";
     try { return new URL(value, document.baseURI).href; } catch (_) { return ""; }
@@ -356,13 +356,16 @@
       const actions = document.createElement("div");
       actions.className = "gallery-suggestion-actions";
       const circuitVideos = media.filter((item) => isVideo(item));
-      if (circuitVideos.length) {
-        const videoLink = document.createElement("a");
-        videoLink.className = "gallery-suggestion-video";
-        videoLink.href = "galerie.html?circuit=" + encodeURIComponent(circuit.slug || circuit.id) + "&media=video";
-        videoLink.innerHTML = '<span aria-hidden="true">▶</span> Voir la vidéo' + (circuitVideos.length > 1 ? " (" + circuitVideos.length + ")" : "");
-        actions.append(videoLink);
-      }
+      const videoLink = document.createElement("a");
+      videoLink.className = "gallery-suggestion-video" + (circuitVideos.length ? "" : " is-video-unavailable");
+      videoLink.href = "galerie.html?circuit=" + encodeURIComponent(circuit.slug || circuit.id) + "&media=video";
+      videoLink.setAttribute("aria-label", circuitVideos.length
+        ? "Voir la vidéo du circuit " + circuit.title
+        : "Vidéo bientôt disponible pour " + circuit.title);
+      videoLink.innerHTML = circuitVideos.length
+        ? '<span aria-hidden="true">▶</span> Voir la vidéo' + (circuitVideos.length > 1 ? " (" + circuitVideos.length + ")" : "")
+        : '<span aria-hidden="true">▶</span> Vidéo à venir';
+      actions.append(videoLink);
       const galleryLink = document.createElement("a");
       galleryLink.className = "gallery-suggestion-gallery-link";
       galleryLink.href = mainLink.href;
@@ -460,11 +463,11 @@
         const localSeen = new Set();
 
         const addMedia = (mediaItem, source, fallbackTitle) => {
-          if (!mediaItem || !mediaItem.url) return;
-          const url = text(mediaItem.url).trim();
+          if (!mediaItem) return;
+          const url = text(mediaItem.url || mediaItem.external_url || mediaItem.src || mediaItem.video_url || mediaItem.file_path || mediaItem.path).trim();
           const key = rootUrl(url) || url;
           if (!url || localSeen.has(key) || globalSeen.has(key)) return;
-          const videoItem = isVideo(mediaItem) || /^(video|mp4|youtube|vimeo)$/i.test(text(mediaItem.type));
+          const videoItem = isVideo({ ...mediaItem, url });
           localSeen.add(key);
           globalSeen.add(key);
           circuitMedia.push({
@@ -509,8 +512,8 @@
         allMedia = mediaByCircuit.get(String(selectedCircuit.id)) || [];
         setCircuitHeader(selectedCircuit, allMedia);
         if (normalize(params.get("media")) === "video") {
-          const firstVideoIndex = allMedia.findIndex((item) => isVideo(item));
-          if (firstVideoIndex >= 0) activeIndex = firstVideoIndex;
+          allMedia = allMedia.filter((item) => isVideo(item));
+          if (allMedia.length) activeIndex = 0;
         }
       } else {
         $("gallery-media-count").textContent = allMedia.length + " photo" + (allMedia.length > 1 ? "s" : "");
