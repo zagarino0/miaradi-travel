@@ -510,11 +510,11 @@
       if (selectedCircuit) {
         activeCircuit = selectedCircuit;
         allMedia = mediaByCircuit.get(String(selectedCircuit.id)) || [];
-        setCircuitHeader(selectedCircuit, allMedia);
         if (normalize(params.get("media")) === "video") {
           allMedia = allMedia.filter((item) => isVideo(item));
-          if (allMedia.length) activeIndex = 0;
+          activeIndex = 0;
         }
+        setCircuitHeader(selectedCircuit, allMedia);
       } else {
         $("gallery-media-count").textContent = allMedia.length + " photo" + (allMedia.length > 1 ? "s" : "");
         $("gallery-page-thumbs-count").textContent = String(allMedia.length).padStart(2, "0") + " PHOTOS";
