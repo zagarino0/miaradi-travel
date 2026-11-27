@@ -794,3 +794,7 @@ body.gallery-page .gallery-suggestion-copy h3 {
     margin-bottom: 14px !important;
   }
 }
+
+/* Actions propres à chaque circuit dans la galerie */
+.gallery-suggestion-main{display:block;color:inherit;text-decoration:none;min-width:0}.gallery-suggestion-actions{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:0 18px 18px}.gallery-suggestion-video,.gallery-suggestion-gallery-link{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:38px;padding:9px 12px;border:1px solid var(--red);border-radius:3px;font-size:11px;font-weight:700;text-decoration:none;transition:background .2s,color .2s}.gallery-suggestion-video{background:var(--red);color:#fff}.gallery-suggestion-video:hover{background:#742319;border-color:#742319}.gallery-suggestion-gallery-link{color:var(--red)}.gallery-suggestion-gallery-link:hover{background:var(--red);color:#fff}
+@media(max-width:700px){.gallery-suggestion-actions{padding:0 12px 14px}.gallery-suggestion-video,.gallery-suggestion-gallery-link{flex:1 1 100%}}
