@@ -7664,3 +7664,11 @@ header.site-header#top {
     font-size: 17px;
   }
 }
+
+
+/* Retirer le suffixe « -TRAVEL » de toutes les navigations du site */
+.brand-travel,
+.site-header .brand-travel,
+.gallery-page-brand .brand-travel {
+  display: none !important;
+}
