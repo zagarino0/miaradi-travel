@@ -347,14 +347,18 @@
       heading.textContent = circuit.title;
       const summary = document.createElement("p");
       summary.textContent = text(circuit.summary, "Découvrez ce circuit à Madagascar.");
-      const cta = document.createElement("strong");
-      cta.innerHTML = 'Découvrir la galerie <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>';
-      copy.append(heading, summary, cta);
+      copy.append(heading, summary);
       mainLink.append(visual, copy);
       card.append(mainLink);
 
       const actions = document.createElement("div");
       actions.className = "gallery-suggestion-actions";
+      const photosLink = document.createElement("a");
+      photosLink.className = "gallery-suggestion-gallery-link";
+      photosLink.href = mainLink.href;
+      photosLink.setAttribute("aria-label", "Découvrir les photos du circuit " + circuit.title);
+      photosLink.innerHTML = 'Découvrir les photos <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>';
+      actions.append(photosLink);
       const circuitVideos = media.filter((item) => isVideo(item));
       const videoLink = document.createElement("a");
       videoLink.className = "gallery-suggestion-video" + (circuitVideos.length ? "" : " is-video-unavailable");
