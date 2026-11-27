@@ -1156,7 +1156,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const startSlideshow = () => {
       window.clearInterval(slideshowTimer);
       if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && slides.length > 1) {
-        slideshowTimer = window.setInterval(() => showSlide(activeSlide + 1), 6500);
+        slideshowTimer = window.setInterval(() => showSlide(activeSlide + 1), 3000);
       }
     };
 
