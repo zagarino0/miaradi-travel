@@ -1123,7 +1123,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const dotsContainer = hero.querySelector(".hero-dots");
     const previous = hero.querySelector(".hero-prev");
     const next = hero.querySelector(".hero-next");
-    let activeSlide = Math.max(0, slides.findIndex(slide => slide.classList.contains("is-active")));
+    // Démarrer sur une image différente selon la visite, au lieu de toujours commencer par la première.
+    // Le choix est fait après le chargement des images administrées et conserve le slider existant.
+    let activeSlide = slides.length > 1
+      ? Math.floor(Math.random() * slides.length)
+      : Math.max(0, slides.findIndex(slide => slide.classList.contains("is-active")));
     let slideshowTimer;
 
     const showSlide = index => {
