@@ -845,3 +845,92 @@ body.gallery-page .gallery-suggestion-video {
     width: auto !important;
   }
 }
+
+
+/* Cartes de circuits : hauteur uniforme et actions photo/vidéo sur une seule ligne. */
+body.gallery-page .gallery-suggestions-grid {
+  align-items: stretch !important;
+}
+body.gallery-page .gallery-suggestion-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-self: stretch !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+body.gallery-page .gallery-suggestion-main {
+  display: flex !important;
+  flex: 1 1 auto !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+}
+body.gallery-page .gallery-suggestion-image {
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  aspect-ratio: 1.4 / 1 !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+body.gallery-page .gallery-suggestion-copy {
+  display: flex !important;
+  flex: 1 1 auto !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+}
+body.gallery-page .gallery-suggestion-copy h3 {
+  flex: 0 0 auto !important;
+}
+body.gallery-page .gallery-suggestion-copy p {
+  flex: 1 0 auto !important;
+  margin-bottom: 0 !important;
+}
+body.gallery-page .gallery-suggestion-actions {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  margin-top: auto !important;
+  padding: 14px 18px 18px !important;
+  min-height: 0 !important;
+}
+body.gallery-page .gallery-suggestion-video,
+body.gallery-page .gallery-suggestion-gallery-link {
+  display: inline-flex !important;
+  flex: 1 1 0 !important;
+  width: 50% !important;
+  min-width: 0 !important;
+  min-height: 40px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  margin: 0 !important;
+  padding: 8px 9px !important;
+  text-align: center !important;
+  white-space: normal !important;
+  font-size: 11px !important;
+  line-height: 1.25 !important;
+  box-sizing: border-box !important;
+}
+body.gallery-page .gallery-suggestion-gallery-link .icon {
+  width: 14px !important;
+  height: 14px !important;
+}
+@media (max-width: 700px) {
+  body.gallery-page .gallery-suggestion-card {
+    height: auto !important;
+    min-height: 100% !important;
+  }
+  body.gallery-page .gallery-suggestion-actions {
+    gap: 7px !important;
+    padding: 12px 12px 14px !important;
+  }
+  body.gallery-page .gallery-suggestion-video,
+  body.gallery-page .gallery-suggestion-gallery-link {
+    flex: 1 1 0 !important;
+    width: 50% !important;
+    padding: 8px 5px !important;
+    font-size: 10px !important;
+  }
+}
