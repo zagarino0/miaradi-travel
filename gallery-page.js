@@ -366,11 +366,6 @@
         ? '<span aria-hidden="true">▶</span> Voir la vidéo' + (circuitVideos.length > 1 ? " (" + circuitVideos.length + ")" : "")
         : '<span aria-hidden="true">▶</span> Vidéo à venir';
       actions.append(videoLink);
-      const galleryLink = document.createElement("a");
-      galleryLink.className = "gallery-suggestion-gallery-link";
-      galleryLink.href = mainLink.href;
-      galleryLink.textContent = "Voir la galerie";
-      actions.append(galleryLink);
       card.append(actions);
       suggestionsGrid.append(card);
     });
