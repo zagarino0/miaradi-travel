@@ -304,9 +304,12 @@
     suggestions.forEach((circuit) => {
       const media = mediaByCircuit.get(String(circuit.id)) || [];
       const cover = media.find((item) => item.type !== "video" && item.url) || null;
-      const link = document.createElement("a");
-      link.className = "gallery-suggestion-card";
-      link.href = "galerie.html?circuit=" + encodeURIComponent(circuit.slug || circuit.id);
+      const card = document.createElement("article");
+      card.className = "gallery-suggestion-card";
+
+      const mainLink = document.createElement("a");
+      mainLink.className = "gallery-suggestion-main";
+      mainLink.href = "galerie.html?circuit=" + encodeURIComponent(circuit.slug || circuit.id);
 
       const visual = document.createElement("div");
       visual.className = "gallery-suggestion-image";
@@ -347,8 +350,26 @@
       const cta = document.createElement("strong");
       cta.innerHTML = 'Découvrir la galerie <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>';
       copy.append(heading, summary, cta);
-      link.append(visual, copy);
-      suggestionsGrid.append(link);
+      mainLink.append(visual, copy);
+      card.append(mainLink);
+
+      const actions = document.createElement("div");
+      actions.className = "gallery-suggestion-actions";
+      const circuitVideos = media.filter((item) => isVideo(item));
+      if (circuitVideos.length) {
+        const videoLink = document.createElement("a");
+        videoLink.className = "gallery-suggestion-video";
+        videoLink.href = "galerie.html?circuit=" + encodeURIComponent(circuit.slug || circuit.id) + "&media=video";
+        videoLink.innerHTML = '<span aria-hidden="true">▶</span> Voir la vidéo' + (circuitVideos.length > 1 ? " (" + circuitVideos.length + ")" : "");
+        actions.append(videoLink);
+      }
+      const galleryLink = document.createElement("a");
+      galleryLink.className = "gallery-suggestion-gallery-link";
+      galleryLink.href = mainLink.href;
+      galleryLink.textContent = "Voir la galerie";
+      actions.append(galleryLink);
+      card.append(actions);
+      suggestionsGrid.append(card);
     });
 
     // Carrousel infini : avance vers la gauche toutes les 3 secondes,
@@ -438,39 +459,40 @@
         const circuitMedia = [];
         const localSeen = new Set();
 
-        const addPhoto = (photo, source, fallbackTitle) => {
-          if (!photo || !photo.url || isVideo(photo)) return;
-          const url = text(photo.url).trim();
+        const addMedia = (mediaItem, source, fallbackTitle) => {
+          if (!mediaItem || !mediaItem.url) return;
+          const url = text(mediaItem.url).trim();
           const key = rootUrl(url) || url;
           if (!url || localSeen.has(key) || globalSeen.has(key)) return;
+          const videoItem = isVideo(mediaItem) || /^(video|mp4|youtube|vimeo)$/i.test(text(mediaItem.type));
           localSeen.add(key);
           globalSeen.add(key);
           circuitMedia.push({
-            id: text(photo.id, "circuit-" + circuit.id + "-photo-" + circuitMedia.length),
+            id: text(mediaItem.id, "circuit-" + circuit.id + "-media-" + circuitMedia.length),
             circuit: { id: circuit.id, slug: circuit.slug, title: circuit.title },
-            type: "image",
+            type: videoItem ? "video" : "image",
             source,
-            title: text(photo.title, text(photo.alt, fallbackTitle || circuit.title)),
-            description: text(photo.description, text(photo.alt, text(circuit.summary, circuit.title))),
-            alt: text(photo.alt, text(photo.title, circuit.title)),
+            title: text(mediaItem.title, text(mediaItem.alt, videoItem ? "Vidéo — " + circuit.title : fallbackTitle || circuit.title)),
+            description: text(mediaItem.description, text(mediaItem.alt, text(circuit.summary, circuit.title))),
+            alt: text(mediaItem.alt, text(mediaItem.title, circuit.title)),
             url,
-            thumbnail: text(photo.thumbnail, url),
+            thumbnail: text(mediaItem.thumbnail, text(mediaItem.thumbnail_url, videoItem ? "" : url)),
             isHero: source === "circuit-cover"
           });
         };
 
         // La couverture ouvre chaque série, suivie des photos de l'itinéraire.
-        if (circuit.image) addPhoto({ url: circuit.image, title: circuit.title, alt: circuit.title, description: circuit.summary }, "circuit-cover", circuit.title);
+        if (circuit.image) addMedia({ url: circuit.image, title: circuit.title, alt: circuit.title, description: circuit.summary, type: "image" }, "circuit-cover", circuit.title);
         if (circuitPage && Array.isArray(circuitPage.gallery)) {
-          circuitPage.gallery.forEach((photo, index) => {
-            addPhoto(photo, index === 0 && !circuit.image ? "circuit-cover" : "itinerary", circuit.title);
+          circuitPage.gallery.forEach((mediaItem, index) => {
+            addMedia(mediaItem, index === 0 && !circuit.image ? "circuit-cover" : "itinerary", circuit.title);
           });
         }
 
         try {
           const mediaPayload = await getJson(API_BASE + "gallery.php?circuit_id=" + encodeURIComponent(circuit.id) + "&lang=" + encodeURIComponent(LANGUAGE));
           const galleryMedia = Array.isArray(mediaPayload.data) ? mediaPayload.data : [];
-          galleryMedia.forEach((photo) => addPhoto(photo, "gallery", circuit.title));
+          galleryMedia.forEach((mediaItem) => addMedia(mediaItem, "gallery", circuit.title));
         } catch (_) {
           // On conserve les photos déjà chargées pour ce circuit.
         }
@@ -486,6 +508,10 @@
         activeCircuit = selectedCircuit;
         allMedia = mediaByCircuit.get(String(selectedCircuit.id)) || [];
         setCircuitHeader(selectedCircuit, allMedia);
+        if (normalize(params.get("media")) === "video") {
+          const firstVideoIndex = allMedia.findIndex((item) => isVideo(item));
+          if (firstVideoIndex >= 0) activeIndex = firstVideoIndex;
+        }
       } else {
         $("gallery-media-count").textContent = allMedia.length + " photo" + (allMedia.length > 1 ? "s" : "");
         $("gallery-page-thumbs-count").textContent = String(allMedia.length).padStart(2, "0") + " PHOTOS";
@@ -496,7 +522,7 @@
       }
 
       renderThumbnails();
-      showMedia(0);
+      showMedia(activeIndex);
 
       const suggestions = circuits.filter((circuit) =>
         (mediaByCircuit.get(String(circuit.id)) || []).length > 0 &&
