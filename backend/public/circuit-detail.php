@@ -213,6 +213,24 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
   });
 
   const route = Array.isArray(routeStops) ? routeStops : [];
+  // Repérer également la zone du circuit sur la carte générale de Madagascar.
+  const overviewRoute = route.map(stop => {
+    const p = geo(stop.lat, stop.lng);
+    return {x:p.x*overviewScale+ox, y:p.y*overviewScale+oy};
+  });
+  if (overviewRoute.length) {
+    const xs = overviewRoute.map(p=>p.x), ys = overviewRoute.map(p=>p.y);
+    const cx = (Math.min(...xs)+Math.max(...xs))/2;
+    const cy = (Math.min(...ys)+Math.max(...ys))/2;
+    const rx = Math.max(10,(Math.max(...xs)-Math.min(...xs))/2+9);
+    const ry = Math.max(13,(Math.max(...ys)-Math.min(...ys))/2+9);
+    overview.append(make('ellipse',{cx,cy,rx,ry,class:'map-route-halo'}));
+    if (overviewRoute.length > 1) {
+      const overviewPath = overviewRoute.map((p,i)=>(i?'L ':'M ')+p.x.toFixed(1)+' '+p.y.toFixed(1)).join(' ');
+      overview.append(make('path',{d:overviewPath,class:'map-route-line','stroke-width':2}));
+    }
+    overviewRoute.forEach((p,i)=>overview.append(make('circle',{cx:p.x,cy:p.y,r:i===0?3.6:2.6,class:'map-route-point'+(i===0?' start':'')})));
+  }
   // Calculer un cadrage dédié à l’itinéraire pour agrandir la bonne partie de l’île.
   const routeGeo=(route.length?route:[{lat:zone.lat,lng:zone.lng}]).map(s=>geo(s.lat,s.lng));
   const bounds={
