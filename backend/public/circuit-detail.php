@@ -25,8 +25,13 @@ $intro = $page ? ((string)($page['intro_fr'] ?: $page['summary_fr'])) : 'Cette p
 .itinerary-top{display:grid;grid-template-columns:minmax(0,.9fr) minmax(420px,1.1fr);gap:clamp(28px,4vw,64px);align-items:center;margin-bottom:34px}
 .itinerary-top .section-head{margin:0;align-self:center}
 .circuit-map-card{display:block;min-width:0;overflow:visible;border:0;border-radius:0;background:transparent;box-shadow:none}
-.circuit-map{height:520px;min-width:0;background:transparent;position:relative;overflow:visible}
-.circuit-map .map-layout{display:grid;grid-template-columns:minmax(150px,.62fr) minmax(0,1.38fr);align-items:stretch;gap:14px;width:100%;height:100%}
+.circuit-map{height:540px;min-width:0;background:transparent;position:relative;overflow:visible}
+.circuit-map .map-layout{display:grid;grid-template-columns:minmax(125px,.42fr) minmax(0,1.58fr);align-items:stretch;gap:18px;width:100%;height:100%}
+.circuit-map .map-zoom-wrap{position:relative;min-width:0;min-height:0}
+.circuit-map .map-zoom{width:100%;height:100%}
+.map-zoom-controls{position:absolute;right:8px;top:8px;display:flex;flex-direction:column;gap:5px;z-index:2}
+.map-zoom-controls button{width:34px;height:34px;border:1px solid #d8c8b7;border-radius:50%;background:#FBF8F5;color:#922D20;font-size:23px;line-height:1;cursor:pointer;box-shadow:0 2px 8px #5b392018}
+.map-zoom-controls button:hover,.map-zoom-controls button:focus-visible{background:#922D20;color:#fff;outline:2px solid #922D20;outline-offset:2px}
 .circuit-map svg{display:block;width:100%;height:100%;overflow:visible;font-family:Georgia,"Times New Roman",serif}
 .circuit-map .map-overview,.circuit-map .map-zoom{min-width:0;min-height:0}
 .circuit-map-info{display:none}
@@ -166,8 +171,15 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
   mapLayout.className = 'map-layout';
   const overview = make('svg',{viewBox:'0 0 190 390',role:'img','aria-label':'Carte complète de Madagascar situant le circuit',preserveAspectRatio:'xMidYMid meet'});
   overview.classList.add('map-overview');
+  const zoomWrap = document.createElement('div');
+  zoomWrap.className = 'map-zoom-wrap';
   const zoom = make('svg',{viewBox:'0 0 520 390',role:'img','aria-label':'Carte agrandie de la zone du circuit avec les villes et le tracé',preserveAspectRatio:'xMidYMid meet'});
   zoom.classList.add('map-zoom');
+  const zoomContent = make('g');
+  const zoomControls = document.createElement('div');
+  zoomControls.className = 'map-zoom-controls';
+  zoomControls.setAttribute('aria-label','Commandes de zoom de la carte');
+  zoomControls.innerHTML = '<button type="button" data-map-zoom="in" aria-label="Agrandir la carte" title="Agrandir">+</button><button type="button" data-map-zoom="out" aria-label="Réduire la carte" title="Réduire">−</button><button type="button" data-map-zoom="reset" aria-label="Réinitialiser le zoom" title="Réinitialiser">↺</button>;
   const defs = make('defs');
   const shadow = make('filter',{id:'island-shadow',x:'-30%',y:'-20%',width:'160%',height:'150%'});
   shadow.append(make('feDropShadow',{dx:'2',dy:'3',stdDeviation:'3','flood-color':'#8b6a3d','flood-opacity':'.17'}));
@@ -175,17 +187,24 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
   const clip = make('clipPath',{id:'zoom-clip'});
   clip.append(make('circle',{cx:260,cy:195,r:184}));
   defs.append(clip);
-  zoom.append(defs);
+  zoom.append(defs,zoomContent);
 
   // Contour de Madagascar en coordonnées géographiques simplifiées.
+  // Contour côtier issu des données géographiques Natural Earth (Madagascar).
   const coast = [
-    [49.30,-11.95],[49.72,-12.45],[50.02,-13.15],[50.32,-14.10],[50.47,-15.05],
-    [50.18,-16.05],[49.82,-17.05],[49.42,-18.10],[49.05,-19.05],[48.72,-20.05],
-    [48.28,-21.05],[47.82,-22.05],[47.18,-23.05],[46.62,-24.05],[45.82,-25.05],
-    [45.10,-25.60],[44.45,-25.15],[43.92,-24.55],[43.55,-23.70],[43.38,-22.65],
-    [43.42,-21.55],[43.60,-20.45],[43.83,-19.35],[44.12,-18.30],[44.35,-17.25],
-    [44.38,-16.30],[44.42,-15.40],[44.78,-14.55],[45.30,-13.78],[46.05,-13.15],
-    [46.82,-12.72],[47.62,-12.42],[48.35,-12.18],[49.00,-12.02]
+    [49.543519,-12.469833],[49.808981,-12.895285],[50.056511,-13.555761],[50.217431,-14.758789],
+    [50.476537,-15.226512],[50.377111,-15.706069],[50.200275,-16.000263],[49.860606,-15.414253],
+    [49.672607,-15.710204],[49.863344,-16.451037],[49.774564,-16.875042],[49.498612,-17.106036],
+    [49.435619,-17.953064],[49.041792,-19.118781],[48.548541,-20.496888],[47.930749,-22.391501],
+    [47.547723,-23.781959],[47.095761,-24.94163],[46.282478,-25.178463],[45.409508,-25.601434],
+    [44.833574,-25.346101],[44.03972,-24.988345],[43.763768,-24.460677],[43.697778,-23.574116],
+    [43.345654,-22.776904],[43.254187,-22.057413],[43.433298,-21.336475],[43.893683,-21.163307],
+    [43.89637,-20.830459],[44.374325,-20.072366],[44.464397,-19.435454],[44.232422,-18.961995],
+    [44.042976,-18.331387],[43.963084,-17.409945],[44.312469,-16.850496],[44.446517,-16.216219],
+    [44.944937,-16.179374],[45.502732,-15.974373],[45.872994,-15.793454],[46.312243,-15.780018],
+    [46.882183,-15.210182],[47.70513,-14.594303],[48.005215,-14.091233],[47.869047,-13.663869],
+    [48.293828,-13.784068],[48.84506,-13.089175],[48.863509,-12.487868],[49.194651,-12.040557],
+    [49.543519,-12.469833]
   ];
   const geo = (lat,lng)=>({x:(Number(lng)-43.2)*43.5,y:35+((-12-Number(lat))*40.5)});
   const globalCoast = coast.map(([lng,lat])=>geo(lat,lng));
@@ -197,7 +216,6 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
   const ox=(190-(maxX-minX)*overviewScale)/2-minX*overviewScale;
   const oy=(390-(maxY-minY)*overviewScale)/2-minY*overviewScale;
   const overviewPts=globalCoast.map(p=>({x:p.x*overviewScale+ox,y:p.y*overviewScale+oy}));
-  overview.append(make('circle',{cx:95,cy:195,r:90,fill:'none',stroke:'#a87930','stroke-width':1,opacity:.38}));
   overview.append(make('path',{d:pathFrom(overviewPts),fill:'#fffdfb',stroke:'#e8d8c6','stroke-width':1.1,filter:'url(#island-shadow)'}));
   overview.append(make('text',{x:95,y:18,'text-anchor':'middle',class:'map-region-label'},'MADAGASCAR'));
   const overviewCities=[
@@ -245,11 +263,10 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
   const ty=195-(bounds.minY+bounds.maxY)/2*zoomScale;
   const zoomPoint=p=>({x:p.x*zoomScale+tx,y:p.y*zoomScale+ty});
   const zoomCoast=globalCoast.map(zoomPoint);
-  zoom.append(make('circle',{cx:260,cy:195,r:184,class:'map-ocean'}));
-  zoom.append(make('circle',{cx:260,cy:195,r:184,class:'map-zoom-ring'}));
+  
   const landGroup=make('g',{'clip-path':'url(#zoom-clip)'});
   landGroup.append(make('path',{d:pathFrom(zoomCoast),fill:'#fffdfb',stroke:'#e8d8c6','stroke-width':1.3,filter:'url(#island-shadow)'}));
-  zoom.append(landGroup);
+  zoomContent.append(landGroup);
   const pts=routeGeo.map(zoomPoint);
   if(pts.length>1){
     const d=pts.map((p,i)=>(i?'L ':'M ')+p.x.toFixed(1)+' '+p.y.toFixed(1)).join(' ');
@@ -258,16 +275,36 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
   route.forEach((stop,index)=>{
     const p=pts[index];
     if(!p) return;
-    zoom.append(make('circle',{cx:p.x,cy:p.y,r:index===0||index===route.length-1?5.5:4,class:'map-route-point'+(index===0?' start':'')}));
+    zoomContent.append(make('circle',{cx:p.x,cy:p.y,r:index===0||index===route.length-1?5.5:4,class:'map-route-point'+(index===0?' start':'')}));
     const labelOnLeft=(index%2===0);
     const labelX=p.x+(labelOnLeft?-8:8);
     const anchor=labelOnLeft?'end':'start';
     const labelY=Math.max(20,Math.min(370,p.y+(index%3===0?-9:15)));
     const major=['Antananarivo','Mahajanga','Antsiranana','Fianarantsoa','Toliara','Toamasina'].includes(stop.name);
-    zoom.append(make('text',{x:labelX,y:labelY,'text-anchor':anchor,class:major?'map-city-label major':'map-city-label'},stop.name));
+    zoomContent.append(make('text',{x:labelX,y:labelY,'text-anchor':anchor,class:major?'map-city-label major':'map-city-label'},stop.name));
   });
-  zoom.append(make('text',{x:260,y:20,'text-anchor':'middle',class:'map-region-label'},zone.label+' · ITINÉRAIRE'));
-  mapLayout.append(overview,zoom);
+  zoomContent.append(make('text',{x:260,y:20,'text-anchor':'middle',class:'map-region-label'},zone.label+' · ITINÉRAIRE'));
+  let mapZoom = 1;
+  const renderZoom = () => {
+    const offsetX = 260 * (1 - mapZoom);
+    const offsetY = 195 * (1 - mapZoom);
+    zoomContent.setAttribute('transform', 'translate('+offsetX+' '+offsetY+') scale('+mapZoom+')');
+  };
+  zoomControls.addEventListener('click', event => {
+    const button = event.target.closest('button[data-map-zoom]');
+    if (!button) return;
+    if (button.dataset.mapZoom === 'in') mapZoom = Math.min(3.2, mapZoom + 0.25);
+    else if (button.dataset.mapZoom === 'out') mapZoom = Math.max(1, mapZoom - 0.25);
+    else mapZoom = 1;
+    renderZoom();
+  });
+  zoom.addEventListener('wheel', event => {
+    event.preventDefault();
+    mapZoom = Math.max(1, Math.min(3.2, mapZoom + (event.deltaY < 0 ? 0.12 : -0.12)));
+    renderZoom();
+  }, {passive:false});
+  zoomWrap.append(zoom,zoomControls);
+  mapLayout.append(overview,zoomWrap);
   node.replaceChildren(mapLayout);
 })();
 </script>
