@@ -22,19 +22,17 @@ $intro = $page ? ((string)($page['intro_fr'] ?: $page['summary_fr'])) : 'Cette p
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="<?=page_escape($intro)?>"><title><?=page_escape($title)?> — MIARADI-TRAVEL</title>
 <style>
 :root{--red:#922D20;--paper:#FBF8F5;--ink:#24211f;--muted:#746d68;--line:#ded7d1;--peach:#eab5a3}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.7 "DM Sans",Inter,system-ui,sans-serif}.nav{height:82px;background:#fffaf8;border-bottom:1px solid #eee5e0;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,5vw,82px);gap:20px}.nav-brand{display:inline-flex;align-items:center;gap:3px;flex-shrink:0}.logo{width:125px;max-height:55px;object-fit:contain}.nav-brand-travel{color:var(--red);font-size:14px;font-weight:800;letter-spacing:.035em;white-space:nowrap}.nav-links{display:flex;align-items:center;gap:clamp(15px,3vw,38px)}.nav a{color:var(--ink);text-decoration:none;font-size:14px;font-weight:650}.cta{background:var(--red)!important;color:#fff!important;padding:13px 21px;border-radius:30px}.hero{min-height:590px;display:flex;align-items:center;position:relative;background:#30251f;color:#fff;overflow:hidden}.hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,16,15,.78),rgba(20,16,15,.2)),linear-gradient(0deg,rgba(20,16,15,.34),transparent 65%)}.hero-content{position:relative;z-index:1;max-width:1200px;width:100%;margin:auto;padding:80px 7vw}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:#f1c6b8;font-weight:800}.hero h1{font-size:clamp(46px,7vw,94px);line-height:.99;letter-spacing:-.055em;max-width:1000px;margin:20px 0}.hero h1 em{font-family:Georgia,serif;font-weight:400;color:var(--peach)}.hero p{font-size:clamp(17px,1.7vw,22px);max-width:700px;color:#f4eeeb}.chips{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0}.chip{border:1px solid #ffffff80;border-radius:30px;padding:7px 14px;font-size:13px}.intro{max-width:1200px;margin:auto;padding:65px 6vw 30px;font-size:18px;color:#655d58}.intro p{max-width:900px}
-.map-section{max-width:1200px;margin:0 auto;padding:18px 6vw 42px}
-.map-section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:18px}
-.map-section-head h2{font-size:clamp(27px,3.5vw,42px);line-height:1.1;letter-spacing:-.04em;margin:0;color:#18253a}
-.map-section-head p{margin:8px 0 0;color:var(--muted);max-width:620px}
-.circuit-map-card{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(220px,.7fr);background:#fff;border:1px solid #eadfd8;border-radius:16px;overflow:hidden;box-shadow:0 12px 34px #34251c0d}
-.circuit-map{height:360px;min-width:0;background:#e7f0ef}
-.circuit-map-info{padding:26px;display:flex;flex-direction:column;justify-content:center;gap:12px}
-.circuit-map-kicker{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);font-weight:800}
-.circuit-map-info h3{margin:0;font-size:25px;line-height:1.2;color:#18253a}
-.circuit-map-info p{margin:0;color:var(--muted);font-size:14px}
-.map-legend{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:700;color:#514640}
-.map-legend-dot{width:12px;height:12px;border-radius:50%;background:var(--red);box-shadow:0 0 0 5px #922d2020;flex-shrink:0}
-@media(max-width:700px){.map-section{padding:14px 20px 30px}.map-section-head{display:block}.circuit-map-card{grid-template-columns:1fr}.circuit-map{height:280px}.circuit-map-info{padding:20px}.circuit-map-info h3{font-size:22px}}
+.itinerary-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.72fr);gap:clamp(24px,4vw,58px);align-items:stretch;margin-bottom:28px}
+.itinerary-top .section-head{margin:0;align-self:center}
+.circuit-map-card{display:grid;grid-template-columns:minmax(0,1fr);background:#fff;border:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px #34251c0a;min-width:0}
+.circuit-map{height:260px;min-width:0;background:#e7f0ef}
+.circuit-map-info{padding:12px 16px 14px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center}
+.circuit-map-kicker{grid-column:1/-1;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--red);font-weight:800}
+.circuit-map-info h3{margin:0;font-size:17px;line-height:1.2;color:#18253a}
+.circuit-map-info p{grid-column:1/-1;margin:0;color:var(--muted);font-size:12px;line-height:1.45}
+.map-legend{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;color:#514640;white-space:nowrap}
+.map-legend-dot{width:10px;height:10px;border-radius:50%;background:var(--red);box-shadow:0 0 0 4px #922d2020;flex-shrink:0}
+@media(max-width:760px){.itinerary-top{grid-template-columns:minmax(0,1fr);gap:22px}.itinerary-top .section-head{display:block}.circuit-map{height:260px}.circuit-map-info{padding:12px 14px}.circuit-map-info h3{font-size:17px}}
 .itinerary{max-width:1400px;margin:0 auto;padding:30px 4vw 90px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:28px}.section-head h2{font-size:clamp(30px,4vw,54px);line-height:1.05;letter-spacing:-.045em;margin:0}.section-head p{color:var(--muted);max-width:390px;margin:0}.day{position:relative;border-top:1px solid var(--line);padding:22px 0 34px 78px}.day:last-child{border-bottom:1px solid var(--line)}.day::before{content:"";position:absolute;left:27px;top:0;bottom:0;width:2px;background:#dfc5bb;z-index:0}.day-heading{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr);gap:8px;padding:0 0 18px;min-height:76px;align-content:center}.day-num{position:absolute;left:-78px;top:0;display:grid;place-items:center;width:48px;height:48px;border:1px solid #d8b2a6;border-radius:50%;color:#fff;font-size:14px;font-weight:800;background:var(--red);z-index:2;box-shadow:0 0 0 5px var(--paper)}.day-title{font-size:clamp(20px,2vw,27px);font-weight:750;line-height:1.3;color:#18253a}.day-subtitle{font-size:15px;color:var(--muted)}.day-content{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:clamp(28px,4vw,64px);align-items:center;padding:0 0 8px;animation:day-reveal .25s ease-out}.day .gallery{grid-column:1;grid-row:1}.day .day-copy{grid-column:2;grid-row:1}.day.image-right .gallery{grid-column:2}.day.image-right .day-copy{grid-column:1}.day-copy{color:#625b56;font-size:clamp(16px,1.3vw,19px);line-height:1.85}.day-copy p:first-child{margin-top:0}.day-copy p{max-width:58ch}.day-copy .overnight{padding:12px 15px;border-left:3px solid var(--red);background:#f4ece6;font-size:14px}.gallery{min-width:0;width:100%}@keyframes day-reveal{from{opacity:.45;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}.overnight{font-size:14px}.gallery{min-width:0}.gallery-main{position:relative;width:100%;aspect-ratio:1.42/1;min-height:320px;max-height:520px;overflow:hidden;background:#eee3dc;border-radius:5px}.gallery-main img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s}.gallery-main img.active{opacity:1}.gallery-arrow{position:absolute;z-index:1;top:50%;transform:translateY(-50%);width:44px;height:44px;border:1px solid #ffffffa8;border-radius:50%;background:#201c1bd9;color:#fff;font-size:25px;cursor:pointer}.gallery-arrow.prev{left:14px}.gallery-arrow.next{right:14px}.gallery-arrow:disabled{opacity:.45;cursor:default}.gallery-count{position:absolute;right:14px;top:14px;border-radius:20px;background:#201c1bd9;color:#fff;padding:5px 11px;font-size:12px}.gallery-caption{background:#f3e7e1;padding:10px 13px;color:#786c67;font-size:11px;letter-spacing:.08em;text-transform:uppercase}.no-image{display:grid;place-items:center;height:100%;color:#9b8e85}.bottom-cta{background:#eee4dd;padding:55px 6vw;text-align:center}.bottom-cta h2{font-size:clamp(30px,4vw,48px);margin:0 0 12px}.bottom-cta p{color:var(--muted)}.bottom-cta a{display:inline-block;margin-top:15px;background:var(--red);color:white;padding:13px 24px;border-radius:30px;text-decoration:none;font-weight:700}.footer{padding:28px 6vw;background:#292320;color:#f7eee9;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:12px}.not-found{min-height:70vh;display:grid;place-content:center;text-align:center;padding:30px}.not-found a{color:var(--red)}@media(max-width:760px){.nav{height:68px}.logo{width:100px}.nav-links a:not(.cta){display:none}.hero{min-height:560px}.hero-content{padding:65px 24px}.day::before{left:17px}.day{padding:20px 0 28px 50px}.day-heading{padding-bottom:16px}.day-num{left:-50px;width:36px;height:36px;font-size:12px}.day-title{font-size:19px}.day-subtitle{font-size:13px}.day-content{grid-template-columns:1fr;gap:18px}.day .gallery,.day.image-right .gallery{grid-column:1;grid-row:1}.day .day-copy,.day.image-right .day-copy{grid-column:1;grid-row:2}.gallery-main{aspect-ratio:1.3/1;min-height:240px;max-height:420px}.section-head{display:block}.section-head p{margin-top:12px}.intro{padding:42px 24px 20px}.itinerary{padding-left:22px;padding-right:22px}}@media(max-width:420px){.day::before{left:13px}.day{padding-left:38px}.day-num{left:-38px;width:28px;height:28px;font-size:10px}.day-title{font-size:17px}.gallery-main{min-height:210px}.hero h1{font-size:clamp(40px,12vw,58px)}.gallery-arrow{width:40px;height:40px}.itinerary{padding-left:17px;padding-right:17px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 
 /* Footer fluide sur ordinateur, tablette et mobile */
@@ -68,14 +66,12 @@ $mapZones = [
 $mapZone = ['label' => $regionName ?: 'Madagascar', 'lat' => -19.0, 'lng' => 46.7, 'zoom' => 5.1, 'note' => 'La zone indicative de ce circuit à Madagascar.'];
 foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle)) { $mapZone = $zone; break; } }
 ?>
-<section class="map-section" aria-labelledby="circuit-map-title">
-  <div class="map-section-head"><div><div class="eyebrow">Où se déroule le voyage ?</div><h2 id="circuit-map-title">Le circuit sur la carte de Madagascar</h2><p>La zone mise en évidence correspond à la région principale de ce circuit.</p></div></div>
-  <div class="circuit-map-card">
-    <div id="circuit-madagascar-map" class="circuit-map" role="img" aria-label="Carte de Madagascar indiquant la région <?=page_escape($mapZone['label'])?>"></div>
-    <div class="circuit-map-info"><span class="circuit-map-kicker">Région du circuit</span><h3><?=page_escape($mapZone['label'])?></h3><p><?=page_escape($mapZone['note'])?></p><div class="map-legend"><span class="map-legend-dot" aria-hidden="true"></span>Zone principale du circuit</div></div>
+<section class="itinerary"><div class="itinerary-top"><div class="section-head"><div><div class="eyebrow">Votre itinéraire</div><h2>Votre voyage,<br><em style="font-family:Georgia,serif;font-weight:400;color:var(--red)">jour après jour.</em></h2></div><p>Suivez les principales étapes du voyage sur la carte. Le programme détaillé reste adaptable selon les conditions et l’organisation confirmée.</p></div>
+  <div class="circuit-map-card" aria-label="Carte de Madagascar et itinéraire du circuit">
+    <div id="circuit-madagascar-map" class="circuit-map" role="img" aria-label="Carte de Madagascar indiquant la région <?=page_escape($mapZone['label'])?> et les étapes du circuit"></div>
+    <div class="circuit-map-info"><span class="circuit-map-kicker">Région du circuit</span><h3><?=page_escape($mapZone['label'])?></h3><div class="map-legend"><span class="map-legend-dot" aria-hidden="true"></span>Itinéraire en pointillés</div><p><?=page_escape($mapZone['note'])?></p></div>
   </div>
-</section>
-<section class="itinerary"><div class="section-head"><h2>Votre voyage,<br><em style="font-family:Georgia,serif;font-weight:400;color:var(--red)">jour après jour.</em></h2><p>Ouvrez chaque étape pour découvrir les grandes expériences prévues. Le programme détaillé reste adaptable selon les conditions et l’organisation confirmée.</p></div>
+</div>
 <?php foreach($days as $i=>$day): $images=is_array($day['images']??null)?$day['images']:[]; ?><article class="day <?=($i%2===0?'image-left':'image-right')?>"><div class="day-heading"><span class="day-num"><?=str_pad((string)($i+1),2,'0',STR_PAD_LEFT)?></span><span class="day-title"><?=page_escape($day['title']??'Étape du voyage')?></span><span class="day-subtitle"><?=page_escape($day['subtitle']??'')?></span></div><div class="day-content"><div class="day-copy"><p><?=nl2br(page_escape($day['description']??''))?></p><?php if(!empty($day['overnight'])): ?><p class="overnight"><strong>Nuitée :</strong> <?=page_escape($day['overnight'])?></p><?php endif; ?></div><div class="gallery"><div class="gallery-main" data-gallery><?php if($images): foreach($images as $j=>$img): ?><img class="<?= $j===0?'active':'' ?>" src="<?=page_escape(page_image_src($img['url']??''))?>" alt="<?=page_escape($img['alt']??$day['title']??'Photo du circuit')?>" loading="lazy" decoding="async"><?php endforeach; ?><button type="button" class="gallery-arrow prev" aria-label="Photo précédente">‹</button><button type="button" class="gallery-arrow next" aria-label="Photo suivante">›</button><span class="gallery-count">1 / <?=count($images)?></span><?php else: ?><div class="no-image">Ajoutez des photos depuis l’administration</div><?php endif; ?></div><div class="gallery-caption">Jour <?=str_pad((string)($i+1),2,'0',STR_PAD_LEFT)?> · <?=page_escape($day['title']??'Étape du voyage')?></div></div></div></article><?php endforeach; ?></section><section class="bottom-cta"><h2>Prêts à imaginer votre voyage ?</h2><p>Parlons de vos envies et construisons ensemble un itinéraire qui vous ressemble.</p><a href="../../index.html#contact">Demander un devis ↗</a></section></main><footer class="site-footer">
   <div class="container footer-editorial">
     <div class="footer-brand-block"><a class="brand brand-footer" href="../../index.html#top"><img class="brand-logo brand-logo-footer" src="../../assets/miaradi-logo.png" alt="MIARADI-TRAVEL — Tour Operator Madagascar"></a><p>Madagascar se découvre mieux quand le voyage a du sens.</p></div>
@@ -91,17 +87,70 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
   const node = document.getElementById('circuit-madagascar-map');
   if (!node || !window.L) return;
   const zone = <?=json_encode(['label' => $mapZone['label'], 'lat' => $mapZone['lat'], 'lng' => $mapZone['lng'], 'zoom' => $mapZone['zoom']], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)?>;
+  const routeStops = <?=json_encode((function () use ($days, $mapZone) {
+    $places = [
+      ['name'=>'Antananarivo','lat'=>-18.8792,'lng'=>47.5079,'keys'=>['antananarivo','tana','ivato']],
+      ['name'=>'Ambatolampy','lat'=>-19.3833,'lng'=>47.4167,'keys'=>['ambatolampy']],
+      ['name'=>'Antsirabe','lat'=>-19.8659,'lng'=>47.0333,'keys'=>['antsirabe']],
+      ['name'=>'Fianarantsoa','lat'=>-21.45,'lng'=>47.0833,'keys'=>['fianarantsoa']],
+      ['name'=>'Maevatanana','lat'=>-16.95,'lng'=>46.8333,'keys'=>['maevatanana']],
+      ['name'=>'Ambondromamy','lat'=>-16.4333,'lng'=>47.15,'keys'=>['ambondromamy']],
+      ['name'=>'Ankarafantsika','lat'=>-16.3167,'lng'=>46.8167,'keys'=>['ankarafantsika','ankarokaroka']],
+      ['name'=>'Mahajanga','lat'=>-15.7167,'lng'=>46.3167,'keys'=>['mahajanga','majunga']],
+      ['name'=>'Fleuve Sofia','lat'=>-15.1,'lng'=>48.0,'keys'=>['fleuve sofia','sofia']],
+      ['name'=>'Antsiranana','lat'=>-12.2765,'lng'=>49.2917,'keys'=>['antsiranana','diégo','diego suarez']],
+      ['name'=>'Nosy Be','lat'=>-13.4,'lng'=>48.2667,'keys'=>['nosy be','nosy-be','hell-ville']],
+      ['name'=>'Toamasina','lat'=>-18.1492,'lng'=>49.4023,'keys'=>['toamasina','tamatave']],
+      ['name'=>'Morondava','lat'=>-20.2833,'lng'=>44.2833,'keys'=>['morondava','baobab']],
+      ['name'=>'Bekopaka','lat'=>-18.9333,'lng'=>44.8333,'keys'=>['bekopaka','tsingy de bemaraha','bemaraha']],
+      ['name'=>'Manja','lat'=>-21.4333,'lng'=>44.3333,'keys'=>['manja']],
+      ['name'=>'Toliara','lat'=>-23.35,'lng'=>43.6667,'keys'=>['toliara','tuléar']],
+      ['name'=>'Parc national de l’Isalo','lat'=>-22.55,'lng'=>45.4,'keys'=>['isalo','ranohira']],
+      ['name'=>'Manakara','lat'=>-22.15,'lng'=>48.0167,'keys'=>['manakara']]
+    ];
+    $found = [];
+    foreach ($days as $day) {
+      $text = mb_strtolower(implode(' ', array_map(static fn($v) => is_scalar($v) ? (string)$v : '', [$day['title'] ?? '', $day['subtitle'] ?? '', $day['description'] ?? ''])), 'UTF-8');
+      $matches = [];
+      foreach ($places as $place) {
+        $position = null;
+        foreach ($place['keys'] as $key) {
+          $at = mb_strpos($text, mb_strtolower($key, 'UTF-8'), 0, 'UTF-8');
+          if ($at !== false && ($position === null || $at < $position)) $position = $at;
+        }
+        if ($position !== null) $matches[] = ['position'=>$position, 'place'=>$place];
+      }
+      usort($matches, static fn($a,$b) => $a['position'] <=> $b['position']);
+      foreach ($matches as $match) {
+        $place = $match['place'];
+        $last = $found ? $found[count($found)-1]['name'] : null;
+        if ($last !== $place['name']) $found[] = ['name'=>$place['name'],'lat'=>$place['lat'],'lng'=>$place['lng']];
+      }
+    }
+    if (count($found) < 2) {
+      $found = [
+        ['name'=>'Départ du circuit','lat'=>-18.8792,'lng'=>47.5079],
+        ['name'=>$mapZone['label'],'lat'=>(float)$mapZone['lat'],'lng'=>(float)$mapZone['lng']]
+      ];
+    }
+    return $found;
+  })(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)?>;
   const map = L.map(node, {scrollWheelZoom: false, zoomControl: true}).setView([-19.0, 46.7], 5);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>'
   }).addTo(map);
   const zonePoint = [zone.lat, zone.lng];
-  L.circle(zonePoint, {radius: 65000, color: '#922D20', weight: 2, opacity: .95, fillColor: '#922D20', fillOpacity: .22}).addTo(map);
-  L.circleMarker(zonePoint, {radius: 7, color: '#fff', weight: 2, fillColor: '#922D20', fillOpacity: 1}).addTo(map)
-    .bindTooltip(zone.label, {permanent: true, direction: 'top', className: 'miaradi-map-label'});
-  // Garder l’île entière visible et afficher la zone du circuit en surbrillance.
-  map.setView([-19.0, 46.7], 5);
+  L.circle(zonePoint, {radius: 65000, color: '#922D20', weight: 1.5, opacity: .9, fillColor: '#922D20', fillOpacity: .16}).addTo(map);
+  const routeLatLngs = routeStops.map(stop => [stop.lat, stop.lng]);
+  if (routeLatLngs.length > 1) {
+    L.polyline(routeLatLngs, {color: '#922D20', weight: 3, opacity: .95, dashArray: '8 9', lineCap: 'round'}).addTo(map);
+  }
+  routeStops.forEach((stop, index) => {
+    L.circleMarker([stop.lat, stop.lng], {radius: index === 0 || index === routeStops.length - 1 ? 6 : 4.5, color: '#fff', weight: 2, fillColor: '#922D20', fillOpacity: 1})
+      .addTo(map).bindTooltip((index + 1) + '. ' + stop.name, {direction: 'top', className: 'miaradi-map-label'});
+  });
+  map.fitBounds(L.latLngBounds(routeLatLngs).pad(0.14), {maxZoom: 6});
   window.addEventListener('resize', () => map.invalidateSize(), {passive: true});
 })();
 </script>
