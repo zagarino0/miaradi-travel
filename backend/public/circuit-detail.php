@@ -24,15 +24,19 @@ $intro = $page ? ((string)($page['intro_fr'] ?: $page['summary_fr'])) : 'Cette p
 :root{--red:#922D20;--paper:#FBF8F5;--ink:#24211f;--muted:#746d68;--line:#ded7d1;--peach:#eab5a3}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.7 "DM Sans",Inter,system-ui,sans-serif}.nav{height:82px;background:#fffaf8;border-bottom:1px solid #eee5e0;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,5vw,82px);gap:20px}.nav-brand{display:inline-flex;align-items:center;gap:3px;flex-shrink:0}.logo{width:125px;max-height:55px;object-fit:contain}.nav-brand-travel{color:var(--red);font-size:14px;font-weight:800;letter-spacing:.035em;white-space:nowrap}.nav-links{display:flex;align-items:center;gap:clamp(15px,3vw,38px)}.nav a{color:var(--ink);text-decoration:none;font-size:14px;font-weight:650}.cta{background:var(--red)!important;color:#fff!important;padding:13px 21px;border-radius:30px}.hero{min-height:590px;display:flex;align-items:center;position:relative;background:#30251f;color:#fff;overflow:hidden}.hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,16,15,.78),rgba(20,16,15,.2)),linear-gradient(0deg,rgba(20,16,15,.34),transparent 65%)}.hero-content{position:relative;z-index:1;max-width:1200px;width:100%;margin:auto;padding:80px 7vw}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:#f1c6b8;font-weight:800}.hero h1{font-size:clamp(46px,7vw,94px);line-height:.99;letter-spacing:-.055em;max-width:1000px;margin:20px 0}.hero h1 em{font-family:Georgia,serif;font-weight:400;color:var(--peach)}.hero p{font-size:clamp(17px,1.7vw,22px);max-width:700px;color:#f4eeeb}.chips{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0}.chip{border:1px solid #ffffff80;border-radius:30px;padding:7px 14px;font-size:13px}.intro{max-width:1200px;margin:auto;padding:65px 6vw 30px;font-size:18px;color:#655d58}.intro p{max-width:900px}
 .itinerary-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.72fr);gap:clamp(24px,4vw,58px);align-items:stretch;margin-bottom:28px}
 .itinerary-top .section-head{margin:0;align-self:center}
-.circuit-map-card{display:grid;grid-template-columns:minmax(0,1fr);background:#fff;border:0;border-radius:10px;overflow:hidden;box-shadow:0 8px 24px #34251c0a;min-width:0}
-.circuit-map{height:260px;min-width:0;background:#e7f0ef}
-.circuit-map-info{padding:12px 16px 14px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center}
-.circuit-map-kicker{grid-column:1/-1;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--red);font-weight:800}
-.circuit-map-info h3{margin:0;font-size:17px;line-height:1.2;color:#18253a}
-.circuit-map-info p{grid-column:1/-1;margin:0;color:var(--muted);font-size:12px;line-height:1.45}
-.map-legend{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:700;color:#514640;white-space:nowrap}
-.map-legend-dot{width:10px;height:10px;border-radius:50%;background:var(--red);box-shadow:0 0 0 4px #922d2020;flex-shrink:0}
-@media(max-width:760px){.itinerary-top{grid-template-columns:minmax(0,1fr);gap:22px}.itinerary-top .section-head{display:block}.circuit-map{height:260px}.circuit-map-info{padding:12px 14px}.circuit-map-info h3{font-size:17px}}
+.circuit-map-card{display:block;min-width:0;overflow:hidden;border:0;border-radius:0;background:#f2bb55;box-shadow:none}
+.circuit-map{height:390px;min-width:0;background:#efb64d;position:relative;overflow:hidden}
+.circuit-map svg{display:block;width:100%;height:100%;font-family:Georgia,"Times New Roman",serif}
+.circuit-map-info{display:none}
+.map-region-label{font-family:Inter,system-ui,sans-serif;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;fill:#7f2b1e}
+.map-city-label{font-size:12px;font-style:italic;fill:#653021;paint-order:stroke;stroke:#fff8e8;stroke-width:2px;stroke-linejoin:round}
+.map-city-label.major{font-size:16px;font-style:normal;font-weight:700;letter-spacing:.02em}
+.map-route-line{fill:none;stroke:#e99a1d;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 6}
+.map-route-point{fill:#8f2c1d;stroke:#fff3d4;stroke-width:2}
+.map-route-point.start{fill:#922d20;stroke:#fff;stroke-width:3}
+.map-route-halo{fill:#922d20;fill-opacity:.12;stroke:#922d20;stroke-opacity:.55;stroke-width:1.5}
+@media(max-width:760px){.itinerary-top{grid-template-columns:minmax(0,1fr);gap:22px}.itinerary-top .section-head{display:block}.circuit-map{height:340px}}
+@media(max-width:420px){.circuit-map{height:300px}.map-city-label{font-size:14px}.map-city-label.major{font-size:17px}}
 .itinerary{max-width:1400px;margin:0 auto;padding:30px 4vw 90px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:28px}.section-head h2{font-size:clamp(30px,4vw,54px);line-height:1.05;letter-spacing:-.045em;margin:0}.section-head p{color:var(--muted);max-width:390px;margin:0}.day{position:relative;border-top:1px solid var(--line);padding:22px 0 34px 78px}.day:last-child{border-bottom:1px solid var(--line)}.day::before{content:"";position:absolute;left:27px;top:0;bottom:0;width:2px;background:#dfc5bb;z-index:0}.day-heading{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr);gap:8px;padding:0 0 18px;min-height:76px;align-content:center}.day-num{position:absolute;left:-78px;top:0;display:grid;place-items:center;width:48px;height:48px;border:1px solid #d8b2a6;border-radius:50%;color:#fff;font-size:14px;font-weight:800;background:var(--red);z-index:2;box-shadow:0 0 0 5px var(--paper)}.day-title{font-size:clamp(20px,2vw,27px);font-weight:750;line-height:1.3;color:#18253a}.day-subtitle{font-size:15px;color:var(--muted)}.day-content{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:clamp(28px,4vw,64px);align-items:center;padding:0 0 8px;animation:day-reveal .25s ease-out}.day .gallery{grid-column:1;grid-row:1}.day .day-copy{grid-column:2;grid-row:1}.day.image-right .gallery{grid-column:2}.day.image-right .day-copy{grid-column:1}.day-copy{color:#625b56;font-size:clamp(16px,1.3vw,19px);line-height:1.85}.day-copy p:first-child{margin-top:0}.day-copy p{max-width:58ch}.day-copy .overnight{padding:12px 15px;border-left:3px solid var(--red);background:#f4ece6;font-size:14px}.gallery{min-width:0;width:100%}@keyframes day-reveal{from{opacity:.45;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}.overnight{font-size:14px}.gallery{min-width:0}.gallery-main{position:relative;width:100%;aspect-ratio:1.42/1;min-height:320px;max-height:520px;overflow:hidden;background:#eee3dc;border-radius:5px}.gallery-main img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s}.gallery-main img.active{opacity:1}.gallery-arrow{position:absolute;z-index:1;top:50%;transform:translateY(-50%);width:44px;height:44px;border:1px solid #ffffffa8;border-radius:50%;background:#201c1bd9;color:#fff;font-size:25px;cursor:pointer}.gallery-arrow.prev{left:14px}.gallery-arrow.next{right:14px}.gallery-arrow:disabled{opacity:.45;cursor:default}.gallery-count{position:absolute;right:14px;top:14px;border-radius:20px;background:#201c1bd9;color:#fff;padding:5px 11px;font-size:12px}.gallery-caption{background:#f3e7e1;padding:10px 13px;color:#786c67;font-size:11px;letter-spacing:.08em;text-transform:uppercase}.no-image{display:grid;place-items:center;height:100%;color:#9b8e85}.bottom-cta{background:#eee4dd;padding:55px 6vw;text-align:center}.bottom-cta h2{font-size:clamp(30px,4vw,48px);margin:0 0 12px}.bottom-cta p{color:var(--muted)}.bottom-cta a{display:inline-block;margin-top:15px;background:var(--red);color:white;padding:13px 24px;border-radius:30px;text-decoration:none;font-weight:700}.footer{padding:28px 6vw;background:#292320;color:#f7eee9;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:12px}.not-found{min-height:70vh;display:grid;place-content:center;text-align:center;padding:30px}.not-found a{color:var(--red)}@media(max-width:760px){.nav{height:68px}.logo{width:100px}.nav-links a:not(.cta){display:none}.hero{min-height:560px}.hero-content{padding:65px 24px}.day::before{left:17px}.day{padding:20px 0 28px 50px}.day-heading{padding-bottom:16px}.day-num{left:-50px;width:36px;height:36px;font-size:12px}.day-title{font-size:19px}.day-subtitle{font-size:13px}.day-content{grid-template-columns:1fr;gap:18px}.day .gallery,.day.image-right .gallery{grid-column:1;grid-row:1}.day .day-copy,.day.image-right .day-copy{grid-column:1;grid-row:2}.gallery-main{aspect-ratio:1.3/1;min-height:240px;max-height:420px}.section-head{display:block}.section-head p{margin-top:12px}.intro{padding:42px 24px 20px}.itinerary{padding-left:22px;padding-right:22px}}@media(max-width:420px){.day::before{left:13px}.day{padding-left:38px}.day-num{left:-38px;width:28px;height:28px;font-size:10px}.day-title{font-size:17px}.gallery-main{min-height:210px}.hero h1{font-size:clamp(40px,12vw,58px)}.gallery-arrow{width:40px;height:40px}.itinerary{padding-left:17px;padding-right:17px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 
 /* Footer fluide sur ordinateur, tablette et mobile */
@@ -78,14 +82,10 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
     <div class="footer-link-group"><h2>Explorer</h2><a href="../../a-propos.html">Esprit MIARADI</a><a href="../../index.html#circuits">Nos circuits</a><a href="../../galerie.html">Galerie de voyage</a><a href="../../index.html#contact">Contact</a></div>
     <div class="footer-link-group"><h2>Préparer son voyage</h2><a href="../../index.html#contact">Voyage sur mesure</a><a href="../../index.html#contact">Demande de devis</a><a href="../../a-propos.html#faq">Questions fréquentes</a><a href="../../a-propos.html">Français / English</a></div>
   </div>
-  <div class="container footer-bottom"><span>© <span class="footer-year"><?=date('Y')?></span> MIARADI-TRAVEL <a class="copyright-admin-access" href="admin/login.php" aria-label="Accès administrateur" title="Accès administrateur"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg></a></span><span class="footer-credit"><span class="footer-developer-label">Développé par :</span><a class="footer-developer" href="https://zagarino0.github.io/site-digital-work/" target="_blank" rel="noopener noreferrer"><img src="../../assets/02-logo-horizontal-fond-noir-removebg-preview (1).png" alt="Digital Work"></a></span><span class="footer-legal"><a href="politique-confidentialite.php">Mentions légales · Politique de confidentialité</a></span><a href="../../index.html#top">Retour en haut ↑</a></div>
-</footer>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-<script>
+  <div class="container footer-bottom"><span>© <span class="footer-year"><?=date('Y')?></span> MIARADI-TRAVEL <a class="copyright-admin-access" href="admin/login.php" aria-label="Accès administrateur" title="Accès administrateur"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg></a></span><span class="footer-credit"><span class="footer-developer-label">Développé par :</span><a class="footer-developer" href="https://zagarino0.github.io/site-digital-work/" target="_blank" rel="noopener noreferrer"><img src="../../assets/02-logo-horizontal-fond-noir-removebg-preview (1).png" alt="Digital Work<script>
 (() => {
   const node = document.getElementById('circuit-madagascar-map');
-  if (!node || !window.L) return;
+  if (!node) return;
   const zone = <?=json_encode(['label' => $mapZone['label'], 'lat' => $mapZone['lat'], 'lng' => $mapZone['lng'], 'zoom' => $mapZone['zoom']], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)?>;
   const routeStops = <?=json_encode((function () use ($days, $mapZone) {
     $places = [
@@ -144,22 +144,55 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
     if (!$found) $found = [['name'=>$mapZone['label'],'lat'=>(float)$mapZone['lat'],'lng'=>(float)$mapZone['lng']]];
     return $found;
   })(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)?>;
-  const map = L.map(node, {scrollWheelZoom: false, zoomControl: true}).setView([-19.0, 46.7], 5);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>'
-  }).addTo(map);
-  const zonePoint = [zone.lat, zone.lng];
-  L.circle(zonePoint, {radius: 65000, color: '#922D20', weight: 1.5, opacity: .9, fillColor: '#922D20', fillOpacity: .16}).addTo(map);
-  const routeLatLngs = routeStops.map(stop => [stop.lat, stop.lng]);
-  if (routeLatLngs.length > 1) {
-    L.polyline(routeLatLngs, {color: '#922D20', weight: 3, opacity: .95, dashArray: '8 9', lineCap: 'round'}).addTo(map);
+  const NS = 'http://www.w3.org/2000/svg';
+  const make = (tag, attrs = {}, value = '') => {
+    const el = document.createElementNS(NS, tag);
+    Object.entries(attrs).forEach(([key, val]) => el.setAttribute(key, String(val)));
+    if (value) el.textContent = value;
+    return el;
+  };
+  const svg = make('svg', {viewBox:'0 0 760 620', role:'img', 'aria-label':'Carte illustrée de Madagascar avec la région du circuit et son itinéraire en pointillés', preserveAspectRatio:'xMidYMid meet'});
+  const defs = make('defs');
+  const bg = make('linearGradient',{id:'madagascar-gold',x1:'0',y1:'0',x2:'0',y2:'1'});
+  bg.append(make('stop',{offset:'0%','stop-color':'#f8e8ad'}),make('stop',{offset:'100%','stop-color':'#edae3f'}));
+  defs.append(bg);
+  const shadow = make('filter',{id:'island-shadow',x:'-30%',y:'-20%',width:'160%',height:'150%'});
+  shadow.append(make('feDropShadow',{dx:'8',dy:'13',stdDeviation:'8','flood-color':'#a16c20','flood-opacity':'.25'}));
+  defs.append(shadow);
+  svg.append(defs,make('rect',{x:0,y:0,width:760,height:620,fill:'url(#madagascar-gold)'}));
+  svg.append(make('circle',{cx:420,cy:310,r:282,fill:'none',stroke:'#a87930','stroke-width':1.4,opacity:.65}));
+  // Silhouette stylisée de Madagascar, inspirée de la carte de référence.
+  const islandPath='M414 27 C388 40 365 68 357 101 C350 127 365 150 362 177 C356 207 365 232 374 260 C380 285 383 314 393 342 C405 378 415 411 430 445 C443 476 453 516 474 547 C488 569 507 586 525 577 C544 563 550 532 559 502 C571 464 582 426 591 389 C600 351 615 317 618 280 C621 244 608 207 591 174 C575 140 557 109 533 81 C507 52 468 31 435 27 C427 26 420 26 414 27 Z';
+  svg.append(make('path',{d:islandPath,fill:'#fffdfb',filter:'url(#island-shadow)'}));
+  // Petite silhouette de repérage à gauche, comme sur l’exemple fourni.
+  svg.append(make('path',{d:'M118 182 C101 196 96 218 91 238 C85 258 89 279 79 299 C72 319 79 339 86 360 C95 385 102 407 115 427 C124 440 138 441 147 426 C157 406 161 383 166 361 C172 338 177 315 174 292 C171 267 163 246 154 225 C146 205 133 187 118 182 Z',fill:'#fffdfb',opacity:.94,filter:'url(#island-shadow)'}));
+  const project = (lat,lng) => ({x:350+(lng-43.2)*34,y:45+((-12-lat)*42)});
+  const route = Array.isArray(routeStops) ? routeStops : [];
+  const center = project(zone.lat,zone.lng);
+  svg.append(make('ellipse',{cx:center.x,cy:center.y,rx:42,ry:58,class:'map-route-halo'}));
+  if (route.length) {
+    const pts = route.map(s=>project(Number(s.lat),Number(s.lng)));
+    if (pts.length > 1) {
+      const d = pts.map((p,i)=>(i?'L':'M')+' '+p.x.toFixed(1)+' '+p.y.toFixed(1)).join(' ');
+      svg.append(make('path',{d,class:'map-route-line'}));
+    }
+    route.forEach((stop,index)=>{
+      const p=pts[index];
+      svg.append(make('circle',{cx:p.x,cy:p.y,r:index===0||index===route.length-1?6:4.5,class:'map-route-point'+(index===0?' start':'')}));
+      const rightSide=Number(stop.lng)<47.3;
+      const labelX=p.x+(rightSide?12:-12);
+      const anchor=rightSide?'start':'end';
+      const labelY=Math.max(20,Math.min(590,p.y-7-(index%2)*5));
+      const label=make('text',{x:labelX,y:labelY,'text-anchor':anchor,class:(['Antananarivo','Mahajanga','Antsiranana','Fianarantsoa','Toliara'].includes(stop.name)?'map-city-label major':'map-city-label')},stop.name);
+      svg.append(label);
+    });
+  } else {
+    svg.append(make('circle',{cx:center.x,cy:center.y,r:7,class:'map-route-point start'}));
   }
-  routeStops.forEach((stop, index) => {
-    L.circleMarker([stop.lat, stop.lng], {radius: index === 0 || index === routeStops.length - 1 ? 6 : 4.5, color: '#fff', weight: 2, fillColor: '#922D20', fillOpacity: 1})
-      .addTo(map).bindTooltip((index + 1) + '. ' + stop.name, {direction: 'top', className: 'miaradi-map-label'});
-  });
-  // Garder Madagascar visible en entier ; la route reste lisible par-dessus.
+  svg.append(make('text',{x:34,y:38,class:'map-region-label'},zone.label+' · MADAGASCAR'));
+  node.replaceChildren(svg);
+})();
+</script>// Garder Madagascar visible en entier ; la route reste lisible par-dessus.
   map.setView([-19.0, 46.7], 5);
   window.addEventListener('resize', () => map.invalidateSize(), {passive: true});
 })();
