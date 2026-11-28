@@ -179,18 +179,14 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
   const zoomControls = document.createElement('div');
   zoomControls.className = 'map-zoom-controls';
   zoomControls.setAttribute('aria-label','Commandes de zoom de la carte');
-  zoomControls.innerHTML = '<button type="button" data-map-zoom="in" aria-label="Agrandir la carte" title="Agrandir">+</button><button type="button" data-map-zoom="out" aria-label="Réduire la carte" title="Réduire">−</button><button type="button" data-map-zoom="reset" aria-label="Réinitialiser le zoom" title="Réinitialiser">↺</button>;
+  zoomControls.innerHTML = '<button type="button" data-map-zoom="in" aria-label="Agrandir la carte" title="Agrandir">+</button><button type="button" data-map-zoom="out" aria-label="Réduire la carte" title="Réduire">−</button><button type="button" data-map-zoom="reset" aria-label="Réinitialiser le zoom" title="Réinitialiser">↺</button>';
   const defs = make('defs');
   const shadow = make('filter',{id:'island-shadow',x:'-30%',y:'-20%',width:'160%',height:'150%'});
   shadow.append(make('feDropShadow',{dx:'2',dy:'3',stdDeviation:'3','flood-color':'#8b6a3d','flood-opacity':'.17'}));
   defs.append(shadow);
-  const clip = make('clipPath',{id:'zoom-clip'});
-  clip.append(make('circle',{cx:260,cy:195,r:184}));
-  defs.append(clip);
-  zoom.append(defs,zoomContent);
+    zoom.append(defs,zoomContent);
 
-  // Contour de Madagascar en coordonnées géographiques simplifiées.
-  // Contour côtier issu des données géographiques Natural Earth (Madagascar).
+  // Contour côtier géographique Natural Earth de Madagascar.
   const coast = [
     [49.543519,-12.469833],[49.808981,-12.895285],[50.056511,-13.555761],[50.217431,-14.758789],
     [50.476537,-15.226512],[50.377111,-15.706069],[50.200275,-16.000263],[49.860606,-15.414253],
@@ -264,7 +260,7 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
   const zoomPoint=p=>({x:p.x*zoomScale+tx,y:p.y*zoomScale+ty});
   const zoomCoast=globalCoast.map(zoomPoint);
   
-  const landGroup=make('g',{'clip-path':'url(#zoom-clip)'});
+  const landGroup=make('g');
   landGroup.append(make('path',{d:pathFrom(zoomCoast),fill:'#fffdfb',stroke:'#e8d8c6','stroke-width':1.3,filter:'url(#island-shadow)'}));
   zoomContent.append(landGroup);
   const pts=routeGeo.map(zoomPoint);
