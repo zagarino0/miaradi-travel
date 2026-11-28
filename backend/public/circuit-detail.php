@@ -266,7 +266,7 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
   const pts=routeGeo.map(zoomPoint);
   if(pts.length>1){
     const d=pts.map((p,i)=>(i?'L ':'M ')+p.x.toFixed(1)+' '+p.y.toFixed(1)).join(' ');
-    zoom.append(make('path',{d,class:'map-route-line'}));
+    zoomContent.append(make('path',{d,class:'map-route-line'}));
   }
   route.forEach((stop,index)=>{
     const p=pts[index];
