@@ -7672,3 +7672,26 @@ header.site-header#top {
 .gallery-page-brand .brand-travel {
   display: none !important;
 }
+
+
+/* FIX CLIC — les trois cartes d'engagement doivent rester au-dessus des overlays */
+.trust-strip {
+  position: relative !important;
+  z-index: 20 !important;
+  isolation: isolate;
+}
+.trust-strip .trust-card-link {
+  position: relative !important;
+  z-index: 21 !important;
+  display: flex !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  touch-action: manipulation;
+}
+.trust-strip .trust-card-link > * {
+  pointer-events: none;
+}
+.trust-strip .trust-card-link:focus-visible {
+  outline: 3px solid #922D20 !important;
+  outline-offset: 3px;
+}
