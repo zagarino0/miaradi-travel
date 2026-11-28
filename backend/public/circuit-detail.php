@@ -90,6 +90,10 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
   const routeStops = <?=json_encode((function () use ($days, $mapZone) {
     $places = [
       ['name'=>'Antananarivo','lat'=>-18.8792,'lng'=>47.5079,'keys'=>['antananarivo','tana','ivato']],
+      ['name'=>'Andasibe','lat'=>-18.9333,'lng'=>48.4167,'keys'=>['andasibe','périnet']],
+      ['name'=>'Moramanga','lat'=>-18.95,'lng'=>48.2333,'keys'=>['moramanga']],
+      ['name'=>'Ambalavao','lat'=>-21.8333,'lng'=>46.9333,'keys'=>['ambalavao']],
+      ['name'=>'Ranomafana','lat'=>-21.25,'lng'=>47.4167,'keys'=>['ranomafana']],
       ['name'=>'Ambatolampy','lat'=>-19.3833,'lng'=>47.4167,'keys'=>['ambatolampy']],
       ['name'=>'Antsirabe','lat'=>-19.8659,'lng'=>47.0333,'keys'=>['antsirabe']],
       ['name'=>'Fianarantsoa','lat'=>-21.45,'lng'=>47.0833,'keys'=>['fianarantsoa']],
@@ -97,10 +101,20 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
       ['name'=>'Ambondromamy','lat'=>-16.4333,'lng'=>47.15,'keys'=>['ambondromamy']],
       ['name'=>'Ankarafantsika','lat'=>-16.3167,'lng'=>46.8167,'keys'=>['ankarafantsika','ankarokaroka']],
       ['name'=>'Mahajanga','lat'=>-15.7167,'lng'=>46.3167,'keys'=>['mahajanga','majunga']],
+      ['name'=>'Antsanitia','lat'=>-15.65,'lng'=>46.4,'keys'=>['antsanitia']],
+      ['name'=>'Katsepy','lat'=>-15.75,'lng'=>46.25,'keys'=>['katsepy']],
+      ['name'=>'Namoroka','lat'=>-16.4667,'lng'=>45.3333,'keys'=>['namoroka']],
+      ['name'=>'Anjajavy','lat'=>-14.9833,'lng'=>47.25,'keys'=>['anjajavy']],
+      ['name'=>'Marovoay','lat'=>-16.1167,'lng'=>46.6333,'keys'=>['marovoay']],
       ['name'=>'Fleuve Sofia','lat'=>-15.1,'lng'=>48.0,'keys'=>['fleuve sofia','sofia']],
       ['name'=>'Antsiranana','lat'=>-12.2765,'lng'=>49.2917,'keys'=>['antsiranana','diégo','diego suarez']],
       ['name'=>'Nosy Be','lat'=>-13.4,'lng'=>48.2667,'keys'=>['nosy be','nosy-be','hell-ville']],
       ['name'=>'Toamasina','lat'=>-18.1492,'lng'=>49.4023,'keys'=>['toamasina','tamatave']],
+      ['name'=>'Sainte-Marie','lat'=>-17.0,'lng'=>49.85,'keys'=>['sainte-marie','sainte marie','nosy boraha']],
+      ['name'=>'Sambava','lat'=>-14.2667,'lng'=>50.1667,'keys'=>['sambava']],
+      ['name'=>'Vohemar','lat'=>-13.3667,'lng'=>50.0,'keys'=>['vohemar','vohémar']],
+      ['name'=>'Ifaty','lat'=>-23.15,'lng'=>43.62,'keys'=>['ifaty']],
+      ['name'=>'Anakao','lat'=>-23.6667,'lng'=>43.65,'keys'=>['anakao']],
       ['name'=>'Morondava','lat'=>-20.2833,'lng'=>44.2833,'keys'=>['morondava','baobab']],
       ['name'=>'Bekopaka','lat'=>-18.9333,'lng'=>44.8333,'keys'=>['bekopaka','tsingy de bemaraha','bemaraha']],
       ['name'=>'Manja','lat'=>-21.4333,'lng'=>44.3333,'keys'=>['manja']],
@@ -127,12 +141,7 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
         if ($last !== $place['name']) $found[] = ['name'=>$place['name'],'lat'=>$place['lat'],'lng'=>$place['lng']];
       }
     }
-    if (count($found) < 2) {
-      $found = [
-        ['name'=>'Départ du circuit','lat'=>-18.8792,'lng'=>47.5079],
-        ['name'=>$mapZone['label'],'lat'=>(float)$mapZone['lat'],'lng'=>(float)$mapZone['lng']]
-      ];
-    }
+    if (!$found) $found = [['name'=>$mapZone['label'],'lat'=>(float)$mapZone['lat'],'lng'=>(float)$mapZone['lng']]];
     return $found;
   })(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)?>;
   const map = L.map(node, {scrollWheelZoom: false, zoomControl: true}).setView([-19.0, 46.7], 5);
@@ -150,7 +159,8 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
     L.circleMarker([stop.lat, stop.lng], {radius: index === 0 || index === routeStops.length - 1 ? 6 : 4.5, color: '#fff', weight: 2, fillColor: '#922D20', fillOpacity: 1})
       .addTo(map).bindTooltip((index + 1) + '. ' + stop.name, {direction: 'top', className: 'miaradi-map-label'});
   });
-  map.fitBounds(L.latLngBounds(routeLatLngs).pad(0.14), {maxZoom: 6});
+  // Garder Madagascar visible en entier ; la route reste lisible par-dessus.
+  map.setView([-19.0, 46.7], 5);
   window.addEventListener('resize', () => map.invalidateSize(), {passive: true});
 })();
 </script>
