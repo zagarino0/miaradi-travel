@@ -162,7 +162,7 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
   svg.append(defs,make('rect',{x:0,y:0,width:760,height:620,fill:'url(#madagascar-gold)'}));
   svg.append(make('circle',{cx:420,cy:310,r:282,fill:'none',stroke:'#a87930','stroke-width':1.4,opacity:.65}));
   // Silhouette stylisée de Madagascar, inspirée de la carte de référence.
-  const islandPath='M414 27 C388 40 365 68 357 101 C350 127 365 150 362 177 C356 207 365 232 374 260 C380 285 383 314 393 342 C405 378 415 411 430 445 C443 476 453 516 474 547 C488 569 507 586 525 577 C544 563 550 532 559 502 C571 464 582 426 591 389 C600 351 615 317 618 280 C621 244 608 207 591 174 C575 140 557 109 533 81 C507 52 468 31 435 27 C427 26 420 26 414 27 Z';
+  const islandPath='M558 32 C536 43 511 60 489 83 C463 109 441 136 417 166 C394 195 369 225 348 257 C329 289 316 321 320 353 C324 385 340 415 354 445 C370 480 384 520 405 550 C419 570 437 584 451 575 C473 560 486 530 497 501 C510 469 522 438 537 407 C553 373 569 340 583 305 C597 271 608 237 613 205 C620 174 622 144 611 116 C600 87 581 55 558 32 Z';
   svg.append(make('path',{d:islandPath,fill:'#fffdfb',filter:'url(#island-shadow)'}));
   // Petite silhouette de repérage à gauche, comme sur l’exemple fourni.
   svg.append(make('path',{d:'M118 182 C101 196 96 218 91 238 C85 258 89 279 79 299 C72 319 79 339 86 360 C95 385 102 407 115 427 C124 440 138 441 147 426 C157 406 161 383 166 361 C172 338 177 315 174 292 C171 267 163 246 154 225 C146 205 133 187 118 182 Z',fill:'#fffdfb',opacity:.94,filter:'url(#island-shadow)'}));
