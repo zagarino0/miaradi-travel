@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#FBF8F5">
+<title>Accompagnement dédié — MIARADI-TRAVEL</title>
+<link rel="stylesheet" href="site.css?v=20261128-engagement-pages">
+<script src="https://unpkg.com/lucide@latest" defer></script><script src="icons.js" defer></script><script src="floating-contact.js" defer></script><script src="footer-partners.js" defer></script>
+<style>
+.engagement-page{background:var(--paper,#FBF8F5);min-height:70vh;padding:clamp(64px,9vw,120px) 0 100px}
+.engagement-wrap{max-width:980px;margin:auto}
+.engagement-eyebrow{display:flex;align-items:center;gap:12px;color:var(--red,#922D20);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.engagement-eyebrow:before{content:"";width:28px;height:1px;background:currentColor}
+.engagement-page h1{max-width:850px;margin:24px 0;font-size:clamp(2.6rem,6vw,5.6rem);line-height:1.02;letter-spacing:-.055em;font-weight:500;color:#172238}
+.engagement-lead{max-width:760px;font-size:clamp(18px,2vw,23px);line-height:1.7;color:#5e6b80}
+.engagement-content{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:48px}
+.engagement-block{background:#fff;border:1px solid #eee4dc;padding:clamp(22px,4vw,36px);border-radius:18px;box-shadow:0 8px 28px #2b1a100a}
+.engagement-block i{color:var(--red,#922D20);width:26px;height:26px;margin-bottom:18px}
+.engagement-block p{margin:0;color:#526079;line-height:1.9}
+.engagement-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
+.engagement-actions a{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:13px 20px;border-radius:999px;text-decoration:none;font-weight:700;font-size:13px}
+.engagement-primary{background:var(--red,#922D20);color:#fff!important}.engagement-secondary{border:1px solid #e4d9d1;color:#922D20}
+@media(max-width:620px){.engagement-content{grid-template-columns:1fr}.engagement-page{padding-top:52px}}
+</style>
+<script>document.documentElement.classList.add('engagement-page-ready');</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Aller au contenu</a>
+<header class="site-header" id="top"><div class="container header-inner">
+<a class="brand" href="index.html#top" aria-label="MIARADI-TRAVEL, accueil"><img class="brand-logo" src="assets/miaradi-logo.png" alt="MIARADI-TRAVEL"></a>
+<button class="nav-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false"><span></span><span></span><span></span></button>
+<nav class="primary-nav" aria-label="Navigation principale"><a href="index.html">Accueil</a><a href="circuits.html">Circuits</a><a href="a-propos.html">Esprit MIARADI</a><a href="galerie.html">Galerie</a><a class="nav-cta" href="index.html#contact">Demander un devis</a></nav>
+</div></header>
+<main id="main" class="engagement-page"><div class="container engagement-wrap">
+<p class="engagement-eyebrow">À VOS CÔTÉS</p>
+<h1 id="support-title">Accompagnement dédié</h1>
+<p class="engagement-lead" id="support-intro">De la première idée au retour, MIARADI reste à vos côtés pour préparer un voyage serein.</p>
+<div class="engagement-content">
+<article class="engagement-block"><i data-lucide="compass" aria-hidden="true"></i><p id="support-text1">Nous prenons le temps de comprendre vos envies, votre rythme et vos priorités afin de vous conseiller un itinéraire adapté à votre projet.</p></article>
+<article class="engagement-block"><i data-lucide="leaf" aria-hidden="true"></i><p id="support-text2">Avant le départ, nous vous aidons à préparer les étapes et les expériences. Pendant l’organisation, nous restons disponibles pour clarifier les informations utiles à votre voyage.</p></article>
+</div>
+<div class="engagement-actions"><a class="engagement-primary" href="index.html#contact">Imaginons votre voyage <span aria-hidden="true">↗</span></a><a class="engagement-secondary" href="index.html">Retour à l’accueil</a></div>
+</div></main>
+<footer class="site-footer"><div class="container footer-bottom"><span>© <span id="year"></span> MIARADI-TRAVEL</span><a href="index.html#top">Retour à l’accueil ↑</a></div></footer>
+<script>
+document.getElementById('year').textContent=new Date().getFullYear();
+(async()=>{try{const response=await fetch('backend/public/api/homepage-settings.php',{headers:{Accept:'application/json'}});if(!response.ok)return;const payload=await response.json();const data=payload.data||{};const fields={title:'supportTitle',intro:'supportIntro',text1:'supportText1',text2:'supportText2'};for(const [target,key] of Object.entries(fields)){const value=data[key];if(typeof value==='string'&&value.trim())document.getElementById('support-'+target).textContent=value;}}catch(error){console.warn('Le contenu éditorial reste affiché avec les textes par défaut.',error);}})();
+</script>
+</body></html>
