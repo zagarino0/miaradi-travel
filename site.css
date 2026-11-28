@@ -7700,10 +7700,8 @@ header.site-header#top {
 .trust-strip .trust-card-link {
   transition:
     background-color 250ms ease,
-    border-color 250ms ease,
     box-shadow 250ms ease,
     transform 250ms ease;
-  border: 1px solid rgba(146, 45, 32, 0.08);
   cursor: pointer;
 }
 
@@ -7714,7 +7712,6 @@ header.site-header#top {
 
 .trust-strip .trust-card-link:nth-child(1):hover {
   background-color: #F8E6E0 !important;
-  border-color: #922D20 !important;
 }
 .trust-strip .trust-card-link:nth-child(1):hover .trust-icon {
   background-color: #922D20 !important;
@@ -7723,7 +7720,6 @@ header.site-header#top {
 
 .trust-strip .trust-card-link:nth-child(2):hover {
   background-color: #E0F0E6 !important;
-  border-color: #28734B !important;
 }
 .trust-strip .trust-card-link:nth-child(2):hover .trust-icon {
   background-color: #28734B !important;
@@ -7732,7 +7728,6 @@ header.site-header#top {
 
 .trust-strip .trust-card-link:nth-child(3):hover {
   background-color: #E4ECF8 !important;
-  border-color: #315C91 !important;
 }
 .trust-strip .trust-card-link:nth-child(3):hover .trust-icon {
   background-color: #315C91 !important;
@@ -7741,7 +7736,6 @@ header.site-header#top {
 
 .trust-strip .trust-card-link:nth-child(4):hover {
   background-color: #F8EBCF !important;
-  border-color: #94651B !important;
 }
 .trust-strip .trust-card-link:nth-child(4):hover .trust-icon {
   background-color: #94651B !important;
