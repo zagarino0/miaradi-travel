@@ -22,25 +22,26 @@ $intro = $page ? ((string)($page['intro_fr'] ?: $page['summary_fr'])) : 'Cette p
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="<?=page_escape($intro)?>"><title><?=page_escape($title)?> — MIARADI-TRAVEL</title>
 <style>
 :root{--red:#922D20;--paper:#FBF8F5;--ink:#24211f;--muted:#746d68;--line:#ded7d1;--peach:#eab5a3}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.7 "DM Sans",Inter,system-ui,sans-serif}.nav{height:82px;background:#fffaf8;border-bottom:1px solid #eee5e0;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,5vw,82px);gap:20px}.nav-brand{display:inline-flex;align-items:center;gap:3px;flex-shrink:0}.logo{width:125px;max-height:55px;object-fit:contain}.nav-brand-travel{color:var(--red);font-size:14px;font-weight:800;letter-spacing:.035em;white-space:nowrap}.nav-links{display:flex;align-items:center;gap:clamp(15px,3vw,38px)}.nav a{color:var(--ink);text-decoration:none;font-size:14px;font-weight:650}.cta{background:var(--red)!important;color:#fff!important;padding:13px 21px;border-radius:30px}.hero{min-height:590px;display:flex;align-items:center;position:relative;background:#30251f;color:#fff;overflow:hidden}.hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,16,15,.78),rgba(20,16,15,.2)),linear-gradient(0deg,rgba(20,16,15,.34),transparent 65%)}.hero-content{position:relative;z-index:1;max-width:1200px;width:100%;margin:auto;padding:80px 7vw}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:#f1c6b8;font-weight:800}.hero h1{font-size:clamp(46px,7vw,94px);line-height:.99;letter-spacing:-.055em;max-width:1000px;margin:20px 0}.hero h1 em{font-family:Georgia,serif;font-weight:400;color:var(--peach)}.hero p{font-size:clamp(17px,1.7vw,22px);max-width:700px;color:#f4eeeb}.chips{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0}.chip{border:1px solid #ffffff80;border-radius:30px;padding:7px 14px;font-size:13px}.intro{max-width:1200px;margin:auto;padding:65px 6vw 30px;font-size:18px;color:#655d58}.intro p{max-width:900px}
-.itinerary-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.72fr);gap:clamp(24px,4vw,58px);align-items:stretch;margin-bottom:28px}
+.itinerary-top{display:grid;grid-template-columns:minmax(0,.9fr) minmax(420px,1.1fr);gap:clamp(28px,4vw,64px);align-items:center;margin-bottom:34px}
 .itinerary-top .section-head{margin:0;align-self:center}
-.circuit-map-card{display:block;min-width:0;overflow:hidden;border:0;border-radius:0;background:transparent;box-shadow:none}
-.circuit-map{height:390px;min-width:0;background:transparent;position:relative;overflow:hidden}
-.circuit-map .map-layout{display:grid;grid-template-columns:minmax(100px,.3fr) minmax(0,1fr);align-items:stretch;gap:10px;width:100%;height:100%}
+.circuit-map-card{display:block;min-width:0;overflow:visible;border:0;border-radius:0;background:transparent;box-shadow:none}
+.circuit-map{height:520px;min-width:0;background:transparent;position:relative;overflow:visible}
+.circuit-map .map-layout{display:grid;grid-template-columns:minmax(150px,.62fr) minmax(0,1.38fr);align-items:stretch;gap:14px;width:100%;height:100%}
 .circuit-map svg{display:block;width:100%;height:100%;overflow:visible;font-family:Georgia,"Times New Roman",serif}
 .circuit-map .map-overview,.circuit-map .map-zoom{min-width:0;min-height:0}
 .circuit-map-info{display:none}
-.map-region-label{font-family:Inter,system-ui,sans-serif;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;fill:#7f2b1e}
-.map-city-label{font-size:11px;font-style:italic;fill:#653021;paint-order:stroke;stroke:#fff8e8;stroke-width:2px;stroke-linejoin:round}
-.map-city-label.major{font-size:14px;font-style:normal;font-weight:700;letter-spacing:.01em}
-.map-route-line{fill:none;stroke:#e99a1d;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 6}
+.map-region-label{font-family:Inter,system-ui,sans-serif;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;fill:#7f2b1e}
+.map-city-label{font-size:12px;font-style:italic;fill:#653021;paint-order:stroke;stroke:#FBF8F5;stroke-width:3px;stroke-linejoin:round}
+.map-city-label.major{font-size:15px;font-style:normal;font-weight:700;letter-spacing:.01em}
+.map-route-line{fill:none;stroke:#e99a1d;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:7 7}
 .map-route-point{fill:#8f2c1d;stroke:#fff3d4;stroke-width:2}
 .map-route-point.start{fill:#922d20;stroke:#fff;stroke-width:3}
 .map-route-halo{fill:#922d20;fill-opacity:.12;stroke:#922d20;stroke-opacity:.55;stroke-width:1.5}
-.map-zoom-ring{fill:none;stroke:#a87930;stroke-width:1.2;opacity:.65}
-.map-ocean{fill:#f3d8a6;fill-opacity:.18}
-@media(max-width:760px){.itinerary-top{grid-template-columns:minmax(0,1fr);gap:22px}.itinerary-top .section-head{display:block}.circuit-map{height:340px}.circuit-map .map-layout{grid-template-columns:minmax(72px,.24fr) minmax(0,1fr);gap:5px}.map-city-label{font-size:10px}.map-city-label.major{font-size:12px}}
-@media(max-width:420px){.circuit-map{height:300px}.circuit-map .map-layout{grid-template-columns:minmax(58px,.22fr) minmax(0,1fr);gap:3px}.map-city-label{font-size:9px}.map-city-label.major{font-size:10px}}
+.map-zoom-ring{fill:none;stroke:#a87930;stroke-width:1.2;opacity:.45}
+.map-ocean{fill:#f3d8a6;fill-opacity:.12}
+@media(max-width:1000px){.itinerary-top{grid-template-columns:minmax(0,1fr);gap:26px}.itinerary-top .section-head{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1fr);gap:28px;align-items:end}.circuit-map{height:480px}.circuit-map .map-layout{grid-template-columns:minmax(170px,.55fr) minmax(0,1.45fr)}}
+@media(max-width:600px){.itinerary-top .section-head{display:block}.circuit-map{height:390px}.circuit-map .map-layout{grid-template-columns:minmax(90px,.42fr) minmax(0,1.58fr);gap:6px}.map-region-label{font-size:10px}.map-city-label{font-size:10px}.map-city-label.major{font-size:12px}}
+@media(max-width:390px){.circuit-map{height:340px}.circuit-map .map-layout{grid-template-columns:minmax(74px,.38fr) minmax(0,1.62fr);gap:3px}.map-city-label{font-size:9px}.map-city-label.major{font-size:10px}}
 .itinerary{max-width:1400px;margin:0 auto;padding:30px 4vw 90px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:28px}.section-head h2{font-size:clamp(30px,4vw,54px);line-height:1.05;letter-spacing:-.045em;margin:0}.section-head p{color:var(--muted);max-width:390px;margin:0}.day{position:relative;border-top:1px solid var(--line);padding:22px 0 34px 78px}.day:last-child{border-bottom:1px solid var(--line)}.day::before{content:"";position:absolute;left:27px;top:0;bottom:0;width:2px;background:#dfc5bb;z-index:0}.day-heading{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr);gap:8px;padding:0 0 18px;min-height:76px;align-content:center}.day-num{position:absolute;left:-78px;top:0;display:grid;place-items:center;width:48px;height:48px;border:1px solid #d8b2a6;border-radius:50%;color:#fff;font-size:14px;font-weight:800;background:var(--red);z-index:2;box-shadow:0 0 0 5px var(--paper)}.day-title{font-size:clamp(20px,2vw,27px);font-weight:750;line-height:1.3;color:#18253a}.day-subtitle{font-size:15px;color:var(--muted)}.day-content{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:clamp(28px,4vw,64px);align-items:center;padding:0 0 8px;animation:day-reveal .25s ease-out}.day .gallery{grid-column:1;grid-row:1}.day .day-copy{grid-column:2;grid-row:1}.day.image-right .gallery{grid-column:2}.day.image-right .day-copy{grid-column:1}.day-copy{color:#625b56;font-size:clamp(16px,1.3vw,19px);line-height:1.85}.day-copy p:first-child{margin-top:0}.day-copy p{max-width:58ch}.day-copy .overnight{padding:12px 15px;border-left:3px solid var(--red);background:#f4ece6;font-size:14px}.gallery{min-width:0;width:100%}@keyframes day-reveal{from{opacity:.45;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}.overnight{font-size:14px}.gallery{min-width:0}.gallery-main{position:relative;width:100%;aspect-ratio:1.42/1;min-height:320px;max-height:520px;overflow:hidden;background:#eee3dc;border-radius:5px}.gallery-main img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s}.gallery-main img.active{opacity:1}.gallery-arrow{position:absolute;z-index:1;top:50%;transform:translateY(-50%);width:44px;height:44px;border:1px solid #ffffffa8;border-radius:50%;background:#201c1bd9;color:#fff;font-size:25px;cursor:pointer}.gallery-arrow.prev{left:14px}.gallery-arrow.next{right:14px}.gallery-arrow:disabled{opacity:.45;cursor:default}.gallery-count{position:absolute;right:14px;top:14px;border-radius:20px;background:#201c1bd9;color:#fff;padding:5px 11px;font-size:12px}.gallery-caption{background:#f3e7e1;padding:10px 13px;color:#786c67;font-size:11px;letter-spacing:.08em;text-transform:uppercase}.no-image{display:grid;place-items:center;height:100%;color:#9b8e85}.bottom-cta{background:#eee4dd;padding:55px 6vw;text-align:center}.bottom-cta h2{font-size:clamp(30px,4vw,48px);margin:0 0 12px}.bottom-cta p{color:var(--muted)}.bottom-cta a{display:inline-block;margin-top:15px;background:var(--red);color:white;padding:13px 24px;border-radius:30px;text-decoration:none;font-weight:700}.footer{padding:28px 6vw;background:#292320;color:#f7eee9;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:12px}.not-found{min-height:70vh;display:grid;place-content:center;text-align:center;padding:30px}.not-found a{color:var(--red)}@media(max-width:760px){.nav{height:68px}.logo{width:100px}.nav-links a:not(.cta){display:none}.hero{min-height:560px}.hero-content{padding:65px 24px}.day::before{left:17px}.day{padding:20px 0 28px 50px}.day-heading{padding-bottom:16px}.day-num{left:-50px;width:36px;height:36px;font-size:12px}.day-title{font-size:19px}.day-subtitle{font-size:13px}.day-content{grid-template-columns:1fr;gap:18px}.day .gallery,.day.image-right .gallery{grid-column:1;grid-row:1}.day .day-copy,.day.image-right .day-copy{grid-column:1;grid-row:2}.gallery-main{aspect-ratio:1.3/1;min-height:240px;max-height:420px}.section-head{display:block}.section-head p{margin-top:12px}.intro{padding:42px 24px 20px}.itinerary{padding-left:22px;padding-right:22px}}@media(max-width:420px){.day::before{left:13px}.day{padding-left:38px}.day-num{left:-38px;width:28px;height:28px;font-size:10px}.day-title{font-size:17px}.gallery-main{min-height:210px}.hero h1{font-size:clamp(40px,12vw,58px)}.gallery-arrow{width:40px;height:40px}.itinerary{padding-left:17px;padding-right:17px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 
 /* Footer fluide sur ordinateur, tablette et mobile */
@@ -140,10 +141,15 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
         if ($position !== null) $matches[] = ['position'=>$position, 'place'=>$place];
       }
       usort($matches, static fn($a,$b) => $a['position'] <=> $b['position']);
-      foreach ($matches as $match) {
-        $place = $match['place'];
-        $last = $found ? $found[count($found)-1]['name'] : null;
-        if ($last !== $place['name']) $found[] = ['name'=>$place['name'],'lat'=>$place['lat'],'lng'=>$place['lng']];
+      // Une étape géographique par jour évite les tracés illisibles causés par
+      // chaque ville citée dans les descriptions.
+      if ($matches) {
+        $place = $matches[0]['place'];
+        $alreadyAdded = false;
+        foreach ($found as $existing) {
+          if ($existing['name'] === $place['name']) { $alreadyAdded = true; break; }
+        }
+        if (!$alreadyAdded) $found[] = ['name'=>$place['name'],'lat'=>$place['lat'],'lng'=>$place['lng']];
       }
     }
     if (!$found) $found = [['name'=>$mapZone['label'],'lat'=>(float)$mapZone['lat'],'lng'=>(float)$mapZone['lng']]];
@@ -213,8 +219,10 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
     minX:Math.min(...routeGeo.map(p=>p.x)),maxX:Math.max(...routeGeo.map(p=>p.x)),
     minY:Math.min(...routeGeo.map(p=>p.y)),maxY:Math.max(...routeGeo.map(p=>p.y))
   };
-  const spanX=Math.max(90,bounds.maxX-bounds.minX),spanY=Math.max(95,bounds.maxY-bounds.minY);
-  const zoomScale=Math.min(430/(spanX*1.42),320/(spanY*1.42));
+  const spanX=Math.max(45,bounds.maxX-bounds.minX),spanY=Math.max(55,bounds.maxY-bounds.minY);
+  // Le cadrage est calculé sur les étapes réellement retenues, avec une marge
+  // réduite pour que la région visitée soit plus grande et plus facile à lire.
+  const zoomScale=Math.min(455/(spanX*1.24),350/(spanY*1.24));
   const tx=260-(bounds.minX+bounds.maxX)/2*zoomScale;
   const ty=195-(bounds.minY+bounds.maxY)/2*zoomScale;
   const zoomPoint=p=>({x:p.x*zoomScale+tx,y:p.y*zoomScale+ty});
