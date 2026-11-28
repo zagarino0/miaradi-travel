@@ -24,8 +24,8 @@ $intro = $page ? ((string)($page['intro_fr'] ?: $page['summary_fr'])) : 'Cette p
 :root{--red:#922D20;--paper:#FBF8F5;--ink:#24211f;--muted:#746d68;--line:#ded7d1;--peach:#eab5a3}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.7 "DM Sans",Inter,system-ui,sans-serif}.nav{height:82px;background:#fffaf8;border-bottom:1px solid #eee5e0;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,5vw,82px);gap:20px}.nav-brand{display:inline-flex;align-items:center;gap:3px;flex-shrink:0}.logo{width:125px;max-height:55px;object-fit:contain}.nav-brand-travel{color:var(--red);font-size:14px;font-weight:800;letter-spacing:.035em;white-space:nowrap}.nav-links{display:flex;align-items:center;gap:clamp(15px,3vw,38px)}.nav a{color:var(--ink);text-decoration:none;font-size:14px;font-weight:650}.cta{background:var(--red)!important;color:#fff!important;padding:13px 21px;border-radius:30px}.hero{min-height:590px;display:flex;align-items:center;position:relative;background:#30251f;color:#fff;overflow:hidden}.hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,16,15,.78),rgba(20,16,15,.2)),linear-gradient(0deg,rgba(20,16,15,.34),transparent 65%)}.hero-content{position:relative;z-index:1;max-width:1200px;width:100%;margin:auto;padding:80px 7vw}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:#f1c6b8;font-weight:800}.hero h1{font-size:clamp(46px,7vw,94px);line-height:.99;letter-spacing:-.055em;max-width:1000px;margin:20px 0}.hero h1 em{font-family:Georgia,serif;font-weight:400;color:var(--peach)}.hero p{font-size:clamp(17px,1.7vw,22px);max-width:700px;color:#f4eeeb}.chips{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0}.chip{border:1px solid #ffffff80;border-radius:30px;padding:7px 14px;font-size:13px}.intro{max-width:1200px;margin:auto;padding:65px 6vw 30px;font-size:18px;color:#655d58}.intro p{max-width:900px}
 .itinerary-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.72fr);gap:clamp(24px,4vw,58px);align-items:stretch;margin-bottom:28px}
 .itinerary-top .section-head{margin:0;align-self:center}
-.circuit-map-card{display:block;min-width:0;overflow:hidden;border:0;border-radius:0;background:#f2bb55;box-shadow:none}
-.circuit-map{height:390px;min-width:0;background:#efb64d;position:relative;overflow:hidden}
+.circuit-map-card{display:block;min-width:0;overflow:hidden;border:0;border-radius:0;background:transparent;box-shadow:none}
+.circuit-map{height:390px;min-width:0;background:transparent;position:relative;overflow:hidden}
 .circuit-map svg{display:block;width:100%;height:100%;font-family:Georgia,"Times New Roman",serif}
 .circuit-map-info{display:none}
 .map-region-label{font-family:Inter,system-ui,sans-serif;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;fill:#7f2b1e}
@@ -153,14 +153,11 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
   };
   const svg = make('svg', {viewBox:'0 0 760 620', role:'img', 'aria-label':'Carte illustrée de Madagascar avec la région du circuit et son itinéraire en pointillés', preserveAspectRatio:'xMidYMid meet'});
   const defs = make('defs');
-  const bg = make('linearGradient',{id:'madagascar-gold',x1:'0',y1:'0',x2:'0',y2:'1'});
-  bg.append(make('stop',{offset:'0%','stop-color':'#f8e8ad'}),make('stop',{offset:'100%','stop-color':'#edae3f'}));
-  defs.append(bg);
   const shadow = make('filter',{id:'island-shadow',x:'-30%',y:'-20%',width:'160%',height:'150%'});
   shadow.append(make('feDropShadow',{dx:'8',dy:'13',stdDeviation:'8','flood-color':'#a16c20','flood-opacity':'.25'}));
   defs.append(shadow);
-  svg.append(defs,make('rect',{x:0,y:0,width:760,height:620,fill:'url(#madagascar-gold)'}));
-  svg.append(make('circle',{cx:420,cy:310,r:282,fill:'none',stroke:'#a87930','stroke-width':1.4,opacity:.65}));
+  svg.append(defs);
+  svg.append(make('circle',{cx:420,cy:310,r:282,fill:'none',stroke:'#a87930','stroke-width':1.4,opacity:.45}));
   // Silhouette stylisée de Madagascar, inspirée de la carte de référence.
   const islandPath='M558 32 C536 43 511 60 489 83 C463 109 441 136 417 166 C394 195 369 225 348 257 C329 289 316 321 320 353 C324 385 340 415 354 445 C370 480 384 520 405 550 C419 570 437 584 451 575 C473 560 486 530 497 501 C510 469 522 438 537 407 C553 373 569 340 583 305 C597 271 608 237 613 205 C620 174 622 144 611 116 C600 87 581 55 558 32 Z';
   svg.append(make('path',{d:islandPath,fill:'#fffdfb',filter:'url(#island-shadow)'}));
@@ -191,10 +188,6 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
   }
   svg.append(make('text',{x:34,y:38,class:'map-region-label'},zone.label+' · MADAGASCAR'));
   node.replaceChildren(svg);
-})();
-</script>// Garder Madagascar visible en entier ; la route reste lisible par-dessus.
-  map.setView([-19.0, 46.7], 5);
-  window.addEventListener('resize', () => map.invalidateSize(), {passive: true});
 })();
 </script>
 <script>
