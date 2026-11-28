@@ -7696,38 +7696,66 @@ header.site-header#top {
   outline-offset: 3px;
 }
 
-/* Transition fluide pour les quatre cartes */
-.service-card {
+/* Couleurs de survol distinctes pour les quatre cartes d'engagement réellement affichées */
+.trust-strip .trust-card-link {
   transition:
     background-color 250ms ease,
     border-color 250ms ease,
     box-shadow 250ms ease,
     transform 250ms ease;
+  border: 1px solid rgba(146, 45, 32, 0.08);
   cursor: pointer;
 }
 
-.service-card:hover {
+.trust-strip .trust-card-link:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(25, 35, 50, 0.08);
+  box-shadow: 0 8px 24px rgba(25, 35, 50, 0.10);
 }
 
-.service-card--madagascar:hover {
-  background-color: #F8E6E0;
-  border-color: #922D20;
+.trust-strip .trust-card-link:nth-child(1):hover {
+  background-color: #F8E6E0 !important;
+  border-color: #922D20 !important;
+}
+.trust-strip .trust-card-link:nth-child(1):hover .trust-icon {
+  background-color: #922D20 !important;
+  color: #fff !important;
 }
 
-.service-card--responsable:hover {
-  background-color: #E0F0E6;
-  border-color: #28734B;
+.trust-strip .trust-card-link:nth-child(2):hover {
+  background-color: #E0F0E6 !important;
+  border-color: #28734B !important;
+}
+.trust-strip .trust-card-link:nth-child(2):hover .trust-icon {
+  background-color: #28734B !important;
+  color: #fff !important;
 }
 
-.service-card--accompagnement:hover {
-  background-color: #E4ECF8;
-  border-color: #315C91;
+.trust-strip .trust-card-link:nth-child(3):hover {
+  background-color: #E4ECF8 !important;
+  border-color: #315C91 !important;
+}
+.trust-strip .trust-card-link:nth-child(3):hover .trust-icon {
+  background-color: #315C91 !important;
+  color: #fff !important;
 }
 
-.service-card--sur-mesure:hover {
-  background-color: #F8EBCF;
-  border-color: #94651B;
+.trust-strip .trust-card-link:nth-child(4):hover {
+  background-color: #F8EBCF !important;
+  border-color: #94651B !important;
+}
+.trust-strip .trust-card-link:nth-child(4):hover .trust-icon {
+  background-color: #94651B !important;
+  color: #fff !important;
+}
+
+.trust-strip .trust-card-link:focus-visible {
+  outline: 3px solid #922D20;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trust-strip .trust-card-link {
+    transition: none;
+  }
 }
 
