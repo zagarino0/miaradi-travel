@@ -152,42 +152,66 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
     if (value) el.textContent = value;
     return el;
   };
-  const svg = make('svg', {viewBox:'0 0 760 620', role:'img', 'aria-label':'Carte illustrée de Madagascar avec la région du circuit et son itinéraire en pointillés', preserveAspectRatio:'xMidYMid meet'});
+  const svg = make('svg', {viewBox:'0 0 760 620', role:'img', 'aria-label':'Carte géographique de Madagascar avec la région du circuit et son itinéraire en pointillés', preserveAspectRatio:'xMidYMid meet'});
   const defs = make('defs');
   const shadow = make('filter',{id:'island-shadow',x:'-30%',y:'-20%',width:'160%',height:'150%'});
-  shadow.append(make('feDropShadow',{dx:'8',dy:'13',stdDeviation:'8','flood-color':'#a16c20','flood-opacity':'.25'}));
+  shadow.append(make('feDropShadow',{dx:'5',dy:'8',stdDeviation:'5','flood-color':'#8b6a3d','flood-opacity':'.16'}));
   defs.append(shadow);
   svg.append(defs);
-  svg.append(make('circle',{cx:420,cy:310,r:282,fill:'none',stroke:'#a87930','stroke-width':1.4,opacity:.45}));
-  // Silhouette stylisée de Madagascar, inspirée de la carte de référence.
-  const islandPath='M558 32 C536 43 511 60 489 83 C463 109 441 136 417 166 C394 195 369 225 348 257 C329 289 316 321 320 353 C324 385 340 415 354 445 C370 480 384 520 405 550 C419 570 437 584 451 575 C473 560 486 530 497 501 C510 469 522 438 537 407 C553 373 569 340 583 305 C597 271 608 237 613 205 C620 174 622 144 611 116 C600 87 581 55 558 32 Z';
-  svg.append(make('path',{d:islandPath,fill:'#fffdfb',filter:'url(#island-shadow)'}));
-  // Petite silhouette de repérage à gauche, comme sur l’exemple fourni.
-  svg.append(make('path',{d:'M118 182 C101 196 96 218 91 238 C85 258 89 279 79 299 C72 319 79 339 86 360 C95 385 102 407 115 427 C124 440 138 441 147 426 C157 406 161 383 166 361 C172 338 177 315 174 292 C171 267 163 246 154 225 C146 205 133 187 118 182 Z',fill:'#fffdfb',opacity:.94,filter:'url(#island-shadow)'}));
-  const project = (lat,lng) => ({x:350+(lng-43.2)*34,y:45+((-12-lat)*42)});
+
+  // Coordonnées simplifiées du littoral malgache (longitude, latitude).
+  // Le même référentiel géographique sert à la côte, aux villes et à l’itinéraire.
+  const coast = [
+    [49.30,-11.95],[49.72,-12.45],[50.02,-13.15],[50.32,-14.10],[50.47,-15.05],
+    [50.18,-16.05],[49.82,-17.05],[49.42,-18.10],[49.05,-19.05],[48.72,-20.05],
+    [48.28,-21.05],[47.82,-22.05],[47.18,-23.05],[46.62,-24.05],[45.82,-25.05],
+    [45.10,-25.60],[44.45,-25.15],[43.92,-24.55],[43.55,-23.70],[43.38,-22.65],
+    [43.42,-21.55],[43.60,-20.45],[43.83,-19.35],[44.12,-18.30],[44.35,-17.25],
+    [44.38,-16.30],[44.42,-15.40],[44.78,-14.55],[45.30,-13.78],[46.05,-13.15],
+    [46.82,-12.72],[47.62,-12.42],[48.35,-12.18],[49.00,-12.02]
+  ];
+  const project = (lat,lng) => ({x:282+(Number(lng)-43.2)*43.5,y:35+((-12-Number(lat))*40.5)});
+  const pathFromCoords = coords => coords.map((coord,i) => {
+    const p = project(coord[1],coord[0]);
+    return (i ? 'L ' : 'M ') + p.x.toFixed(1) + ' ' + p.y.toFixed(1);
+  }).join(' ') + ' Z';
+  const islandPath = pathFromCoords(coast);
+  svg.append(make('circle',{cx:445,cy:310,r:248,fill:'none',stroke:'#a87930','stroke-width':1.4,opacity:.45}));
+  svg.append(make('path',{d:islandPath,fill:'#fffdfb',stroke:'#f0e6d8','stroke-width':1,filter:'url(#island-shadow)'}));
+
+  // Petit repère secondaire, dans l’esprit de la carte de référence.
+  const inset = make('g',{transform:'translate(35 170) scale(.23)'});
+  const insetPath = coast.map((coord,i) => {
+    const p = project(coord[1],coord[0]);
+    return (i ? 'L ' : 'M ') + (p.x-282).toFixed(1) + ' ' + (p.y-35).toFixed(1);
+  }).join(' ') + ' Z';
+  inset.append(make('path',{d:insetPath,fill:'#fffdfb',stroke:'#f0e6d8','stroke-width':2,filter:'url(#island-shadow)'}));
+  svg.append(inset);
+
   const route = Array.isArray(routeStops) ? routeStops : [];
   const center = project(zone.lat,zone.lng);
-  svg.append(make('ellipse',{cx:center.x,cy:center.y,rx:42,ry:58,class:'map-route-halo'}));
+  // Halo régional discret : le fond de la carte reste transparent.
+  svg.append(make('ellipse',{cx:center.x,cy:center.y,rx:30,ry:45,class:'map-route-halo'}));
   if (route.length) {
-    const pts = route.map(s=>project(Number(s.lat),Number(s.lng)));
+    const pts = route.map(s=>project(s.lat,s.lng));
     if (pts.length > 1) {
-      const d = pts.map((p,i)=>(i?'L':'M')+' '+p.x.toFixed(1)+' '+p.y.toFixed(1)).join(' ');
+      const d = pts.map((p,i)=>(i?'L ':'M ')+p.x.toFixed(1)+' '+p.y.toFixed(1)).join(' ');
       svg.append(make('path',{d,class:'map-route-line'}));
     }
     route.forEach((stop,index)=>{
       const p=pts[index];
-      svg.append(make('circle',{cx:p.x,cy:p.y,r:index===0||index===route.length-1?6:4.5,class:'map-route-point'+(index===0?' start':'')}));
-      const rightSide=Number(stop.lng)<47.3;
-      const labelX=p.x+(rightSide?12:-12);
-      const anchor=rightSide?'start':'end';
-      const labelY=Math.max(20,Math.min(590,p.y-7-(index%2)*5));
+      svg.append(make('circle',{cx:p.x,cy:p.y,r:index===0||index===route.length-1?5.5:4,class:'map-route-point'+(index===0?' start':'')}));
+      const labelOnLeft = Number(stop.lng) > 48.2;
+      const labelX=p.x+(labelOnLeft?-9:9);
+      const anchor=labelOnLeft?'end':'start';
+      const labelY=Math.max(22,Math.min(592,p.y-7+(index%2)*12));
       const label=make('text',{x:labelX,y:labelY,'text-anchor':anchor,class:(['Antananarivo','Mahajanga','Antsiranana','Fianarantsoa','Toliara'].includes(stop.name)?'map-city-label major':'map-city-label')},stop.name);
       svg.append(label);
     });
   } else {
     svg.append(make('circle',{cx:center.x,cy:center.y,r:7,class:'map-route-point start'}));
   }
-  svg.append(make('text',{x:34,y:38,class:'map-region-label'},zone.label+' · MADAGASCAR'));
+  svg.append(make('text',{x:255,y:43,class:'map-region-label'},zone.label+' · MADAGASCAR'));
   node.replaceChildren(svg);
 })();
 </script>
