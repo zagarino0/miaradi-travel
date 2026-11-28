@@ -153,13 +153,6 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
   const make = (tag, attrs = {}, value = '') => {
     const el = document.createElementNS(NS, tag);
     Object.entries(attrs).forEach(([key, val]) => el.setAttribute(key, String(val)));
-    if (value) el.textContent = value;
-    return el;
-  };
-  const NS = 'http://www.w3.org/2000/svg';
-  const make = (tag, attrs = {}, value = '') => {
-    const el = document.createElementNS(NS, tag);
-    Object.entries(attrs).forEach(([key, val]) => el.setAttribute(key, String(val)));
     if (value !== '') el.textContent = value;
     return el;
   };
