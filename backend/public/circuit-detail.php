@@ -26,17 +26,21 @@ $intro = $page ? ((string)($page['intro_fr'] ?: $page['summary_fr'])) : 'Cette p
 .itinerary-top .section-head{margin:0;align-self:center}
 .circuit-map-card{display:block;min-width:0;overflow:hidden;border:0;border-radius:0;background:transparent;box-shadow:none}
 .circuit-map{height:390px;min-width:0;background:transparent;position:relative;overflow:hidden}
-.circuit-map svg{display:block;width:100%;height:100%;font-family:Georgia,"Times New Roman",serif}
+.circuit-map .map-layout{display:grid;grid-template-columns:minmax(100px,.3fr) minmax(0,1fr);align-items:stretch;gap:10px;width:100%;height:100%}
+.circuit-map svg{display:block;width:100%;height:100%;overflow:visible;font-family:Georgia,"Times New Roman",serif}
+.circuit-map .map-overview,.circuit-map .map-zoom{min-width:0;min-height:0}
 .circuit-map-info{display:none}
-.map-region-label{font-family:Inter,system-ui,sans-serif;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;fill:#7f2b1e}
-.map-city-label{font-size:12px;font-style:italic;fill:#653021;paint-order:stroke;stroke:#fff8e8;stroke-width:2px;stroke-linejoin:round}
-.map-city-label.major{font-size:16px;font-style:normal;font-weight:700;letter-spacing:.02em}
+.map-region-label{font-family:Inter,system-ui,sans-serif;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;fill:#7f2b1e}
+.map-city-label{font-size:11px;font-style:italic;fill:#653021;paint-order:stroke;stroke:#fff8e8;stroke-width:2px;stroke-linejoin:round}
+.map-city-label.major{font-size:14px;font-style:normal;font-weight:700;letter-spacing:.01em}
 .map-route-line{fill:none;stroke:#e99a1d;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 6}
 .map-route-point{fill:#8f2c1d;stroke:#fff3d4;stroke-width:2}
 .map-route-point.start{fill:#922d20;stroke:#fff;stroke-width:3}
 .map-route-halo{fill:#922d20;fill-opacity:.12;stroke:#922d20;stroke-opacity:.55;stroke-width:1.5}
-@media(max-width:760px){.itinerary-top{grid-template-columns:minmax(0,1fr);gap:22px}.itinerary-top .section-head{display:block}.circuit-map{height:340px}}
-@media(max-width:420px){.circuit-map{height:300px}.map-city-label{font-size:14px}.map-city-label.major{font-size:17px}}
+.map-zoom-ring{fill:none;stroke:#a87930;stroke-width:1.2;opacity:.65}
+.map-ocean{fill:#f3d8a6;fill-opacity:.18}
+@media(max-width:760px){.itinerary-top{grid-template-columns:minmax(0,1fr);gap:22px}.itinerary-top .section-head{display:block}.circuit-map{height:340px}.circuit-map .map-layout{grid-template-columns:minmax(72px,.24fr) minmax(0,1fr);gap:5px}.map-city-label{font-size:10px}.map-city-label.major{font-size:12px}}
+@media(max-width:420px){.circuit-map{height:300px}.circuit-map .map-layout{grid-template-columns:minmax(58px,.22fr) minmax(0,1fr);gap:3px}.map-city-label{font-size:9px}.map-city-label.major{font-size:10px}}
 .itinerary{max-width:1400px;margin:0 auto;padding:30px 4vw 90px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:28px}.section-head h2{font-size:clamp(30px,4vw,54px);line-height:1.05;letter-spacing:-.045em;margin:0}.section-head p{color:var(--muted);max-width:390px;margin:0}.day{position:relative;border-top:1px solid var(--line);padding:22px 0 34px 78px}.day:last-child{border-bottom:1px solid var(--line)}.day::before{content:"";position:absolute;left:27px;top:0;bottom:0;width:2px;background:#dfc5bb;z-index:0}.day-heading{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1fr);gap:8px;padding:0 0 18px;min-height:76px;align-content:center}.day-num{position:absolute;left:-78px;top:0;display:grid;place-items:center;width:48px;height:48px;border:1px solid #d8b2a6;border-radius:50%;color:#fff;font-size:14px;font-weight:800;background:var(--red);z-index:2;box-shadow:0 0 0 5px var(--paper)}.day-title{font-size:clamp(20px,2vw,27px);font-weight:750;line-height:1.3;color:#18253a}.day-subtitle{font-size:15px;color:var(--muted)}.day-content{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:clamp(28px,4vw,64px);align-items:center;padding:0 0 8px;animation:day-reveal .25s ease-out}.day .gallery{grid-column:1;grid-row:1}.day .day-copy{grid-column:2;grid-row:1}.day.image-right .gallery{grid-column:2}.day.image-right .day-copy{grid-column:1}.day-copy{color:#625b56;font-size:clamp(16px,1.3vw,19px);line-height:1.85}.day-copy p:first-child{margin-top:0}.day-copy p{max-width:58ch}.day-copy .overnight{padding:12px 15px;border-left:3px solid var(--red);background:#f4ece6;font-size:14px}.gallery{min-width:0;width:100%}@keyframes day-reveal{from{opacity:.45;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}.overnight{font-size:14px}.gallery{min-width:0}.gallery-main{position:relative;width:100%;aspect-ratio:1.42/1;min-height:320px;max-height:520px;overflow:hidden;background:#eee3dc;border-radius:5px}.gallery-main img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .35s}.gallery-main img.active{opacity:1}.gallery-arrow{position:absolute;z-index:1;top:50%;transform:translateY(-50%);width:44px;height:44px;border:1px solid #ffffffa8;border-radius:50%;background:#201c1bd9;color:#fff;font-size:25px;cursor:pointer}.gallery-arrow.prev{left:14px}.gallery-arrow.next{right:14px}.gallery-arrow:disabled{opacity:.45;cursor:default}.gallery-count{position:absolute;right:14px;top:14px;border-radius:20px;background:#201c1bd9;color:#fff;padding:5px 11px;font-size:12px}.gallery-caption{background:#f3e7e1;padding:10px 13px;color:#786c67;font-size:11px;letter-spacing:.08em;text-transform:uppercase}.no-image{display:grid;place-items:center;height:100%;color:#9b8e85}.bottom-cta{background:#eee4dd;padding:55px 6vw;text-align:center}.bottom-cta h2{font-size:clamp(30px,4vw,48px);margin:0 0 12px}.bottom-cta p{color:var(--muted)}.bottom-cta a{display:inline-block;margin-top:15px;background:var(--red);color:white;padding:13px 24px;border-radius:30px;text-decoration:none;font-weight:700}.footer{padding:28px 6vw;background:#292320;color:#f7eee9;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:12px}.not-found{min-height:70vh;display:grid;place-content:center;text-align:center;padding:30px}.not-found a{color:var(--red)}@media(max-width:760px){.nav{height:68px}.logo{width:100px}.nav-links a:not(.cta){display:none}.hero{min-height:560px}.hero-content{padding:65px 24px}.day::before{left:17px}.day{padding:20px 0 28px 50px}.day-heading{padding-bottom:16px}.day-num{left:-50px;width:36px;height:36px;font-size:12px}.day-title{font-size:19px}.day-subtitle{font-size:13px}.day-content{grid-template-columns:1fr;gap:18px}.day .gallery,.day.image-right .gallery{grid-column:1;grid-row:1}.day .day-copy,.day.image-right .day-copy{grid-column:1;grid-row:2}.gallery-main{aspect-ratio:1.3/1;min-height:240px;max-height:420px}.section-head{display:block}.section-head p{margin-top:12px}.intro{padding:42px 24px 20px}.itinerary{padding-left:22px;padding-right:22px}}@media(max-width:420px){.day::before{left:13px}.day{padding-left:38px}.day-num{left:-38px;width:28px;height:28px;font-size:10px}.day-title{font-size:17px}.gallery-main{min-height:210px}.hero h1{font-size:clamp(40px,12vw,58px)}.gallery-arrow{width:40px;height:40px}.itinerary{padding-left:17px;padding-right:17px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 
 /* Footer fluide sur ordinateur, tablette et mobile */
@@ -152,15 +156,29 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
     if (value) el.textContent = value;
     return el;
   };
-  const svg = make('svg', {viewBox:'0 0 760 620', role:'img', 'aria-label':'Carte géographique de Madagascar avec la région du circuit et son itinéraire en pointillés', preserveAspectRatio:'xMidYMid meet'});
+  const NS = 'http://www.w3.org/2000/svg';
+  const make = (tag, attrs = {}, value = '') => {
+    const el = document.createElementNS(NS, tag);
+    Object.entries(attrs).forEach(([key, val]) => el.setAttribute(key, String(val)));
+    if (value !== '') el.textContent = value;
+    return el;
+  };
+  const mapLayout = document.createElement('div');
+  mapLayout.className = 'map-layout';
+  const overview = make('svg',{viewBox:'0 0 190 390',role:'img','aria-label':'Carte complète de Madagascar situant le circuit',preserveAspectRatio:'xMidYMid meet'});
+  overview.classList.add('map-overview');
+  const zoom = make('svg',{viewBox:'0 0 520 390',role:'img','aria-label':'Carte agrandie de la zone du circuit avec les villes et le tracé',preserveAspectRatio:'xMidYMid meet'});
+  zoom.classList.add('map-zoom');
   const defs = make('defs');
   const shadow = make('filter',{id:'island-shadow',x:'-30%',y:'-20%',width:'160%',height:'150%'});
-  shadow.append(make('feDropShadow',{dx:'5',dy:'8',stdDeviation:'5','flood-color':'#8b6a3d','flood-opacity':'.16'}));
+  shadow.append(make('feDropShadow',{dx:'2',dy:'3',stdDeviation:'3','flood-color':'#8b6a3d','flood-opacity':'.17'}));
   defs.append(shadow);
-  svg.append(defs);
+  const clip = make('clipPath',{id:'zoom-clip'});
+  clip.append(make('circle',{cx:260,cy:195,r:184}));
+  defs.append(clip);
+  zoom.append(defs);
 
-  // Coordonnées simplifiées du littoral malgache (longitude, latitude).
-  // Le même référentiel géographique sert à la côte, aux villes et à l’itinéraire.
+  // Contour de Madagascar en coordonnées géographiques simplifiées.
   const coast = [
     [49.30,-11.95],[49.72,-12.45],[50.02,-13.15],[50.32,-14.10],[50.47,-15.05],
     [50.18,-16.05],[49.82,-17.05],[49.42,-18.10],[49.05,-19.05],[48.72,-20.05],
@@ -170,49 +188,68 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
     [44.38,-16.30],[44.42,-15.40],[44.78,-14.55],[45.30,-13.78],[46.05,-13.15],
     [46.82,-12.72],[47.62,-12.42],[48.35,-12.18],[49.00,-12.02]
   ];
-  const project = (lat,lng) => ({x:282+(Number(lng)-43.2)*43.5,y:35+((-12-Number(lat))*40.5)});
-  const pathFromCoords = coords => coords.map((coord,i) => {
-    const p = project(coord[1],coord[0]);
-    return (i ? 'L ' : 'M ') + p.x.toFixed(1) + ' ' + p.y.toFixed(1);
-  }).join(' ') + ' Z';
-  const islandPath = pathFromCoords(coast);
-  svg.append(make('circle',{cx:445,cy:310,r:248,fill:'none',stroke:'#a87930','stroke-width':1.4,opacity:.45}));
-  svg.append(make('path',{d:islandPath,fill:'#fffdfb',stroke:'#f0e6d8','stroke-width':1,filter:'url(#island-shadow)'}));
-
-  // Petit repère secondaire, dans l’esprit de la carte de référence.
-  const inset = make('g',{transform:'translate(35 170) scale(.23)'});
-  const insetPath = coast.map((coord,i) => {
-    const p = project(coord[1],coord[0]);
-    return (i ? 'L ' : 'M ') + (p.x-282).toFixed(1) + ' ' + (p.y-35).toFixed(1);
-  }).join(' ') + ' Z';
-  inset.append(make('path',{d:insetPath,fill:'#fffdfb',stroke:'#f0e6d8','stroke-width':2,filter:'url(#island-shadow)'}));
-  svg.append(inset);
+  const geo = (lat,lng)=>({x:(Number(lng)-43.2)*43.5,y:35+((-12-Number(lat))*40.5)});
+  const globalCoast = coast.map(([lng,lat])=>geo(lat,lng));
+  const pathFrom = points=>points.map((p,i)=>(i?'L ':'M ')+p.x.toFixed(1)+' '+p.y.toFixed(1)).join(' ')+' Z';
+  // Carte entière à gauche : l’île reste identifiable à l’échelle du pays.
+  const minX=Math.min(...globalCoast.map(p=>p.x)),maxX=Math.max(...globalCoast.map(p=>p.x));
+  const minY=Math.min(...globalCoast.map(p=>p.y)),maxY=Math.max(...globalCoast.map(p=>p.y));
+  const overviewScale=Math.min(150/(maxX-minX),350/(maxY-minY));
+  const ox=(190-(maxX-minX)*overviewScale)/2-minX*overviewScale;
+  const oy=(390-(maxY-minY)*overviewScale)/2-minY*overviewScale;
+  const overviewPts=globalCoast.map(p=>({x:p.x*overviewScale+ox,y:p.y*overviewScale+oy}));
+  overview.append(make('circle',{cx:95,cy:195,r:90,fill:'none',stroke:'#a87930','stroke-width':1,opacity:.38}));
+  overview.append(make('path',{d:pathFrom(overviewPts),fill:'#fffdfb',stroke:'#e8d8c6','stroke-width':1.1,filter:'url(#island-shadow)'}));
+  overview.append(make('text',{x:95,y:18,'text-anchor':'middle',class:'map-region-label'},'MADAGASCAR'));
+  const overviewCities=[
+    {name:'Antsiranana',lat:-12.2765,lng:49.2917},
+    {name:'Mahajanga',lat:-15.7167,lng:46.3167},
+    {name:'Antananarivo',lat:-18.8792,lng:47.5079},
+    {name:'Toamasina',lat:-18.1492,lng:49.4023},
+    {name:'Toliara',lat:-23.35,lng:43.6667}
+  ];
+  overviewCities.forEach(city=>{
+    const p=geo(city.lat,city.lng),x=p.x*overviewScale+ox,y=p.y*overviewScale+oy;
+    overview.append(make('circle',{cx:x,cy:y,r:2.4,fill:'#922d20'}));
+  });
 
   const route = Array.isArray(routeStops) ? routeStops : [];
-  const center = project(zone.lat,zone.lng);
-  // Halo régional discret : le fond de la carte reste transparent.
-  svg.append(make('ellipse',{cx:center.x,cy:center.y,rx:30,ry:45,class:'map-route-halo'}));
-  if (route.length) {
-    const pts = route.map(s=>project(s.lat,s.lng));
-    if (pts.length > 1) {
-      const d = pts.map((p,i)=>(i?'L ':'M ')+p.x.toFixed(1)+' '+p.y.toFixed(1)).join(' ');
-      svg.append(make('path',{d,class:'map-route-line'}));
-    }
-    route.forEach((stop,index)=>{
-      const p=pts[index];
-      svg.append(make('circle',{cx:p.x,cy:p.y,r:index===0||index===route.length-1?5.5:4,class:'map-route-point'+(index===0?' start':'')}));
-      const labelOnLeft = Number(stop.lng) > 48.2;
-      const labelX=p.x+(labelOnLeft?-9:9);
-      const anchor=labelOnLeft?'end':'start';
-      const labelY=Math.max(22,Math.min(592,p.y-7+(index%2)*12));
-      const label=make('text',{x:labelX,y:labelY,'text-anchor':anchor,class:(['Antananarivo','Mahajanga','Antsiranana','Fianarantsoa','Toliara'].includes(stop.name)?'map-city-label major':'map-city-label')},stop.name);
-      svg.append(label);
-    });
-  } else {
-    svg.append(make('circle',{cx:center.x,cy:center.y,r:7,class:'map-route-point start'}));
+  // Calculer un cadrage dédié à l’itinéraire pour agrandir la bonne partie de l’île.
+  const routeGeo=(route.length?route:[{lat:zone.lat,lng:zone.lng}]).map(s=>geo(s.lat,s.lng));
+  const bounds={
+    minX:Math.min(...routeGeo.map(p=>p.x)),maxX:Math.max(...routeGeo.map(p=>p.x)),
+    minY:Math.min(...routeGeo.map(p=>p.y)),maxY:Math.max(...routeGeo.map(p=>p.y))
+  };
+  const spanX=Math.max(90,bounds.maxX-bounds.minX),spanY=Math.max(95,bounds.maxY-bounds.minY);
+  const zoomScale=Math.min(430/(spanX*1.42),320/(spanY*1.42));
+  const tx=260-(bounds.minX+bounds.maxX)/2*zoomScale;
+  const ty=195-(bounds.minY+bounds.maxY)/2*zoomScale;
+  const zoomPoint=p=>({x:p.x*zoomScale+tx,y:p.y*zoomScale+ty});
+  const zoomCoast=globalCoast.map(zoomPoint);
+  zoom.append(make('circle',{cx:260,cy:195,r:184,class:'map-ocean'}));
+  zoom.append(make('circle',{cx:260,cy:195,r:184,class:'map-zoom-ring'}));
+  const landGroup=make('g',{'clip-path':'url(#zoom-clip)'});
+  landGroup.append(make('path',{d:pathFrom(zoomCoast),fill:'#fffdfb',stroke:'#e8d8c6','stroke-width':1.3,filter:'url(#island-shadow)'}));
+  zoom.append(landGroup);
+  const pts=routeGeo.map(zoomPoint);
+  if(pts.length>1){
+    const d=pts.map((p,i)=>(i?'L ':'M ')+p.x.toFixed(1)+' '+p.y.toFixed(1)).join(' ');
+    zoom.append(make('path',{d,class:'map-route-line'}));
   }
-  svg.append(make('text',{x:255,y:43,class:'map-region-label'},zone.label+' · MADAGASCAR'));
-  node.replaceChildren(svg);
+  route.forEach((stop,index)=>{
+    const p=pts[index];
+    if(!p) return;
+    zoom.append(make('circle',{cx:p.x,cy:p.y,r:index===0||index===route.length-1?5.5:4,class:'map-route-point'+(index===0?' start':'')}));
+    const labelOnLeft=(index%2===0);
+    const labelX=p.x+(labelOnLeft?-8:8);
+    const anchor=labelOnLeft?'end':'start';
+    const labelY=Math.max(20,Math.min(370,p.y+(index%3===0?-9:15)));
+    const major=['Antananarivo','Mahajanga','Antsiranana','Fianarantsoa','Toliara','Toamasina'].includes(stop.name);
+    zoom.append(make('text',{x:labelX,y:labelY,'text-anchor':anchor,class:major?'map-city-label major':'map-city-label'},stop.name));
+  });
+  zoom.append(make('text',{x:260,y:20,'text-anchor':'middle',class:'map-region-label'},zone.label+' · ITINÉRAIRE'));
+  mapLayout.append(overview,zoom);
+  node.replaceChildren(mapLayout);
 })();
 </script>
 <script>
