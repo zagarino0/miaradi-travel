@@ -100,7 +100,8 @@ foreach ($mapZones as $needle => $zone) { if (str_contains($regionKey, $needle))
   L.circle(zonePoint, {radius: 65000, color: '#922D20', weight: 2, opacity: .95, fillColor: '#922D20', fillOpacity: .22}).addTo(map);
   L.circleMarker(zonePoint, {radius: 7, color: '#fff', weight: 2, fillColor: '#922D20', fillOpacity: 1}).addTo(map)
     .bindTooltip(zone.label, {permanent: true, direction: 'top', className: 'miaradi-map-label'});
-  map.setView(zonePoint, zone.zoom);
+  // Garder l’île entière visible et afficher la zone du circuit en surbrillance.
+  map.setView([-19.0, 46.7], 5);
   window.addEventListener('resize', () => map.invalidateSize(), {passive: true});
 })();
 </script>
