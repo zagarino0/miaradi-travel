@@ -7695,3 +7695,39 @@ header.site-header#top {
   outline: 3px solid #922D20 !important;
   outline-offset: 3px;
 }
+
+/* Transition fluide pour les quatre cartes */
+.service-card {
+  transition:
+    background-color 250ms ease,
+    border-color 250ms ease,
+    box-shadow 250ms ease,
+    transform 250ms ease;
+  cursor: pointer;
+}
+
+.service-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(25, 35, 50, 0.08);
+}
+
+.service-card--madagascar:hover {
+  background-color: #F8E6E0;
+  border-color: #922D20;
+}
+
+.service-card--responsable:hover {
+  background-color: #E0F0E6;
+  border-color: #28734B;
+}
+
+.service-card--accompagnement:hover {
+  background-color: #E4ECF8;
+  border-color: #315C91;
+}
+
+.service-card--sur-mesure:hover {
+  background-color: #F8EBCF;
+  border-color: #94651B;
+}
+
